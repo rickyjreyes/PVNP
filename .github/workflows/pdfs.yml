@@ -23,7 +23,7 @@ jobs:
       - name: Install LaTeX
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended lmodern
+          sudo apt-get install -y --no-install-recommends texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-science texlive-fonts-recommended lmodern
       - name: Build both manuscripts
         run: bash scripts/build_pdfs.sh
       - name: Verify compiled PDFs
