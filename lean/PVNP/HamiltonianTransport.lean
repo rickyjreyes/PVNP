@@ -103,6 +103,7 @@ theorem gradient_flow_energy_drop_lower
     δ ^ 2 / (detectorNorm ^ 2 * T) ≤ drop := by
   have hden : 0 < detectorNorm ^ 2 * T :=
     mul_pos (sq_pos_of_pos hNorm) hT
-  exact (div_le_iff₀ hden).2 hreadout
+  apply (div_le_iff₀ hden).2
+  simpa [mul_comm, mul_left_comm, mul_assoc] using hreadout
 
 end PVNP.HamiltonianTransport
