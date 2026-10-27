@@ -41,3 +41,7 @@ The universal lower-bound claim, physical curvature-to-discrete resource equival
 ## Actual WCT PDE finite-time readout bridge
 
 [Hamiltonian and gradient-flow transport estimates, source provenance, and limitations](pvnp/proofs/wct-pde-transport-bound.md) · [Lean algebraic formalization](lean/PVNP/HamiltonianTransport.lean).
+
+## Phase-sensitive WCT observability
+
+[Mean-zero coherent detector finite-time curvature bound, nodal counterexample, and full scope](pvnp/proofs/phase-sensitive-observability.md) · [Lean algebraic module](lean/PVNP/PhaseObservability.lean).
