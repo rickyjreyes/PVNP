@@ -32,3 +32,9 @@ curvature_barrier_audit:
   claim: "discrete curvature storage upper bounds for all bit strings and bounded-degree graphs"
   continuum_smooth_bump_proof: "paper proof only; not machine-checked"
   outstanding: "physical PDE invariant code and universal decision lower bound"
+
+phase_sensitive_observability:
+  module: PVNP/PhaseObservability.lean
+  proved_in_lean: "algebraic consequences of detector/Poincare/Hölder bounds, global constant-mode and node-weight identities"
+  analytic_only: "complex nonlinear PDE evolution, Fourier/Parseval, Sobolev and Poincare, detector derivative, dynamic invariants, nodal oscillation counterexample"
+  no_claim: "universal information curvature cost or P versus NP separation"

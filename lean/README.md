@@ -25,3 +25,6 @@ Run `cd lean && lake update && lake exe cache get && lake build`. CI rejects `so
 
 ## Actual-PDE readout cost attempt
 [HamiltonianTransport.lean](PVNP/HamiltonianTransport.lean) checks cubic–quintic coercivity and algebraic finite-time curvature-tradeoff implications. The [analytical note](../pvnp/proofs/wct-pde-transport-bound.md) derives the conditional localized-mass current bound from the maintained projection-free Hamiltonian PDE and separately treats the real Swift–Hohenberg gradient flow. Continuum PDE conservation, flux integration and Sobolev embedding remain outside this Lean module.
+
+## Phase-sensitive coherent observability
+[PhaseObservability.lean](PVNP/PhaseObservability.lean) contains kernel-checkable algebra and explicit no-go identities for global phase and nodal weights. The [analytic note](../pvnp/proofs/phase-sensitive-observability.md) derives a 1/T finite-time mean-zero detector cost from the maintained projection-free PDE and a node-dependent noncoercivity counterexample. The continuum Fourier/PDE calculus is not yet Lean formalized.
