@@ -52,15 +52,13 @@ than any r with r^k < S. No extraction theorem is assumed here. -/
 theorem resolution_transfer_template
     (size resource k : Nat)
     (hextract : size ≤ resource ^ k)
-    (hsize : 0 < size) :
+    (hsize : 0 < size) (hk : 0 < k) :
     0 < resource := by
   by_contra hn
   have hr : resource = 0 := Nat.eq_zero_of_not_pos hn
   subst resource
   cases k with
-  | zero =>
-      simp at hextract
-      omega
+  | zero => omega
   | succ k =>
       simp at hextract
       omega
