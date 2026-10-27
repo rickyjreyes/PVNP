@@ -16,3 +16,6 @@ Run `cd lean && lake update && lake exe cache get && lake build`. CI rejects `so
 
 ### New curvature-barrier test
 [CurvatureBarrier.lean](PVNP/CurvatureBarrier.lean) establishes explicit polynomial *state-encoding* upper bounds on bounded-degree graph Laplacians. These bounds do not prove a solver for SAT. See [analytic note](../pvnp/proofs/curvature-barrier-audit.md).
+
+## Four lower-bound attempts
+[Communication](PVNP/Communication.lean) · [Tseitin parity](PVNP/Tseitin.lean) · [Layout and escape time](PVNP/PhysicalBounds.lean) · [Mathematical interpretation](../pvnp/proofs/four-lower-bound-tests.md). These prove restricted inequalities, not unrestricted physical P versus NP.
