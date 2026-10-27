@@ -29,3 +29,7 @@ The universal lower-bound claim, physical curvature-to-discrete resource equival
 ## Curvature-barrier test
 
 [Polynomial-curvature witness encoding theorem and limitations](pvnp/proofs/curvature-barrier-audit.md) · [Lean discrete proof](lean/PVNP/CurvatureBarrier.lean).
+
+## Four lower-bound tests (2026-10-27)
+
+[Communication, proof complexity, routing, and PDE-metastability audit](pvnp/proofs/four-lower-bound-tests.md) · [Lean modules](lean/README.md).

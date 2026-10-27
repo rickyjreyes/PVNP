@@ -5,3 +5,6 @@ import PVNP.PartIExtended
 import PVNP.PartIIExtended
 import PVNP.PartIIIExtended
 import PVNP.CurvatureBarrier
+import PVNP.Communication
+import PVNP.Tseitin
+import PVNP.PhysicalBounds
