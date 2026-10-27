@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
-for part in part-i-curvature-bounded-wave-computation part-ii-discrete-wcc-turing-equivalence; do
+for part in part-i-curvature-bounded-wave-computation part-ii-discrete-wcc-turing-equivalence part-iii-physical-complexity-reassessment; do
   source="pvnp/papers/$part/main.tex"
   target="pvnp/preprints/$part/paper.pdf"
   build_dir="$(mktemp -d)"

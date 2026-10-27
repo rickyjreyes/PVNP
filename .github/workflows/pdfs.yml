@@ -24,14 +24,16 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-science texlive-fonts-recommended lmodern poppler-utils
-      - name: Build both manuscripts
+      - name: Build all three manuscripts
         run: bash scripts/build_pdfs.sh
       - name: Verify compiled PDFs
         run: |
           test -s pvnp/preprints/part-i-curvature-bounded-wave-computation/paper.pdf
           test -s pvnp/preprints/part-ii-discrete-wcc-turing-equivalence/paper.pdf
+          test -s pvnp/preprints/part-iii-physical-complexity-reassessment/paper.pdf
           pdfinfo pvnp/preprints/part-i-curvature-bounded-wave-computation/paper.pdf | grep Pages
           pdfinfo pvnp/preprints/part-ii-discrete-wcc-turing-equivalence/paper.pdf | grep Pages
+          pdfinfo pvnp/preprints/part-iii-physical-complexity-reassessment/paper.pdf | grep Pages
       - name: Commit compiled PDFs
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |

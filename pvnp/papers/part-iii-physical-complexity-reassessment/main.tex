@@ -1,0 +1,691 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry,enumitem,xcolor,hyperref,booktabs}
+\geometry{top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm}
+\hypersetup{colorlinks=true,linkcolor=blue!60!black,urlcolor=blue!60!black,citecolor=blue!60!black}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\WCC}{\mathcal{W}}
+\newcommand{\PWCC}{\mathbf{P}_{\mathrm{WCC}}}
+\newcommand{\NPWCC}{\mathbf{NP}_{\mathrm{WCC}}}
+\newcommand{\PTuring}{\mathbf{P}_{\mathrm{Turing}}}
+\newcommand{\NPTuring}{\mathbf{NP}_{\mathrm{Turing}}}
+\newcommand{\CTheta}{C_{\Theta,\varepsilon}}
+\newcommand{\poly}{\operatorname{poly}}
+\title{\textbf{Classical Complexity and Curvature-Bounded Physical Computation}\\[4pt]
+\large A Critical Reassessment of the Proposed Physical $P$ versus $NP$ Separation}
+\author{Richard J. Reyes}
+\date{Original research note: December 1, 2025\\Revised mathematical audit: October 27, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+This technical revision distinguishes the mathematically well-defined classical
+$P$ versus $NP$ question from questions of realizability and resource usage
+in Wave Curvature Computation (WCC). The discrete finite-state, local-update
+model can represent polynomial-time Turing computations under uniform encoding,
+decoding, and transition assumptions. That equivalence does not prove that each
+symbolic computation has a polynomial-curvature physical realization.
+Several claims in the original December 2025 technical note required correction:
+physical distinguishability alone does not force positive Laplacian-curvature
+cost; finite first-derivative energy and locality do not imply a universal
+polynomial bound on second-derivative curvature; expander graphs do not, without
+a separate geometric embedding theorem, imply exponential interface area; and
+the total influence of any $n$-bit Boolean function is at most $n$.
+We establish exact counterexamples and corrected conditional estimates,
+clarify physical $P$ and $NP$ witness admissibility, and isolate explicit proof
+obligations for a possible restricted-model separation. No unconditional
+separation of classical $P$ and $NP$, nor a proved separation of the
+curvature-bounded physical classes, is claimed here.
+\end{abstract}
+
+\section{Historical Context: The Divergence of Logic and Physics}
+The classical $P$ versus $NP$ question concerns language classes defined by
+uniform Turing-machine running time and polynomial verification; the question
+is mathematically well posed independent of a physical implementation
+\cite{Sipser,AroraBarak2009}. Turing machines are abstract algorithms and do
+not assert that unbounded physical memory is available at zero energetic cost.
+Whether a concrete physical computer efficiently realizes a particular
+algorithm is an additional question. Locality, thermodynamic dissipation,
+finite precision, field regularity, and resource budgets can restrict a
+physical substrate without changing the definition of classical $P$ or $NP$.
+
+WCT motivates such a resource-sensitive investigation. We distinguish three
+notions throughout: classical classes $P,NP$; uniformly specified discrete
+WCC classes $P^{\mathrm{disc}}_{\mathrm{WCC}},NP^{\mathrm{disc}}_{\mathrm{WCC}}$;
+and physical, curvature-rail classes
+$P^{\mathrm{phys}}_{\mathrm{WCC}},NP^{\mathrm{phys}}_{\mathrm{WCC}}$.
+A physical-vs-classical comparison must specify a uniform implementation
+map and its costs before inferring equality or separation of these classes.
+
+\section{The Physical Distinguishability Obstruction}
+\label{sec:distinguishability}
+\subsection{Physical Encoding of Logical Bits}
+Let $\Omega\subset\mathbb R^3$ be a bounded Lipschitz domain, with
+periodic or Neumann boundary conditions allowed. Two field encodings
+$\psi_0,\psi_1\in H^2(\Omega)$ can be distinct in the $H^1$ norm without
+having different Laplacians. We therefore distinguish \emph{symbolic
+separation} from \emph{curvature cost}.
+
+\begin{definition}[Regularized curvature cost]
+\label{def:regularized}
+For $\varepsilon>0$ and $\psi\in H^2(\Omega;\mathbb C)$ define the
+complex-safe curvature operator
+\[
+\Theta_\varepsilon[\psi]
+ =-\frac{\Delta\psi\,\overline\psi}{|\psi|^2+\varepsilon^2},
+\qquad
+\CTheta[\psi]=\int_\Omega|\Theta_\varepsilon[\psi]|^2\,dx.
+\]
+For a pair of encodings, a proposed separation cost is
+$\CTheta[\psi_1-\psi_0]$. This particular functional measures
+second-derivative structure, not every possible resource cost of a bit.
+\end{definition}
+
+\begin{proposition}[Counterexample to a universal positive separation cost]
+\label{prop:zero_cost}
+Distinct $H^1$ states need not have positive curvature-separation cost.
+\end{proposition}
+\begin{proof}
+Set $\psi_0\equiv0$ and $\psi_1\equiv1$ on $\Omega$. Then
+$\|\psi_1-\psi_0\|_{H^1}^2=|\Omega|>0$ while
+$\Delta(\psi_1-\psi_0)=0$. Hence
+\[
+\CTheta[\psi_1-\psi_0]=0.
+\]
+The counterexample obeys the stated periodic or Neumann conditions.
+\end{proof}
+
+\begin{remark}[WIN-12]
+The original Lemma 2.2 inferred nonzero Laplacian from nonzero $H^1$
+distance, which is false. An experimentally grounded lower bound for a
+specific device would require extra boundary conditions, state constraints,
+and a coercivity inequality; distinguishability alone is insufficient.
+\end{remark}
+
+\subsection{Curvature Cost of an \texorpdfstring{$n$}{n}-Bit Configuration}
+A lower bound $c_0n$ for storing $n$ bits may be established within a
+specified \emph{independent-cell encoding} if every occupied cell contributes
+at least $c_0>0$ and the chosen functional is additive across the disjoint
+supports. Neither cell independence nor positive $c_0$ follows from the
+previous definition. In particular, an $n$-bit string is not required to
+simultaneously realize the $2^n$ possible assignments.
+
+\begin{proposition}[Conditional additive storage estimate]
+If $\Omega=\bigsqcup_{j=1}^n\Omega_j$ and a chosen nonnegative storage
+functional $E_{\rm store}$ is additive on the disjoint cells with
+$E_{\rm store}(\psi_{b_j}|_{\Omega_j})\ge c_0$ for each $j$, then
+$E_{\rm store}(\psi_w)\ge nc_0$.
+\end{proposition}
+\begin{proof}
+Sum the $n$ cellwise inequalities. No such conclusion is asserted for
+$\CTheta$ without proving the premises.
+\end{proof}
+
+\subsection{Classical Turing Machines and Physical Implementations}
+The Turing model accounts for operations through a formal step count, not
+through a PDE-based curvature-energy functional. Its omission of an
+explicit energy budget does not imply a theorem that every physical
+implementation must consume zero energy or that a polynomial-overhead
+physical simulation is impossible. The physical cost of symbols, memory,
+and erasure is an independent quantitative engineering question
+\cite{Landauer1961,Bennett1982}.
+
+\subsection{Physical Complexity Classes}
+For a fixed, uniform physical model $\mathfrak M$ and a stated polynomial
+resource rail $R$, define $P^{\mathrm{phys}}_{\mathfrak M,R}$ by uniformly
+specified deterministic deciders that meet the rail on every input. Define
+$NP^{\mathrm{phys}}_{\mathfrak M,R}$ with polynomial-length, physically
+admissible witness encodings and deterministic verifiers subject to the
+same rail. The physical classes are machine-relative; we do not identify
+them with classical classes without separately proving the necessary
+simulation theorems.
+
+\section{Classical Computation and Physical Resource Models}
+\label{sec:tm_not_physical}
+The classical formalism is mathematically defined even if no hardware can
+realize an unbounded tape for all input sizes at once. Complexity theory
+uses a \emph{family} of finite computations, one for each input length.
+Physical realizability concerns whether a single uniform device family has
+allowed costs, scaling, and error control. The extended Church--Turing
+principle is a statement about efficient simulation of physical models, not
+a prerequisite for formulating classical $P$ versus $NP$.
+
+\begin{remark}
+A distinction between two physical encoding conventions cannot by itself
+refute a theorem about abstract languages. Conversely, a formal equivalence
+of symbolic update systems does not guarantee faithful realization by a
+specified nonlinear PDE under fixed energy and stability rails.
+\end{remark}
+
+\section{The WCC Model and Curvature Axioms}
+\label{sec:wcc_axioms}
+\begin{definition}[Polynomial curvature rail]
+For a uniform physical device family indexed by input length $n$, a
+trajectory $\psi_{n,x}(t)$ respects a polynomial curvature rail if there
+exists one polynomial $p$ such that, for every input $x$ of length $n$ and
+all times $0\le t\le T(n)$,
+\[
+\sup_{|x|=n}\sup_{0\le t\le T(n)}
+\CTheta[\psi_{n,x}(t)]\le p(n).
+\]
+A requirement of \emph{finite} curvature at each $n$ is strictly weaker.
+\end{definition}
+
+\begin{lemma}[A valid conditional curvature bound]
+\label{lem:h2bound}
+For every $\psi\in H^2(\Omega;\mathbb C)$ and $\varepsilon>0$,
+\[
+\CTheta[\psi]\le\frac{1}{4\varepsilon^2}
+\|\Delta\psi\|_{L^2(\Omega)}^2.
+\]
+\end{lemma}
+\begin{proof}
+For $r\ge0$, $r/(r^2+\varepsilon^2)\le1/(2\varepsilon)$.
+Apply this pointwise to $r=|\psi|$ and integrate the square.
+\end{proof}
+
+\begin{remark}[WIN-13]
+The original operator $-\Delta\psi/(\psi+\varepsilon)$ does not have the
+claimed uniform denominator bound $|\psi+\varepsilon|\ge\varepsilon$:
+$\psi=-\varepsilon$ is an immediate counterexample. One may instead
+assume an explicit gap $|\psi+\varepsilon|\ge\delta>0$ or use the
+complex-safe regularizer of Definition~\ref{def:regularized}. All estimates
+in this revision use the latter.
+\end{remark}
+
+\section{Discrete and Physical WCC Semantics}
+\label{sec:two_semantics}
+\subsection{Discrete WCC Model}
+A discrete WCC machine uses a finite alphabet $S$, a fixed-radius local
+update rule, polynomially many lattice cells, a uniform family of lattices,
+and polynomial-time constructible encoders and decoders. Machine
+descriptions must not contain nonuniform advice or a hard language in the
+initialization map.
+
+\begin{theorem}[Discrete Turing equivalence under uniformity]
+\label{thm:disc-equiv}
+For the uniform finite-state, fixed-radius WCC model defined above, with
+polynomial configuration size and polynomial rounds,
+\[
+P^{\mathrm{disc}}_{\mathrm{WCC}}=P,
+\qquad NP^{\mathrm{disc}}_{\mathrm{WCC}}=NP.
+\]
+\end{theorem}
+\begin{proof}
+A Turing machine sequentially updates all polynomially many cells in
+polynomial time per global WCC step. Conversely, standard finite-state
+local tape-and-head encoding simulates each step of a fixed polynomial-time
+Turing machine by a constant number of local rounds on a polynomial-size
+lattice. The two simulations preserve polynomial witness length and verifier
+runtime. Polynomial-time uniform encoding, decoding, and lattice generation
+exclude hidden oracle computations.
+\end{proof}
+
+\subsection{Physical WCC Model and Witness Admissibility}
+The physical model additionally restricts allowable embeddings, precision,
+curvature-energy budgets, and dynamics. Therefore the discrete theorem
+alone supplies no equality
+$P^{\mathrm{phys}}_{\mathrm{WCC}}=P$ or
+$NP^{\mathrm{phys}}_{\mathrm{WCC}}=NP$.
+
+\begin{theorem}[Verifier inclusion; correction of the empty-NP claim]
+\label{thm:p-in-np}
+In any model whose NP verifiers may ignore their witnesses and which
+subjects deciders and verifiers to the same resource rails,
+\[
+P^{\mathrm{phys}}_{\mathrm{WCC}}
+\subseteq NP^{\mathrm{phys}}_{\mathrm{WCC}}.
+\]
+\end{theorem}
+\begin{proof}
+Given a polynomial-resource decider $D(x)$, define
+$V(x,w)=D(x)$ for a fixed empty witness (or ignore $w$). It has the
+same resource usage and correctness. Thus each physical-P language has
+a physical-NP verifier.
+\end{proof}
+\begin{remark}[WIN-16]
+The original assertion $NP^{\mathrm{phys}}_{\mathrm{WCC}}=\varnothing$
+contradicts the claimed nonempty physical-P class together with
+Theorem~\ref{thm:p-in-np}. No physical class separation follows from
+that assertion.
+\end{remark}
+
+\subsection{A Correct Comparison Statement}
+\begin{proposition}[No logical conflict between the two semantics]
+Suppose that the discrete classes equal classical $P,NP$, but physical
+admissibility imposes additional restrictions. It is logically possible
+that the physical classes are proper subsets of their respective discrete
+classes. No equality or inequality between physical P and NP follows from
+those facts alone.
+\end{proposition}
+\begin{proof}
+A class inclusion into a larger class does not determine whether two
+subclasses are equal. In particular the implication
+$P^{\mathrm{phys}}\subseteq P^{\mathrm{disc}}$ and
+$NP^{\mathrm{phys}}\subseteq NP^{\mathrm{disc}}$ is compatible with both
+$P^{\mathrm{phys}}=NP^{\mathrm{phys}}$ and a strict inclusion.
+\end{proof}
+
+\subsection{On the Claimed Ill-Posedness}
+\begin{remark}[WIN-17]
+Classical $P$ versus $NP$ is a precise question about languages and
+Turing machines. What can be \emph{underspecified} is the expression
+``physically efficient computation'' unless the physical machine,
+precision, allowed resources, and asymptotic family are specified.
+Failure of a physical equivalence theorem cannot make the classical
+mathematical question ill-posed.
+\end{remark}
+
+\section{Locked Expanders and Physical Embedding Costs}
+\label{sec:locked}
+A bounded-degree expander has an edge boundary of order the size of a
+balanced vertex subset. That is an $\Omega(n)$ combinatorial cut
+constraint on $O(n)$ vertices; it does not by itself prove that \emph{one}
+encoded satisfying assignment must have $2^{\Omega(n)}$ interface area.
+Counting exponentially many assignments is different from physically
+storing all assignments at once.
+
+\begin{proposition}[Conditional interface-to-curvature lower bound]
+\label{prop:interface}
+Suppose that for each admissible realization $\psi$ of an instance $F_n$
+there is a geometric interface $\Gamma(\psi)$ such that
+\[
+\mathcal H^2(\Gamma(\psi))\ge A_n
+\quad\text{and}\quad
+\CTheta[\psi]\ge\kappa\,\mathcal H^2(\Gamma(\psi))
+\]
+with a constant $\kappa>0$ uniform in $n$, the input, and the encoding.
+Then every such realization satisfies $\CTheta[\psi]\ge\kappa A_n$.
+\end{proposition}
+\begin{proof}
+Compose the two assumed inequalities.
+\end{proof}
+\begin{remark}[WIN-18]
+A proved $A_n\ge 2^{\beta n}$, uniformly for every admissible
+implementation of a specific \emph{decision problem}, would be a
+substantive new embedding theorem. Graph expansion alone does not
+establish it, and the original exponential-domain-wall theorem is
+therefore withdrawn as an unconditional conclusion.
+\end{remark}
+
+\begin{proposition}[Verification of a supplied assignment]
+\label{prop:assignment-P}
+The language
+\[
+L_{\mathrm{check}}=\{(F,\alpha):\alpha\text{ satisfies the 3-CNF formula }F\}
+\]
+is in classical $P$.
+\end{proposition}
+\begin{proof}
+Evaluate each literal of each clause under the supplied assignment and
+accept exactly when every clause contains a true literal. The runtime is
+polynomial in the encoded formula and assignment lengths. Restricting to
+uniformly constructible expander formulas does not make this
+verification task NP-hard.
+\end{proof}
+
+\section{A Conditional Constructibility Barrier}
+\label{sec:constructibility}
+\begin{definition}[Per-step curvature increment]
+For a trajectory $\psi_{t+1}=F_n(\psi_t)$ set
+$\Delta\CTheta(t)=\CTheta[\psi_{t+1}]-\CTheta[\psi_t]$.
+A bound $|\Delta\CTheta(t)|\le K(n)$ is a \emph{separate hypothesis};
+finite precision and local update radius alone do not imply a uniform
+constant $K$ for all system sizes.
+\end{definition}
+
+\begin{theorem}[Conditional telescoping capacity estimate]
+\label{thm:constructibility}
+If $\CTheta[\psi_0]\le p_0(n)$,
+$|\Delta\CTheta(t)|\le K(n)$ for all $t<T(n)$,
+$T(n)\le p_T(n)$, and $p_0,K,p_T$ are polynomials, then
+\[
+\CTheta[\psi_{T(n)}]\le p_0(n)+p_T(n)K(n)=\poly(n).
+\]
+\end{theorem}
+\begin{proof}
+Telescope the increments and use the triangle inequality:
+\[
+\CTheta[\psi_T]=\CTheta[\psi_0]+\sum_{t<T}\Delta\CTheta(t)
+\le p_0(n)+T(n)K(n).
+\]
+\end{proof}
+\begin{remark}[WIN-19]
+A high-curvature \emph{witness} that violates the physical verifier rail
+is not evidence that its language belongs to physical NP. A separation
+requires one common language $L$ with a polynomial-resource physical
+verifier for every admissible witness and a proof that no permitted
+polynomial-resource physical decider recognizes $L$. A lower bound only
+on one chosen witness representation is insufficient.
+\end{remark}
+
+\section{Turing Simulability of Discrete WCC}
+The discrete simulation of Theorem~\ref{thm:disc-equiv} is an algebraic
+statement about locally updated finite symbols. With $N(n)$ cells and
+$T(n)$ global rounds, a sequential machine can evaluate the entire
+evolution in $T(n)\poly(N(n))$ time. This does not convert an arbitrary
+physical PDE into the desired finite-state machine, nor does it charge
+curvature resources to the simulation. Such a cost-preserving realization
+must be established independently (see \cite{Reyes2025_DiscreteWCC}).
+
+\section{Classical-to-Physical Implications}
+\label{sec:ECT}
+The extended Church--Turing thesis addresses simulation of physical
+computations in an abstract model with polynomial overhead. A
+one-directional simulation such as
+$P^{\mathrm{phys}}\subseteq P$ does not entail
+$P^{\mathrm{phys}}=P$, nor does it identify physical NP with classical NP.
+A physical equality claim would require the relevant simulation in both
+directions and preservation of witnesses, encodings, errors, and budgets.
+
+\begin{remark}
+Even the hypothetical equality $P=NP$ would not, solely by definition,
+establish an equality between two separately defined physical classes.
+Conversely, unequal physical subclasses would not by themselves resolve
+classical $P$ versus $NP$. No ``if and only if ECT'' criterion is proved
+or assumed here.
+\end{remark}
+
+\section{Conclusion: What Is Established and What Remains Open}
+\label{sec:conclusion}
+The corrected statements are: (i) under explicit uniformity, discrete WCC
+has the standard polynomial Turing simulation and verifier equivalence;
+(ii) positive storage or curvature costs require device-specific coercivity
+assumptions; (iii) $H^2$ control together with a positive regularization
+parameter gives a rigorous curvature upper bound; (iv) expander
+connectivity does not independently establish an exponential lower bound
+on the curvature of every decision procedure; and (v) Boolean influence
+cannot provide an exponential lower bound because it never exceeds $n$.
+
+The proposed physical separation remains an open mathematical program.
+A viable theorem must name a language, specify its uniform physical
+encoding and resource rails, provide an admissible polynomial-resource
+physical verifier, and prove a lower bound against every admissible
+physical decider, not only against a particular geometric search protocol.
+Classical $P$ versus $NP$ remains mathematically well posed and unresolved
+by these constructions.
+
+\clearpage
+\appendix
+\section{Conditional Curvature--Capacity Analysis}
+\label{sec:curvature_capacity}
+\subsection{Finite first-derivative energy is insufficient}
+\begin{proposition}[A high-frequency counterexample]
+\label{prop:highfreq}
+On the periodic cube $\Omega=(0,2\pi)^3$, let
+\[
+\psi_N(x)=1+\frac1N\sin(Nx_1),\qquad N\ge2.
+\]
+Then $\int_\Omega|\nabla\psi_N|^2dx=4\pi^3$ and
+$\int_\Omega|\Delta\psi_N|^2dx=4\pi^3N^2$.
+With $\varepsilon=1$ in Definition~\ref{def:regularized},
+\[
+C_{\Theta,1}[\psi_N]\ge\frac{16\pi^3}{25}N^2\longrightarrow\infty,
+\]
+while the ordinary nonnegative mass, quartic, and gradient contributions
+of a fixed-coefficient first-derivative field-energy functional are
+uniformly bounded.
+\end{proposition}
+\begin{proof}
+$\nabla\psi_N=(\cos(Nx_1),0,0)$ and
+$\Delta\psi_N=-N\sin(Nx_1)$, giving the stated integrals. Since
+$1/2\le\psi_N\le3/2$, the elementary inequality
+$\psi_N/(1+\psi_N^2)\ge2/5$ yields
+$|\Theta_1[\psi_N]|\ge(2/5)|\Delta\psi_N|$.
+Integrating gives the claimed bound. The amplitude stays between $1/2$
+and $3/2$, so its $L^2$ and $L^4$ contributions remain bounded.
+\end{proof}
+\begin{remark}[WIN-14]
+Finite energy involving $\|\nabla\psi\|_2^2$ does not imply a
+uniform $H^2$ estimate, and generic finite action does not silently
+supply it. A positive $H^2$ regularity assumption or a proved PDE
+estimate is required.
+\end{remark}
+
+\subsection{Locality and gravitational considerations}
+Lieb--Robinson bounds concern information propagation in suitable
+short-range quantum lattice systems; they do not imply that arbitrary
+PDE second derivatives grow at most polynomially in time. The original
+argument also identified divergence of a chosen normalized Laplacian
+functional with divergence of the stress--energy tensor without an
+established inequality between them. Einstein's equation by itself
+cannot close that missing step. The high-frequency family above is a
+counterexample to a universal fixed-energy bound on the chosen curvature
+functional.
+
+\begin{theorem}[Corrected conditional capacity law]
+\label{thm:capacity}
+Assume a uniform family of WCT fields $\psi_{n,x}(t)\in H^2(\Omega_n)$
+with a fixed $\varepsilon>0$ and
+\[
+\sup_{|x|=n}\sup_{t\le T(n)}
+\|\Delta\psi_{n,x}(t)\|_{L^2(\Omega_n)}\le q(n)
+\]
+for one polynomial $q$. Then the regularized curvature cost obeys
+\[
+\sup_{|x|=n}\sup_{t\le T(n)}
+\CTheta[\psi_{n,x}(t)]\le\frac{q(n)^2}{4\varepsilon^2}.
+\]
+\end{theorem}
+\begin{proof}
+Apply Lemma~\ref{lem:h2bound} uniformly over the family.
+\end{proof}
+\begin{remark}[WIN-15]
+This theorem is conditional on the missing uniform second-derivative
+estimate. Finite energy, spatial locality, and finite runtime alone do not
+provide the hypothesis. No universal QFT/GR/Lieb--Robinson polynomial
+curvature-capacity law is claimed.
+\end{remark}
+
+\section{Boolean Influence and Hypercube Boundary}
+\label{sec:boundary_capacity}
+For a Boolean function $f:\{0,1\}^n\to\{0,1\}$, let $x^{\oplus i}$
+denote bit $i$ flipped. Define
+\[
+\operatorname{Inf}_i(f)=2^{-n}\#\{x:f(x)\ne f(x^{\oplus i})\},
+\qquad \operatorname{Var}(f)=\sum_{i=1}^n\operatorname{Inf}_i(f).
+\]
+Define the \emph{directed} boundary
+$B_{\to}(f)=\#\{(x,i):f(x)\ne f(x^{\oplus i})\}$ and the
+\emph{undirected} boundary
+$B_{\rm und}(f)=\tfrac12B_{\to}(f)$.
+
+\begin{lemma}[Corrected boundary--variation identities]
+\label{lem:boundary_variation}
+For every Boolean $f$,
+\[
+B_{\to}(f)=2^n\operatorname{Var}(f),\qquad
+B_{\rm und}(f)=2^{n-1}\operatorname{Var}(f).
+\]
+\end{lemma}
+\begin{proof}
+Count the $2^n\operatorname{Inf}_i(f)$ directed edges in coordinate
+$i$ and sum over $i$; every undirected edge has two orientations.
+\end{proof}
+\begin{remark}[WIN-20]
+The original definition counted directed pairs while its lemma used the
+undirected normalization. Both formulas are now displayed separately.
+\end{remark}
+
+\begin{theorem}[Universal total-influence bound]
+\label{thm:influence}
+For any Boolean function of $n$ bits,
+\[
+0\le\operatorname{Var}(f)\le n.
+\]
+Consequently, it is impossible to have
+$\operatorname{Var}(F_n)=2^{\Omega(n)}$ for any family of Boolean
+functions $F_n$ with $n$ variables.
+\end{theorem}
+\begin{proof}
+Each $\operatorname{Inf}_i(f)$ is a probability in $[0,1]$.
+Summing $n$ terms proves the upper bound.
+\end{proof}
+
+\begin{corollary}[Polynomial variation is vacuous as a complexity class]
+\label{cor:var}
+If $P_{\rm var}$ denotes Boolean language families with
+$\operatorname{Var}(f_n)\le n^{O(1)}$ for all $n$, then
+$P_{\rm var}$ contains every Boolean language family. Thus the proposed
+exponential-variation exclusion of SAT and the resulting argument for
+$P\ne NP$ do not hold.
+\end{corollary}
+\begin{proof}
+Apply Theorem~\ref{thm:influence} with exponent one.
+\end{proof}
+\begin{remark}[WIN-21]
+A large \emph{unnormalized} cube boundary can be exponential even for
+simple functions; for example parity has
+$\operatorname{Var}(f)=n$ and $B_{\to}(f)=n2^n$.
+Neither an exponential directed boundary nor graph expansion by itself
+implies classical algorithmic hardness. The previous theorems claiming an
+exponential total influence and a strict subclass of $NP$ have been
+replaced by these exact bounds.
+\end{remark}
+
+\section{Arrow of Time: Limits of the Claim}
+The thermodynamic arrow and the availability of time-reversing or
+closed-timelike-curve models are additional physical hypotheses, not
+logical characterizations of classical P and NP. A process computing a
+witness need not run the verifier backward: search algorithms operate
+forward in ordinary time. Entropy-reducing maps need not send information
+from the future to the past, and inverse dynamics need not efficiently
+solve SAT. Conversely, a generic assertion of retrocausality does not
+specify the special self-consistent fixed-point model considered in
+\cite{AaronsonWatrous2009,Deutsch1991}.
+
+\begin{remark}
+No equivalence
+$P^{\mathrm{phys}}=NP^{\mathrm{phys}}\iff\text{retrocausality}$,
+and no physical separation inferred merely from a forward thermodynamic
+arrow, is proved. This section is retained as a research direction rather
+than as a theorem.
+\end{remark}
+
+\section{Mathematical Revision Register}
+\label{app:register}
+The following identifiers refer to the issue windows attached to this
+revised manuscript. ``Corrected'' means a valid replacement statement
+has been supplied; ``conditional'' means the original conclusion is not
+established and a precise additional hypothesis is specified.
+\begin{description}[leftmargin=1.5cm,style=nextline]
+\item[WIN-12] Zero-curvature counterexample to the distinct-state lemma
+(Proposition~\ref{prop:zero_cost}); corrected.
+\item[WIN-13] Unsafe denominator $|\psi+\varepsilon|\ge\varepsilon$;
+regularization/gap distinction (Definition~\ref{def:regularized}); corrected.
+\item[WIN-14] First-derivative energy does not control $H^2$;
+explicit counterexample (Proposition~\ref{prop:highfreq}); corrected.
+\item[WIN-15] Universal polynomial curvature growth from locality;
+replaced by conditional $H^2$ capacity (Theorem~\ref{thm:capacity}).
+\item[WIN-16] Impossible assertion physical NP is empty;
+verifier inclusion (Theorem~\ref{thm:p-in-np}); corrected.
+\item[WIN-17] Classical mathematical ill-posedness;
+replaced by a distinction between formal and physical questions
+(Section~\ref{sec:two_semantics}); corrected.
+\item[WIN-18] Unsupported expander-to-exponential-interface implication;
+conditional interface bound (Proposition~\ref{prop:interface}).
+\item[WIN-19] Inadmissible high-curvature NP witnesses;
+common physical verifier rail specified (Section~\ref{sec:constructibility}).
+\item[WIN-20] Directed/undirected cube boundary factor of two;
+exact identities (Lemma~\ref{lem:boundary_variation}); corrected.
+\item[WIN-21] Exponential Boolean total influence;
+universal bound and vacuity of $P_{\rm var}$ (Theorem~\ref{thm:influence});
+corrected.
+\end{description}
+
+\clearpage
+
+\begin{thebibliography}{99}
+
+\bibitem{Turing1936}
+A.~M.~Turing.
+\newblock On Computable Numbers, with an Application to the Entscheidungsproblem.
+\newblock \emph{Proceedings of the London Mathematical Society}, 42(2):230–265, 1936.
+
+\bibitem{Church1936}
+A.~Church.
+\newblock An Unsolvable Problem of Elementary Number Theory.
+\newblock \emph{American Journal of Mathematics}, 58(2):345–363, 1936.
+
+\bibitem{Landauer1961}
+R.~Landauer.
+\newblock Irreversibility and Heat Generation in the Computing Process.
+\newblock \emph{IBM Journal of Research and Development}, 5(3):183–191, 1961.
+
+\bibitem{Bennett1982}
+C.~H.~Bennett.
+\newblock The Thermodynamics of Computation—A Review.
+\newblock \emph{International Journal of Theoretical Physics}, 21(12):905–940, 1982.
+
+\bibitem{Lloyd2000}
+S.~Lloyd.
+\newblock Ultimate Physical Limits to Computation.
+\newblock \emph{Nature}, 406:1047–1054, 2000.
+
+\bibitem{Bekenstein1981}
+J.~D.~Bekenstein.
+\newblock Universal Upper Bound on the Entropy-to-Energy Ratio for Bounded Systems.
+\newblock \emph{Physical Review D}, 23(2):287–298, 1981.
+
+\bibitem{AaronsonWatrous2009}
+S.~Aaronson and J.~Watrous.
+\newblock Closed Timelike Curves Make Quantum and Classical Computing Equivalent.
+\newblock \emph{Proceedings of the Royal Society A}, 465:631–647, 2009.
+
+\bibitem{Deutsch1991}
+D.~Deutsch.
+\newblock Quantum Mechanics Near Closed Timelike Lines.
+\newblock \emph{Physical Review D}, 44(10):3197–3217, 1991.
+
+\bibitem{Sipser}
+M.~Sipser.
+\newblock \emph{Introduction to the Theory of Computation}.
+\newblock Cengage Learning, 3rd edition, 2012.
+
+\bibitem{Papadimitriou1994}
+C.~H.~Papadimitriou.
+\newblock \emph{Computational Complexity}.
+\newblock Addison-Wesley, 1994.
+
+\bibitem{AroraBarak2009}
+S.~Arora and B.~Barak.
+\newblock \emph{Computational Complexity: A Modern Approach}.
+\newblock Cambridge University Press, 2009.
+
+\bibitem{HarlowOoguri2018}
+D.~Harlow and H.~Ooguri.
+\newblock Symmetry, Topology, and Quantum Gravity.
+\newblock \emph{Communications in Mathematical Physics}, 383, 2021.
+
+\bibitem{LiebRobinson1972}
+E.~H.~Lieb and D.~W.~Robinson.
+\newblock The Finite Group Velocity of Quantum Spin Systems.
+\newblock \emph{Communications in Mathematical Physics}, 28:251–257, 1972.
+
+% ---------------------------------------------------------------
+% Added Wave Confinement Theory / WCC P vs NP References
+% ---------------------------------------------------------------
+
+\bibitem{Reyes2025_PWCC}
+R.~J.~Reyes.
+\newblock P vs NP in Curvature-Bounded Wave Computation: A Model-Relative $P_{\mathrm{WCC}} \neq NP_{\mathrm{WCC}}$ Separation.
+\newblock Zenodo, 2025.
+\newblock \url{https://doi.org/10.5281/zenodo.17743607}.
+
+\bibitem{Reyes2025_DiscreteWCC}
+R.~J.~Reyes.
+\newblock Discrete Wave-Constrained Computation and Classical Complexity: Turing Equivalence for $\mathbf{P}$ and $\mathbf{NP}$.
+\newblock Zenodo, 2025.
+\newblock \url{https://doi.org/10.5281/zenodo.17732642}.
+
+\end{thebibliography}
+\end{document}

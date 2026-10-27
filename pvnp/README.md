@@ -11,3 +11,9 @@ This directory follows the pattern used by [rickyjreyes/math](https://github.com
 
 ### Part II
 [Manuscript & scope](preprints/part-ii-discrete-wcc-turing-equivalence/README.md) · [PDF](preprints/part-ii-discrete-wcc-turing-equivalence/paper.pdf) · [LaTeX](papers/part-ii-discrete-wcc-turing-equivalence/main.tex)
+
+### Part III
+[Manuscript & scope](preprints/part-iii-physical-complexity-reassessment/README.md) · [PDF](preprints/part-iii-physical-complexity-reassessment/paper.pdf) · [LaTeX](papers/part-iii-physical-complexity-reassessment/main.tex)
+
+### Lean
+[Auxiliary formally checked claims](../lean/README.md) across all three parts.
