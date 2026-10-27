@@ -86,16 +86,10 @@ theorem two_site_fixed_mass_coercivity
     (a b m e : ℝ)
     (he : 0 < e)
     (hmass : a ^ 2 + b ^ 2 = m) :
-    (m / (2 * (m + e) ^ 2)) * (2 * (a - b) ^ 2) ≤
+    (m / (m + e) ^ 2) * (a - b) ^ 2 ≤
     (scalarWeight (a ^ 2) e + scalarWeight (b ^ 2) e) *
       (a - b) ^ 2 := by
-  have h := two_site_nodal_coercivity a b e he
-  rw [hmass] at h
-  calc
-    (m / (2 * (m + e) ^ 2)) * (2 * (a - b) ^ 2) =
-        (m / (m + e) ^ 2) * (a - b) ^ 2 := by ring
-    _ ≤ (scalarWeight (a ^ 2) e + scalarWeight (b ^ 2) e) *
-        (a - b) ^ 2 := h
+  simpa only [hmass] using (two_site_nodal_coercivity a b e he)
 
 /-- Strictly positive coefficient at strictly positive mass and
 regularization, even if either site has zero amplitude. -/
