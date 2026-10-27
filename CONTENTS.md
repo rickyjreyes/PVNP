@@ -45,3 +45,9 @@ The universal lower-bound claim, physical curvature-to-discrete resource equival
 ## Phase-sensitive WCT observability
 
 [Mean-zero coherent detector finite-time curvature bound, nodal counterexample, and full scope](pvnp/proofs/phase-sensitive-observability.md) · [Lean algebraic module](lean/PVNP/PhaseObservability.lean).
+
+## Independent auxiliary mathematics (not the original proof)
+
+[Fixed-mass nodal coercivity supplement](pvnp/preprints/supplement-fixed-mass-nodal-coercivity/README.md) · [LaTeX](pvnp/papers/supplement-fixed-mass-nodal-coercivity/main.tex) · [Lean finite proof](lean/PVNP/FixedMassNodal.lean).
+
+The supplement is kept outside Parts I–III and does not modify any original-proof claim.

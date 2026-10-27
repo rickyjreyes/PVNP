@@ -28,3 +28,6 @@ Run `cd lean && lake update && lake exe cache get && lake build`. CI rejects `so
 
 ## Phase-sensitive coherent observability
 [PhaseObservability.lean](PVNP/PhaseObservability.lean) contains kernel-checkable algebra and explicit no-go identities for global phase and nodal weights. The [analytic note](../pvnp/proofs/phase-sensitive-observability.md) derives a 1/T finite-time mean-zero detector cost from the maintained projection-free PDE and a node-dependent noncoercivity counterexample. The continuum Fourier/PDE calculus is not yet Lean formalized.
+
+## Independent fixed-mass nodal-coercivity supplement
+[FixedMassNodal.lean](PVNP/FixedMassNodal.lean) formalizes the node-tolerant fixed-mass curvature inequality on a connected two-site graph and an abstract readout-cost transfer. The [standalone LaTeX supplement](../pvnp/papers/supplement-fixed-mass-nodal-coercivity/main.tex) proves the continuum compactness theorem analytically, not in Lean. It is separate from all versions of the original P-versus-NP proof.
