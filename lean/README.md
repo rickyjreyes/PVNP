@@ -22,3 +22,6 @@ Run `cd lean && lake update && lake exe cache get && lake build`. CI rejects `so
 
 ## Physical communication bridge test
 [CurvatureCommunication.lean](PVNP/CurvatureCommunication.lean) formalizes both an affine zero-curvature counterexample and a direct linear bound for a concrete fixed-boundary, paid-slot physical implementation of an exact deterministic DISJ protocol. See the [analytical note](../pvnp/proofs/curvature-communication-bridge.md) for a causal slow-wave counterexample and the sharp 1D Dirichlet inequality. These do not establish a universal WCT curvature cost per bit.
+
+## Actual-PDE readout cost attempt
+[HamiltonianTransport.lean](PVNP/HamiltonianTransport.lean) checks cubic–quintic coercivity and algebraic finite-time curvature-tradeoff implications. The [analytical note](../pvnp/proofs/wct-pde-transport-bound.md) derives the conditional localized-mass current bound from the maintained projection-free Hamiltonian PDE and separately treats the real Swift–Hohenberg gradient flow. Continuum PDE conservation, flux integration and Sobolev embedding remain outside this Lean module.
