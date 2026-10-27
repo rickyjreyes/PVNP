@@ -32,12 +32,6 @@ jobs:
           test -s pvnp/preprints/part-ii-discrete-wcc-turing-equivalence/paper.pdf
           pdfinfo pvnp/preprints/part-i-curvature-bounded-wave-computation/paper.pdf | grep Pages
           pdfinfo pvnp/preprints/part-ii-discrete-wcc-turing-equivalence/paper.pdf | grep Pages
-      - name: Upload PDF artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: pvnp-manuscript-pdfs
-          path: pvnp/preprints/*/paper.pdf
-          if-no-files-found: error
       - name: Commit compiled PDFs
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
