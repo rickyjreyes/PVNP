@@ -37,3 +37,7 @@ The universal lower-bound claim, physical curvature-to-discrete resource equival
 ## Physical communication resource bridge
 
 [Counterexamples, sharp fixed-boundary lower bound, and Lean-verified discrete cut-communication transfer](pvnp/proofs/curvature-communication-bridge.md) · [Lean module](lean/PVNP/CurvatureCommunication.lean).
+
+## Actual WCT PDE finite-time readout bridge
+
+[Hamiltonian and gradient-flow transport estimates, source provenance, and limitations](pvnp/proofs/wct-pde-transport-bound.md) · [Lean algebraic formalization](lean/PVNP/HamiltonianTransport.lean).
