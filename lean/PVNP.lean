@@ -12,3 +12,4 @@ import PVNP.CurvatureCommunication
 import PVNP.HamiltonianTransport
 import PVNP.PhaseObservability
 import PVNP.FixedMassNodal
+import PVNP.ExpandingDomain

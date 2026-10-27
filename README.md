@@ -14,6 +14,12 @@ Research manuscripts on discrete Wave Curvature Computation (WCC), classical com
 
 [**Detailed manuscript map**](CONTENTS.md) · [**PVNP collection**](pvnp/README.md) · [**PDF build workflow**](.github/workflows/pdfs.yml)
 
+## Full research goal
+
+**This repository is intended to attempt the complete PVNP program**, from the original WCC proposal and uniform discrete semantics through rigorous nonlinear PDE resource estimates, adversarial hard-instance lower bounds, and the possible classical P-versus-NP bridge. Progress on a restricted model does not close the final conjecture. [Full proof-completion charter, dependencies, and acceptance gates](pvnp/PROOF_COMPLETION_CHARTER.md).
+
+The original manuscripts, independent supplements, negative results, and Lean checks are all retained. Where the strongest claim cannot be proved, the repo records the exact obstruction instead of silently replacing the original goal.
+
 ## Mathematical scope
 
 - **Part I** presents a model-relative research program and corrected proof obligations. Its universal physical curvature lower bound and WCC complexity-class separation remain **conditional**. It does **not** prove classical `P != NP`.
@@ -27,3 +33,7 @@ Research manuscripts on discrete Wave Curvature Computation (WCC), classical com
 Run `bash scripts/build_pdfs.sh` in a LaTeX environment with the required packages (including `physics`, `tcolorbox`, `tikz`, and `authblk`). The [GitHub Actions workflow](.github/workflows/pdfs.yml) builds all three PDFs and publishes `pvnp/preprints/*/paper.pdf` to the default branch when repository Actions and write permissions permit.
 
 **Research status:** Not independently peer-reviewed. Git commit dates are revision records and should not be represented as historical first-publication dates.
+
+## Latest quantitative scaling audit
+
+[Expanding-domain exact nonlinear Hamiltonian plane wave](pvnp/proofs/expanding-domain-hamiltonian-mode.md): on growing periodic devices, fixed positive mass and uniformly bounded Hamiltonian do not give an input-size-independent positive curvature-to-Laplacian coefficient. This does not contradict the existing [fixed-domain nodal coercivity supplement](pvnp/preprints/supplement-fixed-mass-nodal-coercivity/README.md).

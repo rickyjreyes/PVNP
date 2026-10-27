@@ -51,3 +51,7 @@ The universal lower-bound claim, physical curvature-to-discrete resource equival
 [Fixed-mass nodal coercivity supplement](pvnp/preprints/supplement-fixed-mass-nodal-coercivity/README.md) · [LaTeX](pvnp/papers/supplement-fixed-mass-nodal-coercivity/main.tex) · [Lean finite proof](lean/PVNP/FixedMassNodal.lean).
 
 The supplement is kept outside Parts I–III and does not modify any original-proof claim.
+
+## Full proof completion and scaling falsifier
+
+[Full PVNP end-to-end proof completion charter](pvnp/PROOF_COMPLETION_CHARTER.md) · [Exact expanding-domain Hamiltonian countermodel](pvnp/proofs/expanding-domain-hamiltonian-mode.md) · [Lean algebra](lean/PVNP/ExpandingDomain.lean) · [Executable checks](pvnp/tests/check_expanding_mode.py).
