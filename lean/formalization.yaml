@@ -1,21 +1,28 @@
-toolchain: leanprover/lean4:v4.23.0
-status: "auxiliary lemmas and finite-algebraic counterexamples, not full proofs of manuscripts"
-parts:
-  I:
-    file: PVNP/PartI.lean
-    tagged: [WIN-01, WIN-02, WIN-05]
-    out_of_scope: [WIN-03, WIN-04, WIN-06, WIN-07, WIN-08]
-  II:
-    file: PVNP/PartII.lean
-    tagged: [WIN-10]
-    out_of_scope: [WIN-09, WIN-11]
-  III:
-    file: PVNP/PartIII.lean
-    tagged: [WIN-12, WIN-13, WIN-16, WIN-21]
-    out_of_scope: [WIN-14, WIN-15, WIN-17, WIN-18, WIN-19, WIN-20]
-no_axioms_for:
-  - universal curvature lower bound
-  - continuum PDE regularity or lifetime
-  - full Turing equivalence with polynomial resources
-  - physical P vs NP separation
-  - classical P vs NP separation
+toolchain: "leanprover/lean4:v4.23.0"
+scope: "finite/discrete algebraic core of revised PVNP papers"
+kernel_verified_status: "requires successful GitHub Actions check for this revision"
+modules:
+  part_i:
+    - PVNP/PartI.lean
+    - PVNP/PartIExtended.lean
+  part_ii:
+    - PVNP/PartII.lean
+    - PVNP/PartIIExtended.lean
+  part_iii:
+    - PVNP/PartIII.lean
+    - PVNP/PartIIIExtended.lean
+complete_claims_within_explicit_scope:
+  - Boolean literal and CNF zero-penalty semantics
+  - Conditional language separation implication
+  - Deterministic finite-time transition replay
+  - Radius-one symbolic machine local transition and commuting simulation
+  - Explicit shifted denominator and quantization counterexamples
+  - Symbolic zero-Laplacian distinguishability
+  - Boolean hypercube normalized total influence upper bound
+not_proved:
+  - Full TM/WCC polynomial-time equivalence as machine complexity theorem
+  - Physical PDE realization and curvature-preserving simulation
+  - Universal exponential lower bound for locked-expander SAT
+  - Physical P_WCC != NP_WCC
+  - Classical P != NP
+  - Continuum H2 counterexample or analytic capacity theorem

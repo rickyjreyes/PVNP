@@ -1,16 +1,15 @@
-# PVNP Lean formalization — three-paper scope
+# PVNP Lean verification — extended formalization
 
-**Toolchain:** Lean 4.23.0 and Mathlib v4.23.0. Build with:
-\`cd lean && lake update && lake exe cache get && lake build\`.
+**Scope:** Exact finite Boolean semantics, deterministic local WCC dynamics, and finite Boolean-hypercube inequalities. This is a mechanized **consistent mathematical core**, not proof of the complete manuscripts or of P ≠ NP.
 
-This is a set of **auxiliary formally stated theorems and explicit counterexamples**, not a kernel proof of the entire PVNP trilogy.
+Run `cd lean && lake update && lake exe cache get && lake build`. CI rejects `sorry`, `admit`, and custom `axiom` declarations in the PVNP modules.
 
-| Manuscript | Source | Intended kernel-checkable facts |
+| Part | Files | Formally targeted |
 |---|---|---|
-| Part I | [PVNP/PartI.lean](PVNP/PartI.lean) | Signed Boolean literals; OR clause penalty; conditional set separation |
-| Part II | [PVNP/PartII.lean](PVNP/PartII.lean) | Replay of deterministic transitions; faithful simulation under semiconjugacy; a representative-rule counterexample |
-| Part III | [PVNP/PartIII.lean](PVNP/PartIII.lean) | Distinct states with zero symbolic Laplacian; shifted denominator counterexample; positive regularizer; witness-ignoring verifier; total normalized influence ≤ n |
+| I | [Core](PVNP/PartI.lean), [Extended](PVNP/PartIExtended.lean) | Signed Boolean literals, arbitrary finite CNF satisfaction, equivalent zero-penalty encoding, unsatisfiable opposite unit clauses, conditional class separation |
+| II | [Core](PVNP/PartII.lean), [Extended](PVNP/PartIIExtended.lean) | Finite deterministic replay, radius-one local WCC machine with fixed rule and boundary state, locality, quantization step/trajectory compatibility under commuting semantics |
+| III | [Core](PVNP/PartIII.lean), [Extended](PVNP/PartIIIExtended.lean) | Zero symbolic Laplacian of distinct states, denominator counterexample, positive squared regularizer, witnesses, finite hypercube directional boundary counts and normalized influence ≤ n |
 
-**Outside this formalization:** uniform polynomial-time Turing/WCC equivalence at the level of full machine semantics; physical curvature-cost preservation; H² regularity of PDE evolution; expander domain-wall lower bounds; physical or classical P≠NP. None of these have been added as Lean axioms. Discrete analogues must not be mistaken for continuum theorems.
+**Open/unformalized obligations:** Uniform polynomial-time Turing equivalence with encoded runtime and machines; quantum field PDE existence, Sobolev estimates and stability; exact physical curvature-energy bounds; exponential locked-expander lower bounds against *all* algorithms; physically admissible NP witness existence; classical and physical P vs NP. These cannot be marked verified without valid theorems and missing hypotheses. No custom axioms stand in for those statements.
 
-See [formalization.yaml](formalization.yaml) for precise WIN tags and outstanding work.
+[Detailed proof status](formalization.yaml).
