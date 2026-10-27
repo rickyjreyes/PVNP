@@ -26,3 +26,9 @@ not_proved:
   - Physical P_WCC != NP_WCC
   - Classical P != NP
   - Continuum H2 counterexample or analytic capacity theorem
+
+curvature_barrier_audit:
+  module: PVNP/CurvatureBarrier.lean
+  claim: "discrete curvature storage upper bounds for all bit strings and bounded-degree graphs"
+  continuum_smooth_bump_proof: "paper proof only; not machine-checked"
+  outstanding: "physical PDE invariant code and universal decision lower bound"
