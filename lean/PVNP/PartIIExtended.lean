@@ -10,6 +10,8 @@ This does not formalize the complexity-theoretic polynomial-overhead theorem.
 
 namespace PVNP.PartII
 
+variable {State Target : Type}
+
 abbrev Configuration (n : Nat) (State : Type) := Fin n → State
 
 structure RadiusOneMachine (State : Type) where
@@ -44,16 +46,16 @@ theorem local_update_only
 
 /-- Quantization preserves fallback readings if blank states agree. -/
 theorem sample_compatible
-    (A : RadiusOneMachine State) (B : RadiusOneMachine Symbol)
-    (Q : State → Symbol) (hblank : Q A.blank = B.blank)
+    (A : RadiusOneMachine State) (B : RadiusOneMachine Target)
+    (Q : State → Target) (hblank : Q A.blank = B.blank)
     {n : Nat} (c : Configuration n State) (j : Nat) :
     Q (sample A c j) = sample B (fun i => Q (c i)) j := by
   unfold sample
   split_ifs <;> simp [hblank]
 
 theorem left_compatible
-    (A : RadiusOneMachine State) (B : RadiusOneMachine Symbol)
-    (Q : State → Symbol) (hblank : Q A.blank = B.blank)
+    (A : RadiusOneMachine State) (B : RadiusOneMachine Target)
+    (Q : State → Target) (hblank : Q A.blank = B.blank)
     {n : Nat} (c : Configuration n State) (i : Fin n) :
     Q (left A c i) = left B (fun i => Q (c i)) i := by
   unfold left
@@ -62,8 +64,8 @@ theorem left_compatible
   · exact sample_compatible A B Q hblank c _
 
 theorem right_compatible
-    (A : RadiusOneMachine State) (B : RadiusOneMachine Symbol)
-    (Q : State → Symbol) (hblank : Q A.blank = B.blank)
+    (A : RadiusOneMachine State) (B : RadiusOneMachine Target)
+    (Q : State → Target) (hblank : Q A.blank = B.blank)
     {n : Nat} (c : Configuration n State) (i : Fin n) :
     Q (right A c i) = right B (fun i => Q (c i)) i := by
   exact sample_compatible A B Q hblank c _
@@ -71,8 +73,8 @@ theorem right_compatible
 /-- A commuting local transition and compatible blank yield a commuting
 global update, with no appeal to unproved physical realizability. -/
 theorem step_compatible
-    (A : RadiusOneMachine State) (B : RadiusOneMachine Symbol)
-    (Q : State → Symbol) (hblank : Q A.blank = B.blank)
+    (A : RadiusOneMachine State) (B : RadiusOneMachine Target)
+    (Q : State → Target) (hblank : Q A.blank = B.blank)
     (hrule : ∀ a b c, Q (A.localRule a b c) =
       B.localRule (Q a) (Q b) (Q c))
     {n : Nat} (c : Configuration n State) :
@@ -86,8 +88,8 @@ theorem step_compatible
 /-- Semiconjugacy of a bounded-local WCC machine is preserved under
 arbitrarily many deterministic discrete updates. -/
 theorem trajectory_compatible
-    (A : RadiusOneMachine State) (B : RadiusOneMachine Symbol)
-    (Q : State → Symbol) (hblank : Q A.blank = B.blank)
+    (A : RadiusOneMachine State) (B : RadiusOneMachine Target)
+    (Q : State → Target) (hblank : Q A.blank = B.blank)
     (hrule : ∀ a b c, Q (A.localRule a b c) =
       B.localRule (Q a) (Q b) (Q c))
     {n : Nat} (c : Configuration n State) (t : Nat) :

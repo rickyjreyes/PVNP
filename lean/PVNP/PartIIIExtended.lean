@@ -26,11 +26,12 @@ def directedBoundaryCount {n : Nat} (f : Assignment n → Bool) : Nat :=
 theorem directional_boundary_le_vertices {n : Nat}
     (f : Assignment n → Bool) (i : Fin n) :
     directionalBoundaryCount f i ≤ Fintype.card (Assignment n) := by
-  unfold directionalBoundaryCount
-  simpa using
-    (Finset.card_le_card
-      (Finset.filter_subset (Finset.univ : Finset (Assignment n))
-        (fun x => f x ≠ f (flip x i))))
+  have hsub :
+      (Finset.univ.filter (fun x : Assignment n => f x ≠ f (flip x i))) ⊆
+        (Finset.univ : Finset (Assignment n)) := by
+    intro x hx
+    exact Finset.mem_univ x
+  simpa [directionalBoundaryCount] using Finset.card_le_card hsub
 
 theorem directed_boundary_le_n_times_vertices {n : Nat}
     (f : Assignment n → Bool) :
