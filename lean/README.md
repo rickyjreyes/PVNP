@@ -13,3 +13,6 @@ Run `cd lean && lake update && lake exe cache get && lake build`. CI rejects `so
 **Open/unformalized obligations:** Uniform polynomial-time Turing equivalence with encoded runtime and machines; quantum field PDE existence, Sobolev estimates and stability; exact physical curvature-energy bounds; exponential locked-expander lower bounds against *all* algorithms; physically admissible NP witness existence; classical and physical P vs NP. These cannot be marked verified without valid theorems and missing hypotheses. No custom axioms stand in for those statements.
 
 [Detailed proof status](formalization.yaml).
+
+### New curvature-barrier test
+[CurvatureBarrier.lean](PVNP/CurvatureBarrier.lean) establishes explicit polynomial *state-encoding* upper bounds on bounded-degree graph Laplacians. These bounds do not prove a solver for SAT. See [analytic note](../pvnp/proofs/curvature-barrier-audit.md).

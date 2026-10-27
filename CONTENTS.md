@@ -25,3 +25,7 @@ The universal lower-bound claim, physical curvature-to-discrete resource equival
 ## Lean verification
 
 [Lean overview](lean/README.md) · [Part I](lean/PVNP/PartI.lean) · [Part II](lean/PVNP/PartII.lean) · [Part III](lean/PVNP/PartIII.lean) · [Scope ledger](lean/formalization.yaml).
+
+## Curvature-barrier test
+
+[Polynomial-curvature witness encoding theorem and limitations](pvnp/proofs/curvature-barrier-audit.md) · [Lean discrete proof](lean/PVNP/CurvatureBarrier.lean).

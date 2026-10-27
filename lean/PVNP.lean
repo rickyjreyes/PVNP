@@ -4,3 +4,4 @@ import PVNP.PartIII
 import PVNP.PartIExtended
 import PVNP.PartIIExtended
 import PVNP.PartIIIExtended
+import PVNP.CurvatureBarrier
