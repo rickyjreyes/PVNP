@@ -1,0 +1,1877 @@
+\documentclass[12pt]{article}
+\usepackage{authblk}
+
+% Math packages
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{physics} % Clean vector, derivative, norm, etc.
+
+% Graphics and tables
+\usepackage{graphicx}
+\usepackage{float} % Improved float handling
+\usepackage{booktabs} % Nicer tables
+\usepackage{lscape}
+\usepackage{pdflscape}
+\usepackage{framed}
+\usepackage{pifont}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+
+\providecommand{\RR}{\mathbb{R}}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning}
+
+% Hyperlinks
+\usepackage{hyperref}
+
+% Optional: define styling once
+\tcbset{
+  highlight theorem/.style={
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    fonttitle=\bfseries,
+    coltitle=black,
+    boxrule=0.8pt,
+    arc=3pt,
+    title={\textbf{Classical Implication Template: $P$ vs.\ $NP$ (Conditional)}},
+    before upper={\parindent15pt},
+  }
+}
+
+% Define blank tape symbol
+\newcommand{\blank}{\sqcup}
+
+
+% ============================
+% Complexity class and WCC macro definitions
+% ============================
+\newcommand{\Pclass}{\mathbf{P}}
+\newcommand{\NPclass}{\mathbf{NP}}
+\newcommand{\PWCC}{\mathbf{PWCC}}
+\newcommand{\NPWCC}{\mathbf{NPWCC}}
+
+% ============================
+% Machine model macros
+% ============================
+\newcommand{\TM}{\mathrm{TM}}
+\newcommand{\WCC}{\mathrm{WCC}}
+
+% ============================
+% Encoding / decoding macros
+% ============================
+\newcommand{\enc}{\mathrm{enc}}
+\newcommand{\dec}{\mathrm{dec}}
+
+% ============================
+% NC hierarchy (small caps)
+% ============================
+\newcommand{\NC}{\mathsf{NC}}
+
+% ============================
+% Misc formatting
+% ============================
+\newcommand{\SAT}{\mathrm{SAT}}
+
+
+
+\title{Discrete Wave-Constrained Computation and Classical Complexity:\\
+Turing Equivalence for $P$ and $NP$}
+\author{Richard J. Reyes}
+\date{Revised October 27, 2026 \\ \small Original Release: November 26, 2025}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{remark}[theorem]{Remark}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Wave Confinement Theory (WCT) motivates a discrete model of computation in which
+information is stored and processed by local interactions between finitely many
+metastable states arranged on a lattice. In this paper we isolate the resulting
+\emph{wave-constrained computation} (WCC) model as a finite-state, finite-range
+local-update machine and compare its complexity classes to the classical ones.
+
+First, we define a \emph{uniform} discrete WCC machine model with fixed finite
+alphabet, bounded-radius local updates, polynomial-size constructible lattices,
+and polynomial-time input encoders and output decoders. We explicitly simulate
+polynomial-time deterministic Turing machines with constant-factor overhead in
+the number of global WCC rounds and polynomial overhead in total work; conversely,
+each such WCC machine has a polynomial-time Turing simulation. Thus
+$P_{\mathrm{WCC}}^{\mathrm{disc}} = P_{\mathrm{Turing}}$.
+
+We then lift this equivalence from decision procedures to verifier-based
+nondeterministic computation. We define $NP_{\mathrm{WCC}}$ via polynomial-time
+WCC verifiers with polynomially bounded witnesses, and prove that
+$NP_{\mathrm{WCC}} = NP_{\mathrm{Turing}}$.
+Taken together, these results show that the uniform discrete abstraction
+realizes exactly the classical $P$ and $NP$ classes. Exact symbolic representation
+of wave trajectories needs a compatibility condition on quantization and local
+evolution. Additional physical curvature, energetic and PDE constraints are
+not covered by the discrete complexity-class equalities; the physical
+capacity estimates are conditional on their specific dynamical hypotheses.
+
+\end{abstract}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 0.x — Resource Model Summary
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Resource Model Summary}
+
+For convenience, we summarize the resource model used throughout the
+definition of discrete WCC machines. Let $x \in \Sigma^n$ be an
+input of length $n$.
+
+\begin{enumerate}
+
+    \item \textbf{Space (Finite Lattice).}
+    Computation takes place on a finite lattice
+    $\Lambda_n \subset \mathbb{Z}^d$ (with fixed $d$) satisfying
+    \[
+        |\Lambda_n| \le p(n)
+    \]
+    for some polynomial $p$. The cardinality $|\Lambda_n|$ represents
+    the space cost of the machine.
+
+    \item \textbf{Precision (Finite State).}
+    The state set $S$ is finite. Each cell holds an element of $S$,
+    representing at most $\ell = \lceil\log_2|S|\rceil$ bits of information.
+    No operation increases $\ell$; precision remains fixed and finite
+    throughout computation.
+
+    \item \textbf{Locality (Neighborhood Radius).}
+    A fixed interaction radius $r \in \mathbb{N}$ defines neighborhoods
+    \[
+        N_r(i) = \{ j \in \Lambda_n : \|i-j\|_\infty \le r \}.
+    \]
+    Each update applies a local rule $U : S^{N_r} \to S$.
+
+    \item \textbf{Determinism and Time.}
+    Computation proceeds in synchronous, deterministic rounds via $U$.
+    For a WCC machine $W$, the time cost on inputs of length $n$ is
+    \[
+        T_W(n) =
+        \max_{x \in \Sigma^n}
+        \min\{ t\ge0 : \mathrm{dec}(C_t) \in \{0,1\}\}.
+    \]
+    Given $C_0$ and $U$, the entire trajectory $(C_t)_{t \ge 0}$ is uniquely
+    determined (deterministic replay).
+
+    \item \textbf{Total Configuration Space.}
+    Since $|\Lambda_n|$ and $|S|$ are finite,
+    the global configuration space $S^{\Lambda_n}$ is finite.
+    This precludes hypercomputation via infinite-dimensional state spaces.
+
+\end{enumerate}
+
+The machine descriptions, lattice enumerators, encoders, and decoders are
+fixed for a language and execute in polynomial time. This uniformity is
+essential: otherwise an unrestricted input encoding could decide the language
+before the first WCC update.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lemma — Precision Stability
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{lemma}[Precision Stability]
+\label{lem:precision-stability}
+Let
+$W = (\{\Lambda_n\}, S, r, U, \mathrm{enc}, \mathrm{dec})$
+be a discrete WCC machine.
+If $C_t : \Lambda_n \to S$ is representable using
+$\ell = \lceil\log_2 |S|\rceil$ bits per cell, then so is $C_{t+1}$ obtained by the
+local update rule~$U$.
+\end{lemma}
+
+\begin{proof}
+For each $i \in \Lambda_n$,
+\[
+   C_{t+1}(i) = U(C_t|_{N_r(i)}).
+\]
+Since $U : S^{N_r} \to S$ is a total function whose image lies in the
+same finite state set $S$, its outputs require no more than
+$\lceil\log_2|S|\rceil$ bits.
+No arithmetic involving unbounded precision is performed.
+Thus, the precision requirement remains constant, preventing
+accumulation of infinite information during evolution.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Proposition — Local Implementability of TM Transitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{proposition}[Local Implementability of TM Transitions]
+\label{prop:local-tm}
+Let $M$ be a deterministic single-tape Turing machine with transition
+function
+\[
+   \delta : Q \times \Gamma \to Q \times \Gamma \times \{L, R\}.
+\]
+Under the two-phase head/symbol encoding of Section~1, each transition
+of $M$ is realizable by a WCC local update rule with radius $r = 1$.
+\end{proposition}
+
+\begin{proof}
+In the simulation, each tape cell is encoded as a WCC state
+$(\gamma, q^\#, p) \in S$, where $\gamma \in \Gamma$,
+$q^\# \in Q \cup \{\bot, (q,L), (q,R)\}$ encodes the head state or a
+directional mark, and $p \in \{0,1\}$ is a phase bit.
+
+To realize a TM transition, the rule $U$ need only inspect the cell
+currently holding the head and its immediate neighbors (to which the
+head may move in the next phase).  These cells lie inside the radius--1
+neighborhood $\{i-1, i, i+1\}$.
+
+Given $(q, \gamma)$ at the head location, $U$ rewrites the symbol,
+enters the next state, and places a directional mark for the subsequent
+phase.  Movement of the head by one cell is therefore computed using
+only local information. Hence, all TM transitions are locally
+implementable in the WCC model.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Proposition — Deterministic Evolution and Replay
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{proposition}[Deterministic Evolution and Replay]
+\label{prop:deterministic-replay}
+Let $W$ be a discrete WCC machine.
+Then the global evolution
+\[
+   C_{t+1}(i) = U(C_t|_{N_r(i)})
+\]
+is deterministic. Consequently, given $C_0$ and $U$, the entire
+trajectory $(C_t)_{t \ge 0}$ is uniquely determined and can be
+reconstructed (replayed) by any verifier.
+\end{proposition}
+
+\begin{proof}
+Since $U$ is a function from the finite domain
+$S^{N_r}$ to the finite set $S$, each cell update is uniquely
+determined by the configuration of its neighborhood. Thus $C_{t+1}$ is
+uniquely determined by $C_t$.
+
+By induction, the full sequence of configurations is uniquely
+determined by $C_0$. A verifier with access to $C_0$ and $U$ can
+therefore reproduce the entire evolution without ambiguity,
+establishing deterministic replay.
+\end{proof}
+
+
+% ============================
+% Discrete WCC model and Turing equivalence
+% ============================
+
+\section{Discrete WCC Machines and Turing Equivalence}
+\label{sec:tm_wcc_equiv}
+
+In this section we isolate the discrete core of wave-constrained computation
+(WCC) as a finite-state local-update machine model and prove that its
+polynomial-time class coincides with the classical deterministic polynomial-time
+class. This makes precise the identification
+\[
+P_{\mathrm{WCC}} = P_{\mathrm{Turing}}
+\]
+used elsewhere in the paper.
+
+We first define the discrete WCC machine under the locality and precision rails,
+then construct an explicit simulation of any polynomial-time Turing machine by a
+polynomial-time WCC machine with only constant-factor overhead in time. We then
+recall the converse simulation (WCC by Turing machines) and obtain full
+equivalence.
+
+\subsection{Discrete WCC machine model}
+
+Let $\Sigma$ be a finite input alphabet and let $n = |x|$ denote input length.
+
+% WIN-09: enforce polynomial uniformity of lattice, encoding and decoding.
+\begin{definition}[Uniform discrete WCC machine]
+\label{def:wcc_machine}
+A \emph{uniform discrete WCC machine} is a tuple
+\[
+ W=(\{\Lambda_n\}_{n\ge1},S,r,U,\mathrm{enc},\mathrm{dec})
+\]
+with the following data, fixed independently of an individual input.
+\begin{enumerate}
+\item The spatial dimension $d\ge1$ and neighborhood radius $r\ge0$
+are constants. The cell set $\Lambda_n\subset\mathbb{Z}^d$ satisfies
+$|\Lambda_n|\le p(n)$ and lies in a box with polynomially bounded
+integer coordinates. A fixed deterministic algorithm constructs and
+enumerates $\Lambda_n$ and its fixed-radius neighborhoods in time
+$\mathrm{poly}(n)$.
+\item $S$ is a fixed, finite alphabet. Boundary cells outside $\Lambda_n$
+read a distinguished fixed background symbol $s_\partial\in S$.
+\item $U:S^{\{-r,\ldots,r\}^d}\to S$ is a single fixed local rule
+of constant description length. Its synchronous action is
+\[
+ C_{t+1}(i)=U\bigl((\overline C_t(i+v))_{\|v\|_\infty\le r}\bigr),
+ \quad i\in\Lambda_n,
+\]
+where $\overline C_t$ extends $C_t$ by the background symbol.
+\item The uniform encoder $\mathrm{enc}$ constructs
+$C_0=\mathrm{enc}(x)\in S^{\Lambda_{|x|}}$ in time
+$\mathrm{poly}(|x|)$ on a standard deterministic Turing machine.
+\item The uniform decoder $\mathrm{dec}_n:S^{\Lambda_n}\to
+\{\mathsf{run},0,1\}$ is computed in time $\mathrm{poly}(n)$
+from the canonical configuration encoding. It returns $\mathsf{run}$
+before halting and $0$ (reject) or $1$ (accept) on a halting
+configuration. Halting outputs are persistent (equivalently the
+computation is stopped at its first halting configuration).
+\end{enumerate}
+The polynomial bounds, fixed rule, and algorithms are part of the
+machine description, not extra advice indexed by $n$ or an oracle.
+All complexity classes denoted $P_{\mathrm{WCC}}$ and
+$NP_{\mathrm{WCC}}$ below refer to this \emph{discrete uniform} model
+unless a physical superscript is explicitly attached.
+\end{definition}
+
+
+
+\begin{definition}[Polynomial-time discrete WCC]
+\label{def:pwcc}
+For a uniform discrete WCC machine $W$, set
+\[
+ T_W(n)=\max_{x\in\Sigma^n}\min\{t\ge0:
+ \mathrm{dec}_n(C_t)\in\{0,1\}\}.
+\]
+We require the minimum to exist for every input. The machine decides
+$L\subseteq\Sigma^*$ in polynomial time if $T_W(n)\le p(n)$ for
+some polynomial $p$ and its first halting output equals
+$\mathbf{1}_L(x)$ for every $x$. By Definition~\ref{def:wcc_machine},
+the total cost of constructing, simulating, and decoding each of these
+runs is polynomial in $n$ whenever the round count is polynomial.
+We write $P_{\mathrm{WCC}}^{\mathrm{disc}}$, or simply
+$P_{\mathrm{WCC}}$ in the discrete sections, for the resulting class.
+\end{definition}
+
+
+
+The remaining WCC rails (coercivity, entropy pruning, renewability) impose
+additional structure on how such a discrete machine can arise from an underlying
+wave-evolution model. In this section we restrict attention to the discrete
+interface; the physical realization is addressed separately
+(Remark~\ref{rem:wct_realization}).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% WIN-10: exact symbolic factor requires quantization compatibility.
+\subsection{Wave--Symbol Correspondence Under Compatibility}
+\label{subsec:wave-symbol-isomorphism}
+
+The local symbolic update $U$ can faithfully describe a discretized
+wave evolution only if its quantization commutes with that evolution.
+Locality and finite precision alone do not imply this compatibility.
+Here a local wave update is a map
+$F:Z^{\{-r,\dots,r\}^d}\to Z$ on a finite-precision
+subset $Z\subset\mathbb C$, acting on $\Psi_t:\Lambda_n\to Z$ by
+\begin{equation}
+\Psi_{t+1}(i)=F\bigl((\overline\Psi_t(i+v))_{\|v\|_\infty\le r}\bigr).
+\label{eq:psi-local-update}
+\end{equation}
+This is a discrete local map; realizing it by a particular WCT PDE
+requires independent physical analysis.
+
+\begin{definition}[Quantization and representative encoding]
+Let $S$ be a fixed finite alphabet. Let
+$Q:Z\to S$ be surjective and $\widetilde Q:S\to Z$
+select a representative for each symbol, so that
+\[
+Q\circ\widetilde Q=\mathrm{id}_S.
+\]
+Both maps act cellwise on configurations. The symbolic state associated
+with a field is $C_t=Q\circ\Psi_t$.
+\end{definition}
+
+Given $F,Q,\widetilde Q$, define the candidate symbolic rule
+\begin{equation}
+U(c)=Q\bigl(F(\widetilde Q(c))\bigr),\qquad
+c\in S^{\{-r,\ldots,r\}^d}.
+\label{eq:U-from-F}
+\end{equation}
+
+\begin{theorem}[Exact wave--symbol correspondence]
+\label{thm:wave-symbol-isomorphism}
+Suppose the actual field trajectory obeys \eqref{eq:psi-local-update}
+and that, on every neighborhood configuration $z$ reached by this
+trajectory, the \emph{quantization compatibility} identity holds:
+\begin{equation}
+Q(F(z))=Q\bigl(F(\widetilde Q(Q(z)))\bigr).
+\label{eq:quantization-compatibility}
+\end{equation}
+Then $C_t=Q\circ\Psi_t$ satisfies the exact symbolic update
+\begin{equation}
+C_{t+1}(i)=U\bigl((\overline C_t(i+v))_{\|v\|_\infty\le r}\bigr).
+\label{eq:symbolic-update-from-psi}
+\end{equation}
+Conversely, for every symbolic local rule $U$ there exists an
+\emph{abstract} finite-precision representative evolution, defined by
+\[
+F_U(z)=\widetilde Q\bigl(U(Q(z))\bigr),
+\]
+for which every symbolic trajectory is realized exactly on the invariant
+code manifold $\widetilde Q(S)^{\Lambda_n}$. This converse is a statement
+about a constructed finite-state local evolution, not about solutions of
+an independently fixed continuous WCT PDE.
+\end{theorem}
+
+\begin{proof}
+For an actual trajectory and each site $i$, write $z$ for the
+corresponding input neighborhood. By compatibility,
+\[
+Q(\Psi_{t+1}(i))=Q(F(z))
+=Q(F(\widetilde Q(Q(z))))=U(Q(z)),
+\]
+which is \eqref{eq:symbolic-update-from-psi}.
+For the converse, initialize $\Psi_0=\widetilde Q(C_0)$ and use $F_U$.
+If $\Psi_t=\widetilde Q(C_t)$, then
+\[
+\Psi_{t+1}=\widetilde Q\bigl(U(Q(\Psi_t))\bigr)
+=\widetilde Q(U(C_t))=\widetilde Q(C_{t+1}).
+\]
+Induction proves exact representative dynamics and invariance of the
+code manifold. No continuous curvature or energy bound is inferred.
+\end{proof}
+
+\begin{remark}[Compatibility is necessary]
+\label{rem:wave-symbol-obstruction}
+Without \eqref{eq:quantization-compatibility}, quantization need not
+commute with a local update. For example, let
+$Z=\{-1,\tfrac12,1\}$ and $S=\{0,1\}$, with
+$Q(z)=\mathbf{1}_{\{z>0\}}$, $\widetilde Q(0)=-1$,
+$\widetilde Q(1)=1$. Define the one-cell map
+$F(-1)=-1$, $F(\tfrac12)=\tfrac12$, and $F(1)=-1$.
+For $\Psi_0=\tfrac12$, one has $Q(F(\Psi_0))=1$,
+whereas $U(Q(\Psi_0))=Q(F(1))=0$.
+Thus the unqualified wave--symbol isomorphism is false, even for
+single-site local maps. Exact correspondence requires the stated
+compatibility or an invariant representative code manifold.
+\end{remark}
+
+
+\subsection{Gandy Correspondence and Physical Cellular Automata}
+\label{subsec:gandy-correspondence}
+
+Gandy's physical Church--Turing thesis characterizes a broad class of
+``reasonable'' physical computation models by four structural axioms:
+bounded information density, spatial homogeneity, bounded propagation
+speed, and local causality. In this subsection we show that discrete WCC
+machines satisfy these axioms and therefore instantiate a physical cellular
+automaton in Gandy's sense.
+
+\begin{definition}[Gandy-style physical axioms]
+A discrete dynamical system on configurations $C : \Lambda \to S$ satisfies
+Gandy's physical constraints if:
+\begin{enumerate}
+  \item \textbf{Bounded information density:} $S$ is finite, so each site
+    carries at most $\log_2 |S|$ bits of information.
+  \item \textbf{Spatial homogeneity:} There exists a fixed local rule
+    $U : S^{N_r} \to S$ independent of the site $i \in \Lambda$ and of
+    the configuration size.
+  \item \textbf{Bounded propagation:} There is a fixed radius $r \in \mathbb{N}$
+    such that the update at site $i$ depends only on the values in the
+    neighbourhood $N_r(i)$.
+  \item \textbf{Local causality:} The global update $C \mapsto C'$ is defined
+    pointwise by
+    \[
+    C'(i) = U\big(C|_{N_r(i)}\big),
+    \qquad i \in \Lambda,
+    \]
+    with no dependence on nonlocal aggregates.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[WCC satisfies Gandy axioms]
+\label{prop:gandy-wcc}
+Let
+\[
+W = (\{\Lambda_n\}_{n \ge 1}, S, r, U, \mathrm{enc}, \mathrm{dec})
+\]
+be a discrete WCC machine as in Definition~\ref{def:wcc_machine}.
+Then for each $n$ the induced evolution on configurations
+$C_t : \Lambda_n \to S$ satisfies all four Gandy-style physical axioms.
+\end{proposition}
+
+\begin{proof}
+Fix $n \ge 1$.
+
+(1) \emph{Bounded information density.} By definition of a WCC machine, the
+state set $S$ is finite. Thus each cell carries at most $\log_2|S|$ bits of
+information.
+
+(2) \emph{Spatial homogeneity.} The local update rule $U : S^{N_r} \to S$
+is fixed once and for all in the specification of $W$, and does not depend
+on $i \in \Lambda_n$ or on $n$.
+
+(3) \emph{Bounded propagation.} The neighbourhood shape $N_r(i)$ is defined
+with a fixed radius $r \in \mathbb{N}$. Therefore the update at site $i$
+cannot depend on configuration values outside $N_r(i)$, and information
+cannot propagate faster than $r$ cells per global step.
+
+(4) \emph{Local causality.} By definition of the WCC evolution,
+\[
+C_{t+1}(i) = U\big(C_t|_{N_r(i)}\big),
+\]
+so the future value at site $i$ depends only on the local neighbourhood
+$N_r(i)$ at time $t$ and not on any global property of $C_t$.
+
+Thus all four axioms hold for the evolution on $\Lambda_n$, for each $n$.
+\end{proof}
+
+\begin{corollary}[Gandy--WCC correspondence]
+\label{cor:gandy-wcc-correspondence}
+Every discrete WCC machine induces, for each input length $n$, a
+finite-state cellular-automaton-style evolution satisfying the listed
+structural locality axioms. This is a statement about the abstract
+machine, not a proof of realizability by any fixed physical PDE.
+\end{corollary}
+
+Proposition~\ref{prop:gandy-wcc} and
+Corollary~\ref{cor:gandy-wcc-correspondence} show that uniform WCC is a discrete abstraction compatible with the
+structural locality axioms. Physical feasibility and energy accounting are
+independent questions.
+
+
+
+
+
+\subsection{Deterministic Turing machines}
+
+We recall the standard deterministic Turing machine model and its
+polynomial-time class.
+
+\begin{definition}[Deterministic Turing machine]
+\label{def:tm}
+A deterministic Turing machine is a tuple
+\[
+M = (Q, \Gamma, \Sigma, \delta, q_0, q_{\mathrm{acc}}, q_{\mathrm{rej}})
+\]
+where:
+\begin{itemize}
+  \item $Q$ is a finite set of states.
+  \item $\Gamma$ is a finite tape alphabet containing a distinguished blank
+    symbol $\blank$.
+  \item $\Sigma \subseteq \Gamma \setminus \{\blank\}$ is the input alphabet.
+  \item $\delta : Q \times \Gamma \to Q \times \Gamma \times \{L,R\}$ is the
+    transition function.
+  \item $q_0 \in Q$ is the start state.
+  \item $q_{\mathrm{acc}}, q_{\mathrm{rej}} \in Q$ are halting accept/reject
+    states.
+\end{itemize}
+A \emph{configuration} of $M$ is a triple $(\gamma, h, q)$ consisting of a
+bi-infinite tape $\gamma : \mathbb{Z} \to \Gamma$ with all but finitely many
+entries equal to $\blank$, a head position $h \in \mathbb{Z}$, and a current
+state $q \in Q$. One transition step applies $\delta(q,\gamma(h))$ and updates
+$(\gamma,h,q)$ accordingly.
+\end{definition}
+
+\begin{definition}[Polynomial-time Turing computation]
+\label{def:pturing}
+Let $T_M(n)$ denote the worst-case number of transition steps that $M$ uses on
+inputs of length $n$. A language $L \subseteq \Sigma^*$ is in $P_{\mathrm{Turing}}$
+if there exists a machine $M$ and constants $c,k \ge 1$ such that
+\[
+T_M(n) \le c n^k
+\]
+for all $n$, and $M$ accepts $x$ if and only if $x \in L$.
+\end{definition}
+
+\subsection{Simulation of polynomial-time Turing machines by WCC}
+
+We now construct, for each polynomial-time Turing machine $M$, a discrete WCC
+machine $W_M$ that simulates $M$ with only constant-factor overhead in time. The
+construction proceeds via a one-dimensional radius-$1$ local update rule that
+encodes the tape and head in per-cell symbols and uses a two-phase schedule to
+implement the Turing transition function.
+
+\subsubsection{Configuration encoding}
+
+Fix a Turing machine $M$ as in Definition~\ref{def:tm}. We first define the
+local alphabet used by the WCC machine.
+
+\begin{definition}[Local tape state and phase]
+\label{def:local_state}
+Let
+\[
+S_{\mathrm{tape}} := \Gamma \times (Q \cup \{\bot\})
+\]
+where the symbol $\bot$ denotes ``no head present''. A local tape state
+$(\gamma,q) \in S_{\mathrm{tape}}$ thus records the tape symbol $\gamma \in
+\Gamma$ and, if $q \in Q$, the presence of the head with state $q$ at the
+corresponding cell.
+
+We extend the state space with a phase bit and a directional mark. Let
+\[
+Q' := Q \cup \{(q,L) : q \in Q\} \cup \{(q,R) : q \in Q\}
+\]
+and define
+\[
+S := \Gamma \times (Q' \cup \{\bot\}) \times \{0,1\}.
+\]
+An element $s = (\gamma, q^\#, p) \in S$ consists of:
+\begin{itemize}
+  \item a symbol $\gamma \in \Gamma$,
+  \item either $q^\# = \bot$ (no head), or $q^\# \in Q$ (head present with
+    state $q^\#$), or $q^\# = (q,d)$ with $q \in Q$ and $d \in \{L,R\}$
+    indicating that in the next phase the head should move one cell in
+    direction $d$,
+  \item a phase bit $p \in \{0,1\}$. Phase $p=0$ corresponds to ``before Turing
+    transition'' and phase $p=1$ to ``after symbol rewrite, before head
+    movement''.
+\end{itemize}
+\end{definition}
+
+Given a Turing configuration $(\gamma, h, q)$ at time $t$, we encode it as a
+configuration $C_t : \mathbb{Z} \to S$ by
+\[
+C_t(i) :=
+\begin{cases}
+(\gamma(i), q, 0), & \text{if } i = h,\\[2pt]
+(\gamma(i), \bot, 0), & \text{if } i \neq h.
+\end{cases}
+\]
+
+In the WCC machine we restrict to a finite window
+\[
+\Lambda_n := \{-L(n), \dots, L(n)\} \subset \mathbb{Z}
+\]
+with $L(n)$ chosen as a polynomial upper bound on the space usage of $M$ on
+inputs of length $n$, for example
+\[
+L(n) := T_M(n) + n.
+\]
+
+\subsubsection{Local update rule}
+
+We now define the local rule $U : S^{\{-1,0,1\}} \to S$, which acts with
+radius $r = 1$ in dimension $d=1$. For each site $i \in \Lambda_n$, the
+neighbourhood is
+\[
+N_1(i) = \{i-1,i,i+1\}
+\]
+(with the understanding that we only care about neighbourhoods fully contained
+in $\Lambda_n$; since the head never reaches the boundary within $T_M(n)$
+steps, the behaviour of $U$ at the outermost sites can be defined arbitrarily).
+
+The action of $U$ depends on the phase bit of the centre cell.
+
+\paragraph{Phase 0: symbol rewrite and direction tagging.}
+
+In phase $p=0$, at most one cell carries a head state in $Q$, all other cells
+have $q^\# = \bot$. For a cell at site $i$ with local state
+$s_i = (\gamma_i, q_i^\#, 0)$, we define the phase-$0$ component
+$U_{\mathrm{phase0}}$ as:
+\begin{itemize}
+  \item If $q_i^\# \in Q$ (the head is present at $i$ with state $q_i^\#$), we
+    consult the Turing transition function
+    \[
+    \delta(q_i^\#, \gamma_i) = (q', \gamma', d), \qquad d \in \{L,R\},
+    \]
+    and set
+    \[
+    U_{\mathrm{phase0}}(s_i) := (\gamma', (q',d), 1),
+    \]
+    that is, we overwrite the symbol with $\gamma'$, store a directional mark
+    $(q',d)$, and flip the phase bit to $1$.
+  \item If $q_i^\# = \bot$ (no head), then the cell does not change its symbol
+    or head component and only flips the phase:
+    \[
+    U_{\mathrm{phase0}}(s_i) := (\gamma_i, \bot, 1).
+    \]
+\end{itemize}
+This part of the rule is radius-$0$; it will be incorporated into the full
+radius-$1$ rule below.
+
+\paragraph{Phase 1: head movement.}
+
+In phase $p=1$, exactly one cell in a valid configuration carries a directional
+mark $(q',d) \in Q'$ and all others carry either $\bot$ or an unmarked $q \in
+Q$. The head must move one cell in direction $d$, and the directional mark must
+be cleared.
+
+The update for phase $1$ uses the radius-$1$ neighbourhood
+\[
+(C(i-1), C(i), C(i+1)) = (s_{i-1}, s_i, s_{i+1}) \in S^3.
+\]
+We write $s_j = (\gamma_j, q_j^\#, 1)$ with $q_j^\# \in Q' \cup \{\bot\}$ and
+define $U_{\mathrm{phase1}} : S^3 \to S$ by case distinction:
+
+\begin{itemize}
+  \item If the \emph{centre} cell carries a right-moving mark, i.e.~$q_i^\# =
+    (q',R)$, then the head is leaving site $i$:
+    \[
+    U_{\mathrm{phase1}}(s_{i-1}, s_i, s_{i+1}) := (\gamma_i, \bot, 0).
+    \]
+  \item If the \emph{left neighbour} carries a right-moving mark and the centre
+    cell is headless, i.e.~$q_{i-1}^\# = (q',R)$ and $q_i^\# = \bot$, then the
+    head arrives from the left:
+    \[
+    U_{\mathrm{phase1}}(s_{i-1}, s_i, s_{i+1}) := (\gamma_i, q', 0).
+    \]
+  \item If the centre cell carries a left-moving mark, $q_i^\# = (q',L)$, then
+    the head is leaving site $i$ to the left:
+    \[
+    U_{\mathrm{phase1}}(s_{i-1}, s_i, s_{i+1}) := (\gamma_i, \bot, 0).
+    \]
+  \item If the \emph{right neighbour} carries a left-moving mark and the centre
+    cell is headless, $q_{i+1}^\# = (q',L)$ and $q_i^\# = \bot$, then the head
+    arrives from the right:
+    \[
+    U_{\mathrm{phase1}}(s_{i-1}, s_i, s_{i+1}) := (\gamma_i, q', 0).
+    \]
+  \item In all remaining cases (cells that neither carry nor receive a head),
+    the cell preserves its tape symbol and any non-directional head component
+    and simply flips the phase bit $1 \mapsto 0$. Under the invariant stated
+    below, this means
+    \[
+    U_{\mathrm{phase1}}(s_{i-1}, s_i, s_{i+1}) := (\gamma_i, q_i^*, 0)
+    \]
+    where $q_i^*$ is either $\bot$ or $q \in Q$ (never a directional mark).
+\end{itemize}
+
+The full local rule $U$ is obtained by combining the two phases into a single
+radius-$1$ rule on $S^{\{-1,0,1\}}$, with the phase bit $p$ in the centre cell
+determining which branch, $U_{\mathrm{phase0}}$ or $U_{\mathrm{phase1}}$,
+applies at that cell.
+
+\subsubsection{Encoding, decoding, and correctness}
+
+We now define the WCC machine $W_M$ associated to $M$.
+
+\begin{definition}[Associated WCC machine $W_M$]
+\label{def:wm}
+Let $M$ be a deterministic Turing machine as above. Define $W_M$ to be the
+discrete WCC machine with:
+\begin{itemize}
+  \item dimension $d = 1$,
+  \item index sets $\Lambda_n = \{-L(n),\dots,L(n)\}$ with $L(n)$ a fixed
+    polynomial upper bound on $M$'s tape usage on inputs of length $n$,
+  \item state set $S$ as in Definition~\ref{def:local_state} and radius $r = 1$,
+    with neighbourhoods $N_1(i) = \{i-1,i,i+1\}$,
+  \item local update rule $U : S^{\{-1,0,1\}} \to S$ as defined above,
+  \item encoding $\mathrm{enc}_M : \Sigma^* \to S^{\Lambda_n}$ given by
+    \[
+    \mathrm{enc}_M(x)_i =
+    \begin{cases}
+      (x_1, q_0, 0), & i = 0,\\[2pt]
+      (x_{i+1}, \bot, 0), & 1 \le i \le n-1,\\[2pt]
+      (\blank, \bot, 0), & \text{otherwise},
+    \end{cases}
+    \]
+    i.e.~the input word $x = x_1 \dots x_n$ is written on cells $0,\dots,n-1$,
+    the head starts at $i=0$ in state $q_0$, and the rest of the tape is blank,
+  \item decoding predicate $\mathrm{dec}_M : S^{\Lambda_n} \to \{\mathsf{run},0,1\}$ defined
+    by
+    \[
+    \mathrm{dec}_M(C) =
+    \begin{cases}
+      1, & \text{if the simulated head is in }q_{\mathrm{acc}},\\
+      0, & \text{if the simulated head is in }q_{\mathrm{rej}},\\
+      \mathsf{run}, & \text{otherwise}.
+    \end{cases}
+    \]
+\end{itemize}
+\end{definition}
+
+We first state an invariant that characterizes valid configurations in the
+simulation.
+
+\begin{lemma}[Simulation invariant]
+\label{lem:invariant}
+For the WCC machine $W_M$ on input $x \in \Sigma^n$, the following holds for all
+$t \ge 0$:
+\begin{itemize}
+  \item At every \emph{even} time $2t$, all cells have phase bit $p=0$ and there
+    is a unique head cell $h_t \in \Lambda_n$ such that
+    $C_{2t}(h_t) = (\gamma_t(h_t), q_t, 0)$ with $q_t \in Q$, while all other
+    cells have $q^\# = \bot$.
+  \item At every \emph{odd} time $2t+1$, all cells have phase bit $p=1$ and
+    there is a unique directional mark at some site $j_t \in \Lambda_n$ with
+    $C_{2t+1}(j_t) = (\widetilde\gamma(j_t), (q',d), 1)$ for some $q' \in Q$
+    and $d \in \{L,R\}$, while all other cells have
+    $q^\# \in Q \cup \{\bot\}$ but never a directional mark.
+\end{itemize}
+\end{lemma}
+
+\begin{proof}
+The base case follows from the definition of $\mathrm{enc}_M$ at $t=0$. The step
+from $2t$ to $2t+1$ uses $U_{\mathrm{phase0}}$, which can only introduce a
+single directional mark at the unique head cell and flips all phases to $1$. The
+step from $2t+1$ to $2t+2$ uses $U_{\mathrm{phase1}}$, which ensures that any
+directional mark at the centre cell is cleared and exactly one neighbour
+installs the corresponding non-directional head state; all other cells remain
+without directional marks and all phases flip back to $0$. The uniqueness of the
+marked site follows from the fact that there is exactly one directional mark at
+odd times and the local rule never creates additional marks; a straightforward
+case analysis on the neighbourhoods shows that no two cells can simultaneously
+install a head state from the same marked neighbour. This preserves the
+invariant.
+\end{proof}
+
+We now establish configuration correspondence and runtime.
+
+\begin{lemma}[One Turing step equals two WCC steps]
+\label{lem:one_step}
+Let $(\gamma_t, h_t, q_t)$ be the Turing configuration of $M$ after $t$ steps
+on input $x$, and let $C_{2t}$ be the configuration of $W_M$ after $2t$ update
+steps with initial condition $C_0 = \mathrm{enc}_M(x)$. Then, for all $t \ge 0$,
+the configuration $C_{2t}$ encodes $(\gamma_t, h_t, q_t)$ in the sense that:
+\begin{itemize}
+  \item For all $i \in \Lambda_n$, the tape symbol in $C_{2t}(i)$ equals
+    $\gamma_t(i)$.
+  \item There exists a unique $i = h_t$ such that the head component of
+    $C_{2t}(i)$ equals $q_t$ and all other cells carry $\bot$ in the head
+    component.
+  \item All cells have phase bit $p=0$.
+\end{itemize}
+Moreover, applying two further WCC update steps transforms $C_{2t}$ into
+$C_{2(t+1)}$ which encodes $(\gamma_{t+1}, h_{t+1}, q_{t+1})$.
+\end{lemma}
+
+\begin{proof}
+The claim follows by induction on $t$. For $t=0$ the statement holds by
+construction of $\mathrm{enc}_M$ and the invariant of Lemma~\ref{lem:invariant}.
+Suppose the claim holds for some $t\ge 0$. In configuration $C_{2t}$ there is
+exactly one cell $h_t$ with head state $q_t$ at phase $p=0$, and the tape
+symbols agree with $\gamma_t(i)$ for all $i$.
+
+The phase-$0$ part of the local rule applies $\delta(q_t,\gamma_t(h_t)) =
+(q',\gamma',d)$ at cell $h_t$, overwriting the tape symbol with $\gamma'$ and
+marking the head component as $(q',d)$ while flipping the phase to $1$. All
+other cells preserve their tape symbols and have no head, and flip their phase
+to $1$. After this first update, we obtain $C_{2t+1}$, in which the tape symbols
+coincide with those of $\gamma_t$ except at $h_t$, where they match the updated
+symbol $\gamma'$, and the unique directional head mark $(q',d)$ is at cell
+$h_t$, in accordance with Lemma~\ref{lem:invariant}.
+
+In the next update step (phase $1$), the radius-$1$ rule $U_{\mathrm{phase1}}$
+moves the directional head mark one cell in direction $d$ to obtain a unique
+head state $q'$ at either $h_t+1$ (if $d=R$) or $h_t-1$ (if $d=L$), clears the
+directional mark, and restores all phase bits to $0$, producing $C_{2(t+1)}$.
+The tape symbols are unchanged in this step. By definition of the Turing
+transition, the new Turing configuration is $(\gamma_{t+1}, h_{t+1}, q_{t+1})$
+with $\gamma_{t+1}$ and $(h_{t+1},q_{t+1})$ matching the updated symbol and
+head location/state. Thus $C_{2(t+1)}$ encodes $(\gamma_{t+1}, h_{t+1},
+q_{t+1})$ as claimed. This completes the induction.
+\end{proof}
+
+\begin{lemma}[Runtime and space overhead]
+\label{lem:runtime}
+Let $T_M(n)$ be the worst-case runtime of $M$ on inputs of length $n$. Then the
+associated WCC machine $W_M$ satisfies:
+\begin{itemize}
+  \item For all $x \in \Sigma^n$, $W_M$ reaches an accepting configuration if
+    and only if $M$ enters $q_{\mathrm{acc}}$ on $x$.
+  \item The number of WCC update steps until halting satisfies
+    \[
+    T_{W_M}(n) = 2 T_M(n).
+    \]
+  \item The number of cells satisfies $|\Lambda_n| \le 2L(n)+1 \le
+    \tilde{p}(n)$ for some polynomial $\tilde{p}$.
+\end{itemize}
+\end{lemma}
+
+\begin{proof}
+The first two claims follow directly from Lemma~\ref{lem:one_step} and the
+definition of $\mathrm{dec}_M$: after $T_M(n)$ Turing steps, $M$ halts in either
+$q_{\mathrm{acc}}$ or $q_{\mathrm{rej}}$, and the corresponding encoded
+configuration appears at WCC time $2T_M(n)$ with phase $p=0$; the decoding
+predicate tests for the presence of $q_{\mathrm{acc}}$ and thus detects
+acceptance exactly when $M$ accepts.
+
+For the space bound, by hypothesis $M$ uses at most $L(n)$ nonblank tape cells
+on inputs of length $n$, so choosing $\Lambda_n = \{-L(n),\dots,L(n)\}$
+suffices. Since $L(n)$ is bounded by a polynomial in $n$, we have
+$|\Lambda_n| = 2L(n)+1 \le \tilde{p}(n)$ for a polynomial $\tilde{p}$. Each
+update step applies the local rule $U$ independently at each cell, so a single
+global update can be carried out with work $O(|\Lambda_n|) =
+\mathrm{poly}(n)$, which respects the polynomial-time cost per pass assumed in
+Definition~\ref{def:pwcc}.
+\end{proof}
+
+We can now state the main equivalence theorem for the simulation direction
+TM $\Rightarrow$ WCC.
+
+\begin{theorem}[Simulation of polynomial-time Turing machines by WCC]
+\label{thm:tm_to_wcc}
+Let $L \subseteq \Sigma^*$ be a language decided by a deterministic Turing
+machine $M$ in time $T_M(n) \le c n^k$ for some constants $c,k \ge 1$. Then the
+associated WCC machine $W_M$ defined in Definition~\ref{def:wm} decides $L$ in
+time
+\[
+T_{W_M}(n) = 2 T_M(n) \le 2 c n^k
+\]
+on inputs of length $n$. In particular,
+\[
+P_{\mathrm{Turing}} \subseteq P_{\mathrm{WCC}}.
+\]
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:runtime}, $W_M$ accepts exactly the inputs accepted by $M$ and
+does so in at most $2 T_M(n)$ global update steps on inputs of length $n$. The
+bound $T_M(n) \le c n^k$ implies $T_{W_M}(n) \le 2 c n^k$, so $W_M$ is a
+polynomial-time WCC machine in the sense of Definition~\ref{def:pwcc}. Therefore
+$L \in P_{\mathrm{WCC}}$. Since $L$ was arbitrary in $P_{\mathrm{Turing}}$, we
+obtain $P_{\mathrm{Turing}} \subseteq P_{\mathrm{WCC}}$.
+\end{proof}
+
+\subsection{Simulation of WCC by Turing machines}
+
+We now recall the converse direction: any discrete WCC machine can be simulated
+by a deterministic Turing machine with polynomial overhead. This is essentially
+a standard ``Turing simulation of a cellular automaton'' argument.
+
+\begin{theorem}[Simulation of WCC by Turing machines]
+\label{thm:wcc_to_tm}
+Let $W$ be a discrete WCC machine that decides a language $L$ in polynomial
+time as in Definition~\ref{def:pwcc}, with runtime bound $T_W(n) \le n^k$ and
+$|\Lambda_n| \le p(n)$ for some polynomials $k,p$. Then there exists a
+deterministic Turing machine $M_W$ that decides $L$ in time polynomially
+bounded in $n$. In particular,
+\[
+P_{\mathrm{WCC}} \subseteq P_{\mathrm{Turing}}.
+\]
+\end{theorem}
+
+\begin{proof}
+We sketch the standard simulation; details can be made fully explicit if
+desired.
+
+Fix $n$ and the corresponding index set $\Lambda_n$. A configuration
+$C_t : \Lambda_n \to S$ of $W$ can be encoded on the tape of a Turing machine as
+a finite word over $\Gamma_{\mathrm{enc}} := S \cup \{\#\}$ by listing the cell
+states in some canonical order $i_1,\dots,i_{|\Lambda_n|}$ (e.g.~lexicographic
+order on $\Lambda_n$) separated by a delimiter $\#$. This yields an encoding
+$\mathrm{code}(C_t)$ of length $O(|\Lambda_n|)$.
+
+To simulate one global WCC update $C_t \mapsto C_{t+1}$, the Turing machine
+$M_W$ maintains the current configuration encoding on its work tape and proceeds
+in two phases:
+\begin{enumerate}
+  \item It copies the current configuration to an auxiliary work area. This
+    takes time $O(|\Lambda_n|)$.
+  \item It enumerates each cell, uses the uniform lattice/neighborhood
+    algorithms to retrieve its at most $(2r+1)^d$ local symbols,
+    computes the fixed rule $U$, and writes the next state. The local
+    lookup and update have polynomial cost in $n$; a simple tape
+    implementation may take $O(|\Lambda_n|^2\,\mathrm{poly}(n))$
+    time per round. No constant-time random access is assumed.
+\end{enumerate}
+By assumption $|\Lambda_n| \le p(n)$ and one global update can be effected with
+cost polynomial in $|\Lambda_n|$, i.e.~$\mathrm{poly}(p(n))$. Repeating this
+procedure for $T_W(n) \le n^k$ steps yields an overall Turing runtime
+\[
+T_{M_W}(n) \le T_W(n) \cdot \mathrm{poly}(|\Lambda_n|)
+\le n^k \cdot \mathrm{poly}(p(n))
+= \mathrm{poly}(n).
+\]
+The Turing machine $M_W$ accepts exactly when the simulated configuration
+satisfies $\mathrm{dec}(C_t) = 1$, which can be checked during or after each
+simulated global update by scanning the encoding for an accepting pattern. Thus
+$M_W$ decides the same language $L$ in polynomial time, and $L \in
+P_{\mathrm{Turing}}$. Since $L$ was arbitrary in $P_{\mathrm{WCC}}$, it follows
+that $P_{\mathrm{WCC}} \subseteq P_{\mathrm{Turing}}$.
+\end{proof}
+
+\subsection{Equivalence of $P_{\mathrm{WCC}}$ and $P_{\mathrm{Turing}}$}
+
+Combining Theorem~\ref{thm:tm_to_wcc} and Theorem~\ref{thm:wcc_to_tm} yields
+the desired identification.
+
+\begin{corollary}[Polynomial-time equivalence]
+\label{cor:pwcc_equals_pturing}
+Under the discrete WCC machine model of Definition~\ref{def:wcc_machine} and the
+standard deterministic Turing machine model of Definition~\ref{def:tm}, the
+polynomial-time classes coincide:
+\[
+P_{\mathrm{WCC}} = P_{\mathrm{Turing}}.
+\]
+\end{corollary}
+
+% WIN-11: physical resource equivalence is separate from discrete equivalence.
+\begin{remark}[Physical WCT realization is a separate obligation]
+\label{rem:wct_realization}
+The equality $P_{\mathrm{WCC}}^{\mathrm{disc}}=P$ concerns only the
+uniform finite-state abstraction of Definition~\ref{def:wcc_machine}.
+It does \emph{not} imply $P_{\mathrm{WCC}}^{\mathrm{phys}}=P$.
+To deduce that equality for a curvature-constrained WCT device family,
+one must additionally construct, uniformly in input length and
+for every required local rule, a stable encoding $s\mapsto\psi_s$ and
+a physical evolution satisfying:
+\begin{enumerate}
+\item the exact code-state transition compatibility of
+Theorem~\ref{thm:wave-symbol-isomorphism};
+\item polynomially bounded preparation, run time, volume,
+energy/curvature expenditure, precision and readout costs;
+\item correct uniform simulation of all polynomial-time discrete
+WCC computations, including their verifier machines.
+\end{enumerate}
+These are additional model-specific hypotheses. They are neither
+consequences of locality and finite precision nor established by the
+Turing simulations proved in this section. The reverse inclusion
+$P_{\mathrm{WCC}}^{\mathrm{phys}}\subseteq P$ would likewise require
+a precise representation and polynomial-time classical simulation of
+all admissible physical operations.
+
+
+\end{remark}
+
+% ============================
+% WCC verifiers and NP equivalence
+% ============================
+
+\section{WCC Verifiers and NP Equivalence}
+\label{sec:np_wcc_equiv}
+
+In this section we lift the polynomial-time equivalence of
+Corollary~\ref{cor:pwcc_equals_pturing} from decision procedures to
+verifier-based nondeterministic computation. We define an NP-type class
+$NP_{\mathrm{WCC}}$ using polynomial-time WCC verifiers and show that, under the
+same discrete model assumptions, it coincides with the classical
+nondeterministic polynomial-time class $NP_{\mathrm{Turing}}$.
+
+\subsection{Classical NP via Turing verifiers}
+
+We first recall the standard verifier-based definition of $NP$.
+
+Let $\Sigma$ be a finite input alphabet and let $\Gamma_{\mathrm{wit}}$ be a
+finite witness alphabet. For $x \in \Sigma^n$ and
+$y \in \Gamma_{\mathrm{wit}}^{m}$ we write $(x,y)$ for the pair instance, and
+$N := n + m$ for the total input length.
+
+\begin{definition}[Polynomial-time Turing verifier]
+\label{def:tm_verifier}
+A \emph{polynomial-time Turing verifier} for a language $L \subseteq \Sigma^*$
+is a deterministic Turing machine
+\[
+V_{\mathrm{T}} = (Q, \Gamma, \Sigma \cup \Gamma_{\mathrm{wit}}, \delta, q_0,
+q_{\mathrm{acc}}, q_{\mathrm{rej}})
+\]
+such that:
+\begin{itemize}
+  \item $V_{\mathrm{T}}$ takes as input a pair $(x,y)$ with $x \in \Sigma^n$,
+    $y \in \Gamma_{\mathrm{wit}}^{m}$, encoded in some fixed, efficiently
+    decodable format on its tape.
+  \item There exist polynomials $p,q$ such that for all $x \in \Sigma^n$ and
+    all $y$,
+    \[
+    T_{V_{\mathrm{T}}}(|x|+|y|) \le p(|x|+|y|)
+    \]
+    and
+    \[
+    x \in L
+    \iff
+    \exists y \in \Gamma_{\mathrm{wit}}^{m},\ m \le q(|x|) \text{ such that }
+    V_{\mathrm{T}}(x,y) \text{ accepts.}
+    \]
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Classical nondeterministic polynomial time]
+\label{def:npturing}
+A language $L \subseteq \Sigma^*$ is in $NP_{\mathrm{Turing}}$ if there exists a
+polynomial-time Turing verifier $V_{\mathrm{T}}$ for $L$ in the sense of
+Definition~\ref{def:tm_verifier}. The class $NP_{\mathrm{Turing}}$ is the set of
+all such languages.
+\end{definition}
+
+This definition is equivalent to the usual one via nondeterministic Turing
+machines, but we will not need that equivalence here.
+
+\subsection{WCC verifiers and $NP_{\mathrm{WCC}}$}
+
+We now define polynomial-time WCC verifiers and the associated NP-type class.
+
+\begin{definition}[Polynomial-time WCC verifier]
+\label{def:wcc_verifier}
+Let $\Sigma$ be a finite input alphabet and $\Gamma_{\mathrm{wit}}$ a finite
+witness alphabet. A \emph{polynomial-time WCC verifier} for a language
+$L \subseteq \Sigma^*$ is a discrete WCC machine
+\[
+V_{\mathrm{W}} = (\{\Lambda_N\}_{N\ge 1}, S, r, U, \mathrm{enc}_{\mathrm{W}},
+\mathrm{dec}_{\mathrm{W}})
+\]
+in the sense of Definition~\ref{def:wcc_machine}, together with polynomials
+$p,q$ such that:
+\begin{itemize}
+  \item For each instance $x \in \Sigma^n$ and candidate witness
+    $y \in \Gamma_{\mathrm{wit}}^{m}$ with $m \le q(n)$, the pair $(x,y)$ is
+    encoded as an initial configuration
+    \[
+    C_0 = \mathrm{enc}_{\mathrm{W}}(x,y) \in S^{\Lambda_N},
+    \qquad N := n + m,
+    \]
+    for some index set $\Lambda_N$ with $|\Lambda_N| \le p(N)$.
+  \item The WCC runtime $T_{V_{\mathrm{W}}}(N)$, defined as the worst-case
+    number of global update steps until $\mathrm{dec}_{\mathrm{W}}(C_t)$
+    first returns $0$ or $1$ on inputs of total length $N$, satisfies
+    \[
+    T_{V_{\mathrm{W}}}(N) \le p(N)
+    \]
+    for all $N$.
+  \item For all $x \in \Sigma^n$,
+    \[
+    x \in L
+    \iff
+    \exists y \in \Gamma_{\mathrm{wit}}^{m},\ m \le q(n) \text{ such that }
+    V_{\mathrm{W}}(x,y) \text{ accepts,}
+    \]
+    where acceptance means $\mathrm{dec}_{\mathrm{W}}(C_t) = 1$ for some
+    $t \le T_{V_{\mathrm{W}}}(|x|+|y|)$.
+\end{itemize}
+\end{definition}
+
+\begin{definition}[WCC nondeterministic polynomial time]
+\label{def:npwcc}
+A language $L \subseteq \Sigma^*$ is in $NP_{\mathrm{WCC}}$ if there exists a
+polynomial-time WCC verifier $V_{\mathrm{W}}$ for $L$ in the sense of
+Definition~\ref{def:wcc_verifier}. The class $NP_{\mathrm{WCC}}$ is the set of
+all such languages.
+\end{definition}
+
+By construction, $NP_{\mathrm{WCC}}$ is defined using exactly the same
+witness-length and runtime scaling as $NP_{\mathrm{Turing}}$, but with WCC
+machines in place of Turing machines.
+
+\subsection{Equivalence of $NP_{\mathrm{WCC}}$ and $NP_{\mathrm{Turing}}$}
+
+We now prove that, under the discrete WCC model, the verifier-based NP class
+coincides with the classical one.
+
+\begin{theorem}[NP equivalence]
+\label{thm:np_equiv}
+Under the discrete WCC machine model of Definition~\ref{def:wcc_machine} and the
+Turing verifier model of Definition~\ref{def:tm_verifier}, the
+nondeterministic polynomial-time classes coincide:
+\[
+NP_{\mathrm{WCC}} = NP_{\mathrm{Turing}}.
+\]
+\end{theorem}
+
+\begin{proof}
+We prove both inclusions.
+
+\paragraph{Inclusion $NP_{\mathrm{WCC}} \subseteq NP_{\mathrm{Turing}}$.}
+
+Suppose $L \in NP_{\mathrm{WCC}}$. Then there exists a polynomial-time WCC
+verifier $V_{\mathrm{W}}$ for $L$ with polynomials $p,q$ as in
+Definition~\ref{def:wcc_verifier}. For each pair $(x,y)$ with $x \in \Sigma^n$,
+$y \in \Gamma_{\mathrm{wit}}^{m}$, $m \le q(n)$, the machine $V_{\mathrm{W}}$
+runs in at most $p(N)$ global update steps, where $N := n+m$, on a lattice
+$\Lambda_N$ with $|\Lambda_N| \le p(N)$.
+
+By Theorem~\ref{thm:wcc_to_tm}, there exists a deterministic Turing machine
+$M_{V_{\mathrm{W}}}$ that simulates $V_{\mathrm{W}}$ on inputs of total length
+$N$ in time bounded by
+\[
+T_{M_{V_{\mathrm{W}}}}(N) \le p(N) \cdot \mathrm{poly}(|\Lambda_N|)
+\le p(N) \cdot \mathrm{poly}(p(N))
+= \mathrm{poly}(N).
+\]
+Define a Turing verifier $V_{\mathrm{T}}$ that, on input $(x,y)$, first
+constructs the encoding $\mathrm{enc}_{\mathrm{W}}(x,y)$ on its tape and then
+simulates $M_{V_{\mathrm{W}}}$ for $p(N) \cdot \mathrm{poly}(p(N))$ steps,
+accepting if and only if $V_{\mathrm{W}}(x,y)$ accepts. This adds at most an
+additional polynomial overhead in $N$ for the encoding step, so $V_{\mathrm{T}}$
+runs in time polynomial in $N$.
+
+By construction, for either verifier $V$ in
+$\{V_{\mathrm{W}},V_{\mathrm{T}}\}$ the same predicate is decided:
+\[
+ x\in L\quad\Longleftrightarrow\quad
+ \exists y\ \bigl(|y|\le q(|x|)\ \wedge\ V(x,y)=1\bigr).
+\]
+Thus $V_{\mathrm{T}}$ is a polynomial-time Turing verifier for $L$ in the sense
+of Definition~\ref{def:tm_verifier}, and hence $L \in NP_{\mathrm{Turing}}$.
+Since $L$ was arbitrary in $NP_{\mathrm{WCC}}$, we obtain
+$NP_{\mathrm{WCC}} \subseteq NP_{\mathrm{Turing}}$.
+
+\paragraph{Inclusion $NP_{\mathrm{Turing}} \subseteq NP_{\mathrm{WCC}}$.}
+
+Conversely, suppose $L \in NP_{\mathrm{Turing}}$. Then there exists a
+polynomial-time Turing verifier $V_{\mathrm{T}}$ for $L$ with polynomials $p,q$
+as in Definition~\ref{def:tm_verifier}. For each pair $(x,y)$ with
+$x \in \Sigma^n$, $y \in \Gamma_{\mathrm{wit}}^{m}$, $m \le q(n)$, the machine
+$V_{\mathrm{T}}$ halts in at most $p(N)$ steps with $N := n+m$.
+
+Apply the construction of Theorem~\ref{thm:tm_to_wcc} to $V_{\mathrm{T}}$,
+treating $(x,y)$ as a single input string of length $N$. This yields a discrete
+WCC machine $W_{V_{\mathrm{T}}}$ that simulates $V_{\mathrm{T}}$ with at most a
+constant-factor overhead in time, i.e.
+\[
+T_{W_{V_{\mathrm{T}}}}(N) \le c\, T_{V_{\mathrm{T}}}(N) \le c\, p(N)
+\]
+for some constant $c\ge 1$, on index sets $\Lambda_N$ with $|\Lambda_N| \le
+\tilde{p}(N)$ for some polynomial $\tilde{p}$. We define the encoding map
+$\mathrm{enc}_{\mathrm{W}}$ for $W_{V_{\mathrm{T}}}$ by viewing $(x,y)$ simply
+as a word over the combined alphabet $\Sigma \cup \Gamma_{\mathrm{wit}}$ and
+placing it on the initial tape segment as in Definition~\ref{def:wm}. The
+decoding predicate $\mathrm{dec}_{\mathrm{W}}$ tests for the presence of the
+accepting state $q_{\mathrm{acc}}$ in the head component, exactly as in
+Definition~\ref{def:wm}.
+
+By Lemma~\ref{lem:runtime} and Theorem~\ref{thm:tm_to_wcc}, we then have
+\[
+(x,y) \text{ accepted by } V_{\mathrm{T}}
+\iff
+(x,y) \text{ accepted by } W_{V_{\mathrm{T}}}
+\]
+for all pairs $(x,y)$. Thus, with $V$ equal to either
+$V_{\mathrm{T}}$ or $W_{V_{\mathrm{T}}}$,
+\[
+ x\in L\quad\Longleftrightarrow\quad
+ \exists y\ \bigl(|y|\le q(|x|)\ \wedge\ V(x,y)=1\bigr).
+\]
+Thus $W_{V_{\mathrm{T}}}$ is a polynomial-time WCC verifier for $L$ with
+witness bound $q(\cdot)$ and runtime bounded by a polynomial in $N$, and hence
+$L \in NP_{\mathrm{WCC}}$.
+
+Since $L$ was arbitrary in $NP_{\mathrm{Turing}}$, we obtain
+$NP_{\mathrm{Turing}} \subseteq NP_{\mathrm{WCC}}$.
+
+\paragraph{Conclusion.}
+
+We have shown $NP_{\mathrm{WCC}} \subseteq NP_{\mathrm{Turing}}$ and
+$NP_{\mathrm{Turing}} \subseteq NP_{\mathrm{WCC}}$, hence
+\[
+NP_{\mathrm{WCC}} = NP_{\mathrm{Turing}}.
+\]
+This completes the proof.
+\end{proof}
+
+
+
+
+% ============================
+% Curvature-bounded channel capacity in WCT
+% ============================
+
+\section{Curvature-Bounded Channel Capacity in WCT}
+\label{sec:curvature_capacity}
+
+In this section we make precise the intuition that a wave-confinement device with finite volume, energy budget, and runtime cannot sustain arbitrarily many independent information ``lanes'' or arbitrarily fast switching between them. Under the rest-energy curvature identity and the dimensional lock on timescales, we obtain a polynomial upper bound on the spatiotemporal information-processing capacity of a WCT cavity.
+
+\subsection{Geometric and energetic setup}
+
+Let $\Gamma$ be a smooth closed characteristic loop of a confined field configuration with arclength parameter $s \in [0,L)$, total length
+\[
+L = \oint_\Gamma ds,
+\]
+and Frenet--Serret curvature $\kappa(s)$ and torsion $\tau(s)$. We define the local curvature-rate scalar
+\begin{equation}
+  \sigma(s)^2 := \kappa(s)^2 + \tau(s)^2.
+\end{equation}
+
+Let $w(s) > 0$ be a weight function induced, for example, by an energy density or probability density derived from $\abs{\psi}^2$ along $\Gamma$. We write the corresponding weighted average of a quantity $f$ as
+\begin{equation}
+  \label{eq:weighted_average}
+  \langle f \rangle_w
+  := \frac{\displaystyle \oint_\Gamma w(s)\,f(s)\,ds}{\displaystyle \oint_\Gamma w(s)\,ds}.
+\end{equation}
+
+\begin{definition}[Rest energy / mass from curvature]
+\label{def:rest_energy_curvature}
+We say that a confined field configuration obeys the \emph{rest energy curvature identity} if its rest energy and inertial mass are given by
+\begin{equation}
+  \label{eq:rest_energy_identity}
+  E_{\mathrm{rest}} = \hbar c\,\langle \sigma \rangle_w,
+  \qquad
+  m = \frac{\hbar}{c}\,\langle \sigma \rangle_w,
+\end{equation}
+for some positive weight $w$ along closed characteristic loops of the configuration.
+\end{definition}
+
+In a bulk description, we consider a bounded cavity $\Omega \subset \mathbb{R}^3$ with volume $V := \abs{\Omega}$ confining a complex scalar field
+\[
+\psi : \Omega \times \mathbb{R} \to \mathbb{C},
+\]
+which we assume satisfies a WCT-type curvature-locking PDE. We denote by $E_{\mathrm{rest}}(\psi)$ the total rest energy of $\psi$ in $\Omega$ and impose a resource bound
+\begin{equation}
+  \label{eq:energy_budget}
+  E_{\mathrm{rest}}(\psi) \le E_{\max}.
+\end{equation}
+
+\subsection{Curvature, bandlimit, and spatial capacity}
+
+We first connect the curvature/energy budget to an effective bandlimit on the field.
+
+\begin{definition}[Effective wavenumber]
+\label{def:effective_k}
+Let $\widehat{\psi}(\mathbf{k})$ denote the spatial Fourier transform of $\psi(\cdot,t)$ at a fixed time. We say that $\psi$ is \emph{effectively band-limited} to radius $k_{\max}$ if
+\begin{equation}
+  \widehat{\psi}(\mathbf{k}) = 0
+  \quad\text{whenever}\quad
+  \norm{\mathbf{k}} > k_{\max}.
+\end{equation}
+We denote by $k_{\mathrm{eff}}$ an effective wavenumber scale associated to $\psi$, for example a suitable norm or average of $\mathbf{k}$ weighted by $\abs{\widehat{\psi}}^2$.
+\end{definition}
+
+\begin{definition}[Curvature--wavenumber coupling]
+\label{def:curvature_k_coupling}
+We assume that for confined WCT configurations the effective wavenumber is controlled by the curvature-rate average in the sense that there exists a constant $C_1 > 0$ with
+\begin{equation}
+  \label{eq:curvature_k_coupling}
+  k_{\mathrm{eff}} \le C_1 \,\langle \sigma \rangle_w.
+\end{equation}
+\end{definition}
+
+Combining the energy identity with the assumed coupling bounds the
+\emph{effective} wavenumber, but does not by itself bound the maximum
+Fourier frequency or imply compact spectral support. A separate sharp
+bandwidth hypothesis is needed for finite-mode counting.
+
+\begin{lemma}[Effective wavenumber estimate; conditional sharp cutoff]
+\label{lem:bandlimit}
+Assume the rest-energy identity \eqref{eq:rest_energy_identity}, the
+coupling \eqref{eq:curvature_k_coupling}, and
+$E_{\mathrm{rest}}(\psi)\le E_{\max}$. Then
+\begin{equation}
+ k_{\mathrm{eff}}\le C_1\frac{E_{\max}}{\hbar c}.
+ \label{eq:effective_k_energy}
+\end{equation}
+If one \emph{additionally assumes} a uniform spectral-support bound
+$\operatorname{supp}\widehat\psi\subseteq\{\|k\|\le
+k_{\max}\}$ and the stronger coupling
+$k_{\max}\le C_1\langle\sigma\rangle_w$, then
+\begin{equation}
+ k_{\max}\le C_1\frac{E_{\max}}{\hbar c}.
+ \label{eq:kmax_energy}
+\end{equation}
+The second conclusion is conditional on the sharp-support premise;
+it does not follow from the effective-wavenumber estimate alone.
+\end{lemma}
+
+
+
+\begin{proof}
+The energy identity and bound give
+$\langle\sigma\rangle_w\le E_{\max}/(\hbar c)$.
+Substitution into the corresponding assumed coupling yields
+\eqref{eq:effective_k_energy}; using the \emph{additional}
+sharp-cutoff coupling yields \eqref{eq:kmax_energy}.
+\end{proof}
+
+
+
+We now translate the bandlimit into a bound on the number of independent spatial degrees of freedom (``lanes'').
+
+\begin{lemma}[Curvature-bounded spatial channel capacity]
+\label{lem:spatial_capacity}
+Let $\Omega$ be a fixed periodic cubical cavity with volume $V$, and
+let the computation use only its Fourier modes satisfying
+$\norm{\mathbf{k}}\le k_{\max}$. Assume $k_{\max}$ is at
+least the fundamental nonzero wavenumber of the cavity. Then there
+is a geometric constant $C_2>0$ such that the number
+$N_{\mathrm{lanes}}$ of these modes obeys
+\begin{equation}
+  \label{eq:spatial_capacity}
+  N_{\mathrm{lanes}} \;\le\; C_2\,V\,k_{\max}^3.
+\end{equation}
+In particular, under the energy budget $E_{\mathrm{rest}}(\psi) \le E_{\max}$ we have
+\begin{equation}
+  \label{eq:spatial_capacity_energy}
+  N_{\mathrm{lanes}} \;\le\; C_2\,V\,
+  \Big( C_1 \frac{E_{\max}}{\hbar c} \Big)^3.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For a periodic cubic cavity, allowed wavenumbers form a lattice of
+spacing proportional to $V^{-1/3}$. Counting the lattice points
+inside the spectral ball gives, for $k_{\max}$ at least the
+fundamental wavenumber, an upper bound proportional to $Vk_{\max}^3$.
+The leading-volume approximation is
+\[
+N_{\mathrm{lanes}} \sim \frac{V}{(2\pi)^3} \,\frac{4\pi}{3}k_{\max}^3
+= C_2\,V\,k_{\max}^3,
+\]
+for an appropriate constant $C_2 > 0$. Substituting the bound \eqref{eq:kmax_energy} from Lemma~\ref{lem:bandlimit} gives \eqref{eq:spatial_capacity_energy}.
+\end{proof}
+
+Here $N_{\mathrm{lanes}}$ counts orthogonal spatial Fourier modes,
+not all metastable states in a nonlinear cavity. Its identification with
+independently addressable code lanes is an additional modeling
+hypothesis, not a general consequence of the mode count.
+
+\subsection{Temporal dimensional lock and spatiotemporal capacity}
+
+We now incorporate the temporal side of the dimensional lock. The key assumption is that curvature-locked code states cannot be switched arbitrarily fast.
+
+\begin{definition}[Dimensional lock in time]
+\label{def:temporal_lock}
+Let $\Delta t_{\min}$ denote the minimal dwell time required for a curvature-locked configuration to relax from one metastable code state to a distinct one while remaining within the WCT code manifold. We assume there exists a constant $C_3 > 0$ such that
+\begin{equation}
+  \label{eq:temporal_lock}
+  \Delta t_{\min} \;\ge\; \frac{C_3}{\omega_{\max}},
+\end{equation}
+where $\omega_{\max}$ is a characteristic maximal angular frequency of the band-limited field. For propagating modes we assume a dispersion relation of the form
+\begin{equation}
+  \label{eq:dispersion}
+  \omega_{\max} \;\le\; c\,k_{\max},
+\end{equation}
+with $c$ the relevant propagation speed.
+\end{definition}
+
+\begin{lemma}[Per-lane temporal update bound]
+\label{lem:lane_update_bound}
+Under the assumptions of Lemma~\ref{lem:spatial_capacity} and Definition~\ref{def:temporal_lock}, over any time window of duration $T > 0$ a single lane can undergo at most
+\begin{equation}
+  \label{eq:steps_per_lane}
+  N_{\mathrm{steps\ per\ lane}} \;\le\; \frac{T}{\Delta t_{\min}}
+  \;\le\; \frac{T\,c\,k_{\max}}{C_3}
+\end{equation}
+distinct metastable state transitions.
+\end{lemma}
+
+\begin{proof}
+The first inequality is the definition of $N_{\mathrm{steps\ per\ lane}}$. The second follows by combining \eqref{eq:temporal_lock} and \eqref{eq:dispersion}:
+\[
+\Delta t_{\min} \ge \frac{C_3}{\omega_{\max}}
+\ge \frac{C_3}{c\,k_{\max}}
+\quad\Longrightarrow\quad
+\frac{T}{\Delta t_{\min}} \le \frac{T\,c\,k_{\max}}{C_3}.
+\]
+\end{proof}
+
+Combining the spatial and temporal bounds yields a spatiotemporal capacity limit.
+
+\begin{theorem}[Curvature-bounded spatiotemporal channel capacity]
+\label{thm:spacetime_capacity}
+Let $\Omega \subset \mathbb{R}^3$ be a bounded WCT cavity of volume $V$, confining a field $\psi$ with rest-energy bounded by $E_{\max}$, and suppose the sharp spectral-cutoff, periodic-cavity, independent-lane,
+and minimum-dwell-time assumptions of
+Lemmas~\ref{lem:bandlimit}, \ref{lem:spatial_capacity}, and
+\ref{lem:lane_update_bound} hold. Then, over any time window of duration $T > 0$, the total number $N_{\mathrm{updates}}$ of distinct metastable lane transitions obeys
+\begin{equation}
+  \label{eq:Nupdates_kmax}
+  N_{\mathrm{updates}} \;\le\; C_4\,V\,T\,k_{\max}^4,
+\end{equation}
+for some constant $C_4 > 0$, and hence
+\begin{equation}
+  \label{eq:Nupdates_energy}
+  N_{\mathrm{updates}} \;\le\; K\,V\,T\,E_{\max}^4,
+\end{equation}
+for a constant $K > 0$ depending only on $C_1,C_2,C_3,\hbar,c$.
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:spatial_capacity}, the number of lanes satisfies
+\[
+N_{\mathrm{lanes}} \le C_2\,V\,k_{\max}^3.
+\]
+By Lemma~\ref{lem:lane_update_bound}, each lane can switch at most $T c k_{\max}/C_3$ times in the interval of duration $T$. Thus the total number of lane updates obeys
+\[
+N_{\mathrm{updates}}
+\;\le\; N_{\mathrm{lanes}} \cdot N_{\mathrm{steps\ per\ lane}}
+\;\le\; \Big(C_2\,V\,k_{\max}^3\Big)\,\Big(\frac{T\,c\,k_{\max}}{C_3}\Big)
+= C_4\,V\,T\,k_{\max}^4,
+\]
+where $C_4 := C_2 c / C_3$. Substituting the energy-dependent bound $k_{\max} \le C_1 E_{\max} / (\hbar c)$ from Lemma~\ref{lem:bandlimit} yields
+\[
+k_{\max}^4 \;\le\; C_1^4 \,\frac{E_{\max}^4}{\hbar^4 c^4},
+\]
+and hence
+\[
+N_{\mathrm{updates}} \;\le\; C_4\,V\,T\,k_{\max}^4
+\;\le\; C_4\,V\,T\,C_1^4 \frac{E_{\max}^4}{\hbar^4 c^4}
+\;=\; K\,V\,T\,E_{\max}^4
+\]
+for $K := C_4 C_1^4 / (\hbar^4 c^4)$.
+\end{proof}
+
+\begin{remark}[Polynomial resource scaling]
+\label{rem:poly_resources}
+Conditional on the spectral-support, mode-counting, and minimum
+dwell-time assumptions, Theorem~\ref{thm:spacetime_capacity} shows that, for fixed physical resources $(V,T,E_{\max})$, the total number of resolvable metastable transitions in a WCT cavity is bounded by a polynomial in these parameters. In particular, if a family of WCT-based computing devices indexed by input size $n$ is constrained so that
+\[
+V(n),\; T(n),\; E_{\max}(n) \;\le\; \mathrm{poly}(n),
+\]
+then the total number $N_{\mathrm{updates}}(n)$ of elementary computational events across all lanes is also bounded by $\mathrm{poly}(n)$. Thus curvature confinement and dimensional lock enforce a physical bottleneck on the achievable computational complexity as a function of input size.
+\end{remark}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% ============================
+% Physics-bounded computation and conditional NP safety
+% ============================
+
+\section{Physics-Bounded Computation and Conditional NP Safety}
+\label{sec:phys_np_safety}
+
+In this section we combine the discrete WCC--Turing equivalence with the
+curvature/energy channel-capacity bound from the WCT model to obtain a
+conditional statement about the computational power of any AGI implemented
+on WCT hardware under the rails (L,P,V,C,S,R).
+
+The next bound is a \emph{conditional physical hypothesis} derived
+algebraically in the preceding section under the stated sharp-bandwidth,
+mode-counting, and dwell-time premises; it has not been established
+universally for arbitrary WCT PDE evolutions:
+
+\begin{theorem}[Conditional channel-capacity step bound]
+\label{thm:channel_capacity}
+Let a WCT device occupy a cavity of volume $V > 0$ over a time interval
+$[0,T]$ with a rest-energy ceiling $E_{\max} > 0$.
+Assume the sharp spectral cutoff and the uniform mode-counting and
+minimum-dwell-time hypotheses of Section~\ref{sec:curvature_capacity}.
+Then the total number of distinct metastable lane updates
+(individual local state transitions) $N_{\mathrm{updates}}$ that can occur
+in $[0,T]$ obeys
+\begin{equation}
+  \label{eq:Nupdates_energy_restated}
+  N_{\mathrm{updates}} \;\le\; K\,V\,T\,E_{\max}^4,
+\end{equation}
+for some constant $K > 0$ depending only on the WCT parameters
+$(\hbar,c,\xi,\dots)$ and not on the particular device or algorithm.
+\end{theorem}
+
+We now formalize what it means for a family of physical devices to be
+\emph{polynomially bounded} in WCT resources.
+
+\begin{definition}[Polynomial-resource WCT device family]
+\label{def:poly_resource_wct}
+Let $(D_n)_{n\ge 1}$ be a family of WCT devices intended to process inputs
+of length $n$. For each $n$, let $V(n)$ denote the device volume,
+$T_{\mathrm{phys}}(n)$ the physical run time, and $E_{\max}(n)$ a rest-energy
+ceiling during the computation.
+
+We say that $(D_n)$ is a \emph{polynomial-resource WCT device family} if
+there exist constants $C_V,C_T,C_E > 0$ and exponents $a,b,c \ge 0$ such that
+for all $n$,
+\begin{equation}
+  \label{eq:poly_resource_scaling}
+  V(n) \;\le\; C_V n^{a},\qquad
+  T_{\mathrm{phys}}(n) \;\le\; C_T n^{b},\qquad
+  E_{\max}(n) \;\le\; C_E n^{c}.
+\end{equation}
+\end{definition}
+
+Combining Definition~\ref{def:poly_resource_wct} with
+Theorem~\ref{thm:channel_capacity} yields a polynomial bound on the total
+number of usable primitive updates.
+
+\begin{proposition}[Physical step ceiling under WCT rails]
+\label{prop:phys_step_ceiling}
+Let $(D_n)_{n\ge 1}$ be a polynomial-resource WCT device family in the sense
+of Definition~\ref{def:poly_resource_wct}. Then there exist constants
+$C' > 0$ and $d \ge 0$ such that, for all $n$,
+\begin{equation}
+  \label{eq:Nupdates_poly}
+  N_{\mathrm{updates}}(n) \;\le\; C' n^{d}.
+\end{equation}
+In particular, any discrete WCC machine $W$ faithfully implemented by such
+a device family (with every nonhalting global round incurring at least one
+counted elementary event) has worst-case runtime
+$T_W(n)$ bounded by a polynomial in $n$.
+\end{proposition}
+
+\begin{proof}
+By Definition~\ref{def:poly_resource_wct} we have
+\[
+V(n) \le C_V n^{a},\quad
+T_{\mathrm{phys}}(n) \le C_T n^{b},\quad
+E_{\max}(n) \le C_E n^{c}.
+\]
+Plugging these into the channel-capacity bound
+\eqref{eq:Nupdates_energy} gives
+\[
+\begin{aligned}
+N_{\mathrm{updates}}(n)
+&\le K\,V(n)\,T_{\mathrm{phys}}(n)\,E_{\max}(n)^4\\
+&\le K \cdot (C_V n^{a}) \cdot (C_T n^{b}) \cdot (C_E n^{c})^4\\
+&= K C_V C_T C_E^4 \; n^{\,a + b + 4c}.
+\end{aligned}
+\]
+Setting $C' := K C_V C_T C_E^4$ and $d := a + b + 4c$ yields
+\eqref{eq:Nupdates_poly}. If every nonhalting global round incurs at least one counted
+elementary event, then $T_W(n)\le N_{\mathrm{updates}}(n)+1$;
+therefore $T_W$ is polynomially bounded. This counting premise must
+hold for the particular implementation and clocking convention.
+\end{proof}
+
+We now combine the physical step ceiling with the discrete model equivalences
+$P_{\mathrm{WCC}} = P_{\mathrm{Turing}}$ and
+$NP_{\mathrm{WCC}} = NP_{\mathrm{Turing}}$ from
+Sections~\ref{sec:tm_wcc_equiv}--\ref{sec:np_wcc_equiv} to obtain a
+conditional NP-safety statement.
+
+\begin{theorem}[Conditional NP-safety of WCT-bounded AGI]
+\label{thm:conditional_np_safety}
+Assume:
+\begin{enumerate}[label=(\roman*)]
+  \item The WCT rails (L,P,V,C,S,R) correctly describe the physically
+        realizable dynamics of any WCT device, and the channel-capacity
+        bound of Theorem~\ref{thm:channel_capacity} holds.
+  \item All physically realizable discrete computation on such devices is
+        faithfully modeled by discrete WCC machines in the sense of
+        Definition~\ref{def:wcc_machine}, with equivalences
+        \[
+        P_{\mathrm{WCC}} = P_{\mathrm{Turing}},\qquad
+        NP_{\mathrm{WCC}} = NP_{\mathrm{Turing}}.
+        \]
+  \item The classical complexity-theoretic separation
+        $P_{\mathrm{Turing}} \neq NP_{\mathrm{Turing}}$ holds.
+\end{enumerate}
+Let $(D_n)_{n\ge 1}$ be any polynomial-resource WCT device family
+(Definition~\ref{def:poly_resource_wct}) implementing an AGI-level
+computational system on inputs of length $n$. Then there exists an
+NP-complete language $L \subseteq \Sigma^*$ and a constant $k \ge 1$ such that, for infinitely many input lengths $n$, the system realized by $(D_n)$
+\emph{fails} to decide $L$ on at least one input of length $n$ using only resources
+obeying~\eqref{eq:poly_resource_scaling}.
+Equivalently, no such WCT-bounded AGI can decide all NP-complete languages
+within polynomial physical resources without violating at least one of
+assumptions (i)--(iii).
+\end{theorem}
+
+\begin{proof}
+Let $L_{\mathrm{SAT}}$ be any fixed NP-complete language (e.g.\ 3-SAT) over
+some finite alphabet $\Sigma$. By (iii), $P_{\mathrm{Turing}} \neq
+NP_{\mathrm{Turing}}$, so $L_{\mathrm{SAT}} \notin P_{\mathrm{Turing}}$. By
+(ii) and the NP-equivalence, $L_{\mathrm{SAT}} \notin P_{\mathrm{WCC}}$ as
+well. Unpacking the definition of $P_{\mathrm{WCC}}$, this means that for
+every discrete WCC machine $W$ deciding $L_{\mathrm{SAT}}$ and for every
+exponent $k \ge 1$, there exist infinitely many input lengths $n$ such that
+$T_W(n) > n^{k}$.
+
+Now let $(D_n)$ be a polynomial-resource WCT device family implementing an
+AGI-level system that, by assumption (ii), corresponds to some WCC machine
+$W_{\mathrm{AGI}}$ on inputs of length $n$. By
+Proposition~\ref{prop:phys_step_ceiling}, there exist constants $C',d$ such
+that $T_{W_{\mathrm{AGI}}}(n) \le C' n^{d}$ for all $n$, because each global
+WCC update costs at most a constant number of lane updates and the total
+number of lane updates is polynomially bounded.
+
+Suppose for contradiction that this AGI decides $L_{\mathrm{SAT}}$ on all
+inputs of length $n$ while respecting the polynomial resource bounds
+\eqref{eq:poly_resource_scaling}. Then $W_{\mathrm{AGI}}$ decides
+$L_{\mathrm{SAT}}$ with runtime $T_{W_{\mathrm{AGI}}}(n) \le C' n^{d}$, so
+$L_{\mathrm{SAT}} \in P_{\mathrm{WCC}}$, and hence $L_{\mathrm{SAT}} \in
+P_{\mathrm{Turing}}$ by (ii), contradicting the choice of
+$L_{\mathrm{SAT}}$ and assumption (iii).
+
+Therefore, for any polynomial-resource WCT device family $(D_n)$, there
+must exist some NP-complete language $L$ (in fact any NP-complete language)
+and some $k \ge 1$ such that, for infinitely many lengths $n$, the system
+implemented by $(D_n)$ cannot decide $L$ on at least one input of length $n$
+without exceeding the polynomial resource bounds in
+\eqref{eq:poly_resource_scaling} or violating at least one of (i)--(iii).
+This is precisely the claimed conditional NP-safety statement.
+\end{proof}
+
+\begin{remark}[Interpretation for AGI safety]
+\label{rem:agi_safety_interpretation}
+Theorem~\ref{thm:conditional_np_safety} can be read as follows. If
+\emph{(a)} the WCT rails correctly bound all physically realizable
+computation and \emph{(b)} the classical separation $P \neq NP$ holds, then
+no AGI implemented on WCT hardware with volume, time, and energy scaling at
+most polynomially in the input size can solve NP-complete problems on all
+inputs within those resource bounds. In particular, such an AGI cannot
+``cheat'' cryptography or other NP-hard tasks by exploiting super-Turing
+parallelism or infinitely fine analog degrees of freedom: any attempt to do
+so would require either super-polynomial physical resources or a violation
+of the WCT rails.
+\end{remark}
+
+
+
+\section{Uniform Encodings, Decision Equivalence, and the Physical Bridge}
+\label{sec:bijection}
+
+The preceding sections establish an equivalence of \emph{language classes}
+between uniform discrete local-update WCC machines and standard Turing
+machines. They do not establish a pointwise bijection between every
+abstract Turing configuration and every continuous wavefield.
+In particular, a general polynomial-time verifier need not be in
+$\NC^1$: the WCC machine simulates the full verifier computation
+using polynomially many local rounds.
+
+\subsection{Uniform input and certificate representations}
+For each fixed classical deterministic machine $M$, the construction
+of Section~\ref{sec:tm_wcc_equiv} supplies a polynomial-time
+injective tape-to-lattice encoding $\enc_M(x)$ and a fixed-radius
+local transition rule implementing one classical Turing step in a
+constant number of WCC rounds. The readout of a halting state is
+polynomial-time uniform. For a classical verifier $V_{\TM}(x,w)$, use
+the same uniform construction on an efficiently delimited encoding
+of the pair $(x,w)$.
+
+\begin{lemma}[Preservation of verifier outcomes]
+\label{lem:verifier-encoding}
+For every fixed polynomial-time Turing verifier $V_{\TM}$, there
+exists a uniform discrete WCC verifier $V_{\WCC}$ satisfying
+\[
+V_{\TM}(x,w)=1\quad\Longleftrightarrow\quad
+V_{\WCC}(\enc(x,w))=1
+\]
+for every input and candidate witness, with polynomially bounded
+encoding, time, lattice size, and decoding overhead.
+\end{lemma}
+\begin{proof}
+Apply the two-phase radius-one Turing simulation to the fixed
+verifier $V_{\TM}$. Its transition rule does not depend on $x$ or
+$w$, and the input pair is encoded uniformly. The simulation
+invariant preserves the simulated tape, head, and halting state,
+so acceptance agrees. Polynomial runtime and tape usage of the
+verifier give polynomial overhead for the WCC representation.
+\end{proof}
+
+\subsection{Decision-class equivalence}
+\begin{theorem}[Uniform discrete complexity equivalence]
+\label{thm:uniform-discrete-bijection}
+For the uniform finite-state model of Definition~\ref{def:wcc_machine},
+\[
+P_{\mathrm{WCC}}^{\mathrm{disc}}=P_{\TM},
+\qquad
+NP_{\mathrm{WCC}}^{\mathrm{disc}}=NP_{\TM}.
+\]
+The equalities identify the \emph{sets of recognized languages} and
+are not a claim that arbitrary encodings are bijective or that
+physically constrained WCT evolution realizes every such machine.
+\end{theorem}
+\begin{proof}
+The deterministic equality is
+Corollary~\ref{cor:pwcc_equals_pturing}; the nondeterministic
+verifier equality is Theorem~\ref{thm:np_equiv}.
+Both rely on polynomial-time uniform input encoding and decoding.
+\end{proof}
+
+\subsection{Conditional lifting, without conflating models}
+\begin{proposition}[Classical implication under an actual common-model separation]
+\label{prop:conditional-classical-lift}
+If a language $L$ is proved to satisfy
+$L\in NP_{\mathrm{WCC}}^{\mathrm{disc}}\setminus
+P_{\mathrm{WCC}}^{\mathrm{disc}}$, then $P\ne NP$.
+\end{proposition}
+\begin{proof}
+Substitute the discrete class equalities from
+Theorem~\ref{thm:uniform-discrete-bijection}.
+\end{proof}
+
+A lower bound for only \emph{physical} curvature-bounded realizations
+does not satisfy the premise of this proposition. Deriving classical
+$P\ne NP$ from a physical separation would require an independently
+proved equality of the \emph{same} physical and discrete decision and
+verifier classes, with polynomial preservation of all relevant costs.
+No such physical-to-discrete resource equivalence or classical
+separation is established here.
+
+
+\section{Conclusion}
+
+The principal rigorous result is the polynomial-time equivalence of
+\emph{uniform discrete} WCC machines and classical Turing machines.
+Fixed finite-state local rules, polynomial-size constructible lattices,
+polynomial-time input encoders and output decoders, and polynomially
+many global update rounds yield
+\[
+ P_{\mathrm{WCC}}^{\mathrm{disc}}=P,
+ \qquad NP_{\mathrm{WCC}}^{\mathrm{disc}}=NP.
+\]
+The uniformity requirements exclude arbitrary noncomputable
+preprocessing in the encoding map. Exact wave-to-symbol correspondence
+requires quantization compatibility; the converse construction of an
+abstract finite-state representative evolution does not establish
+realization by a chosen nonlinear WCT PDE.
+
+The physical curvature/energy channel-counting estimates are presented
+conditional on their additional spectral-support and dynamical
+assumptions. Neither those estimates nor the discrete Turing simulations
+prove $P_{\mathrm{WCC}}^{\mathrm{phys}}=P$ or
+$NP_{\mathrm{WCC}}^{\mathrm{phys}}=NP$, and no unconditional
+$P\ne NP$ or universal SAT lower bound is claimed in this manuscript.
+
+The remaining research problem is to construct and validate a precise
+physical realization map with uniform polynomial resource overhead,
+then separately study any model-relative physical resource lower bounds.
+
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
+
+\begin{enumerate}
+
+  \item S.~A. Cook.
+  ``The Complexity of Theorem-Proving Procedures.''
+  \textit{Proceedings of the 3rd Annual ACM Symposium on Theory of Computing}, 1971.
+
+  \item L.~A. Levin.
+  ``Universal Sequential Search Problems.''
+  \textit{Problems of Information Transmission}, 9(3):265--266, 1973.
+
+  \item T. Baker, J. Gill, R. Solovay.
+  ``Relativizations of the $P$=?$NP$ Question.''
+  \textit{SIAM Journal on Computing}, 4(4):431--442, 1975.
+
+  \item A.~A. Razborov, S. Rudich.
+  ``Natural Proofs.''
+  \textit{Journal of Computer and System Sciences}, 55(1):24--35, 1997.
+
+  \item S. Aaronson, A. Wigderson.
+  ``Algebrization: A New Barrier in Complexity Theory.''
+  \textit{ACM Transactions on Computation Theory}, 1(1):2:1--2:54, 2009.
+
+  \item A. Lubotzky, R. Phillips, P. Sarnak.
+  ``Ramanujan Graphs.''
+  \textit{Combinatorica}, 8(3):261--277, 1988.
+
+  \item S. Arora, B. Barak.
+  \textit{Computational Complexity: A Modern Approach}.
+  Cambridge University Press, 2009.
+
+  \item R.~J. Reyes.
+  \textit{Structure and Derivation of Physical Constants through Wave Confinement}.
+  Zenodo, 2025. \url{https://doi.org/10.5281/zenodo.15341540}.
+
+  \item R.~J. Reyes.
+  \textit{The Geometry of Resonance: Wave Confinement Theory and the Emergence of Mass, Force, and Spacetime}.
+  Zenodo, 2025. \url{https://doi.org/10.5281/zenodo.15356814}.
+
+\end{enumerate}
+
+
+\end{document}
