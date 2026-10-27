@@ -1,0 +1,56 @@
+name: Build and publish PVNP PDFs
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'pvnp/papers/**'
+      - 'scripts/build_pdfs.sh'
+      - '.github/workflows/pdfs.yml'
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: pvnp-pdfs-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Install LaTeX
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended lmodern
+      - name: Build both manuscripts
+        run: bash scripts/build_pdfs.sh
+      - name: Verify compiled PDFs
+        run: |
+          test -s pvnp/preprints/part-i-curvature-bounded-wave-computation/paper.pdf
+          test -s pvnp/preprints/part-ii-discrete-wcc-turing-equivalence/paper.pdf
+          pdfinfo pvnp/preprints/part-i-curvature-bounded-wave-computation/paper.pdf | grep Pages
+          pdfinfo pvnp/preprints/part-ii-discrete-wcc-turing-equivalence/paper.pdf | grep Pages
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pvnp-manuscript-pdfs
+          path: pvnp/preprints/*/paper.pdf
+          if-no-files-found: error
+      - name: Commit compiled PDFs
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f pvnp/preprints/*/paper.pdf
+          if ! git diff --cached --quiet; then
+            git commit -m 'build: publish revised PVNP PDFs [skip ci]'
+            for attempt in 1 2 3 4 5; do
+              git fetch origin main
+              git rebase origin/main || { git rebase --abort; exit 1; }
+              if git push origin HEAD:main; then exit 0; fi
+              sleep 2
+            done
+            exit 1
+          fi

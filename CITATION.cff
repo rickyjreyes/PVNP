@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: Please cite the specific manuscript DOI and the Git revision of the version used.
+authors:
+  - family-names: Reyes
+    given-names: Richard J.
+title: PVNP — Curvature-Bounded Wave Computation and Turing Equivalence
+date-released: '2026-10-27'
+repository-code: https://github.com/rickyjreyes/PVNP
+url: https://github.com/rickyjreyes/PVNP
