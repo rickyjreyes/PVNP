@@ -31,3 +31,6 @@ Run `cd lean && lake update && lake exe cache get && lake build`. CI rejects `so
 
 ## Independent fixed-mass nodal-coercivity supplement
 [FixedMassNodal.lean](PVNP/FixedMassNodal.lean) formalizes the node-tolerant fixed-mass curvature inequality on a connected two-site graph and an abstract readout-cost transfer. The [standalone LaTeX supplement](../pvnp/papers/supplement-fixed-mass-nodal-coercivity/main.tex) proves the continuum compactness theorem analytically, not in Lean. It is separate from all versions of the original P-versus-NP proof.
+
+## Expanding-domain test
+[ExpandingDomain.lean](PVNP/ExpandingDomain.lean) formalizes the vanishing density-curvature coefficient for growing volume with fixed mass and a representative bounded Hamiltonian energy expression. The [analytic exact PDE mode](../pvnp/proofs/expanding-domain-hamiltonian-mode.md) demonstrates that conservation rails do not automatically supply input-size-uniform curvature coefficients.

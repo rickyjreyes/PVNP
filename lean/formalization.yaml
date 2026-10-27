@@ -45,3 +45,9 @@ fixed_mass_nodal_supplement:
   lean_proved: 'two-site fixed-mass density-weighted coercivity, scalar denominator bound, abstract transport transfer'
   analytic_only: '2D torus compactness coercivity on Hamiltonian sublevels, Hamiltonian conservation, nonlinear phase-observability inequality'
   missing: 'constructive uniform constants on input-growing domains and all-algorithm resource lower bounds'
+
+expanding_domain_hamiltonian_test:
+  module: PVNP/ExpandingDomain.lean
+  proved_in_lean: "density weight volume bound; absence of volume-uniform floor; normalized mode algebra and bounded representative Hamiltonian expression"
+  analytic_only: "exact complex plane-wave solution of projection-free PDE; Fourier readout and input-volume asymptotics"
+  remains_open: "uniform WCC algorithm-independent resource lower bound and P versus NP"
