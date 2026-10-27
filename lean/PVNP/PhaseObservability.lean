@@ -33,7 +33,7 @@ theorem maintained_default_uniform_frequency :
 
 /-- The WCT density-weight F(|psi|²) can vanish at a node although
 the independent Laplacian factor need not vanish. -/
-def densityWeight (amplitude epsilon : ℝ) : ℝ :=
+noncomputable def densityWeight (amplitude epsilon : ℝ) : ℝ :=
   amplitude ^ 2 / (amplitude ^ 2 + epsilon ^ 2) ^ 2
 
 theorem densityWeight_at_node (epsilon : ℝ) :
