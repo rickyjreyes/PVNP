@@ -1,0 +1,363 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Td}{\mathbb T^2}
+\newcommand{\dd}{\,dx}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\title{\textbf{Fixed-Mass Nodal Coercivity for Density-Weighted Curvature}\\[4pt]
+\large An Independent Auxiliary Verification Note for WCT Computation}
+\author{Richard J. Reyes}
+\date{October 27, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+On a fixed two-dimensional periodic domain, we prove that positive conserved mass
+and an upper bound on the cubic--quintic projection-free Hamiltonian enforce a
+strictly positive and quantitatively explicit lower comparison between
+density-weighted Laplacian curvature and ordinary Laplacian energy.
+No uniform positive lower bound on pointwise amplitude is imposed, so fields
+with nodes are allowed. This closes a previously open \emph{fixed-domain,
+fixed-resource} analytic step in a separate curvature--communication study.
+The constant is not controlled uniformly in domain size, spectral resolution,
+or computational input length. An exact two-site version and the algebraic
+readout-cost transfer are formalized in Lean. This auxiliary note is independent
+of the author's original P versus NP manuscript, which it neither revises nor
+claims to complete.
+\end{abstract}
+
+\section{The maintained Hamiltonian and the curvature weight}
+Let \(\Omega=\mathbb R^2/\Lambda\) be a fixed connected flat two-dimensional
+torus, of volume \(V=|\Omega|\), and let \(u\in H^2(\Omega;\mathbb C)\).
+For \(\kappa=k_\star^2\geq0\) and \(\beta,\gamma>0\), define
+\begin{equation}
+\label{eq:H}
+\mathcal H[u]=\int_\Omega
+\left(|(\Delta+\kappa)u|^2-\frac{\beta}{2}|u|^4
++\frac{\gamma}{3}|u|^6\right)\dd.
+\end{equation}
+This is the Hamiltonian of the separately maintained projection-free evolution
+\begin{equation}
+\label{eq:pde}
+i\partial_tu=(\Delta+\kappa)^2u-\beta|u|^2u+\gamma|u|^4u.
+\end{equation}
+The present theorem concerns the \emph{distinct} density-weighted curvature
+functional, not the Hamiltonian's own quadratic term. For
+\(\varepsilon>0\), \(\alpha\geq0\), let
+\begin{equation}
+\label{eq:Q}
+F_{\varepsilon,\alpha}(s)=
+\frac{s}{(s+\varepsilon^2e^{-2\alpha s})^2},\qquad
+\mathcal Q_{\varepsilon,\alpha}[u]
+=\int_\Omega F_{\varepsilon,\alpha}(|u|^2)|\Delta u|^2\dd.
+\end{equation}
+The weight vanishes at every node \(u=0\). Pointwise coercivity is therefore
+false without a node-free assumption, and the result below is genuinely global.
+
+\section{Conservation-derived compactness}
+Put \(a_{\beta,\gamma}=3\beta^2/(16\gamma)\). For every \(s\geq0\),
+\begin{equation}
+\label{eq:potential}
+-\frac{\beta}{2}s^2+\frac{\gamma}{3}s^3
++a_{\beta,\gamma}s
+=\frac{\gamma}{3}s
+\left(s-\frac{3\beta}{4\gamma}\right)^2\geq0.
+\end{equation}
+Consequently
+\begin{equation}
+\label{eq:band}
+\norm{(\Delta+\kappa)u}_{2}^{2}
+\leq\mathcal H[u]+a_{\beta,\gamma}\norm{u}_{2}^{2}.
+\end{equation}
+Given a positive mass \(m>0\) and finite \(H_\star\in\mathbb R\), define
+\[
+\mathcal A_{m,H_\star}=
+\{u\in H^2(\Omega;\mathbb C):
+\norm{u}_2^2=m,\quad\mathcal H[u]\leq H_\star\}.
+\]
+If this class is nonempty, \(H_\star+a_{\beta,\gamma}m\geq0\).
+For every \(u\in\mathcal A_{m,H_\star}\),
+\begin{equation}
+\label{eq:lapbound}
+\norm{\Delta u}_2
+\leq\sqrt{H_\star+a_{\beta,\gamma}m}+\kappa\sqrt m=:B.
+\end{equation}
+On the fixed torus, elliptic regularity gives
+\(\norm{u}_{H^2}\leq C_\Omega(\sqrt m+B)\).
+The compact embedding \(H^2(\Td)\Subset C^0(\Td)\)
+therefore gives a common amplitude bound \(\norm{u}_\infty\leq U\)
+and subsequential uniform convergence.
+
+\section{The fixed-mass nodal theorem}
+\begin{theorem}[Uniform nodal coercivity on a fixed Hamiltonian sublevel]
+\label{thm:coercivity}
+Fix \(\Omega,\kappa,\beta,\gamma,m,H_\star,\varepsilon\) as above, with
+\(\mathcal A_{m,H_\star}\ne\varnothing\). There exists a number
+\(c_\star=c_\star(\Omega,\kappa,\beta,\gamma,m,H_\star,\varepsilon)>0\)
+such that for \emph{every} \(\alpha\geq0\) and every
+\(u\in\mathcal A_{m,H_\star}\),
+\begin{equation}
+\label{eq:coercive}
+\boxed{\qquad
+\mathcal Q_{\varepsilon,\alpha}[u]
+\geq c_\star\norm{\Delta u}_2^2.\qquad}
+\end{equation}
+No hypothesis \(\inf_\Omega|u|>0\) is needed.
+A constructive coefficient is supplied in
+Theorem~\ref{thm:explicit}; it depends on the fixed domain spectrum
+and the resource upper bound.
+\end{theorem}
+\begin{proof}
+From \(\alpha\geq0\) and the common amplitude bound,
+\[
+0\leq|u|^2+\varepsilon^2e^{-2\alpha|u|^2}
+\leq U^2+\varepsilon^2,
+\]
+and therefore
+\begin{equation}
+\label{eq:product}
+\mathcal Q_{\varepsilon,\alpha}[u]\geq
+\frac{\norm{u\,\Delta u}_2^2}{(U^2+\varepsilon^2)^2}.
+\end{equation}
+Suppose no positive \(c_\star\) works. Then for each integer \(j\geq1\)
+there are \(u_j\in\mathcal A_{m,H_\star}\) and \(\alpha_j\geq0\)
+with \(\norm{\Delta u_j}_2>0\) and
+\[
+\mathcal Q_{\varepsilon,\alpha_j}[u_j]
+<j^{-1}\norm{\Delta u_j}_2^2.
+\]
+The uniform bound \eqref{eq:lapbound} implies that the left side tends to
+zero. By \eqref{eq:product},
+\(\norm{u_j\Delta u_j}_2\to0\). Periodic integration by parts then yields
+\[
+\norm{\nabla u_j}_2^2
+=-\operatorname{Re}\int_\Omega\overline{u_j}\Delta u_j\dd
+\leq V^{1/2}\norm{u_j\Delta u_j}_2\longrightarrow0.
+\]
+By the Poincar\'e inequality,
+\(u_j-\langle u_j\rangle\to0\) in \(L^2\), where
+\(\langle u\rangle=V^{-1}\int_\Omega u\dd\).
+Pass to a subsequence that converges uniformly in \(C^0\), using the
+\(H^2\) compactness established above. Its limit is spatially constant,
+and fixed mass forces the modulus of that constant to equal
+\(\sqrt{m/V}>0\).
+
+Thus, for all sufficiently large \(j\), the \emph{whole} field satisfies
+\(|u_j(x)|\geq\frac12\sqrt{m/V}\), for every \(x\in\Omega\).
+Together with the common upper amplitude bound,
+\[
+F_{\varepsilon,\alpha_j}(|u_j|^2)
+\geq\frac{m}{4V(U^2+\varepsilon^2)^2}
+=:c_0>0
+\qquad\text{at every }x\in\Omega.
+\]
+Hence
+\(\mathcal Q_{\varepsilon,\alpha_j}[u_j]
+\geq c_0\norm{\Delta u_j}_2^2\),
+contradicting its defining strict inequality for all \(j>c_0^{-1}\).
+\end{proof}
+
+\begin{remark}[What fixed mass does and does not imply]
+The theorem does \emph{not} prove that each fixed-mass field is node-free.
+It proves a uniform \emph{integrated} comparison over a compactly controlled
+class of fields. The positive mass is essential: the earlier high-frequency
+sequence \(N^{-2}\sin(Nx)\) has mass tending to zero and thus does not
+contradict Theorem~\ref{thm:coercivity}. The Hamiltonian upper bound is
+essential to prevent the Laplacian energy of arbitrarily fine oscillations
+from escaping the compact class. The same compactness argument works
+in dimensions \(d\leq3\) on a fixed flat torus; \(d=4\) requires
+different control because \(H^2\not\hookrightarrow C^0\) there.
+\end{remark}
+
+
+\section{An explicit spectral coercivity coefficient}
+\label{sec:explicit}
+The compactness argument above can be made quantitative on the
+fixed torus. Let \(\Lambda^\ast\) be the reciprocal lattice, and use
+the orthonormal Fourier basis \(V^{-1/2}e^{ik\cdot x}\).
+Let
+\[
+B_+=1+\sqrt{H_\star+a_{\beta,\gamma}m}+\kappa\sqrt m>0,\qquad
+\mathcal S_\Omega=\frac1{\sqrt V}
+\left(\sum_{k\in\Lambda^\ast}\frac{1}{1+|k|^4}\right)^{1/2},
+\quad
+U_+=\mathcal S_\Omega\sqrt{m+B_+^2}.
+\]
+Absolute convergence holds because the torus dimension is two.
+Parseval and Cauchy--Schwarz show, without invoking an unspecified
+embedding constant, that every \(u\in\mathcal A_{m,H_\star}\)
+satisfies
+\(\norm{\Delta u}_2\le B_+\) and \(\norm{u}_\infty\le U_+\).
+
+Let \(\lambda_1>0\) be the first nonzero eigenvalue of
+\(-\Delta\), and set \(\tau=\sqrt{m/(32V)}\).
+Choose a finite radius \(R\) containing at least one nonzero reciprocal
+lattice point, sufficiently large that
+\[
+\mathsf H_R B_+\le\tau,\qquad
+\mathsf H_R=\frac1{\sqrt V}
+\left(\sum_{|k|>R}|k|^{-4}\right)^{1/2}.
+\]
+Such an \(R\) exists since the Fourier tail converges.
+Define
+\[
+\mathsf L_R=\frac1{\sqrt V}
+\left(\sum_{0<|k|\le R}|k|^{-2}\right)^{1/2}>0,
+\quad
+\eta=\min\left\{\sqrt{\frac{\lambda_1 m}{2}},
+\frac{\tau}{\mathsf L_R}\right\}>0.
+\]
+
+\begin{theorem}[Explicit fixed-domain coercivity coefficient]
+\label{thm:explicit}
+The constant in Theorem~\ref{thm:coercivity} can be chosen to be
+\begin{equation}
+\label{eq:explicit-c}
+\boxed{\quad
+c_{\mathrm{exp}}=
+\frac{1}{(U_+^2+\varepsilon^2)^2}
+\min\left\{\frac{m}{8V},
+\frac{\eta^4}{VB_+^2}\right\}>0.\quad}
+\end{equation}
+In particular this choice is uniform for \emph{all}
+\(\alpha\ge0\), and makes the dependence on the domain's Fourier
+spectrum, positive mass, and energy upper bound explicit.
+\end{theorem}
+\begin{proof}
+Write \(g=\norm{\nabla u}_2\) and \(\bar u=V^{-1}\int_\Omega u\dd\).
+We distinguish two cases.
+
+If \(g\le\eta\), Poincar\'e and the mass identity give
+\[
+V|\bar u|^2=m-\norm{u-\bar u}_2^2
+\ge m-\lambda_1^{-1}g^2\ge m/2.
+\]
+Splitting the Fourier series of \(u-\bar u\) at radius \(R\)
+and applying Cauchy--Schwarz to the gradient and Laplacian terms gives
+\[
+\norm{u-\bar u}_\infty
+\le \mathsf L_R g+\mathsf H_R\norm{\Delta u}_2
+\le2\tau=\sqrt{\frac{m}{8V}}.
+\]
+Since \(|\bar u|\ge\sqrt{m/(2V)}\),
+the reverse triangle inequality yields
+\(|u(x)|\ge\sqrt{m/(8V)}\) for every \(x\).
+Consequently
+\[
+\mathcal Q_{\varepsilon,\alpha}[u]
+\ge\frac{m}{8V(U_+^2+\varepsilon^2)^2}
+     \norm{\Delta u}_2^2.
+\]
+
+If \(g>\eta\), periodic integration by parts, Cauchy--Schwarz,
+and the uniform denominator estimate instead yield
+\[
+\norm{u\,\Delta u}_2^2\ge\frac{g^4}{V}
+>\frac{\eta^4}{V},
+\qquad
+\mathcal Q_{\varepsilon,\alpha}[u]
+\ge\frac{\eta^4}{V(U_+^2+\varepsilon^2)^2}.
+\]
+Finally \(\norm{\Delta u}_2^2\le B_+^2\), so this implies
+\[
+\mathcal Q_{\varepsilon,\alpha}[u]
+\ge\frac{\eta^4}{VB_+^2(U_+^2+\varepsilon^2)^2}
+\norm{\Delta u}_2^2.
+\]
+The smaller of the two coefficients proves
+\eqref{eq:explicit-c}. If \(\Delta u=0\), the assertion is
+immediate in either case.
+\end{proof}
+
+\begin{remark}[Asymptotic meaning]
+This effective constant is generally conservative. It can deteriorate
+as \(V\) grows, \(\lambda_1\to0\), \(H_\star\) grows, or the device
+geometry changes. Thus the theorem does \emph{not} establish an
+input-length-uniform physical resource bound. Its merit is that every
+dependence is now stated as an explicit spectral sum or model parameter.
+\end{remark}
+
+\section{A detector corollary for the actual Hamiltonian evolution}
+Let \(u(t)\) be a sufficiently smooth periodic solution of
+\eqref{eq:pde} on \(0\leq t\leq T\), conserving positive mass \(m\)
+and Hamiltonian \(H_0\). Let \(\chi\in H^4(\Omega;\mathbb C)\) have
+zero spatial mean and write
+\[
+Z_\chi(t)=\int_\Omega\overline\chi\,u(t)\dd,\qquad
+\delta=|Z_\chi(T)-Z_\chi(0)|.
+\]
+Let \(\lambda_1>0\) be the smallest positive eigenvalue of
+\(-\Delta\), and use the amplitude bound \(U\) from the conserved
+resources. For
+\[
+K_\chi=
+\frac{\norm{(\Delta+\kappa)^2\chi}_2+
+(3\beta U^2+5\gamma U^4)\norm{\chi}_2}{\lambda_1},
+\]
+the periodic equation, the polynomial nonlinear Lipschitz estimate,
+and the mean-zero Poincar\'e inequality imply
+\begin{equation}
+\label{eq:obs}
+\delta^2\leq K_\chi^2\,T
+\int_0^T\norm{\Delta u(t)}_2^2\,dt.
+\end{equation}
+\begin{corollary}[Node-tolerant finite-time density-curvature cost]
+\label{cor:transport}
+If \(T>0\), \(K_\chi>0\), \(\delta>0\), and the smooth solution obeys
+the conserved mass and Hamiltonian hypotheses above, then
+\begin{equation}
+\boxed{\quad
+\int_0^T\mathcal Q_{\varepsilon,\alpha}[u(t)]\,dt
+\geq\frac{c_\star\,\delta^2}{K_\chi^2\,T}.\quad}
+\end{equation}
+This remains valid if \(u(t,x)=0\) at some points and times.
+\end{corollary}
+\begin{proof}
+The conserved quantities place every \(u(t)\) in the \emph{same}
+class \(\mathcal A_{m,H_0}\), so Theorem~\ref{thm:coercivity}
+gives one uniform \(c_\star>0\) for all \(t\). Integrate
+\eqref{eq:coercive} in time and apply \eqref{eq:obs}.
+\end{proof}
+
+\section{Discrete Lean certificate and exact limitations}
+On a two-node connected graph with real field values \(a,b\), set
+\(m=a^2+b^2>0\), and use the simplified density weight
+\(w_e(s)=s/(s+e)^2\), \(e>0\).
+The two graph-Laplacian values are \(b-a,a-b\). Since
+\(w_e(a^2)+w_e(b^2)\geq m/(m+e)^2\),
+\begin{equation}
+\boxed{\quad
+(a-b)^2[w_e(a^2)+w_e(b^2)]
+\geq\frac{m}{2(m+e)^2}\,[2(a-b)^2].\quad}
+\end{equation}
+The estimate holds even if \(a=0\) or \(b=0\), and the
+coefficient is strictly positive when \(m,e>0\).
+The separate Lean module
+\texttt{PVNP/FixedMassNodal.lean} verifies this exact finite result
+and algebraic detector-to-cost transfer. It does \emph{not}
+kernel-formalize the Sobolev compactness proof of
+Theorem~\ref{thm:coercivity} nor the continuum PDE integration and
+conservation arguments in Corollary~\ref{cor:transport}.
+
+\paragraph{Computational limitation.}
+Neither \(c_\star\) nor \(K_\chi\) is shown to be independent of a
+growing device domain, input length, resolution, or detector family.
+The estimates concern a restricted observable of one declared PDE,
+not all admissible SAT solvers. In particular, no unconditional
+\(P_{\mathrm{WCC}}\ne NP_{\mathrm{WCC}}\) or classical \(P\ne NP\)
+claim follows.
+
+\paragraph{Source provenance.}
+This supplemental note uses the maintained
+\href{https://github.com/rickyjreyes/wct-pde/blob/main/src/wct_pde/projection_free.py}
+{projection-free Hamiltonian equation} and follows the independent
+\href{https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/phase-sensitive-observability.md}
+{phase-observability study}. The original PVNP trilogy and its
+published versions are not modified here.
+\end{document}

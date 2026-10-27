@@ -38,3 +38,10 @@ phase_sensitive_observability:
   proved_in_lean: "algebraic consequences of detector/Poincare/Hölder bounds, global constant-mode and node-weight identities"
   analytic_only: "complex nonlinear PDE evolution, Fourier/Parseval, Sobolev and Poincare, detector derivative, dynamic invariants, nodal oscillation counterexample"
   no_claim: "universal information curvature cost or P versus NP separation"
+
+fixed_mass_nodal_supplement:
+  module: PVNP/FixedMassNodal.lean
+  scope: independent_of_original_P_vs_NP_manuscript
+  lean_proved: 'two-site fixed-mass density-weighted coercivity, scalar denominator bound, abstract transport transfer'
+  analytic_only: '2D torus compactness coercivity on Hamiltonian sublevels, Hamiltonian conservation, nonlinear phase-observability inequality'
+  missing: 'constructive uniform constants on input-growing domains and all-algorithm resource lower bounds'
