@@ -19,3 +19,6 @@ Run `cd lean && lake update && lake exe cache get && lake build`. CI rejects `so
 
 ## Four lower-bound attempts
 [Communication](PVNP/Communication.lean) · [Tseitin parity](PVNP/Tseitin.lean) · [Layout and escape time](PVNP/PhysicalBounds.lean) · [Mathematical interpretation](../pvnp/proofs/four-lower-bound-tests.md). These prove restricted inequalities, not unrestricted physical P versus NP.
+
+## Physical communication bridge test
+[CurvatureCommunication.lean](PVNP/CurvatureCommunication.lean) formalizes both an affine zero-curvature counterexample and a direct linear bound for a concrete fixed-boundary, paid-slot physical implementation of an exact deterministic DISJ protocol. See the [analytical note](../pvnp/proofs/curvature-communication-bridge.md) for a causal slow-wave counterexample and the sharp 1D Dirichlet inequality. These do not establish a universal WCT curvature cost per bit.

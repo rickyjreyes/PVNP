@@ -8,3 +8,4 @@ import PVNP.CurvatureBarrier
 import PVNP.Communication
 import PVNP.Tseitin
 import PVNP.PhysicalBounds
+import PVNP.CurvatureCommunication

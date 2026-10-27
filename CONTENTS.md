@@ -33,3 +33,7 @@ The universal lower-bound claim, physical curvature-to-discrete resource equival
 ## Four lower-bound tests (2026-10-27)
 
 [Communication, proof complexity, routing, and PDE-metastability audit](pvnp/proofs/four-lower-bound-tests.md) · [Lean modules](lean/README.md).
+
+## Physical communication resource bridge
+
+[Counterexamples, sharp fixed-boundary lower bound, and Lean-verified discrete cut-communication transfer](pvnp/proofs/curvature-communication-bridge.md) · [Lean module](lean/PVNP/CurvatureCommunication.lean).
