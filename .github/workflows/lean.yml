@@ -1,0 +1,30 @@
+name: PVNP Lean supporting theorems
+on:
+  push:
+    branches: [main]
+    paths: ['lean/**', '.github/workflows/lean.yml']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  lean:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: lean
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install elan
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch Mathlib cache
+        run: |
+          lake update
+          lake exe cache get
+      - name: Reject unfinished proof markers
+        run: |
+          if grep -rnE '^[[:space:]]*(sorry|admit|axiom)([[:space:]]|$)' PVNP; then exit 1; fi
+      - name: Kernel check
+        run: lake build
