@@ -20,7 +20,7 @@
 \begin{abstract}
 On a fixed two-dimensional periodic domain, we prove that positive conserved mass
 and an upper bound on the cubic--quintic projection-free Hamiltonian enforce a
-strictly positive, though nonconstructive, lower comparison between
+strictly positive and quantitatively explicit lower comparison between
 density-weighted Laplacian curvature and ordinary Laplacian energy.
 No uniform positive lower bound on pointwise amplitude is imposed, so fields
 with nodes are allowed. This closes a previously open \emph{fixed-domain,
@@ -109,8 +109,9 @@ such that for \emph{every} \(\alpha\geq0\) and every
 \geq c_\star\norm{\Delta u}_2^2.\qquad}
 \end{equation}
 No hypothesis \(\inf_\Omega|u|>0\) is needed.
-The coefficient \(c_\star\) is an existence constant, not an explicit
-universal numerical value.
+A constructive coefficient is supplied in
+Theorem~\ref{thm:explicit}; it depends on the fixed domain spectrum
+and the resource upper bound.
 \end{theorem}
 \begin{proof}
 From \(\alpha\geq0\) and the common amplitude bound,
@@ -172,6 +173,114 @@ essential to prevent the Laplacian energy of arbitrarily fine oscillations
 from escaping the compact class. The same compactness argument works
 in dimensions \(d\leq3\) on a fixed flat torus; \(d=4\) requires
 different control because \(H^2\not\hookrightarrow C^0\) there.
+\end{remark}
+
+
+\section{An explicit spectral coercivity coefficient}
+\label{sec:explicit}
+The compactness argument above can be made quantitative on the
+fixed torus. Let \(\Lambda^\ast\) be the reciprocal lattice, and use
+the orthonormal Fourier basis \(V^{-1/2}e^{ik\cdot x}\).
+Let
+\[
+B_+=1+\sqrt{H_\star+a_{\beta,\gamma}m}+\kappa\sqrt m>0,\qquad
+\mathscr S_\Omega=\frac1{\sqrt V}
+\left(\sum_{k\in\Lambda^\ast}\frac{1}{1+|k|^4}\right)^{1/2},
+\quad
+U_+=\mathscr S_\Omega\sqrt{m+B_+^2}.
+\]
+Absolute convergence holds because the torus dimension is two.
+Parseval and Cauchy--Schwarz show, without invoking an unspecified
+embedding constant, that every \(u\in\mathcal A_{m,H_\star}\)
+satisfies
+\(\norm{\Delta u}_2\le B_+\) and \(\norm{u}_\infty\le U_+\).
+
+Let \(\lambda_1>0\) be the first nonzero eigenvalue of
+\(-\Delta\), and set \(\tau=\sqrt{m/(32V)}\).
+Choose a finite radius \(R\) containing at least one nonzero reciprocal
+lattice point, sufficiently large that
+\[
+\mathsf H_R B_+\le\tau,\qquad
+\mathsf H_R=\frac1{\sqrt V}
+\left(\sum_{|k|>R}|k|^{-4}\right)^{1/2}.
+\]
+Such an \(R\) exists since the Fourier tail converges.
+Define
+\[
+\mathsf L_R=\frac1{\sqrt V}
+\left(\sum_{0<|k|\le R}|k|^{-2}\right)^{1/2}>0,
+\quad
+\eta=\min\left\{\sqrt{\frac{\lambda_1 m}{2}},
+\frac{\tau}{\mathsf L_R}\right\}>0.
+\]
+
+\begin{theorem}[Explicit fixed-domain coercivity coefficient]
+\label{thm:explicit}
+The constant in Theorem~\ref{thm:coercivity} can be chosen to be
+\begin{equation}
+\label{eq:explicit-c}
+\boxed{\quad
+c_{\mathrm{exp}}=
+\frac{1}{(U_+^2+\varepsilon^2)^2}
+\min\left\{\frac{m}{8V},
+\frac{\eta^4}{VB_+^2}\right\}>0.\quad}
+\end{equation}
+In particular this choice is uniform for \emph{all}
+\(\alpha\ge0\), and makes the dependence on the domain's Fourier
+spectrum, positive mass, and energy upper bound explicit.
+\end{theorem}
+\begin{proof}
+Write \(g=\norm{\nabla u}_2\) and \(\bar u=V^{-1}\int_\Omega u\dd\).
+We distinguish two cases.
+
+If \(g\le\eta\), Poincar\'e and the mass identity give
+\[
+V|\bar u|^2=m-\norm{u-\bar u}_2^2
+\ge m-\lambda_1^{-1}g^2\ge m/2.
+\]
+Splitting the Fourier series of \(u-\bar u\) at radius \(R\)
+and applying Cauchy--Schwarz to the gradient and Laplacian terms gives
+\[
+\norm{u-\bar u}_\infty
+\le \mathsf L_R g+\mathsf H_R\norm{\Delta u}_2
+\le2\tau=\sqrt{\frac{m}{8V}}.
+\]
+Since \(|\bar u|\ge\sqrt{m/(2V)}\),
+the reverse triangle inequality yields
+\(|u(x)|\ge\sqrt{m/(8V)}\) for every \(x\).
+Consequently
+\[
+\mathcal Q_{\varepsilon,\alpha}[u]
+\ge\frac{m}{8V(U_+^2+\varepsilon^2)^2}
+     \norm{\Delta u}_2^2.
+\]
+
+If \(g>\eta\), periodic integration by parts, Cauchy--Schwarz,
+and the uniform denominator estimate instead yield
+\[
+\norm{u\,\Delta u}_2^2\ge\frac{g^4}{V}
+>\frac{\eta^4}{V},
+\qquad
+\mathcal Q_{\varepsilon,\alpha}[u]
+\ge\frac{\eta^4}{V(U_+^2+\varepsilon^2)^2}.
+\]
+Finally \(\norm{\Delta u}_2^2\le B_+^2\), so this implies
+\[
+\mathcal Q_{\varepsilon,\alpha}[u]
+\ge\frac{\eta^4}{VB_+^2(U_+^2+\varepsilon^2)^2}
+\norm{\Delta u}_2^2.
+\]
+The smaller of the two coefficients proves
+\eqref{eq:explicit-c}. If \(\Delta u=0\), the assertion is
+immediate in either case.
+\end{proof}
+
+\begin{remark}[Asymptotic meaning]
+This effective constant is generally conservative. It can deteriorate
+as \(V\) grows, \(\lambda_1\to0\), \(H_\star\) grows, or the device
+geometry changes. Thus the theorem does \emph{not} establish an
+input-length-uniform physical resource bound. Its merit is that every
+dependence is now stated as an explicit spectral sum or model parameter.
 \end{remark}
 
 \section{A detector corollary for the actual Hamiltonian evolution}
