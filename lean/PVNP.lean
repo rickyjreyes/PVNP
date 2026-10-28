@@ -19,3 +19,4 @@ import PVNP.ReplayCost
 import PVNP.LocalityLowerBound
 import PVNP.RadiusCausality
 import PVNP.TMGlobal
+import PVNP.TMStayTrace
