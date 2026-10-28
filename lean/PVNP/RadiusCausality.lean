@@ -293,6 +293,7 @@ theorem two_stage_required_causal_coverage
     (encoder : RadiusMachine Bool encoderRadius)
     (computer : RadiusMachine Bool computeRadius)
     (decode : (Fin m → Bool) → Bool)
+    (hread : m ≤ n) (hn : 0 < n)
     (hall : ∀ c : Configuration n Bool,
       decode (fun i =>
         (iterate (step computer) computeRounds
