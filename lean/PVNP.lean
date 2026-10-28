@@ -25,3 +25,4 @@ import PVNP.FiniteWCCCode
 import PVNP.OracleObstruction
 import PVNP.TMHeadMotion
 import PVNP.TMHeadSupport
+import PVNP.TMHeadUniqueRight
