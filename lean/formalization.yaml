@@ -175,3 +175,16 @@ oct_28_formal_scope_and_ci_ledger:
     - "ReplayCost abstract units are not ordinary Turing instruction counts"
     - "no kernel-checked P_WCC = P_TM or NP_WCC = NP_TM"
     - "no physical curvature preservation, general SAT lower bound, or classical P != NP"
+
+
+latest_issue_11_head_marker_support:
+  module: PVNP/TMHeadSupport.lean
+  verification: "requires successful Lean CI at current PR head; do not infer from source existence"
+  statements:
+    - "headless_outside_original_neighborhood: no marker appears outside p-1,p,p+1"
+    - "head_marker_support: every one-step new marker lies in original radius-one cone"
+  model: "actual compiled TM transition table on independently marked finite TM tape"
+  still_missing:
+    - "uniqueness of marker at every valid right/left/stay successor"
+    - "unrestricted bounded-tape moving-head trace, boundary safety, acceptance/rejection"
+    - "actual serialized ordinary TM interpreter, polynomial simulation proofs, P/NP language equivalence"

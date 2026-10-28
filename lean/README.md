@@ -105,3 +105,17 @@ The working definition of done for #11 is still **OPEN**.
 **Further #11 source:** `TMCellCompiler` now checks both moving-head arrival directions and the no-spontaneous-head rule. `TMHeadMotion` targets the original-head vacating and destination-arrival obligations for left/right/stay moves on explicitly interior bounded tapes. These are one-step theorems, not full arbitrary-head trajectory correspondence.
 
 **Outstanding completion gate:** Model a complete safe moving-head TM trace and prove global one-head preservation; serialize/parse finite TM and WCC rule descriptions with runtime bounds; construct a genuine ordinary TM interpreter (with instruction-count proof) for WCC, including input, witness, description, workspace, and round costs; derive uniform P and NP equivalence for the exact finite model. Until then, #11 remains open. A symbolic WCC result is not a curvature-resource theorem.
+
+
+### New head-support proof target
+
+[TMHeadSupport.lean](PVNP/TMHeadSupport.lean) formalizes the negative
+side of the moving-head invariant: outside the previous head's
+radius-one three-cell neighborhood, **no head marker can be created**
+by a compiled step, regardless of the transition table. The premise is
+the canonical one-head TM encoding already defined in `TMGlobal`.
+This is not the uniqueness theorem: for a completely general
+configuration, whether a marker appears at one of the three candidate
+sites still depends on the transition direction. Complete moving-head
+traces and P/NP class equality remain open. Verify the file by
+current-head Lean CI before describing it as kernel checked.

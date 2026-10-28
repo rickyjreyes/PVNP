@@ -201,3 +201,24 @@ polynomial-time language-equivalence and P/NP witness class proofs
 remain **unproved**. No resource lower bound is extrapolated to
 physical phase, nodes, curvature, all algorithms, SAT hardness,
 or classical P versus NP.
+
+
+## No-spurious-head support audit
+
+`TMHeadSupport.headless_outside_original_neighborhood` isolates
+the finite-range **support** of a head marker after one compiled step.
+Its hypotheses are numeric exclusions of all three possible positions:
+`i != p`, `i != p+1`, and `i+1 != p`. It proves
+the newly updated cell cannot carry a marker. By contraposition,
+`head_marker_support` confines every successor marker to at most
+those three sites. These do not presuppose the target simulator result,
+a cost bound, or any physical wave curvature property.
+
+To complete global head-marker invariance, eliminate all but the
+actual movement-selected successor site in left/right/stay cases,
+then prove a valid total bounded-tape step relation and its iteration.
+For an unbounded tape, the left/right boundary condition must be
+handled by a non-degenerate embedding or expanding work tape. A
+bounded-tape step theorem alone does not prove universal
+polynomial-time simulation, and an arbitrary rule function without a
+finite encoded truth table does not define an ordinary effective TM.
