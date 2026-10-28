@@ -127,3 +127,24 @@ issue_11_global_tm_encoding_extension:
     - "binary machine description and uniform compiler/decompiler complexity"
     - "actual single-tape TM interpreter program and machine-level time/space correctness"
     - "both directions polynomial time and NP witness class equivalence"
+
+issue_11_finite_machine_description_and_restricted_trace:
+  modules:
+    - PVNP/MachineCode.lean
+    - PVNP/FiniteWCCCode.lean
+    - PVNP/TMStayTrace.lean
+  status: "source committed; check CI for the exact final commit"
+  genuine_theorem_scope:
+    - "one-hot finite binary-grid machine table descriptions and injectivity"
+    - "explicit polynomial table-bit bounds for finite Turing and finite WCC local rules"
+    - "all-time exact encoding/step commutation for the stationary-head TM subclass only"
+    - "single encoded head remains present throughout every stationary-head trace"
+  nonclaims:
+    - "no finite-stencil code table establishes the tape-TM interpreter's instruction count by itself"
+    - "stationary-head trace is not a proof for arbitrary moving-head TMs"
+    - "complete bidirectional polynomial TM/WCC equivalence and P/NP characterizations remain open"
+  outstanding:
+    - "global moving-head step and all-step invariant with boundary safety"
+    - "flat binary serialization and parsing of machine code with running-time bounds"
+    - "actual ordinary TM machine instruction schedule and proof of step count"
+    - "uniform language and witness class inclusions with explicit size polynomials"

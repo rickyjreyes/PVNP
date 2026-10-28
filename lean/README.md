@@ -76,3 +76,22 @@ finite-state locality, not continuous phase or curvature physics.
 (tape/head/control) and a canonical marked WCC encoding. The per-cell
 compiled TM tape-write agreement is a global update theorem, but
 complete head-movement preservation and all-step simulation are still open.
+
+### Finite machine descriptions and stationary-head complete traces
+
+[MachineCode.lean](PVNP/MachineCode.lean) and
+[FiniteWCCCode.lean](PVNP/FiniteWCCCode.lean) provide injective binary
+table representations for arbitrary **finite** TM instruction tables
+and finite-alphabet radius-one WCC rules, with explicit polynomial
+bit counts. The generic old `RadiusOneMachine State` does **not**
+restrict `State` to a finite effective alphabet; that older type is
+too broad to claim polynomial-time Turing simulation without a
+finitely described rule.
+
+[TMStayTrace.lean](PVNP/TMStayTrace.lean) proves actual all-time
+compiled WCC trajectory correspondence for the **stationary-head**
+finite TM subclass. This result is intentionally restricted: it does
+not solve moving-head simulation, boundary handling, machine-code
+parsing, actual TM instruction costs, or the general P/NP theorems.
+
+The working definition of done for #11 is still **OPEN**.

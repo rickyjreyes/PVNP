@@ -140,3 +140,26 @@ the tape-write behavior of the compiled WCC local rule at every site.
 Correct head travel (including boundary cases), total trace
 semiconjugacy, and actual serialized Turing interpreter bounds are
 still required before claiming exact class equivalence.
+
+## Finite alphabet and stationary-head checkpoint
+
+The original `RadiusOneMachine State` accepts an arbitrary mathematical
+type and arbitrary local function. Without an effective finite rule
+description and a uniform encoding, this is not itself a standard
+Turing machine model.
+
+`FiniteWCCCode.FiniteWCC s` fixes the state alphabet as `Fin s`
+and encodes all `s^3` transition rows as one-hot bit vectors.
+Its bit count is `s+s^4` and is polynomial in `s`.
+`MachineCode.FiniteTable q g` represents arbitrary finite TM
+transition tables with code size `g+q*g*(q+g+3)`, and the two
+encodings have injectivity targets. This is a *representation
+lemma*, not a proof that a tape TM can parse and execute this bit
+grid within the stated instruction bound.
+
+`TMStayTrace` supplies a nontrivial all-time compilation theorem
+for stationary-head Turing machines and a witness to the preserved
+unique head. Its scope does not include left/right moves. General
+bounded-tape simulation and the reverse finite-WCC Turing interpreter
+remain unproved, so neither exact discrete P nor NP equivalence
+may be labeled kernel-certified.
