@@ -62,3 +62,7 @@ Freeze a **resource-scaled channel and computational device family** as input si
 ## New verified direction: split-input SAT and bounded-precision cut (October 27, 2026)
 
 The [split 3-CNF proof](proofs/split-3sat-reliable-channel.md) formalizes actual tripled 3-literal clause satisfiability and proves the all-protocol deterministic bound `2^n <= q^m` for split-input SAT under complete-transcript rectangularity and q-level/m-slot accounting. This supports O2's finite Boolean semantics and O6's bounded-alphabet resource estimates. The physical analog noise-to-q packing estimate remains a separate analytical step conditional on amplitude and adversarial error rails. **O7 and O9 are still OPEN**: this family has an O(n) centralized solver, so its private-input bottleneck does not show classical SAT hardness.
+
+## Conserved-mass finite-band reliable-readout packing (O6)
+
+The [sphere-packing supplement](proofs/bandlimited-noisy-wave-packing.md) proves analytically that N independently decodable noisy complex D-mode readout states at fixed conserved mass M must satisfy `N <= (1+sqrt(M)/eta)^(2D)`. This is a universal bound over that specified codebook class, **not** an all-algorithm SAT bound, because an SAT decider need not separately decode all assignments. It is currently outside Lean and does not establish the link between an actual PDE trajectory and a distributed communication transcript.
