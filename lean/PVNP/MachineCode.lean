@@ -85,12 +85,12 @@ theorem tableBits_injective {q g : Nat} :
       (fun z => z.2 state symbol) h
     exact instructionBits_injective hpair
   cases A with
-  | mk ab at =>
+  | mk ab atr =>
       cases B with
-      | mk bb bt =>
+      | mk bb btr =>
           dsimp at hb ht
           subst bb
-          subst bt
+          subst btr
           rfl
 
 /-- Allocated bits for the one-hot blank plus q*g records, where each

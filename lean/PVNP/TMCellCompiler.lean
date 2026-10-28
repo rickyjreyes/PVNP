@@ -31,6 +31,19 @@ structure TapeCell (Q Gamma : Type) where
   symbol : Gamma
   head : Option Q
 
+/-- Structural extensionality for marked tape cells. -/
+theorem TapeCell.ext {Q Gamma : Type} {a b : TapeCell Q Gamma}
+    (hsymbol : a.symbol = b.symbol) (hhead : a.head = b.head) :
+    a = b := by
+  cases a with
+  | mk sa ha =>
+      cases b with
+      | mk sb hb =>
+          dsimp at hsymbol hhead
+          cases hsymbol
+          cases hhead
+          rfl
+
 structure TMTable (Q Gamma : Type) where
   blankSymbol : Gamma
   transition : Q → Gamma → Instruction Q Gamma
