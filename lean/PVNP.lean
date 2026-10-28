@@ -14,3 +14,6 @@ import PVNP.PhaseObservability
 import PVNP.FixedMassNodal
 import PVNP.ExpandingDomain
 import PVNP.SplitSATCapacity
+import PVNP.TMCellCompiler
+import PVNP.ReplayCost
+import PVNP.LocalityLowerBound

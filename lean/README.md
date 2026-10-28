@@ -37,3 +37,26 @@ Run `cd lean && lake update && lake exe cache get && lake build`. CI rejects `so
 
 ## Actual split 3-CNF and finite-alphabet capacity
 [SplitSATCapacity.lean](PVNP/SplitSATCapacity.lean) verifies the complete indexed tripled-literal SAT reduction to DISJ and the all-protocol deterministic bounded-alphabet transcript bound 2^n ≤ q^m (binary m ≥ n), conditional on rectangle/correctness properties. The [robust-noise physical packing analysis](../pvnp/proofs/split-3sat-reliable-channel.md) is conventional mathematics and is not Lean certified as a WCT PDE channel result.
+
+## Issues #10 and #11: October 27, 2026 checkpoint
+
+**LocalityLowerBound.lean** establishes an unconditional *linear* latency obstruction against
+**all** radius-one local rules on a direct finite tape with fixed left-end
+readout: the bit at distance `t+1` cannot influence cell zero in `t`
+rounds. This is not a universal computational or curvature lower bound.
+The theorem intentionally does not apply to nonlocal decoders or
+encodings that move the input information to the output site.
+
+**TMCellCompiler.lean** provides the explicit arbitrary transition-table
+to radius-one head-marker rule and basic one-cell correspondence lemmas.
+The globally valid single-head simulation, boundary treatment, and
+uniform binary code for descriptions remain open.
+
+**ReplayCost.lean** produces a serialized exact finite stencil sweep and
+proves a cubic *unit-cost interpreter budget* in
+`n+|w|+|description|+cells+rounds`. The definition charges list access and
+table lookup; the proof does **not** yet provide an instruction-by-instruction
+ordinary Turing-machine simulation. The complete bidirectional polynomial
+equivalence and P/NP class equalities are therefore **not Lean verified**.
+
+See [the exact proof and obstruction ledger](../pvnp/proofs/issue-10-11-formal-audit.md).
