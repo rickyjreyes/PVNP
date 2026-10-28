@@ -209,10 +209,14 @@ theorem two_stage_prefix_decoder_equal
     decode (fun i =>
       (iterate (step computer) computeRounds
         (iterate (step encoder) encoderRounds d)) ⟨i.val, by omega⟩) := by
-  apply prefix_decoder_equal computer _ _ computeRounds m hm decode
-  exact prefix_iterate encoder c d encoderRounds
-    (computeRounds * computeRadius + m)
-    (by simpa [Nat.add_assoc] using h)
+  exact prefix_decoder_equal computer
+    (iterate (step encoder) encoderRounds c)
+    (iterate (step encoder) encoderRounds d)
+    computeRounds m hm
+    (prefix_iterate encoder c d encoderRounds
+      (computeRounds * computeRadius + m)
+      (by simpa [Nat.add_assoc] using h))
+    decode
 
 /-- A more flexible size bound: for any tape length n with
     t*r+m<n, the last bit lies outside the readout's causal cone. -/
