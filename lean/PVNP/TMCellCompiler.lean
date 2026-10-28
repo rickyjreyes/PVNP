@@ -118,4 +118,25 @@ theorem right_move_arrives {Q Gamma : Type} (T : TMTable Q Gamma)
       some (T.transition q l.symbol).next := by
   simp [compiledRule, hc, hl, h]
 
+
+/-- The symmetric left-arrival clause. Only the right neighbor may carry
+    the head; a competing left neighbor would be a malformed TM encoding. -/
+theorem left_move_arrives {Q Gamma : Type} (T : TMTable Q Gamma)
+    (q : Q) (l c r : TapeCell Q Gamma)
+    (hc : c.head = none) (hl : l.head = none)
+    (hr : r.head = some q)
+    (h : (T.transition q r.symbol).move = Move.left) :
+    (compiledRule T l c r).head =
+      some (T.transition q r.symbol).next := by
+  simp [compiledRule, hc, hl, hr, h]
+
+/-- A headless center with headless neighbors remains headless for ANY
+    finite transition table. -/
+theorem no_head_appears_from_empty_stencil {Q Gamma : Type}
+    (T : TMTable Q Gamma) (l c r : TapeCell Q Gamma)
+    (hl : l.head = none) (hc : c.head = none)
+    (hr : r.head = none) :
+    (compiledRule T l c r).head = none := by
+  simp [compiledRule, hc, hl, hr]
+
 end PVNP.TMCellCompiler
