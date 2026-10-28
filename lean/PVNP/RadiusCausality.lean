@@ -170,4 +170,74 @@ theorem sparse_decoder_equal (M : RadiusMachine S r) {n : Nat}
   funext j
   exact hp (observed j) (hsite j)
 
+
+/-- Input preprocessing cannot be free when its own local update has
+    a declared finite radius. The total information cone is the sum of
+    the encoding and computation cones, with potentially different radii. -/
+theorem two_stage_prefix
+    (encoder : RadiusMachine S encoderRadius)
+    (computer : RadiusMachine S computeRadius)
+    {n : Nat} (c d : Configuration n S)
+    (encoderRounds computeRounds m : Nat)
+    (h : prefixAgree c d
+      (encoderRounds * encoderRadius + computeRounds * computeRadius + m)) :
+    prefixAgree
+      (iterate (step computer) computeRounds
+        (iterate (step encoder) encoderRounds c))
+      (iterate (step computer) computeRounds
+        (iterate (step encoder) encoderRounds d))
+      m := by
+  apply prefix_iterate computer _ _ computeRounds m
+  apply prefix_iterate encoder _ _ encoderRounds
+    (computeRounds * computeRadius + m)
+  simpa [Nat.add_assoc] using h
+
+/-- A decoder of the first m cells inherits the *sum* of both
+    local computation and local preprocessing latency costs. -/
+theorem two_stage_prefix_decoder_equal
+    (encoder : RadiusMachine S encoderRadius)
+    (computer : RadiusMachine S computeRadius)
+    {n : Nat} (c d : Configuration n S)
+    (encoderRounds computeRounds m : Nat)
+    (hm : m ≤ n)
+    (h : prefixAgree c d
+      (encoderRounds * encoderRadius + computeRounds * computeRadius + m))
+    (decode : (Fin m → S) → Bool) :
+    decode (fun i =>
+      (iterate (step computer) computeRounds
+        (iterate (step encoder) encoderRounds c)) ⟨i.val, by omega⟩) =
+    decode (fun i =>
+      (iterate (step computer) computeRounds
+        (iterate (step encoder) encoderRounds d)) ⟨i.val, by omega⟩) := by
+  apply prefix_decoder_equal computer _ _ computeRounds m hm decode
+  exact prefix_iterate encoder c d encoderRounds
+    (computeRounds * computeRadius + m)
+    (by simpa [Nat.add_assoc] using h)
+
+/-- A more flexible size bound: for any tape length n with
+    t*r+m<n, the last bit lies outside the readout's causal cone. -/
+theorem no_prefix_decoder_last_bit_general
+    (r t m n : Nat) (hfar : t * r + m < n)
+    (M : RadiusMachine Bool r) (decode : (Fin m → Bool) → Bool) :
+    ¬ (∀ c : Configuration n Bool,
+        decode (fun i =>
+          (iterate (step M) t c) ⟨i.val, by omega⟩) =
+          c ⟨n - 1, by omega⟩) := by
+  intro hall
+  have hp : prefixAgree (allFalse n) (oneAt n (n - 1))
+      (t * r + m) := by
+    intro i hi
+    have hne : i.val ≠ n - 1 := by omega
+    simp [allFalse, oneAt, hne]
+  have heq := prefix_decoder_equal M (allFalse n)
+    (oneAt n (n - 1)) t m (by omega) hp decode
+  have hz : decode (fun i =>
+      (iterate (step M) t (allFalse n)) ⟨i.val, by omega⟩) = false := by
+    simpa [allFalse] using (hall (allFalse n))
+  have ho : decode (fun i =>
+      (iterate (step M) t (oneAt n (n - 1))) ⟨i.val, by omega⟩) = true := by
+    simpa [oneAt] using (hall (oneAt n (n - 1)))
+  rw [hz, ho] at heq
+  cases heq
+
 end PVNP.RadiusCausality
