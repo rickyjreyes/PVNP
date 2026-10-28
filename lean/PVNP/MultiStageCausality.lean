@@ -96,6 +96,7 @@ finite-stage local pipeline with m output cells. -/
 theorem multistage_required_causal_coverage
     (stages : List (Stage Bool)) (n m : Nat)
     (decode : (Fin m → Bool) → Bool)
+    (hm : m ≤ n) (hn : 0 < n)
     (hall : ∀ c : Configuration n Bool,
       decode (fun i => (runStages stages c) ⟨i.val, by omega⟩) =
         c ⟨n - 1, by omega⟩) :
