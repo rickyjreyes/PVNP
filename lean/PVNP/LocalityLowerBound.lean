@@ -113,4 +113,24 @@ theorem every_local_rule_fails_far_bit_by_t
   refine ⟨allZero t, distantOne t, distant_inputs_differ t, ?_⟩
   exact congrArg decode (indistinguishable_far_input t M)
 
+
+/-- No algorithm in this exact locality/readout class can correctly decide
+    the distal-bit language on *all* length-(t+2) direct configurations
+    by round t. This is a linear-time worst-case bound. -/
+theorem no_all_input_last_bit_decider_by_t
+    (t : Nat) (M : RadiusOneMachine Bool) (decode : Bool → Bool) :
+    ¬ (∀ c : Configuration (t + 2) Bool,
+        decode ((iterate (step M) t c) ⟨0, by omega⟩) =
+          c ⟨t + 1, by omega⟩) := by
+  intro hall
+  have hzero : decode ((iterate (step M) t (allZero t)) ⟨0, by omega⟩) =
+      false := by
+    simpa [allZero] using (hall (allZero t))
+  have hone : decode ((iterate (step M) t (distantOne t)) ⟨0, by omega⟩) =
+      true := by
+    simpa [distantOne] using (hall (distantOne t))
+  have heq := congrArg decode (indistinguishable_far_input t M)
+  rw [hzero, hone] at heq
+  cases heq
+
 end PVNP.LocalityLowerBound
