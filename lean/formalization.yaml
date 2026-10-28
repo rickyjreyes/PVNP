@@ -102,7 +102,7 @@ issue_10_model_relative_resource_lower_bound:
 
 issue_10_radius_r_extension:
   module: PVNP/RadiusCausality.lean
-  status: "pending new Lean CI; never mark verified based on presence of source"
+  status: "radius-r core and two-stage prefix theorems Lean CI PASS at 9077a840; new general-size and two-stage decisional corollaries require current-head CI"
   model: "fixed finite radius-r synchronous full-stencil list rule; blank boundaries; direct embedding"
   new_targets:
     - "prefix_step: one global update loses at most radius r of matching prefix"
@@ -117,7 +117,7 @@ issue_10_radius_r_extension:
 
 issue_11_global_tm_encoding_extension:
   module: PVNP/TMGlobal.lean
-  status: "pending new Lean CI; not complete bidirectional simulation"
+  status: "TMGlobal Lean CI PASS at 9077a840; bidirectional simulation remains open"
   targets:
     - "canonical one-head marked encoding from independent bounded-tape TM configuration"
     - "unique encoded head and exact global tape-write update for arbitrary finite transition"
@@ -133,7 +133,7 @@ issue_11_finite_machine_description_and_restricted_trace:
     - PVNP/MachineCode.lean
     - PVNP/FiniteWCCCode.lean
     - PVNP/TMStayTrace.lean
-  status: "source committed; check CI for the exact final commit"
+  status: "MachineCode, FiniteWCCCode, TMStayTrace Lean CI PASS at 9077a840; restricted scope only"
   genuine_theorem_scope:
     - "one-hot finite binary-grid machine table descriptions and injectivity"
     - "explicit polynomial table-bit bounds for finite Turing and finite WCC local rules"
@@ -148,3 +148,30 @@ issue_11_finite_machine_description_and_restricted_trace:
     - "flat binary serialization and parsing of machine code with running-time bounds"
     - "actual ordinary TM machine instruction schedule and proof of step count"
     - "uniform language and witness class inclusions with explicit size polynomials"
+
+oct_28_formal_scope_and_ci_ledger:
+  last_confirmed_full_build:
+    commit: "9077a8406e6ee4dca22440d04bb000329a7199c2"
+    action: "https://github.com/rickyjreyes/PVNP/actions/runs/40701665817"
+    conclusion: "success"
+    verified:
+      - "all existing PartII, lower-bound, and finite replay imports"
+      - "radius-r prefix propagation and multiple-site/prefix decoder equality"
+      - "sum-of-radii finite-local encoder+compute prefix cone"
+      - "arbitrary-length distal-bit lower bound for fixed local decoder"
+      - "unique marked initial bounded TM configuration and global tape write"
+      - "all-step stationary-head trace, not moving-head trace"
+      - "injective finite TM/WCC binary-grid descriptions and polynomial bit bounds"
+      - "unrestricted arbitrary functional local-rule nonenumerability obstruction"
+  additions_after_that_build:
+    issue_10:
+      - "no_two_stage_prefix_last_bit: worst-case decisional impossibility with e*r_e+t*r_c+m<n; needs current-head compilation"
+    issue_11:
+      - "TMCellCompiler.left_move_arrives, no_head_appears_from_empty_stencil"
+      - "TMHeadMotion.right_destination_has_head, left_destination_has_head, moving_head_vacates_origin, stationary_head_retained; needs current-head compilation"
+  forbidden_claims:
+    - "complete moving-head execution trace or global head preservation not established"
+    - "finite binary grid is not yet a runnable flat serialized tape-TM decoder"
+    - "ReplayCost abstract units are not ordinary Turing instruction counts"
+    - "no kernel-checked P_WCC = P_TM or NP_WCC = NP_TM"
+    - "no physical curvature preservation, general SAT lower bound, or classical P != NP"

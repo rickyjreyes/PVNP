@@ -95,3 +95,13 @@ not solve moving-head simulation, boundary handling, machine-code
 parsing, actual TM instruction costs, or the general P/NP theorems.
 
 The working definition of done for #11 is still **OPEN**.
+
+## October 28, 2026 verification checkpoint — Issues #10/#11
+
+**Verified expanded baseline:** [Lean CI at commit `9077a840`](https://github.com/rickyjreyes/PVNP/actions/runs/40701665817) passed the complete import tree and all targeted #10/#11 files. This includes the radius-r causal cone, finite-local two-stage preprocessing propagation, machine-code bit-grid representation, and the stationary-head full trace.
+
+**Further #10 source:** `RadiusCausality.no_prefix_decoder_last_bit_general` handles arbitrary tape lengths whenever `t*r + m < n`. `two_stage_prefix` and `two_stage_prefix_decoder_equal` charge separate encoder and compute stages, with causal reach `e*r_e + t*r_c`. `no_two_stage_prefix_last_bit` upgrades that to an all-input impossibility when `e*r_e + t*r_c + m < n`. The final corollary was added after the confirmed green baseline; inspect CI of the precise current head before calling it verified. This does not bound the Turing runtime of arbitrary nonlocal input encoders or continuum phase detectors.
+
+**Further #11 source:** `TMCellCompiler` now checks both moving-head arrival directions and the no-spontaneous-head rule. `TMHeadMotion` targets the original-head vacating and destination-arrival obligations for left/right/stay moves on explicitly interior bounded tapes. These are one-step theorems, not full arbitrary-head trajectory correspondence.
+
+**Outstanding completion gate:** Model a complete safe moving-head TM trace and prove global one-head preservation; serialize/parse finite TM and WCC rule descriptions with runtime bounds; construct a genuine ordinary TM interpreter (with instruction-count proof) for WCC, including input, witness, description, workspace, and round costs; derive uniform P and NP equivalence for the exact finite model. Until then, #11 remains open. A symbolic WCC result is not a curvature-resource theorem.

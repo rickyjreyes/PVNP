@@ -163,3 +163,41 @@ unique head. Its scope does not include left/right moves. General
 bounded-tape simulation and the reverse finite-WCC Turing interpreter
 remain unproved, so neither exact discrete P nor NP equivalence
 may be labeled kernel-certified.
+
+## October 28 verified baseline and new work
+
+A complete Lean CI run passed at `9077a840`:
+https://github.com/rickyjreyes/PVNP/actions/runs/40701665817.
+This checked `RadiusCausality`, `TMGlobal`, `TMStayTrace`,
+`MachineCode`, `FiniteWCCCode`, `OracleObstruction`,
+`TMCellCompiler`, `ReplayCost`, and all preexisting modules.
+The accepted scope is an unconditional finite-locality information
+lower bound, static finite code representations, a correct global tape
+write rule, and an exact trace for **stationary-head machines**.
+
+The stronger radius-r cost ledger distinguishes two synchronized,
+finite-stencil stages: encoder radius `r_e`, encoder rounds `e`,
+computer radius `r_c`, computer rounds `t`, and a decoder receiving
+only the first `m` cells. The initial-data causal footprint ends at
+index `e*r_e+t*r_c+m-1`. If `n>e*r_e+t*r_c+m`, the final bit lies
+outside the cone; the new `no_two_stage_prefix_last_bit` statement
+exhibits a pair differing only at the final position and contradicts
+correctness on all length-n inputs. This is stronger than an assumption
+that input encoding is a free, arbitrary operation. The *decisional*
+corollary is new and must pass CI at its exact commit.
+
+The latest `TMHeadMotion` source separately checks a right-moving
+head arrives at `p+1`, a left-moving head arrives at `p-1`, a
+non-stationary head leaves its previous cell, and a stationary head
+remains. These use the independent bounded-tape configuration and
+actual local compiler semantics. They do not yet prove that **no other**
+cell is marked after an arbitrary move; hence arbitrary finite-trace
+preservation and a moving-head TM compiler are still open.
+
+Full ordinary-TM execution-step and memory bounds require a genuinely
+finite coded interpreter with explicit tape and instruction operations.
+The declared list `ReplayCost` formula is not that program. Uniform
+polynomial-time language-equivalence and P/NP witness class proofs
+remain **unproved**. No resource lower bound is extrapolated to
+physical phase, nodes, curvature, all algorithms, SAT hardness,
+or classical P versus NP.
