@@ -76,7 +76,7 @@ theorem finiteCodeBitCount_quartic (s : Nat) :
     finiteCodeBitCount s ≤ 2 * (s + 1) ^ 4 := by
   have hs : s ≤ s + 1 := by omega
   have hpow : s ^ 4 ≤ (s + 1) ^ 4 :=
-    Nat.pow_le_pow_left hs
+    Nat.pow_le_pow_left hs 4
   have hlinear : s ≤ (s + 1) ^ 4 := by
     nlinarith [sq_nonneg ((s : ℤ) + 1)]
   unfold finiteCodeBitCount

@@ -56,7 +56,8 @@ theorem stayStep_encoded (T : TMTable Q Gamma)
   · by_cases hi : i = c.headPos
     · subst i
       simp [step, compile, encode, compiledRule,
-            tmStayStep, instruction, hs]
+            tmStayStep, instruction]
+      all_goals exact hs c.control (c.tape c.headPos)
     · have hc : (encode c i).head = none := by
         simp [encode, hi]
       have hno := headless_noarrival T hs
