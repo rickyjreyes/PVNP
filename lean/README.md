@@ -34,3 +34,6 @@ Run `cd lean && lake update && lake exe cache get && lake build`. CI rejects `so
 
 ## Expanding-domain test
 [ExpandingDomain.lean](PVNP/ExpandingDomain.lean) formalizes the vanishing density-curvature coefficient for growing volume with fixed mass and a representative bounded Hamiltonian energy expression. The [analytic exact PDE mode](../pvnp/proofs/expanding-domain-hamiltonian-mode.md) demonstrates that conservation rails do not automatically supply input-size-uniform curvature coefficients.
+
+## Actual split 3-CNF and finite-alphabet capacity
+[SplitSATCapacity.lean](PVNP/SplitSATCapacity.lean) verifies the complete indexed tripled-literal SAT reduction to DISJ and the all-protocol deterministic bounded-alphabet transcript bound 2^n ≤ q^m (binary m ≥ n), conditional on rectangle/correctness properties. The [robust-noise physical packing analysis](../pvnp/proofs/split-3sat-reliable-channel.md) is conventional mathematics and is not Lean certified as a WCT PDE channel result.

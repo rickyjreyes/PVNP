@@ -37,3 +37,11 @@ Run `bash scripts/build_pdfs.sh` in a LaTeX environment with the required packag
 ## Latest quantitative scaling audit
 
 [Expanding-domain exact nonlinear Hamiltonian plane wave](pvnp/proofs/expanding-domain-hamiltonian-mode.md): on growing periodic devices, fixed positive mass and uniformly bounded Hamiltonian do not give an input-size-independent positive curvature-to-Laplacian coefficient. This does not contradict the existing [fixed-domain nodal coercivity supplement](pvnp/preprints/supplement-fixed-mass-nodal-coercivity/README.md).
+
+## Latest deterministic SAT channel theorem
+
+[Split-input 3-CNF SAT and finite-alphabet lower bound](pvnp/proofs/split-3sat-reliable-channel.md) prove that **every** correct deterministic two-party SAT protocol under standard full-transcript rectangularity has `2^n <= q^m`, where `m` is the number of transcript symbols and `q` their alphabet size. This is a *restricted distributed-communication theorem*, not a universal SAT time lower bound or a proof of classical P ≠ NP. Lean checks the exact 3-CNF semantics and counting argument; the separate amplitude/noise packing bound explicitly requires instrument specifications.
+
+## Bandlimited wave-state reliability bound
+
+For an actual conserved-mass WCT Hamiltonian field read through a complex D-mode projection with adversarial norm-eta noise, the [sphere-packing theorem](pvnp/proofs/bandlimited-noisy-wave-packing.md) shows `N <= (1 + sqrt(M)/eta)^(2D)` for N individually decodable field labels. This standard analytical proof requires receiver spectral-band limits and robust distinct readouts. It **does not** force SAT solvers to distinguish all assignments and is not Lean-certified as a continuum theorem.

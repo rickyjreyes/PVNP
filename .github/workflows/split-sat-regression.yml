@@ -1,0 +1,20 @@
+name: Split 3-CNF semantic checks
+on:
+  push:
+    paths:
+      - 'pvnp/tests/test_split_three_sat.py'
+      - '.github/workflows/split-sat-regression.yml'
+  pull_request:
+    paths:
+      - 'pvnp/tests/test_split_three_sat.py'
+      - '.github/workflows/split-sat-regression.yml'
+jobs:
+  semantic-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exhaustive small-input SAT semantics
+        run: python -m unittest discover -s pvnp/tests -p 'test_split_three_sat.py'

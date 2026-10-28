@@ -55,3 +55,9 @@ The supplement is kept outside Parts I–III and does not modify any original-pr
 ## Full proof completion and scaling falsifier
 
 [Full PVNP end-to-end proof completion charter](pvnp/PROOF_COMPLETION_CHARTER.md) · [Exact expanding-domain Hamiltonian countermodel](pvnp/proofs/expanding-domain-hamiltonian-mode.md) · [Lean algebra](lean/PVNP/ExpandingDomain.lean) · [Executable checks](pvnp/tests/check_expanding_mode.py).
+
+## Split 3-CNF distributed communication and robust channel
+
+[Indexed 3-CNF reduction, all-protocol finite-alphabet cut bound, noise-aware packing and scope](pvnp/proofs/split-3sat-reliable-channel.md) · [Lean semantics and transcript theorem](lean/PVNP/SplitSATCapacity.lean) · [Exhaustive checks](pvnp/tests/test_split_three_sat.py).
+
+[Finite-band robust WCT readout: conserved mass, spectral dimension and noise packing](pvnp/proofs/bandlimited-noisy-wave-packing.md) — separate analytic resource theorem, not a universal SAT lower bound.
