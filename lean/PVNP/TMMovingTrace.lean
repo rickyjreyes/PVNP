@@ -43,10 +43,10 @@ theorem safe_moving_step_encoded (T : TMTable Q Gamma) {n : Nat}
     (h : SafeMovingStep T c d) :
     step (compile T) (encode c) = encode d := by
   cases h with
-  | right c hmove hbound =>
-      exact right_step_encoded T c hmove hbound
-  | left c hmove hbound =>
-      exact left_step_encoded T c hmove hbound
+  | right hmove hbound =>
+      exact right_step_encoded T _ hmove hbound
+  | left hmove hbound =>
+      exact left_step_encoded T _ hmove hbound
 
 /-- Exact inductive execution traces of independently specified
 bounded-tape moving-head TM configurations. -/
@@ -68,7 +68,7 @@ theorem safe_moving_trace_encoded (T : TMTable Q Gamma) {n : Nat}
   induction h with
   | zero c => rfl
   | succ hfirst htail ih =>
-      rw [Function.iterate_succ_apply]
+      rw [← Nat.succ_eq_add_one, Function.iterate_succ_apply]
       rw [safe_moving_step_encoded T hfirst]
       exact ih
 
