@@ -18,6 +18,7 @@ import PVNP.TMCellCompiler
 import PVNP.ReplayCost
 import PVNP.LocalityLowerBound
 import PVNP.RadiusCausality
+import PVNP.MultiStageCausality
 import PVNP.TMGlobal
 import PVNP.TMStayTrace
 import PVNP.MachineCode
