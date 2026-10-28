@@ -72,4 +72,35 @@ theorem safe_moving_trace_encoded (T : TMTable Q Gamma) {n : Nat}
       rw [ih]
       exact safe_moving_step_encoded T hlast
 
+
+/-- For every finite trace of safe left/right moves, the compiled WCC
+configuration has exactly the final TM head position and no other marker.
+This is a trace-level global uniqueness theorem, not just a per-step fact. -/
+theorem safe_moving_trace_head_iff (T : TMTable Q Gamma) {n : Nat}
+    {t : Nat} {c d : TMConfiguration n Q Gamma}
+    (h : SafeMovingTrace T t c d) (i : Fin n) :
+    ((iterate (step (compile T)) t (encode c)) i).head ≠ none ↔
+      i = d.headPos := by
+  rw [safe_moving_trace_encoded T h]
+  exact encode_head_unique d i
+
+/-- A unique global marker survives every finite sequence of safe moves. -/
+theorem safe_moving_trace_unique_head (T : TMTable Q Gamma) {n : Nat}
+    {t : Nat} {c d : TMConfiguration n Q Gamma}
+    (h : SafeMovingTrace T t c d) :
+    ∃! i : Fin n,
+      ((iterate (step (compile T)) t (encode c)) i).head ≠ none := by
+  refine ⟨d.headPos, (safe_moving_trace_head_iff T h d.headPos).2 rfl, ?_⟩
+  intro i hi
+  exact (safe_moving_trace_head_iff T h i).1 hi
+
+/-- The entire final tape, not only the marker trajectory, is recovered
+from the compiled WCC execution after any safe moving-head finite trace. -/
+theorem safe_moving_trace_tape (T : TMTable Q Gamma) {n : Nat}
+    {t : Nat} {c d : TMConfiguration n Q Gamma}
+    (h : SafeMovingTrace T t c d) :
+    (fun i => ((iterate (step (compile T)) t (encode c)) i).symbol) = d.tape := by
+  rw [safe_moving_trace_encoded T h]
+  rfl
+
 end PVNP.TMMovingTrace
