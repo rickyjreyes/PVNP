@@ -62,7 +62,8 @@ theorem left_destination_has_head (T : TMTable Q Gamma)
   let dest : Fin n := ⟨c.headPos.val - 1, by omega⟩
   have hright : right (compile T) (encode c) dest =
       encode c c.headPos := by
-    simp [dest, right, sample, compile, Nat.sub_add_cancel (Nat.le_of_lt hbound)]
+    have hj : c.headPos.val - 1 + 1 = c.headPos.val := by omega
+    simp [dest, right, sample, compile, hj]
   have hne : dest ≠ c.headPos := by
     intro eq
     have hv := congrArg Fin.val eq
@@ -105,7 +106,8 @@ theorem moving_head_vacates_origin (T : TMTable Q Gamma)
     {n : Nat} (c : TMConfiguration n Q Gamma)
     (hmove : (instruction T c).move ≠ Move.stay) :
     ((step (compile T) (encode c)) c.headPos).head = none := by
-  simp [step, compile, encode, compiledRule, instruction, hmove]
+  simp [step, compile, encode, compiledRule, instruction]
+  all_goals simpa [instruction] using hmove
 
 /-- Every stationary transition keeps the head at the same site. -/
 theorem stationary_head_retained (T : TMTable Q Gamma)
