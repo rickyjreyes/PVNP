@@ -115,6 +115,7 @@ theorem stationary_head_retained (T : TMTable Q Gamma)
     (hmove : (instruction T c).move = Move.stay) :
     ((step (compile T) (encode c)) c.headPos).head =
       some (instruction T c).next := by
-  simp [step, compile, encode, compiledRule, instruction, hmove]
+  simp [step, compile, encode, compiledRule, instruction]
+  all_goals simpa [instruction] using hmove
 
 end PVNP.TMHeadMotion
