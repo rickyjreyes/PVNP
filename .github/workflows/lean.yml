@@ -26,5 +26,7 @@ jobs:
       - name: Reject unfinished proof markers
         run: |
           if grep -rnE '^[[:space:]]*(sorry|admit|axiom)([[:space:]]|$)' PVNP; then exit 1; fi
-      - name: Kernel check
-        run: lake build
+      - name: Kernel check (complete PVNP import tree)
+        run: lake build PVNP
+      - name: Check issue 10 and 11 proof modules explicitly
+        run: lake build PVNP.LocalityLowerBound PVNP.ReplayCost PVNP.TMCellCompiler
