@@ -283,4 +283,29 @@ theorem no_two_stage_prefix_last_bit
   rw [hz, ho] at heq
   cases heq
 
+
+/-- Necessary total local-work coverage for every correct two-stage
+encoder+computer+prefix-decoder pipeline, with both local radii and
+both round budgets charged explicitly. This is the direct positive
+resource-inequality consequence of the unconditional far-bit theorem. -/
+theorem two_stage_required_causal_coverage
+    (encoderRadius computeRadius encoderRounds computeRounds m n : Nat)
+    (encoder : RadiusMachine Bool encoderRadius)
+    (computer : RadiusMachine Bool computeRadius)
+    (decode : (Fin m → Bool) → Bool)
+    (hall : ∀ c : Configuration n Bool,
+      decode (fun i =>
+        (iterate (step computer) computeRounds
+          (iterate (step encoder) encoderRounds c))
+            ⟨i.val, by omega⟩) =
+      c ⟨n - 1, by omega⟩) :
+    n ≤ encoderRounds * encoderRadius +
+      computeRounds * computeRadius + m := by
+  by_contra h
+  have hfar : encoderRounds * encoderRadius +
+      computeRounds * computeRadius + m < n := by omega
+  exact (no_two_stage_prefix_last_bit
+    encoderRadius computeRadius encoderRounds computeRounds m n
+    hfar encoder computer decode) hall
+
 end PVNP.RadiusCausality
