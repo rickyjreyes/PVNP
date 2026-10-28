@@ -145,4 +145,13 @@ theorem shortcut_encoding_reads_far_at_zero {n : Nat}
     copyFar c target ⟨0, hn⟩ = c target := by
   simp [copyFar]
 
+/-- Unrestricted input preprocessors can decide any Boolean predicate
+    in their output encoding. This is an adversarial nonuniform/unpaid
+    encoding countermodel, not a uniform polynomial-time algorithm. -/
+theorem uncharged_encoder_decides_any_language
+    {Input : Type} (answer : Input → Bool) :
+    ∃ encoder : Input → Configuration 1 Bool,
+      ∀ x, encoder x ⟨0, by norm_num⟩ = answer x := by
+  exact ⟨(fun x _ => answer x), (by intro x; rfl)⟩
+
 end PVNP.RadiusCausality

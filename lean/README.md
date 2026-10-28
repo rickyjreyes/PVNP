@@ -60,3 +60,19 @@ ordinary Turing-machine simulation. The complete bidirectional polynomial
 equivalence and P/NP class equalities are therefore **not Lean verified**.
 
 See [the exact proof and obstruction ledger](../pvnp/proofs/issue-10-11-formal-audit.md).
+
+### Further source extensions under PR #14
+
+[RadiusCausality.lean](PVNP/RadiusCausality.lean) expresses the general
+radius `r` information cone: after `t` rounds, a prefix of `m` output
+cells can depend only on the first `t*r+m` initial cells. This extends to
+*any* decoder of that finite prefix, and yields a direct-input last-bit
+impossibility for `n=t*r+m+1`. A nonlocal encoding that copies the far
+bit to the first cell is an explicit counterexample to applying the bound
+when input processing is uncharged. These theorems concern symbolic
+finite-state locality, not continuous phase or curvature physics.
+
+[TMGlobal.lean](PVNP/TMGlobal.lean) introduces a distinct Turing configuration
+(tape/head/control) and a canonical marked WCC encoding. The per-cell
+compiled TM tape-write agreement is a global update theorem, but
+complete head-movement preservation and all-step simulation are still open.

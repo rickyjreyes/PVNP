@@ -103,3 +103,40 @@ table at zero cost.
 This checkpoint is a proof/result ledger, not a declaration of either
 mission's full success. Discrete symbol operations alone do not prove
 physical curvature preservation.
+
+## Radius r extension and local decoder limitations
+
+For fixed radius `r`, time `t`, and `m` observed output cells,
+`PVNP.RadiusCausality.prefix_iterate` derives the causal dependence
+radius `t*r` for the full finite stencil (not merely a three-cell
+radius-one special case). `prefix_decoder_equal` permits **any**
+postprocessing function of the observed `m` cells, so additional decoder
+complexity alone cannot restore information that has not propagated.
+
+For direct configurations of length `n=t*r+m+1`, the last input
+bit lies outside that cone and `no_prefix_decoder_last_bit` rules
+out an all-input correct decider within `t` rounds. It is equivalent
+to a lower bound `t*r >= n-m` for a correct fixed-prefix readout,
+when the radius and prefix length have been fixed in advance.
+
+The construction explicitly fails for general uncharged encoding:
+`shortcut_encoding_reads_far_at_zero` puts an arbitrary remote bit
+at the first cell at initialization and allows zero-round readout.
+Global readout likewise bypasses the fixed-prefix assumption.
+A time-varying/long-range rule with an effectively unbounded radius
+must pay for that dependence separately.
+
+This proof does not require nonzero wave amplitudes or assume a mass
+detector. It does **not** establish that a continuous wave's phase,
+nodal geometry or remote optical readout obeys the same symbolic
+causal cone; that would require an independent physical realization
+theorem with explicit constants.
+
+## Bounded-tape TM representation extension
+
+`TMGlobal.lean` adds a mathematical Turing tape, head position and
+control state, proves the single-marker encoding property, and checks
+the tape-write behavior of the compiled WCC local rule at every site.
+Correct head travel (including boundary cases), total trace
+semiconjugacy, and actual serialized Turing interpreter bounds are
+still required before claiming exact class equivalence.

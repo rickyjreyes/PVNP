@@ -99,3 +99,31 @@ issue_10_model_relative_resource_lower_bound:
     - "charged uniform encodings and arbitrary phase-sensitive detectors"
     - "continuum curvature-to-computation bridge with all resource constants"
     - "classical P versus NP"
+
+issue_10_radius_r_extension:
+  module: PVNP/RadiusCausality.lean
+  status: "pending new Lean CI; never mark verified based on presence of source"
+  model: "fixed finite radius-r synchronous full-stencil list rule; blank boundaries; direct embedding"
+  new_targets:
+    - "prefix_step: one global update loses at most radius r of matching prefix"
+    - "prefix_iterate: t rounds propagate information no farther than t*r"
+    - "prefix_decoder_equal: any decoder observing first m cells obeys cone theorem"
+    - "no_prefix_decoder_last_bit: an all-input far-bit decider needs more than t rounds on length t*r+m+1"
+    - "shortcut_encoding_reads_far_at_zero: nonlocal preprocessing invalidates uncharged readout lower bound"
+  limitations:
+    - "all-rule quantification within declared local stencil, not all physical architectures"
+    - "radius, output locality and encoder cost must be explicitly charged as functions of input length"
+    - "influence bound not a curvature bound or SAT hardness claim"
+
+issue_11_global_tm_encoding_extension:
+  module: PVNP/TMGlobal.lean
+  status: "pending new Lean CI; not complete bidirectional simulation"
+  targets:
+    - "canonical one-head marked encoding from independent bounded-tape TM configuration"
+    - "unique encoded head and exact global tape-write update for arbitrary finite transition"
+    - "tape recovered from encoding equality"
+  still_open:
+    - "global head-move theorem and total valid execution traces with boundary policy"
+    - "binary machine description and uniform compiler/decompiler complexity"
+    - "actual single-tape TM interpreter program and machine-level time/space correctness"
+    - "both directions polynomial time and NP witness class equivalence"

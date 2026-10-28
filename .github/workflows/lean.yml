@@ -21,8 +21,12 @@ jobs:
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Fetch Mathlib cache
         run: |
-          lake update
-          lake exe cache get
+          for attempt in 1 2 3 4 5; do
+            if lake update && lake exe cache get; then exit 0; fi
+            echo "Mathlib/toolchain download failed (attempt $attempt/5), retrying"
+            sleep 6
+          done
+          exit 1
       - name: Reject unfinished proof markers
         run: |
           if grep -rnE '^[[:space:]]*(sorry|admit|axiom)([[:space:]]|$)' PVNP; then exit 1; fi
