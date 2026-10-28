@@ -32,6 +32,7 @@ theorem headless_outside_original_neighborhood
       have hne : (⟨i.val - 1, hp⟩ : Fin n) ≠ c.headPos := by
         intro he
         have heq := congrArg Fin.val he
+        change i.val - 1 = c.headPos.val at heq
         omega
       simp [left, hz, sample, hp, encode, hne]
   have hr : (right (compile T) (encode c) i).head = none := by
@@ -39,7 +40,8 @@ theorem headless_outside_original_neighborhood
     · have hne : (⟨i.val + 1, hp⟩ : Fin n) ≠ c.headPos := by
         intro he
         have heq := congrArg Fin.val he
-        omega
+        change i.val + 1 = c.headPos.val at heq
+        exact hright heq
       simp [right, sample, hp, encode, hne]
     · simp [right, sample, hp, compile]
   have h := no_head_appears_from_empty_stencil T
