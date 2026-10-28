@@ -244,4 +244,43 @@ theorem no_prefix_decoder_last_bit_general
   rw [hz, ho] at heq
   cases heq
 
+
+/-- Explicit lower bound charging BOTH local input encoding and subsequent
+    computation. If e*re+t*rc+m<n, the last input bit is outside the
+    observable information cone; no such pipeline decides it on all inputs. -/
+theorem no_two_stage_prefix_last_bit
+    (encoderRadius computeRadius encoderRounds computeRounds m n : Nat)
+    (hfar : encoderRounds * encoderRadius +
+        computeRounds * computeRadius + m < n)
+    (encoder : RadiusMachine Bool encoderRadius)
+    (computer : RadiusMachine Bool computeRadius)
+    (decode : (Fin m → Bool) → Bool) :
+    ¬ (∀ c : Configuration n Bool,
+        decode (fun i =>
+          (iterate (step computer) computeRounds
+            (iterate (step encoder) encoderRounds c))
+              ⟨i.val, by omega⟩) =
+        c ⟨n - 1, by omega⟩) := by
+  intro hall
+  have hp : prefixAgree (allFalse n) (oneAt n (n - 1))
+      (encoderRounds * encoderRadius + computeRounds * computeRadius + m) := by
+    intro i hi
+    have hne : i.val ≠ n - 1 := by omega
+    simp [allFalse, oneAt, hne]
+  have heq := two_stage_prefix_decoder_equal encoder computer
+    (allFalse n) (oneAt n (n - 1))
+    encoderRounds computeRounds m (by omega) hp decode
+  have hz : decode (fun i =>
+      (iterate (step computer) computeRounds
+        (iterate (step encoder) encoderRounds (allFalse n)))
+          ⟨i.val, by omega⟩) = false := by
+    simpa [allFalse] using (hall (allFalse n))
+  have ho : decode (fun i =>
+      (iterate (step computer) computeRounds
+        (iterate (step encoder) encoderRounds (oneAt n (n - 1))))
+          ⟨i.val, by omega⟩) = true := by
+    simpa [oneAt] using (hall (oneAt n (n - 1)))
+  rw [hz, ho] at heq
+  cases heq
+
 end PVNP.RadiusCausality
