@@ -33,4 +33,4 @@ jobs:
       - name: Kernel check (complete PVNP import tree)
         run: lake build PVNP
       - name: Check issue 10 and 11 proof modules explicitly
-        run: lake build PVNP.LocalityLowerBound PVNP.ReplayCost PVNP.TMCellCompiler PVNP.RadiusCausality PVNP.TMGlobal PVNP.TMStayTrace PVNP.MachineCode
+        run: lake build PVNP.LocalityLowerBound PVNP.ReplayCost PVNP.TMCellCompiler PVNP.RadiusCausality PVNP.TMGlobal PVNP.TMStayTrace PVNP.MachineCode PVNP.FiniteWCCCode
