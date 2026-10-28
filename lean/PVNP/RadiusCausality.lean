@@ -154,4 +154,20 @@ theorem uncharged_encoder_decides_any_language
       ∀ x, encoder x ⟨0, by norm_num⟩ = answer x := by
   exact ⟨(fun x _ => answer x), (by intro x; rfl)⟩
 
+/-- A decoder may inspect any finite list of sites, not necessarily a
+    contiguous block, as long as every observed site lies inside the
+    explicitly paid prefix. This allows multiple separated outputs. -/
+theorem sparse_decoder_equal (M : RadiusMachine S r) {n : Nat}
+    (c d : Configuration n S) (t m outputCount : Nat)
+    (observed : Fin outputCount → Fin n)
+    (hsite : ∀ j, (observed j).val < m)
+    (h : prefixAgree c d (t * r + m))
+    (decode : (Fin outputCount → S) → Bool) :
+    decode (fun j => (iterate (step M) t c) (observed j)) =
+      decode (fun j => (iterate (step M) t d) (observed j)) := by
+  have hp := prefix_iterate M c d t m h
+  congr 1
+  funext j
+  exact hp (observed j) (hsite j)
+
 end PVNP.RadiusCausality
