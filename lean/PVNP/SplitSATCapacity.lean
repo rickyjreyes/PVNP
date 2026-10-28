@@ -52,9 +52,9 @@ theorem split_three_sat_iff_disjoint {n : Nat} (a b : Bits n) :
   constructor
   · rintro ⟨z, hz⟩ i
     cases ha : a i <;> cases hb : b i
-    · exact Or.inl ha
-    · exact Or.inl ha
-    · exact Or.inr hb
+    · exact Or.inl rfl
+    · exact Or.inl rfl
+    · exact Or.inr rfl
     · exfalso
       have hpos : z i = true := by
         simpa only [triple_clause_eq] using (hz i).1 ha
@@ -71,7 +71,7 @@ theorem split_three_sat_iff_disjoint {n : Nat} (a b : Bits n) :
       rcases hdisj i with ha | hbfalse
       · simp [triple_clause_eq, ha]
       · rw [hb] at hbfalse
-        cases Bool.noConfusion hbfalse
+        simp at hbfalse
 
 /-- A diagonal complement pair always has a satisfying assignment. -/
 theorem diagonal_split_sat {n : Nat} (a : Bits n) :
@@ -84,16 +84,16 @@ rectangular transcript map has at least 2^n distinct transcript words.
 Each of its m slots ranges over Fin q. The correctness assumption is
 about the SAME combined 3-CNF language defined above. -/
 theorem distributed_three_sat_transcript_capacity
-    {n m q : Nat}
-    (protocol : Bits n → Bits n → (Fin m → Fin q))
-    (accepts : (Fin m → Fin q) → Prop)
+    {n m : Nat} {Symbol : Type*} [Fintype Symbol]
+    (protocol : Bits n → Bits n → (Fin m → Symbol))
+    (accepts : (Fin m → Symbol) → Prop)
     (hrectangle : ∀ a a' b b',
       protocol a b = protocol a' b' →
         protocol a b' = protocol a b ∧
         protocol a' b = protocol a b)
     (hcorrect : ∀ a b, accepts (protocol a b) ↔
       ∃ z : Bits n, splitThreeSat a b z) :
-    2 ^ n ≤ q ^ m := by
+    2 ^ n ≤ (Fintype.card Symbol) ^ m := by
   have haccept : ∀ a, accepts (protocol a (fun i => !a i)) := by
     intro a
     exact (hcorrect a (fun i => !a i)).2 (diagonal_split_sat a)
@@ -105,6 +105,23 @@ theorem distributed_three_sat_transcript_capacity
   have hcard := PVNP.Communication.disjointness_transcript_lower_bound
     protocol accepts hrectangle haccept hsound
   simpa [Fintype.card_fun] using hcard
+
+/-- Specialize the finite-alphabet result to q physically distinct
+symbols. All semantics and rectangle conditions are unchanged. -/
+theorem distributed_three_sat_qary_slots
+    {n m q : Nat}
+    (protocol : Bits n → Bits n → (Fin m → Fin q))
+    (accepts : (Fin m → Fin q) → Prop)
+    (hrectangle : ∀ a a' b b',
+      protocol a b = protocol a' b' →
+        protocol a b' = protocol a b ∧
+        protocol a' b = protocol a b)
+    (hcorrect : ∀ a b, accepts (protocol a b) ↔
+      ∃ z : Bits n, splitThreeSat a b z) :
+    2 ^ n ≤ q ^ m := by
+  have h := distributed_three_sat_transcript_capacity
+    protocol accepts hrectangle hcorrect
+  simpa using h
 
 /-- Binary fixed-length transcript consequence, including interactive
 deterministic protocols provided complete transcript classes are
