@@ -23,3 +23,4 @@ import PVNP.TMStayTrace
 import PVNP.MachineCode
 import PVNP.FiniteWCCCode
 import PVNP.OracleObstruction
+import PVNP.TMHeadMotion
