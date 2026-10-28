@@ -34,7 +34,6 @@ theorem encode_head_iff {n : Nat}
     (c : TMConfiguration n Q Gamma) (i : Fin n) :
     (encode c i).head = some c.control ↔ i = c.headPos := by
   simp [encode]
-  by_cases h : i = c.headPos <;> simp [h]
 
 theorem encode_head_unique {n : Nat}
     (c : TMConfiguration n Q Gamma) (i : Fin n) :

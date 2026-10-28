@@ -40,7 +40,7 @@ theorem windowSample_prefix (M : RadiusMachine S r) {n k : Nat}
     windowSample M c i off = windowSample M d i off := by
   unfold windowSample
   split_ifs with hbound hinside
-  · exact h ⟨_, hinside⟩ (by omega)
+  · exact h ⟨_, hinside⟩ (by change i.val + r - off < k + r; omega)
   · rfl
   · rfl
 
