@@ -24,3 +24,4 @@ import PVNP.MachineCode
 import PVNP.FiniteWCCCode
 import PVNP.OracleObstruction
 import PVNP.TMHeadMotion
+import PVNP.TMHeadSupport
