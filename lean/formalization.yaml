@@ -51,3 +51,9 @@ expanding_domain_hamiltonian_test:
   proved_in_lean: "density weight volume bound; absence of volume-uniform floor; normalized mode algebra and bounded representative Hamiltonian expression"
   analytic_only: "exact complex plane-wave solution of projection-free PDE; Fourier readout and input-volume asymptotics"
   remains_open: "uniform WCC algorithm-independent resource lower bound and P versus NP"
+
+split_sat_channel_capacity:
+  module: PVNP/SplitSATCapacity.lean
+  lean_scope: "indexed tripled-literal 3-CNF satisfiability iff set disjointness, exact deterministic rectangle-transcript all-protocol q^m capacity, binary slots"
+  analytic_not_lean: "amplitude/noise scalar-symbol packing q <= ceil(A/eta) and hardware realization"
+  not_proved: "model-independent physical communication or exponential classical SAT lower bound"
