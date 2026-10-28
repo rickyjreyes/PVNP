@@ -55,8 +55,8 @@ inductive SafeMovingTrace (T : TMTable Q Gamma) {n : Nat} :
   | zero (c : TMConfiguration n Q Gamma) :
       SafeMovingTrace T 0 c c
   | succ {t : Nat} {c mid d : TMConfiguration n Q Gamma}
-      (hfirst : SafeMovingStep T c mid)
-      (htail : SafeMovingTrace T t mid d) :
+      (htail : SafeMovingTrace T t c mid)
+      (hlast : SafeMovingStep T mid d) :
       SafeMovingTrace T (t + 1) c d
 
 /-- Universal finite-trace semiconjugacy for safe nonstationary
@@ -67,9 +67,9 @@ theorem safe_moving_trace_encoded (T : TMTable Q Gamma) {n : Nat}
     iterate (step (compile T)) t (encode c) = encode d := by
   induction h with
   | zero c => rfl
-  | succ hfirst htail ih =>
-      rw [← Nat.succ_eq_add_one, Function.iterate_succ_apply]
-      rw [safe_moving_step_encoded T hfirst]
-      exact ih
+  | succ htail hlast ih =>
+      rw [PVNP.PartII.iterate_succ]
+      rw [ih]
+      exact safe_moving_step_encoded T hlast
 
 end PVNP.TMMovingTrace
