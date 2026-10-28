@@ -17,3 +17,5 @@ import PVNP.SplitSATCapacity
 import PVNP.TMCellCompiler
 import PVNP.ReplayCost
 import PVNP.LocalityLowerBound
+import PVNP.RadiusCausality
+import PVNP.TMGlobal
