@@ -99,10 +99,10 @@ theorem headless_preserves_symbol {Q Gamma : Type} (T : TMTable Q Gamma)
     center, provided no other head is already there. -/
 theorem right_move_arrives {Q Gamma : Type} (T : TMTable Q Gamma)
     (q : Q) (l c r : TapeCell Q Gamma)
-    (hc : c.head = none)
+    (hc : c.head = none) (hl : l.head = some q)
     (h : (T.transition q l.symbol).move = Move.right) :
-    (compiledRule T l { c with head := none } r).head =
+    (compiledRule T l c r).head =
       some (T.transition q l.symbol).next := by
-  simp [compiledRule, h]
+  simp [compiledRule, hc, hl, h]
 
 end PVNP.TMCellCompiler

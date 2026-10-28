@@ -100,7 +100,7 @@ theorem indistinguishable_far_input (t : Nat)
     simp [allZero, distantOne, hne]
   have h := prefix_agree_iterate M (allZero t) (distantOne t)
     t 1 (by simpa using hprefix)
-  exact h ⟨0, by omega⟩ (by omega)
+  exact h ⟨0, by omega⟩ (by simp)
 
 /-- Decoding the left-end state does not evade the causal lower bound.
     A global output decoder or a nonlocal encoder would be a DIFFERENT model. -/
