@@ -34,6 +34,7 @@ theorem right_neighbor_headless_on_left_move
   have hp : i.val - 1 < n := by omega
   have hleftidx : (⟨i.val - 1, hp⟩ : Fin n) = c.headPos := by
     apply Fin.ext
+    change i.val - 1 = c.headPos.val
     omega
   have hl : (left (compile T) (encode c) i).head =
       some c.control := by
