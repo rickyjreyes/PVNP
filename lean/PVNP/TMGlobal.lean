@@ -76,4 +76,44 @@ theorem encoding_recovers_tape {n : Nat}
   have he := congrArg (fun k => (k i).symbol) h
   simpa [encode] using he
 
+/-- The canonical one-head-marker encoding also recovers the unique
+head position. Exact global tape recovery was established earlier. -/
+theorem encoding_recovers_head {n : Nat}
+    (c d : TMConfiguration n Q Gamma) (h : encode c = encode d) :
+    c.headPos = d.headPos := by
+  have hc : (encode c c.headPos).head ≠ none := by
+    simp [encode]
+  have hd : (encode d c.headPos).head ≠ none := by
+    rw [← h]
+    exact hc
+  exact (encode_head_unique d c.headPos).1 hd
+
+/-- The control state is faithfully encoded in the unique head cell. -/
+theorem encoding_recovers_control {n : Nat}
+    (c d : TMConfiguration n Q Gamma) (h : encode c = encode d) :
+    c.control = d.control := by
+  have hp : c.headPos = d.headPos := encoding_recovers_head c d h
+  have hc := congrArg (fun u => (u c.headPos).head) h
+  simpa [encode, hp] using hc
+
+/-- Full injectivity of the direct TM configuration compiler.
+No bounded-tape TM information (tape, head, control) is lost by
+encoding it as a uniquely marked finite WCC configuration. -/
+theorem encode_injective {n : Nat} :
+    Function.Injective (encode : TMConfiguration n Q Gamma →
+      Configuration n (TapeCell Q Gamma)) := by
+  intro c d h
+  have ht := encoding_recovers_tape c d h
+  have hp := encoding_recovers_head c d h
+  have hq := encoding_recovers_control c d h
+  cases c with
+  | mk ct cp cq =>
+    cases d with
+    | mk dt dp dq =>
+      dsimp at ht hp hq
+      cases ht
+      cases hp
+      cases hq
+      rfl
+
 end PVNP.TMGlobal
