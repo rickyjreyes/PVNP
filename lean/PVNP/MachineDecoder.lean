@@ -26,7 +26,7 @@ theorem decodeOneHot_oneHot {n : Nat} (i : Fin n) :
       ⟨by simp [oneHot], by
         intro j hj
         have hji : j = i := by simpa [oneHot] using hj
-        exact le_of_eq hji⟩
+        exact le_of_eq hji.symm⟩
   simpa [decodeOneHot] using he
 
 /-- An explicit inverse of the three finite movement tags. -/
