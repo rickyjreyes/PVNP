@@ -29,6 +29,25 @@ theorem decodeOneHot_oneHot {n : Nat} (i : Fin n) :
         exact le_of_eq hji.symm⟩
   simpa [decodeOneHot] using he
 
+/-- Fully validated one-hot decoding: reject all-zero AND multi-hot
+bit fields rather than silently choosing the first enabled index. -/
+def decodeStrictOneHot {n : Nat} (bits : Fin n → Bool) :
+    Option (Fin n) :=
+  match decodeOneHot bits with
+  | none => none
+  | some i => if bits = oneHot i then some i else none
+
+/-- Valid one-hot values remain exactly decodable, including the
+empty-domain edge case where no index exists. -/
+theorem decodeStrictOneHot_oneHot {n : Nat} (i : Fin n) :
+    decodeStrictOneHot (oneHot i) = some i := by
+  simp [decodeStrictOneHot, decodeOneHot_oneHot]
+
+/-- The invalid two-hot 2-bit field is rejected by the strict parser. -/
+theorem decodeStrictOneHot_reject_two_hot :
+    decodeStrictOneHot (fun _ : Fin 2 => true) = none := by
+  decide
+
 /-- An explicit inverse of the three finite movement tags. -/
 def moveFromIndex (i : Fin 3) : Move :=
   if i = 0 then Move.left else if i = 1 then Move.stay else Move.right
@@ -41,9 +60,9 @@ theorem moveFromIndex_moveIndex (m : Move) :
 one-hot fields (including all-zero fields) can be rejected. -/
 def decodeInstructionBits {q g : Nat}
     (bits : InstructionBits q g) : Option (Instruction (Fin q) (Fin g)) := do
-  let next ← decodeOneHot bits.1
-  let write ← decodeOneHot bits.2.1
-  let movement ← decodeOneHot bits.2.2
+  let next ← decodeStrictOneHot bits.1
+  let write ← decodeStrictOneHot bits.2.1
+  let movement ← decodeStrictOneHot bits.2.2
   return ⟨next, write, moveFromIndex movement⟩
 
 /-- Round-trip correctness for every finite instruction, not merely
@@ -54,7 +73,7 @@ theorem decodeInstructionBits_roundtrip {q g : Nat}
   cases ins with
   | mk next write move =>
       simp [decodeInstructionBits, instructionBits,
-        decodeOneHot_oneHot, moveFromIndex_moveIndex]
+        decodeStrictOneHot_oneHot, moveFromIndex_moveIndex]
 
 /-- Correct decoders imply uniqueness of the source instructions. -/
 theorem instructionBits_roundtrip_injective {q g : Nat}
