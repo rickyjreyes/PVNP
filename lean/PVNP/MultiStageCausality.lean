@@ -105,4 +105,48 @@ theorem multistage_required_causal_coverage
   have hfar : totalReach stages + m < n := by omega
   exact (no_multistage_prefix_last_bit stages n m hfar decode) hall
 
+/-- The unrestricted finite-stage locality obstruction applies to
+*every distal bit*, not only the last tape cell. With a decoder
+restricted to the first m output sites, a target bit j outside the
+cumulative causal cone cannot be computed correctly for all inputs.
+The statement is for the declared bounded local tape model. -/
+theorem no_multistage_prefix_distal_bit
+    (stages : List (Stage Bool)) (n m : Nat)
+    (j : Fin n) (hfar : totalReach stages + m ≤ j.val)
+    (decode : (Fin m → Bool) → Bool) :
+    ¬ (∀ c : Configuration n Bool,
+      decode (fun i => (runStages stages c) ⟨i.val, by omega⟩) =
+        c j) := by
+  intro hall
+  have hp : prefixAgree (allFalse n) (oneAt n j.val)
+      (totalReach stages + m) := by
+    intro i hi
+    have hne : i.val ≠ j.val := by omega
+    simp [allFalse, oneAt, hne]
+  have heq := multistage_decoder_equal stages (allFalse n)
+    (oneAt n j.val) m (by omega) hp decode
+  have hz : decode (fun i =>
+      (runStages stages (allFalse n)) ⟨i.val, by omega⟩) = false := by
+    simpa [allFalse] using (hall (allFalse n))
+  have ho : decode (fun i =>
+      (runStages stages (oneAt n j.val)) ⟨i.val, by omega⟩) = true := by
+    simpa [oneAt] using (hall (oneAt n j.val))
+  rw [hz, ho] at heq
+  cases heq
+
+/-- Necessary reachability budget for the selected target bit j.
+The exact coordinate j replaces the previous last-cell-only bound;
+the cumulative preprocessing, computation and postprocessing charge
+is unchanged. -/
+theorem multistage_required_coverage_for_bit
+    (stages : List (Stage Bool)) (n m : Nat) (j : Fin n)
+    (hm : m ≤ n) (decode : (Fin m → Bool) → Bool)
+    (hall : ∀ c : Configuration n Bool,
+      decode (fun i => (runStages stages c) ⟨i.val, by omega⟩) =
+        c j) :
+    j.val < totalReach stages + m := by
+  by_contra h
+  have hfar : totalReach stages + m ≤ j.val := by omega
+  exact (no_multistage_prefix_distal_bit stages n m j hfar decode) hall
+
 end PVNP.MultiStageCausality
