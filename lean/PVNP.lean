@@ -22,6 +22,7 @@ import PVNP.MultiStageCausality
 import PVNP.TMGlobal
 import PVNP.TMStayTrace
 import PVNP.MachineCode
+import PVNP.MachineDecoder
 import PVNP.FiniteWCCCode
 import PVNP.OracleObstruction
 import PVNP.TMHeadMotion
