@@ -16,15 +16,17 @@ open PVNP.TMCellCompiler PVNP.MachineCode
 
 /-- Executable finite search for the first enabled bit. -/
 def decodeOneHot {n : Nat} (bits : Fin n → Bool) : Option (Fin n) :=
-  Fin.find? bits
+  Fin.find (fun i => bits i = true)
 
 /-- An honestly encoded one-hot state is decoded exactly. -/
 theorem decodeOneHot_oneHot {n : Nat} (i : Fin n) :
     decodeOneHot (oneHot i) = some i := by
-  have he : i ∈ Fin.find? (oneHot i) := (Fin.mem_find?_iff).2
-    ⟨by simp [oneHot], by
-      intro j hj
-      simp [oneHot, ne_of_lt hj]⟩
+  have he : i ∈ Fin.find (fun j : Fin n => oneHot i j = true) :=
+    (Fin.mem_find_iff).2
+      ⟨by simp [oneHot], by
+        intro j hj
+        have hji : j = i := by simpa [oneHot] using hj
+        exact le_of_eq hji⟩
   simpa [decodeOneHot] using he
 
 /-- An explicit inverse of the three finite movement tags. -/
