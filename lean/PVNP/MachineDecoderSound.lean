@@ -29,8 +29,8 @@ theorem decodeStrictOneHot_sound {n : Nat}
       by_cases hb : bits = oneHot j
       · have hji : j = i := by
           have h' := h
-        simp only [decodeStrictOneHot, hd, if_pos hb, Option.some.injEq] at h'
-        exact h'
+          simp only [decodeStrictOneHot, hd, if_pos hb, Option.some.injEq] at h'
+          exact h'
         simpa [hji] using hb
       · simp [decodeStrictOneHot, hd, hb] at h
 
