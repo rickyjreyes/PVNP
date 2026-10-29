@@ -103,4 +103,31 @@ theorem safe_moving_trace_tape (T : TMTable Q Gamma) {n : Nat}
   rw [safe_moving_trace_encoded T h]
   rfl
 
+/-- Two independently presented safe-moving TM traces of the same
+length from the same initial configuration have the same *complete*
+final TM state. This uses exact WCC trace correspondence together
+with injectivity of the canonical encoding, not an assumed TM
+determinism axiom. -/
+theorem safe_moving_trace_final_unique (T : TMTable Q Gamma) {n : Nat}
+    {t : Nat} {c d e : TMConfiguration n Q Gamma}
+    (hd : SafeMovingTrace T t c d) (he : SafeMovingTrace T t c e) :
+    d = e := by
+  apply encode_injective
+  rw [← safe_moving_trace_encoded T hd,
+      ← safe_moving_trace_encoded T he]
+
+/-- Concatenation of two safe-moving traces preserves the exact
+independent TM execution relation. The resulting WCC run uses the
+sum of the two lengths, not two independent restarts. -/
+theorem safe_moving_trace_append (T : TMTable Q Gamma) {n : Nat}
+    {s t : Nat} {c mid d : TMConfiguration n Q Gamma}
+    (hleft : SafeMovingTrace T s c mid)
+    (hright : SafeMovingTrace T t mid d) :
+    SafeMovingTrace T (s + t) c d := by
+  induction hright with
+  | zero =>
+      simpa using hleft
+  | succ htail hlast ih =>
+      simpa only [Nat.add_assoc] using SafeMovingTrace.succ ih hlast
+
 end PVNP.TMMovingTrace
