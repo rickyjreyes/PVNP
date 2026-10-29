@@ -128,6 +128,6 @@ theorem safe_moving_trace_append (T : TMTable Q Gamma) {n : Nat}
   | zero =>
       simpa using hleft
   | succ htail hlast ih =>
-      simpa only [Nat.add_assoc] using SafeMovingTrace.succ ih hlast
+      simpa only [Nat.add_assoc] using SafeMovingTrace.succ (ih hleft) hlast
 
 end PVNP.TMMovingTrace
