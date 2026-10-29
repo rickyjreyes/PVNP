@@ -28,7 +28,7 @@ alphabets. Malformed records are rejected; valid records are decoded
 by the earlier checked one-hot instruction decoder. -/
 def decodeTableBits {q g : Nat} [NeZero q] [NeZero g]
     (bits : TableBits q g) : Option (FiniteTable q g) :=
-  match decodeOneHot bits.1 with
+  match decodeStrictOneHot bits.1 with
   | none => none
   | some blank =>
       if decide (∀ state : Fin q, ∀ symbol : Fin g,
@@ -49,7 +49,7 @@ theorem decodeTableBits_roundtrip {q g : Nat} [NeZero q] [NeZero g]
     decodeTableBits (tableBits T) = some T := by
   cases T with
   | mk blank transition =>
-      simp [decodeTableBits, tableBits, decodeOneHot_oneHot,
+      simp [decodeTableBits, tableBits, decodeStrictOneHot_oneHot,
         decodeInstructionBits_roundtrip]
 
 /-- The complete encoded table is injective as a direct consequence
