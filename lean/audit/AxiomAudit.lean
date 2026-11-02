@@ -71,3 +71,10 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TransportCalculus.hamiltonian_controls_bandpass
 #print axioms PVNP.AnalogSplitSAT.scalar_level_count
 #print axioms PVNP.AnalogSplitSAT.analog_split_sat_capacity
+#print axioms PVNP.PhysicalAudit.device_physics
+#print axioms PVNP.PhysicalAudit.unrestricted_encoder_trivializes
+#print axioms PVNP.PhysicalAudit.unrestricted_decoder_trivializes
+#print axioms PVNP.PhysicalAudit.P_TM_subset_PhysConst
+#print axioms PVNP.PhysicalAudit.PhysConst_polyEnc_eq_P_TM
+#print axioms PVNP.PhysicalAudit.physical_SAT_lower_bound_is_classical
+#print axioms PVNP.PhysicalAudit.two_states_suffice
