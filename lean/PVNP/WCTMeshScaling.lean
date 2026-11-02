@@ -22,7 +22,6 @@ theorem mesh_flux_prefactor (h : ℝ) (hh : 0 < h) :
   have hn : h ≠ 0 := ne_of_gt hh
   rw [abs_of_nonneg (div_nonneg (by positivity) (sq_nonneg h))]
   field_simp
-  ring
 
 /-- On the unit mesh `h = 1/n`, the same coefficient is `4n` for
 every positive integer number of intervals. -/
