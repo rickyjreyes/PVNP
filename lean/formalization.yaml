@@ -191,7 +191,7 @@ latest_issue_11_head_marker_support:
 
 astra_completion_2026_11_02:
   branch: "astra/complete-program-20261102 (built on PR #14 head 98d0ac20)"
-  verification: "local `lake build PVNP` PASS with pinned Lean v4.23.0 / Mathlib v4.23.0; axiom audit `lean/audit/AxiomAudit.lean` (34 declarations, only propext, Classical.choice, Quot.sound); confirm with current-head GitHub Actions before citing as CI-verified"
+  verification: "local `lake build PVNP` PASS with pinned Lean v4.23.0 / Mathlib v4.23.0; axiom audit `lean/audit/AxiomAudit.lean` (36 declarations, only propext, Classical.choice, Quot.sound); confirm with current-head GitHub Actions before citing as CI-verified"
   issue_11:
     classification: PROVED (for the frozen 1-D radius-one finite quiescent WCC model on Z and ordinary single-tape TMs)
     model: "PVNP/DiscreteMachines.lean: TM (finite Λ, Γ; δ : Λ → Γ → Option (Λ × Γ × Dir); bi-infinite tape; acc/rej flags); WCC (finite S, quiescent blank, radius-one rule on Z, origin-marked input); shared first-answer decision semantics; P_TM, P_WCC, NP_TM := NPOf P_TM, NP_WCC := NPOf P_WCC with explicit Polynomial ℕ time and witness bounds and self-delimiting pairing"
@@ -203,6 +203,7 @@ astra_completion_2026_11_02:
       - "WCC.toTM_decides: ordinary TM decides L within 1 + (T n + 1)(n + 2 T n + 5) steps"
       - "P_TM_subset_P_WCC, P_WCC_subset_P_TM, P_WCC_eq_P_TM, NP_WCC_eq_NP_TM"
       - "p_vs_np_discrete_transfer: (P_WCC = NP_WCC) ↔ (P_TM = NP_TM); lower_bound_transfer"
+      - "WitnessSizeUniformity: pair_length, pair_length_le, NP_TM_verifier_to_WCC (same q, same p, verifier time ≤ p∘(2X+1+q)), NP_WCC_verifier_to_TM"
       - "MachineSerialization: Codec laws; encodeTable_decodeTable (round trip), decodeTable_sound and decodeTable_rejects (malformed/noncanonical rejection), encodeTable_injective, encodeTable_length_le (|code| ≤ 4 + 6k + 4m + k m (k+m+4)), TM.normalize_decides, P_TM_eq_tables"
     remaining_scope_limits:
       - "radius-r and d-dimensional lattices, and polynomial-time (non-local) input encoders of the manuscript's general Definition: not formalized (standard block/encoder composition)"

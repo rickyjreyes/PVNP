@@ -2,7 +2,7 @@
 
 Author of the research program: **Richard J. Reyes**. Original publications (Zenodo releases 03, 12, 13 and the May/November/December 2025 versions) are preserved unchanged; this report records the current, revised state of the mathematics.
 
-Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (which itself extends `main`). Every result below was checked locally with the pinned toolchain (`leanprover/lean4:v4.23.0`, Mathlib `v4.23.0`) via `lake build PVNP`, and the axiom audit `lean/audit/AxiomAudit.lean` reports only `propext`, `Classical.choice`, `Quot.sound` for all 34 principal declarations. GitHub Actions on the branch head is the authoritative CI record.
+Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (which itself extends `main`). Every result below was checked locally with the pinned toolchain (`leanprover/lean4:v4.23.0`, Mathlib `v4.23.0`) via `lake build PVNP`, and the axiom audit `lean/audit/AxiomAudit.lean` reports only `propext`, `Classical.choice`, `Quot.sound` for all 36 principal declarations. GitHub Actions on the branch head is the authoritative CI record.
 
 ---
 
@@ -12,7 +12,7 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
 
 - **Starting status:** OPEN. PR #14 had one-step head motion, safe moving-head traces (left/right only), stationary-head traces, bit-grid machine tables with strict one-hot decoding; no stay/halt in traces, no reverse interpreter, no class theorems.
 - **Work performed:** froze one discrete model pair and proved both simulations end-to-end, the class equalities, and a flat binary serialization.
-- **New Lean files:** `DiscreteMachines.lean`, `TMtoWCC.lean`, `WCCtoTM.lean`, `ComplexityEquivalence.lean`, `MachineSerialization.lean`.
+- **New Lean files:** `DiscreteMachines.lean`, `TMtoWCC.lean`, `WCCtoTM.lean`, `ComplexityEquivalence.lean`, `MachineSerialization.lean`, `WitnessSizeUniformity.lean` (the issue's requested `UniformSimulationBridge` content is `ComplexityEquivalence.explicit_simulations`).
 - **New theorems (qualified names, namespace `PVNP.Discrete`):**
   - `TM.toWCC_step_encode` — `M.toWCC.step (M.encode c) = M.encode (M.next c)` for **every** configuration (left, right, stay, halt).
   - `TM.toWCC_run_encode`, `TM.encode_injective`, `TM.encode_head_unique` — all finite executions; exactly one head marker at every step.
@@ -21,6 +21,7 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
   - `WCC.toTM_decides` — the TM decides `L` within `1 + (T n + 1)(n + 2 T n + 5)` steps.
   - `P_TM_subset_P_WCC`, `P_WCC_subset_P_TM`, **`P_WCC_eq_P_TM`**, **`NP_WCC_eq_NP_TM`**.
   - `p_vs_np_discrete_transfer : (P_WCC = NP_WCC) ↔ (P_TM = NP_TM)`, `lower_bound_transfer`.
+  - Witness quantifiers: `pair_length` (`|pair x w| = 2|x|+1+|w|`), `NP_TM_verifier_to_WCC` (same language, same witness polynomial `q`, same time `p`, verifier time in `|x|` at most `p ∘ (2X+1+q)`), `NP_WCC_verifier_to_TM`.
   - Serialization: `Codec` laws, `encodeTable_decodeTable`, `decodeTable_sound`, `decodeTable_rejects`, `encodeTable_injective`, `encodeTable_length_le` (`|code| ≤ 4 + 6k + 4m + km(k+m+4)`), `TM.normalize_decides`, `P_TM_eq_tables`.
 - **Exact definitions used (no hypothesis restates the conclusion):** `P_TM = {L | ∃ M p, M.Decides L (p.eval ·)}`, `P_WCC` likewise; `NP_X = NPOf P_X` with `x ∈ L ↔ ∃ w, |w| ≤ q(|x|) ∧ pair x w ∈ V`. `Decides` = for every input, the first non-`none` output occurs by step `T |x|` and equals the membership bit. Both alphabets/state sets are `Fintype`.
 - **Readout convention:** a WCC answers when *some* cell carries an accepting/rejecting symbol (acceptance takes precedence). The TM→WCC compiler only ever produces such symbols in the single head cell, and the WCC→TM simulator handles the global readout explicitly, so the class is the same under the local head-cell readout; no non-local readout power is hidden in `P_WCC`.
@@ -111,7 +112,7 @@ No percentages are used. Status words follow the charter's labels.
 | O7 | **Open;** every tested universal statement refuted at stated scope; discrete version proved equivalent to classical P ≠ NP. | M2. |
 | O8 | **Open.** No candidate language with a physical verifier and a proved all-decider lower bound. | M1 + M2. |
 | O9 | **Reduced to classical P vs NP** for the discrete model (`p_vs_np_discrete_transfer`); for the physical model blocked on M1. | Classical P ≠ NP itself (unresolved). |
-| O10 | **Advanced.** 34 principal declarations axiom-audited; CI enforces the audit; Python cross-checks added (`pvnp/tests/test_astra_discrete.py`). | Independent adversarial review; manuscript text alignment (section D). |
+| O10 | **Advanced.** 36 principal declarations axiom-audited; CI enforces the audit; Python cross-checks added (`pvnp/tests/test_astra_discrete.py`). | Independent adversarial review; manuscript text alignment (section D). |
 
 ---
 

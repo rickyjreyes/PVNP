@@ -35,7 +35,7 @@ jobs:
       - name: Check issue 10 and 11 proof modules explicitly
         run: lake build PVNP.LocalityLowerBound PVNP.ReplayCost PVNP.TMCellCompiler PVNP.RadiusCausality PVNP.TMGlobal PVNP.TMStayTrace PVNP.MachineCode PVNP.FiniteWCCCode PVNP.OracleObstruction PVNP.TMHeadMotion PVNP.TMHeadSupport PVNP.TMHeadUniqueRight PVNP.TMHeadUniqueLeft PVNP.TMHeadStep PVNP.TMMovingTrace
       - name: Check ASTRA completion modules explicitly (#10, #11, #12, #15)
-        run: lake build PVNP.DiscreteMachines PVNP.TMtoWCC PVNP.WCCtoTM PVNP.ComplexityEquivalence PVNP.MachineSerialization PVNP.BandlimitedNoisyPacking PVNP.FourierReceiverProjection PVNP.DecisionVsEncodingCounterexample PVNP.PartIIIAnalytic PVNP.DiscreteCurvatureRail PVNP.PhysicalComplexityClasses
+        run: lake build PVNP.DiscreteMachines PVNP.TMtoWCC PVNP.WCCtoTM PVNP.ComplexityEquivalence PVNP.MachineSerialization PVNP.BandlimitedNoisyPacking PVNP.FourierReceiverProjection PVNP.DecisionVsEncodingCounterexample PVNP.PartIIIAnalytic PVNP.DiscreteCurvatureRail PVNP.PhysicalComplexityClasses PVNP.WitnessSizeUniformity
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt

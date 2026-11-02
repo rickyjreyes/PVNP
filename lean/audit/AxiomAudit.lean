@@ -38,3 +38,5 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.PartIIIAnalytic.no_gradient_energy_control
 #print axioms PVNP.PartIII.directed_boundary_eq
 #print axioms PVNP.PartIII.parity_total_influence
+#print axioms PVNP.Discrete.NP_TM_verifier_to_WCC
+#print axioms PVNP.Discrete.NP_WCC_verifier_to_TM

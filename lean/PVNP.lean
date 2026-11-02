@@ -44,3 +44,4 @@ import PVNP.DecisionVsEncodingCounterexample
 import PVNP.PartIIIAnalytic
 import PVNP.DiscreteCurvatureRail
 import PVNP.PhysicalComplexityClasses
+import PVNP.WitnessSizeUniformity
