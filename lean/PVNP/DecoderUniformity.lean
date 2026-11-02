@@ -25,7 +25,7 @@ def signCode (x : Fin n → Bool) : Fin n → ℝ :=
   fun i => if x i then 1 else -1
 
 /-- Zero-threshold sign receiver. -/
-def signDecode (y : Fin n → ℝ) : Fin n → Bool :=
+noncomputable def signDecode (y : Fin n → ℝ) : Fin n → Bool :=
   fun i => decide (0 < y i)
 
 theorem signDecode_signCode (x : Fin n → Bool) :
