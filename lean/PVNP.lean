@@ -59,5 +59,6 @@ import PVNP.R12_DiscreteEquivalence
 import PVNP.R13_PhysicalComplexity
 import PVNP.PhysicalModelAudit
 import PVNP.WCCRadius
+import PVNP.WCCGenerality
 
 import PVNP.DecoderUniformity

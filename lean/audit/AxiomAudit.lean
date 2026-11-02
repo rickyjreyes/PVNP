@@ -98,3 +98,11 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.DecoderUniformity.signDecode_noise
 #print axioms PVNP.DecoderUniformity.arbitrary_predicate_has_robust_decoder
 #print axioms PVNP.DecoderUniformity.number_of_labels
+-- Part II generality: (1+d)-dimensional lattices, encoders, advice
+#print axioms PVNP.Discrete.WCC.toD_run
+#print axioms PVNP.Discrete.WCC.toD_decides
+#print axioms PVNP.Discrete.P_TM_subset_P_WCCD
+#print axioms PVNP.Discrete.NP_TM_subset_NP_WCCD
+#print axioms PVNP.Discrete.P_WCC_enc_id
+#print axioms PVNP.Discrete.unrestricted_encoder_trivializes_WCC
+#print axioms PVNP.Discrete.advice_bit_trivializes
