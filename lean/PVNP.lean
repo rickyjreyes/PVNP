@@ -63,5 +63,6 @@ import PVNP.WCCGenerality
 import PVNP.WCCDFiniteSupport
 import PVNP.WCTLattice
 import PVNP.WCTLatticeGlobalBounds
+import PVNP.WCTMeshScaling
 
 import PVNP.DecoderUniformity
