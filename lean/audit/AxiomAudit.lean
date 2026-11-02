@@ -90,3 +90,11 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Discrete.P_WCCR_radius_invariant
 #print axioms PVNP.Discrete.p_vs_np_radius_transfer
 #print axioms PVNP.Discrete.explicit_radius_simulations
+
+-- Fixed, language-independent robust encoding / unrestricted receiver countermodel
+#print axioms PVNP.DecoderUniformity.signDecode_signCode
+#print axioms PVNP.DecoderUniformity.signCode_mass
+#print axioms PVNP.DecoderUniformity.signCode_injective
+#print axioms PVNP.DecoderUniformity.signDecode_noise
+#print axioms PVNP.DecoderUniformity.arbitrary_predicate_has_robust_decoder
+#print axioms PVNP.DecoderUniformity.number_of_labels

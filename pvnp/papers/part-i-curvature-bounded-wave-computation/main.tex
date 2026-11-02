@@ -133,6 +133,24 @@ This revision records explicit mathematical counterexamples and precise
 remaining obligations under tags \texttt{WIN-01}--\texttt{WIN-08}.
 \end{abstract}
 
+\paragraph{Formal verification status (November 2, 2026).}
+The frozen one-dimensional, radius-one, finite-alphabet symbolic WCC model
+has kernel-checked theorems for
+$P_{\mathrm{WCC}}^{\mathrm{disc}}=P_{\mathrm{TM}}$ and
+$NP_{\mathrm{WCC}}^{\mathrm{disc}}=NP_{\mathrm{TM}}$ in
+\texttt{PVNP.Discrete}. These are theorems for that model, not
+physical curvature-preserving implementations. A fixed,
+language-independent sign encoding of $2^n$ possible inputs in $n$ real
+coordinates has squared amplitude mass $n$ and is stable under per-coordinate
+noise of absolute value less than one. An unrestricted output decoder
+can then apply any predicate. Thus storage capacity, encoding efficiency
+and label count alone cannot prove a decision-time lower bound; decoder
+computability, runtime, precision and uniformity must also be charged.
+The all-algorithm physical curvature lower bound and any physical or
+classical $P$ versus $NP$ separation remain unproved.
+
+
+
 \section{Introduction}
 The $\mathbf{P}$ vs.\ $\mathbf{NP}$ problem asks whether every computational problem
 whose solution can be verified in polynomial time can also be solved in
@@ -188,10 +206,11 @@ Under this \emph{TM--WCC compatibility conjecture}, any internal separation
 $\mathbf{P}_{\mathrm{WCC}} \neq \mathbf{NP}_{\mathrm{WCC}}$, combined with the curvature
 lower bound described above, would imply the classical separation
 $\mathbf{P} \neq \mathbf{NP}$.
-The present work does not assert either the internal separation or the
-simulation equivalence as proved; instead, it isolates them as clearly
-labeled conjectural targets and focuses on the exact logical encoding and the explicit hypotheses needed
-for a future model-relative analytic curvature lower bound.
+The specified frozen one-dimensional radius-one discrete model has a
+kernel-checked polynomial-time TM/WCC equivalence. Its physical
+curvature-preserving realization and any internal physical separation are
+unproved. We focus on the exact logical encoding and explicit hypotheses
+needed for a future model-relative analytic curvature lower bound.
 
 
 

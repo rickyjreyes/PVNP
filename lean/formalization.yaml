@@ -24,8 +24,10 @@ current_status:
     - "PVNP.TransportCalculus.transport_tradeoff, curvature_time_lower_bound, hamiltonian_controls_bandpass"
     - "PVNP.PartIIIAnalytic.curvature_cost_le, highfreq_*; PVNP.PartIIIHighFreq3D.cube_gradient_energy, cube_curvature_lower"
     - "PVNP.AnalogSplitSAT.scalar_level_count, analog_split_sat_capacity"
+    - "PVNP.DecoderUniformity.signCode_mass, signDecode_noise, arbitrary_predicate_has_robust_decoder, number_of_labels (fixed, language-independent n-coordinate sign code of mass n; arbitrary decoder is uncharged and may be noncomputable)"
   refuted_as_stated:
     - "storage/packing bound implies a decision lower bound (PVNP.DecisionVsEncoding.promoted_bound_false)"
+    - "efficient, answer-independent encoding alone ensures a computationally bounded receiver (PVNP.DecoderUniformity.arbitrary_predicate_has_robust_decoder countermodel with unrestricted decoder)"
     - "positive distinguishability implies positive curvature cost (PartIIIAnalytic.zero_cost_counterexample)"
     - "finite first-derivative energy bounds the curvature functional (PartIIIAnalytic.no_gradient_energy_control)"
     - "nonlinear WCT evolution preserves finite Fourier support (FourierReceiver.cubic_quintic_generates_new_modes)"
