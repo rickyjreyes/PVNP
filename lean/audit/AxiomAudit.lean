@@ -131,3 +131,6 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.WCTLattice.coordinate_norm_le_sqrt_mass
 #print axioms PVNP.WCTLattice.solution_uniform_coordinate_bound
 #print axioms PVNP.WCTLattice.exists_local_solution_bounded
+-- M3-C: flux prefactor mesh-refinement limitation
+#print axioms PVNP.WCTLattice.mesh_flux_prefactor
+#print axioms PVNP.WCTLattice.mesh_flux_prefactor_unit
