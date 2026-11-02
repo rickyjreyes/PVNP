@@ -149,3 +149,7 @@ No classical `P ≠ NP`, physical class separation, or universal SAT lower bound
 ### Part III completed at stated scope
 
 `PartIIIHighFreq3D` proves Proposition `prop:highfreq` on the 3-D periodic cube with the manuscript's constants (gradient energy `4π³`, curvature `≥ (16/25)π³N²`), and `conditional_additive_storage` formalizes the conditional additive storage estimate. Every principal Part III statement now has a Lean declaration (theorem, counterexample, or explicitly conditional statement). Axiom audit: 61 declarations.
+
+### Transport calculus
+
+`TransportCalculus` proves the FTC and time-Hölder steps of the WCT readout-transport bound (`transport_tradeoff`, `curvature_time_lower_bound`: `∫₀ᵀ‖Δψ‖₂² ≥ δ⁴/(Γ⁴T³)` from the flux inequality) and the integrated Hamiltonian control of `∫|(Δ+κ)ψ|²`, replacing hypotheses that `HamiltonianTransport` previously assumed. Axiom audit: 65 declarations.

@@ -65,3 +65,7 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.PartIIIHighFreq3D.cube_gradient_energy
 #print axioms PVNP.PartIIIHighFreq3D.cube_curvature_lower
 #print axioms PVNP.Discrete.conditional_additive_storage
+#print axioms PVNP.TransportCalculus.power_mean_four
+#print axioms PVNP.TransportCalculus.transport_tradeoff
+#print axioms PVNP.TransportCalculus.curvature_time_lower_bound
+#print axioms PVNP.TransportCalculus.hamiltonian_controls_bandpass

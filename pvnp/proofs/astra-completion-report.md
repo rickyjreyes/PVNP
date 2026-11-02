@@ -2,7 +2,7 @@
 
 Author of the research program: **Richard J. Reyes**. Original publications (Zenodo releases 03, 12, 13 and the May/November/December 2025 versions) are preserved unchanged; this report records the current, revised state of the mathematics.
 
-Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (which itself extends `main`). Every result below was checked locally with the pinned toolchain (`leanprover/lean4:v4.23.0`, Mathlib `v4.23.0`) via `lake build PVNP`, and the axiom audit `lean/audit/AxiomAudit.lean` reports only `propext`, `Classical.choice`, `Quot.sound` for all 61 principal declarations. GitHub Actions on the branch head is the authoritative CI record.
+Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (which itself extends `main`). Every result below was checked locally with the pinned toolchain (`leanprover/lean4:v4.23.0`, Mathlib `v4.23.0`) via `lake build PVNP`, and the axiom audit `lean/audit/AxiomAudit.lean` reports only `propext`, `Classical.choice`, `Quot.sound` for all 65 principal declarations. GitHub Actions on the branch head is the authoritative CI record.
 
 ---
 
@@ -47,6 +47,7 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
 - **New Lean files:** `DiscreteCurvatureRail.lean`, `CircleSpectralGap.lean`, `WCTPlaneWave.lean` (+ #12 modules used here).
 - **Genuine function-space / PDE results (new):**
   - `SpectralGap.wirtinger`: for a continuous periodic field `f` on the circle of length `L` with continuous derivative `g`, `(2π/L)²(∫‖f‖² − ‖f̂(0)‖²) ≤ ∫‖g‖²` (normalized Haar measure); `wirtinger_sharp` (equality for `e^{2πix/L}`); `no_uniform_poincare` (for every `c > 0` some domain length defeats the constant `c`). Proved from Mathlib's Parseval identity and Fourier coefficients of derivatives.
+  - `TransportCalculus.transport_tradeoff` / `curvature_time_lower_bound`: from the instantaneous flux inequality `|J'(t)| ≤ Γ√D(t)` (a PDE-derived premise, kept explicit), the FTC and a genuine time-Hölder inequality (`power_mean_four`: `(∫₀ᵀf)⁴ ≤ T³∫₀ᵀf⁴`) give `∫₀ᵀ D² ≥ δ⁴/(Γ⁴T³)` with `D(t) = ‖Δψ(t)‖₂` — replacing the algebraic hypotheses of `HamiltonianTransport.finite_time_curvature_transport_tradeoff`; `hamiltonian_controls_bandpass`: `∫|(Δ+κ)ψ|² ≤ H + (3β²/16γ)·mass` as a Lebesgue-integral theorem (replacing the hypothesis-restating `bandpass_norm_sq_control`).
   - `WCTPlaneWave.plane_wave_solves` + `classical_derivatives`: `u = A e^{i(kx₁−ωt)}`, `ω = (κ−k²)² − β|A|² + γ|A|⁴`, is an exact classical solution of the frozen PDE `i∂ₜu = (Δ+κ)²u − β|u|²u + γ|u|⁴u` (genuine partial derivatives); `expanding_domain_countermodel`: on the torus of side `L` with fixed mass `M`, exact solutions have mass exactly `M`, curvature energy `(2π/L)⁴M → 0` (`curvature_energy_vanishes`), and Hamiltonian `M(κ−(2π/L)²)² − βM²/(2L²) + γM³/(3L⁴)`.
 - **New theorems:** `WCC.run_blank_outside` (light cone), `WCC.lap_zero_outside`, `WCC.curvature_le` (`curv ≤ 16K²(n+2t+3)` for *every* amplitude embedding), **`P_TM_eq_curvature_rail`**, **`curvature_lower_bound_is_classical`**, `no_curvature_lower_bound_in_P`.
 - **Counterexamples (new):** `promoted_bound_false`, `no_gradient_energy_control`, `zero_cost_counterexample`, `curvature_not_representation_invariant`, `cubic_quintic_generates_new_modes`. **Preserved:** polynomial static storage, bounded-degree expanders, GF(2)/Tseitin bypass, affine/zero-curvature channels, phase-only and nodal obstructions, expanding-domain plane waves, nonlocal readout (`RadiusCausality.shortcut_encoding_reads_far_at_zero`), uncharged preprocessing.
@@ -119,7 +120,7 @@ No percentages are used. Status words follow the charter's labels.
 | O7 | **Open;** every tested universal statement refuted at stated scope; discrete version proved equivalent to classical P ≠ NP. | M2. |
 | O8 | **Open.** No candidate language with a physical verifier and a proved all-decider lower bound. | M1 + M2. |
 | O9 | **Reduced to classical P vs NP** for the discrete model (`p_vs_np_discrete_transfer`); for the physical model blocked on M1. | Classical P ≠ NP itself (unresolved). |
-| O10 | **Advanced.** 61 principal declarations axiom-audited; CI enforces the audit; Python cross-checks added (`pvnp/tests/test_astra_discrete.py`). | Independent adversarial review; manuscript text alignment (section D). |
+| O10 | **Advanced.** 65 principal declarations axiom-audited; CI enforces the audit; Python cross-checks added (`pvnp/tests/test_astra_discrete.py`). | Independent adversarial review; manuscript text alignment (section D). |
 
 ---
 

@@ -283,3 +283,13 @@ part_iii_completion:
     - "Discrete.conditional_additive_storage (CONDITIONAL, premises explicit)"
   issue_12_classification: "PROVED at stated scope: every principal Part III statement is a Lean theorem, counterexample, or explicitly conditional statement; physical separation (O8) OPEN and not claimed by Part III"
   axiom_audit: "61 declarations, standard axioms or subsets"
+
+transport_calculus:
+  module: PVNP/TransportCalculus.lean
+  proved:
+    - "sq_integral_le, power_mean_four: (∫₀ᵀ f)⁴ ≤ T³ ∫₀ᵀ f⁴ for continuous f ≥ 0"
+    - "transport_tradeoff: |J(T)-J(0)|⁴ ≤ Γ⁴T³∫₀ᵀD² from |J'| ≤ Γ√D (FTC + Hölder)"
+    - "curvature_time_lower_bound: ∫₀ᵀ D² ≥ δ⁴/(Γ⁴T³)"
+    - "hamiltonian_controls_bandpass: ∫‖B‖² ≤ H + (3β²/(16γ))∫‖ψ‖² on any measure space"
+  premise_kept_explicit: "instantaneous flux inequality |J'(t)| ≤ Γ√D(t) (PDE integration by parts, analytic)"
+  axiom_audit: "65 declarations, standard axioms or subsets"
