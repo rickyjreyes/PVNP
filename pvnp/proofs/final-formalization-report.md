@@ -13,7 +13,7 @@ declaration uses only `propext`, `Classical.choice` or `Quot.sound`. The full ax
 |---|---|---|---|---|
 | **Part I**: curvature-bounded wave computation | **No.** The physical/curvature separation is conditional and open. Its discrete form is proved equivalent to classical `P ≠ NP` (`p_vs_np_discrete_transfer`, `curvature_lower_bound_is_classical`), and its physical form is proved at least as hard (`physical_SAT_lower_bound_is_classical`). | The supporting discrete and conditional statements are verified; the separation is not. | M2 (universal lower bound); the dimensional-lock hypothesis; F-1; CL-1 (converse transfers only) | **Not ready** as a separation paper. It could be submitted as a conditional framework plus obstruction analysis after the title, abstract and claims are rescoped. |
 | **Part II**: discrete WCC ⇄ Turing equivalence | **Yes, in dimension 1 for every fixed radius** with the fixed origin-marked encoding. For `ℤ^(1+d)` only `P_TM ⊆ P_WCC` is proved. | Yes: `P_WCC_eq_P_TM`, `NP_WCC_eq_NP_TM`, `P_WCCR_eq_P_TM`, `NP_WCCR_eq_NP_TM`, `P_TM_subset_P_WCCD` | D-1 (multidimensional converse; classical but not formalized). The physical capacity sections are conditional. | **Near-ready** for the discrete part with the restricted scope now stated in the text (Remark `rem:verified-scope`). The physical sections need their conditional status kept explicit. |
-| **Part III**: physical complexity reassessment | **Yes** for its corrective content: counterexamples, corrected conditional bounds, Boolean-influence results and `P ⊆ NP`. **No** for M1–M3 on tori. | Yes for every numbered statement except two analytic ones (see the map); the continuum flux inequality stays a premise. | F-1 (continuum flux inequality), M3-T (torus well-posedness), M1-a (certified simulation), M2 | **Ready** as a reassessment note after copy-editing. Every claim is classified. |
+| **Part III**: physical complexity reassessment | **Yes** for its corrective content: counterexamples, corrected conditional bounds, Boolean-influence results and `P ⊆ NP`. **No** for M1–M3 on tori. | All 14 numbered statements have kernel-checked counterparts: 9 proved, 1 proved for a restricted scope, 4 conditional with explicit premises. The continuum flux inequality stays a premise. | F-1 (continuum flux inequality), M3-T (torus well-posedness), M1-a (certified simulation), M2 | **Ready** as a reassessment note after copy-editing. Every claim is classified. |
 
 Every numbered statement is classified in `theorem-manuscript-map.md`, and every open item in
 `remaining-obstructions.md`. These classifications do **not** mean that the papers' physical
@@ -175,7 +175,8 @@ Part II 35 pages, Part III 11 pages, with no undefined references.
 - commits `522db46` (physical audit), `210ef45` (radius-r), `5c29bda` (merge main), `2bd6ba8`
   (generality), `82987fd` (lattice and bridge), `d2b019a` (ledger);
 - CI on `2bd6ba8`: Lean run 41529538065 ✓, PDFs run 41529538053 ✓;
-- CI on `82987fd` and `d2b019a`: see the PR checks.
+- CI on `82987fd` (lattice and bridge, 111-declaration audit): Lean run 41532337480 ✓, PDFs ✓;
+- CI on `d2b019a` (ledger only): see the PR checks.
 
 **Docs/manuscripts PR** (stacked on #19), head `astra/docs-20261102`: see the PR description.
 
