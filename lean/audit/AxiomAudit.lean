@@ -69,3 +69,5 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TransportCalculus.transport_tradeoff
 #print axioms PVNP.TransportCalculus.curvature_time_lower_bound
 #print axioms PVNP.TransportCalculus.hamiltonian_controls_bandpass
+#print axioms PVNP.AnalogSplitSAT.scalar_level_count
+#print axioms PVNP.AnalogSplitSAT.analog_split_sat_capacity

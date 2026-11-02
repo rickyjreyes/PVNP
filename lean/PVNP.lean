@@ -53,3 +53,4 @@ import PVNP.TMScan
 import PVNP.SATVerifier
 import PVNP.PartIIIHighFreq3D
 import PVNP.TransportCalculus
+import PVNP.AnalogSplitSATCapacity

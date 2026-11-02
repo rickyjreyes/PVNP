@@ -27,6 +27,7 @@
 | Finite-radius causality: `R = m + Σᵢ tᵢ rᵢ` cells of causal coverage needed to read a distal bit | **Lean, unconditional (discrete locality model)** | `MultiStageCausality.multistage_required_causal_coverage`, `no_multistage_prefix_last_bit` (PR #14) |
 | Finite-time readout transport: flux inequality ⇒ `∫₀ᵀ‖Δψ‖₂² ≥ δ⁴/(Γ⁴T³)` | **Lean** for the FTC + time-Hölder steps; flux inequality itself analytic (PDE integration by parts) | `TransportCalculus.transport_tradeoff`, `curvature_time_lower_bound`, `power_mean_four` |
 | Hamiltonian controls `∫|(Δ+κ)ψ|²` up to mass | **Lean** (integrated cubic–quintic bound) | `TransportCalculus.hamiltonian_controls_bandpass` |
+| Analog split-SAT channel: `2ⁿ ≤ (1 + A/η)ᵐ` (amplitude `A`, noise `η`, `m` slots) | **Lean** (rectangle + robust-decoding premises; not a SAT time bound) | `AnalogSplitSAT.analog_split_sat_capacity` |
 | Receiver packing `N ≤ (1+√M/η)^{2D}` for `N` robustly distinguishable readouts | **Lean, unconditional** for the declared receiver class | `Packing.complex_receiver_packing`, `Packing.subspace_receiver_packing` |
 | Mode count `D ≤ (2⌊LK/2π⌋+1)²` | **Lean** | `FourierReceiver.receiver_mode_count` |
 | Genuine Fourier receiver on `L²(𝕋²)`: Bessel + packing + bandwidth | **Lean, unconditional** | `FourierTorus.receiver_bessel`, `torus_receiver_packing`, `torus2_bandlimited_packing` |

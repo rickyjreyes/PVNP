@@ -293,3 +293,12 @@ transport_calculus:
     - "hamiltonian_controls_bandpass: ∫‖B‖² ≤ H + (3β²/(16γ))∫‖ψ‖² on any measure space"
   premise_kept_explicit: "instantaneous flux inequality |J'(t)| ≤ Γ√D(t) (PDE integration by parts, analytic)"
   axiom_audit: "65 declarations, standard axioms or subsets"
+
+analog_split_sat_capacity:
+  module: PVNP/AnalogSplitSATCapacity.lean
+  closes: "split_sat_channel_capacity.analytic_not_lean (amplitude/noise scalar-symbol packing)"
+  proved:
+    - "AnalogSplitSAT.scalar_level_count: 2η-separated levels in [-A, A] number at most 1 + A/η"
+    - "AnalogSplitSAT.analog_split_sat_capacity: 2^n ≤ (1 + A/η)^m for exact rectangular split-3SAT protocols over robust amplitude slots"
+  scope: "transcript-resource bound for the split-input problem only; not a SAT time lower bound (O(n) centralized solver exists)"
+  axiom_audit: "67 declarations, standard axioms or subsets"

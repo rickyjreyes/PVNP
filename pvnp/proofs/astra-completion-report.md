@@ -2,7 +2,7 @@
 
 Author of the research program: **Richard J. Reyes**. Original publications (Zenodo releases 03, 12, 13 and the May/November/December 2025 versions) are preserved unchanged; this report records the current, revised state of the mathematics.
 
-Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (which itself extends `main`). Every result below was checked locally with the pinned toolchain (`leanprover/lean4:v4.23.0`, Mathlib `v4.23.0`) via `lake build PVNP`, and the axiom audit `lean/audit/AxiomAudit.lean` (checked in CI by `lean/audit/check_axioms.py`) reports only the standard axioms `propext`, `Classical.choice`, `Quot.sound` (or a subset) for all 65 principal declarations. GitHub Actions on the branch head is the authoritative CI record.
+Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (which itself extends `main`). Every result below was checked locally with the pinned toolchain (`leanprover/lean4:v4.23.0`, Mathlib `v4.23.0`) via `lake build PVNP`, and the axiom audit `lean/audit/AxiomAudit.lean` (checked in CI by `lean/audit/check_axioms.py`) reports only the standard axioms `propext`, `Classical.choice`, `Quot.sound` (or a subset) for all 67 principal declarations. GitHub Actions on the branch head is the authoritative CI record.
 
 ---
 
@@ -37,6 +37,7 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
 - **New Lean files:** `BandlimitedNoisyPacking.lean`, `FourierReceiverProjection.lean`, `DecisionVsEncodingCounterexample.lean`, `FourierTorusReceiver.lean`.
 - **New theorems:** `Packing.packing_card_le` (Haar-measure volume argument, any finite-dimensional real normed space); `Packing.finrank_real_euclideanSpace_complex` (`dim_ℝ ℂ^D = 2D`); `Packing.complex_receiver_packing` / `_strict` (**`N ≤ (1+√M/η)^{2D}`**, under `≥ 2η` and the supplement's `> 2η`); `Packing.receiver_projection_norm_le`; `Packing.subspace_receiver_packing` (any complex `D`-dimensional receiver subspace, states of mass `≤ M`); `Packing.capacity_bits_le`; `Packing.mass_lower_bound`; `FourierReceiver.mode_count_le`, `receiver_mode_count`; and on the **genuine `L²` torus** (`FourierTorusReceiver.lean`): `FourierTorus.receiver_bessel` (Parseval ⇒ Bessel for the observed Fourier coefficients), `torus_receiver_packing` (`N ≤ (1+√M/η)^{2|S|}` for fields in `L²(𝕋^d)`), `torus2_bandlimited_packing` (2-torus receiver observing all modes with `|2πk/L| ≤ K`: `N ≤ (1+√M/η)^{2(2⌊LK/2π⌋+1)²}`). The receiver is now literally the list of Fourier coefficients of an `L²` field, not an abstract projection.
 - **New counterexamples:** `FourierReceiver.cubic_quintic_generates_new_modes` (the WCT nonlinearity leaves the finite support `{1,2}` for every `(β,γ) ≠ 0`; algebraic Fourier-coefficient model); `DecisionVsEncoding.promoted_bound_false` (storage bound ≠ decision bound; one mode and mass `η²` give an η-robust readout of **every** language: `robust_decision_readout`); `decision_forgets_witnesses`.
+- **Also closed:** the split-SAT channel's analog step (`AnalogSplitSATCapacity.lean`): `scalar_level_count` (`q ≤ 1 + A/η` robust amplitude levels) and `analog_split_sat_capacity` (`2ⁿ ≤ (1 + A/η)ᵐ` for every exact rectangular split-3SAT protocol), previously listed as `analytic_not_lean`.
 - **Assumptions match the supplement:** adversarial error radius `η > 0`, codeword norm `≤ √M`, pairwise separation (we prove the stronger `≥ 2η` version), finite complex receiver dimension `D`.
 - **Classification: PROVED** (packing theorem and receiver lemmas); promotion to a SAT/decision lower bound **REFUTED**.
 
@@ -120,7 +121,7 @@ No percentages are used. Status words follow the charter's labels.
 | O7 | **Open;** every tested universal statement refuted at stated scope; discrete version proved equivalent to classical P ≠ NP. | M2. |
 | O8 | **Open.** No candidate language with a physical verifier and a proved all-decider lower bound. | M1 + M2. |
 | O9 | **Reduced to classical P vs NP** for the discrete model (`p_vs_np_discrete_transfer`); for the physical model blocked on M1. | Classical P ≠ NP itself (unresolved). |
-| O10 | **Advanced.** 65 principal declarations axiom-audited; CI enforces the audit; Python cross-checks added (`pvnp/tests/test_astra_discrete.py`). | Independent adversarial review; manuscript text alignment (section D). |
+| O10 | **Advanced.** 67 principal declarations axiom-audited; CI enforces the audit; Python cross-checks added (`pvnp/tests/test_astra_discrete.py`). | Independent adversarial review; manuscript text alignment (section D). |
 
 ---
 
