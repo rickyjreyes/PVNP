@@ -1,59 +1,368 @@
-toolchain: "leanprover/lean4:v4.23.0"
-scope: "finite/discrete algebraic core of revised PVNP papers"
-kernel_verified_status: "requires successful GitHub Actions check for this revision"
-modules:
-  part_i:
-    - PVNP/PartI.lean
-    - PVNP/PartIExtended.lean
-  part_ii:
-    - PVNP/PartII.lean
-    - PVNP/PartIIExtended.lean
-  part_iii:
-    - PVNP/PartIII.lean
-    - PVNP/PartIIIExtended.lean
-complete_claims_within_explicit_scope:
-  - Boolean literal and CNF zero-penalty semantics
-  - Conditional language separation implication
-  - Deterministic finite-time transition replay
-  - Radius-one symbolic machine local transition and commuting simulation
-  - Explicit shifted denominator and quantization counterexamples
-  - Symbolic zero-Laplacian distinguishability
-  - Boolean hypercube normalized total influence upper bound
-not_proved:
-  - Full TM/WCC polynomial-time equivalence as machine complexity theorem
-  - Physical PDE realization and curvature-preserving simulation
-  - Universal exponential lower bound for locked-expander SAT
-  - Physical P_WCC != NP_WCC
-  - Classical P != NP
-  - Continuum H2 counterexample or analytic capacity theorem
+# PVNP Lean formalization ledger.
+# `current_status` is AUTHORITATIVE.  `history` preserves dated snapshots
+# verbatim for provenance; stale entries there are marked [SUPERSEDED ...].
+toolchain: "leanprover/lean4:v4.23.0 (Mathlib v4.23.0)"
+status_as_of: "2026-11-02"
+verify: "cd lean && lake exe cache get && lake build PVNP && lake env lean audit/AxiomAudit.lean | tee out.txt && python3 audit/check_axioms.py audit/AxiomAudit.lean out.txt"
+kernel_verified_status: "a statement counts as verified only for a commit whose GitHub Actions Lean workflow passed"
 
-curvature_barrier_audit:
-  module: PVNP/CurvatureBarrier.lean
-  claim: "discrete curvature storage upper bounds for all bit strings and bounded-degree graphs"
-  continuum_smooth_bump_proof: "paper proof only; not machine-checked"
-  outstanding: "physical PDE invariant code and universal decision lower bound"
+current_status:
+  scope_note: "Lean theorems hold relative to their formal definitions. Discrete results concern the frozen 1-D radius-one finite quiescent WCC model and ordinary single-tape TMs; they do not establish anything about physical curvature-preserving realizations."
+  proved_discrete_complexity:
+    - "PVNP.Discrete.P_WCC_eq_P_TM : P_WCC = P_TM (1-D, radius one, finite alphabet, quiescent blank, origin-marked input)"
+    - "PVNP.Discrete.NP_WCC_eq_NP_TM : NP_WCC = NP_TM (verifier definition, explicit witness polynomial, self-delimiting pairing)"
+    - "PVNP.Discrete.TM.toWCC_decides (real time) and PVNP.Discrete.WCC.toTM_decides (time 1 + (T+1)(n+2T+5)): both simulation directions by explicit machines"
+    - "PVNP.Discrete.p_vs_np_discrete_transfer : (P_WCC = NP_WCC) <-> (P_TM = NP_TM)"
+    - "PVNP.Discrete.P_TM_subset_NP_TM, P_WCC_subset_NP_WCC (explicit pair-parsing verifier TM)"
+    - "PVNP.Discrete.SATV.SAT_dense_mem_NP_TM / NP_WCC, V_SAT_mem_P_TM (dense CNF encoding), encDense_mem_SAT_iff (agreement with PVNP.PartI.satisfiable)"
+    - "PVNP.Discrete.encodeTable_decodeTable, decodeTable_sound, encodeTable_length_le, TM.normalize_decides (flat binary machine code)"
+    - "PVNP.Discrete.P_TM_eq_curvature_rail, curvature_lower_bound_is_classical (discrete curvature rails are vacuous)"
+  proved_analysis_and_pde:
+    - "PVNP.Packing.complex_receiver_packing, subspace_receiver_packing; PVNP.FourierTorus.torus_receiver_packing, torus2_bandlimited_packing (genuine L2-torus Fourier receiver)"
+    - "PVNP.SpectralGap.wirtinger, wirtinger_sharp, no_uniform_poincare"
+    - "PVNP.WCTPlaneWave.plane_wave_solves, classical_derivatives, expanding_domain_countermodel (exact classical solutions of the frozen PDE)"
+    - "PVNP.TransportCalculus.transport_tradeoff, curvature_time_lower_bound, hamiltonian_controls_bandpass"
+    - "PVNP.PartIIIAnalytic.curvature_cost_le, highfreq_*; PVNP.PartIIIHighFreq3D.cube_gradient_energy, cube_curvature_lower"
+    - "PVNP.AnalogSplitSAT.scalar_level_count, analog_split_sat_capacity"
+  refuted_as_stated:
+    - "storage/packing bound implies a decision lower bound (PVNP.DecisionVsEncoding.promoted_bound_false)"
+    - "positive distinguishability implies positive curvature cost (PartIIIAnalytic.zero_cost_counterexample)"
+    - "finite first-derivative energy bounds the curvature functional (PartIIIAnalytic.no_gradient_energy_control)"
+    - "nonlinear WCT evolution preserves finite Fourier support (FourierReceiver.cubic_quintic_generates_new_modes)"
+    - "domain-uniform Poincare/spectral-gap constant (SpectralGap.no_uniform_poincare)"
+    - "curvature is a representation-invariant cost (Discrete.curvature_not_representation_invariant)"
+  conditional_premises_explicit:
+    - "TransportCalculus.transport_tradeoff: assumes the instantaneous flux inequality |J'(t)| <= Gamma sqrt(D(t))"
+    - "PartIIIAnalytic.capacity_law: assumes a uniform second-derivative bound"
+    - "Discrete.telescoping_bound, conditional_interface_bound, conditional_additive_storage"
+  open:
+    - "radius-r and d-dimensional discrete equivalence, polynomial-time non-local encoders, universal TM (see later ASTRA entries for any progress)"
+    - "general well-posedness of the frozen PDE (M3); rail-preserving physical<->TM simulation (M1); universal physical lower bound (M2)"
+    - "Cook-Levin NP-completeness of SAT_dense"
+    - "physical class separation (O8); classical P != NP"
+  forbidden_claims:
+    - "classical P != NP"
+    - "physical P != NP or any universal SAT lower bound"
+    - "physical curvature-preserving realization of discrete WCC"
 
-phase_sensitive_observability:
-  module: PVNP/PhaseObservability.lean
-  proved_in_lean: "algebraic consequences of detector/Poincare/Hölder bounds, global constant-mode and node-weight identities"
-  analytic_only: "complex nonlinear PDE evolution, Fourier/Parseval, Sobolev and Poincare, detector derivative, dynamic invariants, nodal oscillation counterexample"
-  no_claim: "universal information curvature cost or P versus NP separation"
+superseded_statements:
+  - old: "Full TM/WCC polynomial-time equivalence as machine complexity theorem is not proved"
+    now: "proved for the frozen 1-D radius-one model (P_WCC_eq_P_TM, NP_WCC_eq_NP_TM, toWCC_decides, toTM_decides)"
+  - old: "no kernel-checked P_WCC = P_TM or NP_WCC = NP_TM"
+    now: "kernel-checked (CI on the PR #16 head 30b13aa and merge 614dc1c lineage)"
+  - old: "complete bidirectional simulation / moving-head trace / machine-level interpreter open"
+    now: "proved within the frozen 1-D model (TMtoWCC, WCCtoTM); a universal TM executing serialized descriptions remains unbuilt and is not needed for the class equalities"
+  - old: "genuine L2-torus packing theorem not formalized"
+    now: "FourierTorus.torus_receiver_packing / torus2_bandlimited_packing"
+  - old: "exact WCT plane-wave countermodel analytic only"
+    now: "WCTPlaneWave.plane_wave_solves / expanding_domain_countermodel"
+  - old: "Part III analytic results (curvature cost bound, high-frequency counterexample, transport tradeoff) analytic only"
+    now: "PartIIIAnalytic, PartIIIHighFreq3D, TransportCalculus (flux inequality remains an explicit premise)"
+  - old: "amplitude/noise scalar-symbol packing analytic only"
+    now: "AnalogSplitSAT.scalar_level_count / analog_split_sat_capacity"
 
-fixed_mass_nodal_supplement:
-  module: PVNP/FixedMassNodal.lean
-  scope: independent_of_original_P_vs_NP_manuscript
-  lean_proved: 'two-site fixed-mass density-weighted coercivity, scalar denominator bound, abstract transport transfer'
-  analytic_only: '2D torus compactness coercivity on Hamiltonian sublevels, Hamiltonian conservation, nonlinear phase-observability inequality'
-  missing: 'constructive uniform constants on input-growing domains and all-algorithm resource lower bounds'
+history:
+  toolchain: "leanprover/lean4:v4.23.0"
+  scope: "finite/discrete algebraic core of revised PVNP papers"
+  kernel_verified_status: "requires successful GitHub Actions check for this revision"
+  modules:
+    part_i:
+      - PVNP/PartI.lean
+      - PVNP/PartIExtended.lean
+    part_ii:
+      - PVNP/PartII.lean
+      - PVNP/PartIIExtended.lean
+    part_iii:
+      - PVNP/PartIII.lean
+      - PVNP/PartIIIExtended.lean
+  complete_claims_within_explicit_scope:
+    - Boolean literal and CNF zero-penalty semantics
+    - Conditional language separation implication
+    - Deterministic finite-time transition replay
+    - Radius-one symbolic machine local transition and commuting simulation
+    - Explicit shifted denominator and quantization counterexamples
+    - Symbolic zero-Laplacian distinguishability
+    - Boolean hypercube normalized total influence upper bound
+  not_proved:
+    - "[SUPERSEDED 2026-11-02: proved for the frozen 1-D radius-one model, PVNP.Discrete.P_WCC_eq_P_TM / NP_WCC_eq_NP_TM] Full TM/WCC polynomial-time equivalence as machine complexity theorem"
+    - Physical PDE realization and curvature-preserving simulation
+    - Universal exponential lower bound for locked-expander SAT
+    - Physical P_WCC != NP_WCC
+    - Classical P != NP
+    - "[SUPERSEDED 2026-11-02: PartIIIAnalytic.capacity_law (conditional), PartIIIHighFreq3D.cube_curvature_lower] Continuum H2 counterexample or analytic capacity theorem"
 
-expanding_domain_hamiltonian_test:
-  module: PVNP/ExpandingDomain.lean
-  proved_in_lean: "density weight volume bound; absence of volume-uniform floor; normalized mode algebra and bounded representative Hamiltonian expression"
-  analytic_only: "exact complex plane-wave solution of projection-free PDE; Fourier readout and input-volume asymptotics"
-  remains_open: "uniform WCC algorithm-independent resource lower bound and P versus NP"
+  curvature_barrier_audit:
+    module: PVNP/CurvatureBarrier.lean
+    claim: "discrete curvature storage upper bounds for all bit strings and bounded-degree graphs"
+    continuum_smooth_bump_proof: "paper proof only; not machine-checked"
+    outstanding: "physical PDE invariant code and universal decision lower bound"
 
-split_sat_channel_capacity:
-  module: PVNP/SplitSATCapacity.lean
-  lean_scope: "indexed tripled-literal 3-CNF satisfiability iff set disjointness, exact deterministic rectangle-transcript all-protocol q^m capacity, binary slots"
-  analytic_not_lean: "amplitude/noise scalar-symbol packing q <= ceil(A/eta) and hardware realization"
-  not_proved: "model-independent physical communication or exponential classical SAT lower bound"
+  phase_sensitive_observability:
+    module: PVNP/PhaseObservability.lean
+    proved_in_lean: "algebraic consequences of detector/Poincare/Hölder bounds, global constant-mode and node-weight identities"
+    analytic_only: "complex nonlinear PDE evolution, Fourier/Parseval, Sobolev and Poincare, detector derivative, dynamic invariants, nodal oscillation counterexample"
+    no_claim: "universal information curvature cost or P versus NP separation"
+
+  fixed_mass_nodal_supplement:
+    module: PVNP/FixedMassNodal.lean
+    scope: independent_of_original_P_vs_NP_manuscript
+    lean_proved: 'two-site fixed-mass density-weighted coercivity, scalar denominator bound, abstract transport transfer'
+    analytic_only: '2D torus compactness coercivity on Hamiltonian sublevels, Hamiltonian conservation, nonlinear phase-observability inequality'
+    missing: 'constructive uniform constants on input-growing domains and all-algorithm resource lower bounds'
+
+  expanding_domain_hamiltonian_test:
+    module: PVNP/ExpandingDomain.lean
+    proved_in_lean: "density weight volume bound; absence of volume-uniform floor; normalized mode algebra and bounded representative Hamiltonian expression"
+    analytic_only: "[SUPERSEDED 2026-11-02: exact plane-wave solution now Lean-verified, WCTPlaneWave.plane_wave_solves / expanding_domain_countermodel] exact complex plane-wave solution of projection-free PDE; Fourier readout and input-volume asymptotics"
+    remains_open: "uniform WCC algorithm-independent resource lower bound and P versus NP"
+
+  split_sat_channel_capacity:
+    module: PVNP/SplitSATCapacity.lean
+    lean_scope: "indexed tripled-literal 3-CNF satisfiability iff set disjointness, exact deterministic rectangle-transcript all-protocol q^m capacity, binary slots"
+    analytic_not_lean: "[SUPERSEDED 2026-11-02 for the packing step: AnalogSplitSAT.scalar_level_count gives q <= 1 + A/eta; hardware realization still open] amplitude/noise scalar-symbol packing q <= ceil(A/eta) and hardware realization"
+    not_proved: "model-independent physical communication or exponential classical SAT lower bound"
+
+  issue_11_discrete_uniform_simulation_audit:
+    original_release: "https://doi.org/10.5281/zenodo.17732642 (Nov 26, 2025)"
+    revised_source: "pvnp/papers/part-ii-discrete-wcc-turing-equivalence/main.tex (Oct 27, 2026)"
+    actual_semantics: "PVNP.PartII.RadiusOneMachine: fixed blank, fixed synchronous triple-stencil rule, Fin n domain, no wrap"
+    modules:
+      - PVNP/TMCellCompiler.lean
+      - PVNP/ReplayCost.lean
+      - PVNP/PartII.lean
+      - PVNP/PartIIExtended.lean
+    proved_or_compiler_checked:
+      - "arbitrary finite TM transition function compiled into a radius-one local rule, with exact center-head symbol/write/move local lemmas"
+      - "uniform serialized synchronous sweep correctness, including length"
+      - "explicit cubic upper bound for a declared indexed-list interpreter charge including input, witness, machine description, lattice and rounds"
+    still_open:
+      - "global exactly-one-head invariant and head position decoding for arbitrary transitions and boundary moves"
+      - "uniform binary code for arbitrary Turing transition tables and exact executable TM interpreter"
+      - "resource correspondence between unit-cost list charge and ordinary tape-TM steps (list access is charged, but compiler not proved)"
+      - "[SUPERSEDED 2026-11-02: TM.toWCC_decides, WCC.toTM_decides] true Turing-to-WCC total execution trace and both directions as explicit polynomial TM simulation"
+      - "[SUPERSEDED 2026-11-02: P_WCC_eq_P_TM, NP_WCC_eq_NP_TM, WitnessSizeUniformity] formal P and NP language-class equivalence across uniform machine families and witness polynomial lengths"
+      - "physical curvature-preserving implementation of discrete WCC"
+
+  issue_10_model_relative_resource_lower_bound:
+    original_release: "https://doi.org/10.5281/zenodo.17743607 (May 7, 2025; later revised)"
+    revised_source: "pvnp/papers/part-i-curvature-bounded-wave-computation/main.tex (Oct 27, 2026)"
+    module: "PVNP/LocalityLowerBound.lean"
+    proved_unconditional_restricted:
+      - "radius-one finite-lattice machines cannot distinguish two inputs differing at distance t+1 from fixed left-end readout in t rounds, for every local rule"
+      - "same obstruction holds for any postprocessing that only receives the left-end state"
+    explicit_scope:
+      - "direct configuration encoding, no nonlocal preprocessing; fixed readout at leftmost cell"
+      - "linear round lower bound for distal-bit access, not exponential curvature/SAT hardness"
+    preexisting_counterexamples:
+      - "PVNP/CurvatureBarrier.lean: O(n) local stored Boolean curvature"
+      - "PVNP/ExpandingDomain.lean: density coefficient vanishes with increasing volume"
+      - "PVNP/PhaseObservability.lean: uniform-phase and nodal obstructions"
+      - "PVNP/PhysicalBounds.lean: many states can converge in one step"
+    still_open:
+      - "uniform input-size all-algorithm superpolynomial lower bound for any NP-complete language"
+      - "charged uniform encodings and arbitrary phase-sensitive detectors"
+      - "continuum curvature-to-computation bridge with all resource constants"
+      - "classical P versus NP"
+
+  issue_10_radius_r_extension:
+    module: PVNP/RadiusCausality.lean
+    status: "radius-r core and two-stage prefix theorems Lean CI PASS at 9077a840; new general-size and two-stage decisional corollaries require current-head CI"
+    model: "fixed finite radius-r synchronous full-stencil list rule; blank boundaries; direct embedding"
+    new_targets:
+      - "prefix_step: one global update loses at most radius r of matching prefix"
+      - "prefix_iterate: t rounds propagate information no farther than t*r"
+      - "prefix_decoder_equal: any decoder observing first m cells obeys cone theorem"
+      - "no_prefix_decoder_last_bit: an all-input far-bit decider needs more than t rounds on length t*r+m+1"
+      - "shortcut_encoding_reads_far_at_zero: nonlocal preprocessing invalidates uncharged readout lower bound"
+    limitations:
+      - "all-rule quantification within declared local stencil, not all physical architectures"
+      - "radius, output locality and encoder cost must be explicitly charged as functions of input length"
+      - "influence bound not a curvature bound or SAT hardness claim"
+
+  issue_11_global_tm_encoding_extension:
+    module: PVNP/TMGlobal.lean
+    status: "TMGlobal Lean CI PASS at 9077a840; bidirectional simulation remains open"
+    targets:
+      - "canonical one-head marked encoding from independent bounded-tape TM configuration"
+      - "unique encoded head and exact global tape-write update for arbitrary finite transition"
+      - "tape recovered from encoding equality"
+    still_open:
+      - "[SUPERSEDED 2026-11-02: TM.toWCC_step_encode covers left/right/stay/halt on the bi-infinite tape] global head-move theorem and total valid execution traces with boundary policy"
+      - "binary machine description and uniform compiler/decompiler complexity"
+      - "[SUPERSEDED 2026-11-02: WCC.toTM is an explicit single-tape TM with proved step counts] actual single-tape TM interpreter program and machine-level time/space correctness"
+      - "[SUPERSEDED 2026-11-02: proved] both directions polynomial time and NP witness class equivalence"
+
+  issue_11_finite_machine_description_and_restricted_trace:
+    modules:
+      - PVNP/MachineCode.lean
+      - PVNP/FiniteWCCCode.lean
+      - PVNP/TMStayTrace.lean
+    status: "MachineCode, FiniteWCCCode, TMStayTrace Lean CI PASS at 9077a840; restricted scope only"
+    genuine_theorem_scope:
+      - "one-hot finite binary-grid machine table descriptions and injectivity"
+      - "explicit polynomial table-bit bounds for finite Turing and finite WCC local rules"
+      - "all-time exact encoding/step commutation for the stationary-head TM subclass only"
+      - "single encoded head remains present throughout every stationary-head trace"
+    nonclaims:
+      - "no finite-stencil code table establishes the tape-TM interpreter's instruction count by itself"
+      - "stationary-head trace is not a proof for arbitrary moving-head TMs"
+      - "[SUPERSEDED 2026-11-02: proved for the 1-D radius-one model] complete bidirectional polynomial TM/WCC equivalence and P/NP characterizations remain open"
+    outstanding:
+      - "global moving-head step and all-step invariant with boundary safety"
+      - "flat binary serialization and parsing of machine code with running-time bounds"
+      - "actual ordinary TM machine instruction schedule and proof of step count"
+      - "[SUPERSEDED 2026-11-02: WitnessSizeUniformity] uniform language and witness class inclusions with explicit size polynomials"
+
+  oct_28_formal_scope_and_ci_ledger:
+    last_confirmed_full_build:
+      commit: "9077a8406e6ee4dca22440d04bb000329a7199c2"
+      action: "https://github.com/rickyjreyes/PVNP/actions/runs/40701665817"
+      conclusion: "success"
+      verified:
+        - "all existing PartII, lower-bound, and finite replay imports"
+        - "radius-r prefix propagation and multiple-site/prefix decoder equality"
+        - "sum-of-radii finite-local encoder+compute prefix cone"
+        - "arbitrary-length distal-bit lower bound for fixed local decoder"
+        - "unique marked initial bounded TM configuration and global tape write"
+        - "all-step stationary-head trace, not moving-head trace"
+        - "injective finite TM/WCC binary-grid descriptions and polynomial bit bounds"
+        - "unrestricted arbitrary functional local-rule nonenumerability obstruction"
+    additions_after_that_build:
+      issue_10:
+        - "no_two_stage_prefix_last_bit: worst-case decisional impossibility with e*r_e+t*r_c+m<n; needs current-head compilation"
+      issue_11:
+        - "TMCellCompiler.left_move_arrives, no_head_appears_from_empty_stencil"
+        - "TMHeadMotion.right_destination_has_head, left_destination_has_head, moving_head_vacates_origin, stationary_head_retained; needs current-head compilation"
+    forbidden_claims:
+      - "[SUPERSEDED 2026-11-02: TM.toWCC_run_encode / encode_head_unique for the bi-infinite-tape model] complete moving-head execution trace or global head preservation not established"
+      - "finite binary grid is not yet a runnable flat serialized tape-TM decoder"
+      - "ReplayCost abstract units are not ordinary Turing instruction counts"
+      - "[SUPERSEDED 2026-11-02: now kernel-checked, PVNP.Discrete.P_WCC_eq_P_TM / NP_WCC_eq_NP_TM] no kernel-checked P_WCC = P_TM or NP_WCC = NP_TM"
+      - "no physical curvature preservation, general SAT lower bound, or classical P != NP"
+
+
+  latest_issue_11_head_marker_support:
+    module: PVNP/TMHeadSupport.lean
+    verification: "requires successful Lean CI at current PR head; do not infer from source existence"
+    statements:
+      - "headless_outside_original_neighborhood: no marker appears outside p-1,p,p+1"
+      - "head_marker_support: every one-step new marker lies in original radius-one cone"
+    model: "actual compiled TM transition table on independently marked finite TM tape"
+    still_missing:
+      - "uniqueness of marker at every valid right/left/stay successor"
+      - "[SUPERSEDED 2026-11-02: bi-infinite-tape model, TMtoWCC] unrestricted bounded-tape moving-head trace, boundary safety, acceptance/rejection"
+      - "[SUPERSEDED 2026-11-02 except the universal interpreter: polynomial simulations and P/NP equivalence proved] actual serialized ordinary TM interpreter, polynomial simulation proofs, P/NP language equivalence"
+
+  astra_completion_2026_11_02:
+    branch: "astra/complete-program-20261102 (built on PR #14 head 98d0ac20)"
+    verification: "local `lake build PVNP` PASS with pinned Lean v4.23.0 / Mathlib v4.23.0; axiom audit `lean/audit/AxiomAudit.lean` (36 declarations, only propext, Classical.choice, Quot.sound); confirm with current-head GitHub Actions before citing as CI-verified"
+    issue_11:
+      classification: PROVED (for the frozen 1-D radius-one finite quiescent WCC model on Z and ordinary single-tape TMs)
+      model: "PVNP/DiscreteMachines.lean: TM (finite Λ, Γ; δ : Λ → Γ → Option (Λ × Γ × Dir); bi-infinite tape; acc/rej flags); WCC (finite S, quiescent blank, radius-one rule on Z, origin-marked input); shared first-answer decision semantics; P_TM, P_WCC, NP_TM := NPOf P_TM, NP_WCC := NPOf P_WCC with explicit Polynomial ℕ time and witness bounds and self-delimiting pairing"
+      proved:
+        - "TM.toWCC_step_encode: exact one-step correspondence, all cases (left, right, stay, halt)"
+        - "TM.toWCC_run_encode: every finite execution; TM.encode_injective, encode_head_unique (global unique head)"
+        - "TM.toWCC_decides: real-time simulation, identical time bound"
+        - "WCC.rsweep_run, lsweep_run, phase_step, global: exact invariants of the alternating shifted-sweep simulator TM"
+        - "WCC.toTM_decides: ordinary TM decides L within 1 + (T n + 1)(n + 2 T n + 5) steps"
+        - "P_TM_subset_P_WCC, P_WCC_subset_P_TM, P_WCC_eq_P_TM, NP_WCC_eq_NP_TM"
+        - "p_vs_np_discrete_transfer: (P_WCC = NP_WCC) ↔ (P_TM = NP_TM); lower_bound_transfer"
+        - "WitnessSizeUniformity: pair_length, pair_length_le, NP_TM_verifier_to_WCC (same q, same p, verifier time ≤ p∘(2X+1+q)), NP_WCC_verifier_to_TM"
+        - "MachineSerialization: Codec laws; encodeTable_decodeTable (round trip), decodeTable_sound and decodeTable_rejects (malformed/noncanonical rejection), encodeTable_injective, encodeTable_length_le (|code| ≤ 4 + 6k + 4m + k m (k+m+4)), TM.normalize_decides, P_TM_eq_tables"
+      remaining_scope_limits:
+        - "radius-r and d-dimensional lattices, and polynomial-time (non-local) input encoders of the manuscript's general Definition: not formalized (standard block/encoder composition)"
+        - "universal TM executing serialized descriptions and a TM-step bound for the parser: not constructed (not needed for the class equalities)"
+        - "P_TM ⊆ NP_TM in Lean requires a pair-parsing TM: not formalized (classically routine)"
+        - "no physical curvature-preserving simulation is claimed"
+    issue_15:
+      classification: PROVED (packing theorem and receiver lemmas); promoted decision bound REFUTED
+      proved:
+        - "Packing.packing_card_le: N ≤ (1 + R/η)^(finrank ℝ E) for 2η-separated vectors of norm ≤ R, any finite-dimensional real normed space (Haar-volume proof)"
+        - "Packing.finrank_real_euclideanSpace_complex: real dimension of C^D is 2D"
+        - "Packing.complex_receiver_packing (≥ 2η separation), complex_receiver_packing_strict (> 2η, supplement's hypothesis)"
+        - "Packing.receiver_projection_norm_le; subspace_receiver_packing (orthogonal projection of mass-≤M states onto any complex D-dim receiver subspace)"
+        - "Packing.capacity_bits_le: n ≤ 2D log2(1 + √M/η); mass_lower_bound: M ≥ η²(2^{n/2D} − 1)²"
+        - "FourierReceiver.mode_count_le, receiver_mode_count: D ≤ (2⌊LK/2π⌋+1)²"
+        - "FourierReceiver.cubic_quintic_generates_new_modes: −β|u|²u + γ|u|⁴u leaves finite support {1,2} for all (β,γ) ≠ 0 (trigonometric-polynomial algebra model)"
+        - "DecisionVsEncoding.robust_decision_readout, promoted_bound_false, decision_forgets_witnesses, decision_image_card_le_two"
+    issue_10:
+      classification: PARTIAL (locality results PROVED; universal physical resource lower bound OPEN; every tested universal candidate REFUTED at stated scope)
+      new_proved:
+        - "Discrete.WCC.run_blank_outside, lap_zero_outside, curvature_le: discrete curvature ≤ 16 K²(n + 2t + 3) for every amplitude embedding"
+        - "Discrete.P_TM_eq_curvature_rail: polynomial curvature rails add nothing in the discrete model"
+        - "Discrete.curvature_lower_bound_is_classical: discrete curvature lower bound for an NP language ⇒ P_TM ≠ NP_TM"
+      frozen_model: "pvnp/proofs/physical-model-freeze.md"
+      open: ["M1 two-way rail-preserving WCT-Phys/TM simulation", "M2 forced 2^Ω(n) distinguishable intermediate states for every decider", "M3 PDE well-posedness and L_n-uniform coercivity"]
+    issue_12:
+      classification: "PARTIAL — completion gate met (every principal Part III statement matched to a Lean theorem, scoped counterexample, conditional statement, or documented obligation; see pvnp/proofs/astra-completion-report.md, Part III map). Remaining formalization items: L_check in P_TM (CNF-evaluating TM), 3-D Fubini lift of prop:highfreq. Physical-class separation OPEN."
+      new_proved:
+        - "PartIIIAnalytic.curvature_cost_le (lem:h2bound), capacity_law (thm:capacity, conditional premise explicit)"
+        - "PartIIIAnalytic.laplacian_const, zero_cost_counterexample (prop:zero_cost, Mathlib Laplacian on R^d)"
+        - "PartIIIAnalytic.highfreq_gradient_energy, highfreq_curvature_lower, no_gradient_energy_control (prop:highfreq, 1-D periodic version; manuscript states 3-D, which follows by Fubini but is not formalized)"
+        - "Discrete.WCC.relabel_decides (time invariant under representation), curvature_not_representation_invariant (curvature is not)"
+        - "Discrete.telescoping_bound (thm:constructibility), conditional_interface_bound (prop:interface, CONDITIONAL)"
+        - "PartIII.directed_boundary_eq (lem:boundary_variation), parity_total_influence, parity_directed_boundary (WIN-21), variation_class_vacuous (cor:var)"
+        - "Discrete.inclusions_do_not_determine, classical_question_well_posed (WIN-17)"
+    forbidden_claims_unchanged:
+      - "no classical P ≠ NP"
+      - "no physical P_WCC ≠ NP_WCC"
+      - "no universal SAT lower bound in any physical model"
+
+  astra_second_tranche_2026_11_02:
+    verification: "local lake build PVNP PASS; axiom audit 50 declarations, all [propext, Classical.choice, Quot.sound]"
+    issue_11_12_p_subset_np:
+      module: PVNP/PSubsetNP.lean
+      proved: ["TM.unpair_decides (explicit parse/erase/return/odd-cell simulator, time 2N + 3 + 2p(N))", "P_TM_subset_NP_TM", "P_WCC_subset_NP_WCC"]
+    issue_15_genuine_fourier_receiver:
+      module: PVNP/FourierTorusReceiver.lean
+      proved: ["FourierTorus.receiver_bessel", "FourierTorus.torus_receiver_packing", "FourierTorus.torus2_bandlimited_packing"]
+      model: "L2 fields on Mathlib UnitAddTorus d with normalized Haar measure; receiver = Fourier coefficients on a finite mode set"
+    issue_10_spectral_gap:
+      module: PVNP/CircleSpectralGap.lean
+      proved: ["SpectralGap.fourierCoeff_of_deriv", "SpectralGap.hasSum_sq_fourierCoeff_cont", "SpectralGap.wirtinger", "SpectralGap.wirtinger_sharp", "SpectralGap.no_uniform_poincare"]
+    o4_exact_pde_solutions:
+      module: PVNP/WCTPlaneWave.lean
+      proved: ["WCTPlaneWave.plane_wave_solves", "WCTPlaneWave.classical_derivatives", "WCTPlaneWave.wave_periodic", "WCTPlaneWave.mass_box", "WCTPlaneWave.curvature_box", "WCTPlaneWave.hamiltonian_box", "WCTPlaneWave.expanding_domain_countermodel", "WCTPlaneWave.curvature_energy_vanishes"]
+      scope: "explicit classical solution family of the frozen PDE (classical partial derivatives along coordinates); not a general well-posedness theorem"
+    still_open: ["SAT ∈ NP_TM under a fixed CNF bit encoding (O2)", "general well-posedness of the frozen PDE (O4)", "universal physical lower bound (O7-O9: M1-M3)"]
+
+  o2_sat_in_np:
+    modules: [PVNP/TMScan.lean, PVNP/SATVerifier.lean]
+    verification: "local lake build PVNP PASS; axiom audit 57 declarations (standard axioms or subsets)"
+    encoding: "dense CNF: each clause = n slots of 3 bits (x_j occurs, not-x_j occurs, last-slot flag); witness = assignment of length n"
+    proved:
+      - "TM.scan1, TM.scan2, TM.frozen, TM.none_before (generic TM execution lemmas)"
+      - "SATV.rounds: exact round invariants of the verifier TM following chkFrom"
+      - "SATV.satTM_decides: V_SAT decided in time 2(N+3)^2 (malformed pair inputs rejected)"
+      - "SATV.V_SAT_mem_P_TM (Part III prop:assignment-P)"
+      - "SATV.SAT_dense_mem_NP_TM, SATV.SAT_dense_mem_NP_WCC"
+      - "SATV.encDense_mem_SAT_iff: encDense n F ∈ SAT_dense ↔ PVNP.PartI.satisfiable F (variables < n, n ≥ 1)"
+      - "SATV.SAT_curvature_transfer: SAT_dense ∉ P_curvRail → P_TM ≠ NP_TM"
+    not_proved: ["Cook-Levin NP-completeness of SAT_dense", "sparse binary-index CNF encoding"]
+
+  part_iii_completion:
+    modules: [PVNP/PartIIIHighFreq3D.lean, PVNP/PhysicalComplexityClasses.lean]
+    proved:
+      - "PartIIIHighFreq3D.lap3_psi, cube_gradient_energy (4π³), cube_curvature_lower ((16/25)π³N²): prop:highfreq on the 3-D cube"
+      - "Discrete.conditional_additive_storage (CONDITIONAL, premises explicit)"
+    issue_12_classification: "PROVED at stated scope: every principal Part III statement is a Lean theorem, counterexample, or explicitly conditional statement; physical separation (O8) OPEN and not claimed by Part III"
+    axiom_audit: "61 declarations, standard axioms or subsets"
+
+  transport_calculus:
+    module: PVNP/TransportCalculus.lean
+    proved:
+      - "sq_integral_le, power_mean_four: (∫₀ᵀ f)⁴ ≤ T³ ∫₀ᵀ f⁴ for continuous f ≥ 0"
+      - "transport_tradeoff: |J(T)-J(0)|⁴ ≤ Γ⁴T³∫₀ᵀD² from |J'| ≤ Γ√D (FTC + Hölder)"
+      - "curvature_time_lower_bound: ∫₀ᵀ D² ≥ δ⁴/(Γ⁴T³)"
+      - "hamiltonian_controls_bandpass: ∫‖B‖² ≤ H + (3β²/(16γ))∫‖ψ‖² on any measure space"
+    premise_kept_explicit: "instantaneous flux inequality |J'(t)| ≤ Γ√D(t) (PDE integration by parts, analytic)"
+    axiom_audit: "65 declarations, standard axioms or subsets"
+
+  analog_split_sat_capacity:
+    module: PVNP/AnalogSplitSATCapacity.lean
+    closes: "split_sat_channel_capacity.analytic_not_lean (amplitude/noise scalar-symbol packing)"
+    proved:
+      - "AnalogSplitSAT.scalar_level_count: 2η-separated levels in [-A, A] number at most 1 + A/η"
+      - "AnalogSplitSAT.analog_split_sat_capacity: 2^n ≤ (1 + A/η)^m for exact rectangular split-3SAT protocols over robust amplitude slots"
+    scope: "transcript-resource bound for the split-input problem only; not a SAT time lower bound (O(n) centralized solver exists)"
+    axiom_audit: "67 declarations, standard axioms or subsets"

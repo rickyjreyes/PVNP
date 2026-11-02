@@ -1800,6 +1800,22 @@ verifier classes, with polynomial preservation of all relevant costs.
 No such physical-to-discrete resource equivalence or classical
 separation is established here.
 
+\paragraph{Formal verification status (November 2026).}
+For the one-dimensional, radius-one, finite-alphabet, quiescent
+discrete model, both simulation directions and the class equalities of
+Theorem~\ref{thm:uniform-discrete-bijection} are kernel-checked in the
+accompanying Lean project (\texttt{PVNP.Discrete.P\_WCC\_eq\_P\_TM},
+\texttt{PVNP.Discrete.NP\_WCC\_eq\_NP\_TM}). The Lean Turing-to-WCC
+simulation runs in real time (overhead factor one); the WCC-to-Turing
+simulation is an explicit single-tape machine using alternating shifted
+sweeps, with at most $1+(T(n)+1)(n+2T(n)+5)$ steps. Radius-$r$ and
+higher-dimensional lattices and non-local polynomial-time encoders are
+covered by the analytic argument above but are not formalized. The
+formal transfer theorem \texttt{PVNP.Discrete.p\_vs\_np\_discrete\_transfer}
+shows that the discrete question $P^{\mathrm{disc}}_{\mathrm{WCC}}
+\stackrel{?}{=} NP^{\mathrm{disc}}_{\mathrm{WCC}}$ is exactly the
+classical one; it is not resolved here.
+
 
 \section{Conclusion}
 
