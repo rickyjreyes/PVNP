@@ -451,6 +451,48 @@ kernel-checked for a dense CNF encoding by an explicit verifier machine
 (\texttt{PVNP.Discrete.SATV.V\_SAT\_mem\_P\_TM}), which also gives
 CNF-SAT $\in NP$ in both discrete models
 (\texttt{PVNP.Discrete.SATV.SAT\_dense\_mem\_NP\_TM}).
+Theorem~\ref{thm:disc-equiv} is kernel-checked in dimension one for every
+fixed radius $r\ge1$ (\texttt{PVNP.Discrete.P\_WCCR\_eq\_P\_TM},
+\texttt{PVNP.Discrete.NP\_WCCR\_eq\_NP\_TM}); on $\mathbb{Z}^{1+d}$ only the
+inclusion of $P_{\mathrm{TM}}$ is (\texttt{PVNP.Discrete.P\_TM\_subset\_P\_WCCD}).
+
+\emph{Encoders and decoders.} For the exact constant-amplitude solutions of the
+frozen PDE (\texttt{PVNP.WCTPlaneWave.plane\_wave\_solves}), an unrestricted
+encoder decides every language at constant mass, zero curvature energy and two
+final states (\texttt{PVNP.PhysicalAudit.unrestricted\_encoder\_trivializes});
+so does an unrestricted decoder after a fixed injective encoder
+(\texttt{unrestricted\_decoder\_trivializes}). With polynomial-time indicator
+encoders the constant-cost physical class is exactly $P_{\mathrm{TM}}$
+(\texttt{PhysConst\_polyEnc\_eq\_P\_TM}), and a physical lower bound for SAT over
+any encoder class containing them would prove $P_{\mathrm{TM}}\ne NP_{\mathrm{TM}}$
+(\texttt{physical\_SAT\_lower\_bound\_is\_classical}). A universal physical SAT
+lower bound is therefore at least as hard as the classical problem.
+
+\emph{The flux inequality.} The transport theorem
+$\int_0^T\|\Delta\psi\|_2^2\,dt\ge\delta^4/(\Gamma^4T^3)$ is kernel-checked from
+the instantaneous flux inequality $|J'(t)|\le\Gamma\sqrt{D(t)}$
+(\texttt{PVNP.TransportCalculus.curvature\_time\_lower\_bound}); for the continuum
+PDE the flux inequality itself is derived only analytically (integration by
+parts, \texttt{pvnp/proofs/wct-pde-transport-bound.md}) and remains a premise of
+the Lean theorem. For the method-of-lines discretization on the discrete torus
+$\mathbb{Z}/N\mathbb{Z}$ it is \emph{derived} in Lean: mass and Hamiltonian are
+exactly conserved (\texttt{PVNP.WCTLattice.mass\_conserved},
+\texttt{ham\_conserved}), $\|Az\|^2\le H+\tfrac{3\beta^2}{16\gamma}M$ uniformly in
+$N$ (\texttt{bandpass\_le\_ham}), $J'=2\operatorname{Im}\langle[A,w]z,Az\rangle$
+(\texttt{hasDerivAt\_flux}), and $|J'(t)|\le\Gamma\sqrt{\|Az(t)\|}$ with an explicit
+$\Gamma$ fixed by the initial data (\texttt{lattice\_flux\_inequality}), giving
+the lattice curvature--time bound (\texttt{lattice\_curvature\_time\_bound}).
+
+\emph{Well-posedness.} Global $H^2(\mathbb{R}^2)$ well-posedness, continuous
+dependence and conservation for the same equation are kernel-checked in the
+external library \texttt{rickyjreyes/math} (commit \texttt{30a5ddc},
+\texttt{ReyesMath.Sobolev.global\_wellposed}, \texttt{continuous\_dependence},
+\texttt{conservation}); the bridge \texttt{lean/bridge/MathBridge.lean} proves that
+its operator $(\Delta+k^2)^2$, nonlinearity and energy density coincide with
+the definitions used here ($\kappa=k^2$). These results are on the whole plane;
+the periodic and expanding-torus geometry of the physical model is not covered,
+and no uniform-in-$L$ Poincar\'e constant exists there
+(\texttt{PVNP.SpectralGap.no\_uniform\_poincare}, sharp constant $(2\pi/L)^2$).
 Conditional statements remain conditional.
 
 \clearpage
