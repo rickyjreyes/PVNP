@@ -121,10 +121,17 @@ capacity estimates are conditional on their specific dynamical hypotheses.
 \paragraph{Kernel verification and model boundary (November 2, 2026).}
 The theorems \texttt{PVNP.Discrete.P\_WCC\_eq\_P\_TM} and
 \texttt{PVNP.Discrete.NP\_WCC\_eq\_NP\_TM} are checked for the
-specific one-dimensional radius-one finite quiescent model.
-The manuscript's broader fixed-radius, higher-dimensional and physically
-realized variants must not be identified with these statements without
-additional constructions and uniform simulation bounds. In particular,
+one-dimensional radius-one finite quiescent model, and
+\texttt{PVNP.Discrete.P\_WCCR\_eq\_P\_TM} and
+\texttt{PVNP.Discrete.NP\_WCCR\_eq\_NP\_TM} extend them to \emph{every
+fixed radius} $r\ge1$ in dimension one. For lattices
+$\mathbb{Z}^{1+d}$ only the inclusion
+$P_{\mathrm{TM}}\subseteq P^{(1+d)}_{\mathrm{WCC}}$ is kernel-checked
+(\texttt{PVNP.Discrete.P\_TM\_subset\_P\_WCCD}); the converse inclusion
+for $d\ge1$ rests on the proof sketch of Theorem~\ref{thm:wcc_to_tm} and
+is not formally verified. Physically realized variants must not be
+identified with any of these statements without additional
+constructions and uniform simulation bounds. In particular,
 a language-independent polynomial-cost encoder does not make an
 arbitrary receiver decoder efficient: a fixed noisy sign encoding with
 $n$ coordinates and squared mass $n$ supports an unrestricted decoder
@@ -1035,6 +1042,20 @@ P_{\mathrm{WCC}} = P_{\mathrm{Turing}}.
 \]
 \end{corollary}
 
+\begin{remark}[Scope of the formally verified part]
+\label{rem:verified-scope}
+Corollary~\ref{cor:pwcc_equals_pturing} is kernel-checked in dimension
+one for every fixed radius $r\ge1$ and the fixed origin-marked encoding
+(Section~\ref{sec:uniform-bridge}). For $d\ge2$ only
+$P_{\mathrm{Turing}}\subseteq P_{\mathrm{WCC}}$ is kernel-checked; the
+inclusion $P_{\mathrm{WCC}}\subseteq P_{\mathrm{Turing}}$ in dimension
+$d\ge2$ is supported here by the proof sketch of
+Theorem~\ref{thm:wcc_to_tm} only. For the polynomial-time encoder class
+of Definition~\ref{def:wcc_machine}, the inclusion
+$P_{\mathrm{Turing}}\subseteq P_{\mathrm{WCC}}$ also follows trivially,
+because the encoder may compute the decision bit.
+\end{remark}
+
 % WIN-11: physical resource equivalence is separate from discrete equivalence.
 \begin{remark}[Physical WCT realization is a separate obligation]
 \label{rem:wct_realization}
@@ -1735,6 +1756,7 @@ of the WCT rails.
 
 
 \section{Uniform Encodings, Decision Equivalence, and the Physical Bridge}
+\label{sec:uniform-bridge}
 \label{sec:bijection}
 
 The preceding sections establish an equivalence of \emph{language classes}
@@ -1823,11 +1845,43 @@ accompanying Lean project (\texttt{PVNP.Discrete.P\_WCC\_eq\_P\_TM},
 \texttt{PVNP.Discrete.NP\_WCC\_eq\_NP\_TM}). The Lean Turing-to-WCC
 simulation runs in real time (overhead factor one); the WCC-to-Turing
 simulation is an explicit single-tape machine using alternating shifted
-sweeps, with at most $1+(T(n)+1)(n+2T(n)+5)$ steps. Radius-$r$ and
-higher-dimensional lattices and non-local polynomial-time encoders are
-covered by the analytic argument above but are not formalized. The
-formal transfer theorem \texttt{PVNP.Discrete.p\_vs\_np\_discrete\_transfer}
-shows that the discrete question $P^{\mathrm{disc}}_{\mathrm{WCC}}
+sweeps, with at most $1+(T(n)+1)(n+2T(n)+5)$ steps. For \emph{every fixed radius} $r\ge1$
+(still in dimension one, with the same origin-marked encoding) the
+equalities are kernel-checked as
+\texttt{PVNP.Discrete.P\_WCCR\_eq\_P\_TM} and
+\texttt{PVNP.Discrete.NP\_WCCR\_eq\_NP\_TM}: the simulating machine
+\texttt{WCCR.toTM} keeps the last $2r$ tape symbols in its control state,
+shifts the simulated frame by $r$ per sweep, and uses at most
+$1+(T(n)+1)(n+2r(T(n)+1)+2r+1)$ steps
+(\texttt{WCCR.toTM\_decides}); radius-one machines embed with identical
+runs (\texttt{WCC.toR\_decides}). For lattices $\mathbb{Z}^{1+d}$ with the
+Moore neighbourhood, an exact axis embedding
+(\texttt{WCC.toD\_run}) gives the kernel-checked inclusion
+$P_{\mathrm{TM}}\subseteq P^{(1+d)}_{\mathrm{WCC}}$
+(\texttt{PVNP.Discrete.P\_TM\_subset\_P\_WCCD}). The converse inclusion
+for $d\ge1$ is the classical polynomial simulation of a multidimensional
+automaton sketched in Theorem~\ref{thm:wcc_to_tm}; it is \emph{not}
+formalized, and every statement of this paper about $d\ge2$ that needs it
+is conditional on it. The radius-$0$ case of
+Definition~\ref{def:wcc_machine} has no communication between cells and
+is excluded from the formal statements.
+
+Encoders and decoders must be fixed and charged. With an unrestricted
+encoder, every language, including undecidable ones, is decided in time
+zero by a fixed one-cell reader
+(\texttt{PVNP.Discrete.unrestricted\_encoder\_trivializes\_WCC}), and a
+single length-indexed advice bit decides every length-determined language
+(\texttt{PVNP.Discrete.advice\_bit\_trivializes}). An encoder that is
+merely polynomial-time computable may itself compute the decision bit, so
+for the encoder class of Definition~\ref{def:wcc_machine} the equality
+$P^{\mathrm{disc}}_{\mathrm{WCC}}=P_{\mathrm{Turing}}$ also holds for this
+trivial reason; the non-trivial content of
+Theorem~\ref{thm:uniform-discrete-bijection} is the simulation for the
+\emph{fixed} origin-marked encoding
+(\texttt{PVNP.Discrete.P\_WCC\_enc\_id}). The formal transfer theorems
+\texttt{PVNP.Discrete.p\_vs\_np\_discrete\_transfer} and
+\texttt{PVNP.Discrete.p\_vs\_np\_radius\_transfer} show that the discrete
+question $P^{\mathrm{disc}}_{\mathrm{WCC}}
 \stackrel{?}{=} NP^{\mathrm{disc}}_{\mathrm{WCC}}$ is exactly the
 classical one; it is not resolved here.
 
