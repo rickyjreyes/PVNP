@@ -1,7 +1,7 @@
 name: PVNP Lean supporting theorems
 on:
   push:
-    branches: [main, formal/wcc-locality-resource-audit-10-11-20261027]
+    branches: [main, formal/wcc-locality-resource-audit-10-11-20261027, astra/complete-program-20261102]
     paths: ['lean/**', '.github/workflows/lean.yml']
   pull_request:
   workflow_dispatch:
@@ -34,3 +34,9 @@ jobs:
         run: lake build PVNP
       - name: Check issue 10 and 11 proof modules explicitly
         run: lake build PVNP.LocalityLowerBound PVNP.ReplayCost PVNP.TMCellCompiler PVNP.RadiusCausality PVNP.TMGlobal PVNP.TMStayTrace PVNP.MachineCode PVNP.FiniteWCCCode PVNP.OracleObstruction PVNP.TMHeadMotion PVNP.TMHeadSupport PVNP.TMHeadUniqueRight PVNP.TMHeadUniqueLeft PVNP.TMHeadStep PVNP.TMMovingTrace
+      - name: Check ASTRA completion modules explicitly (#10, #11, #12, #15)
+        run: lake build PVNP.DiscreteMachines PVNP.TMtoWCC PVNP.WCCtoTM PVNP.ComplexityEquivalence PVNP.MachineSerialization PVNP.BandlimitedNoisyPacking PVNP.FourierReceiverProjection PVNP.DecisionVsEncodingCounterexample PVNP.PartIIIAnalytic PVNP.DiscreteCurvatureRail PVNP.PhysicalComplexityClasses PVNP.WitnessSizeUniformity PVNP.FourierTorusReceiver PVNP.PSubsetNP PVNP.CircleSpectralGap PVNP.WCTPlaneWave PVNP.TMScan PVNP.SATVerifier PVNP.PartIIIHighFreq3D PVNP.TransportCalculus PVNP.AnalogSplitSATCapacity
+      - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
+        run: |
+          lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt
+          python3 audit/check_axioms.py audit/AxiomAudit.lean axiom-audit.txt

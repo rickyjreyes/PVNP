@@ -66,3 +66,14 @@ The [split 3-CNF proof](proofs/split-3sat-reliable-channel.md) formalizes actual
 ## Conserved-mass finite-band reliable-readout packing (O6)
 
 The [sphere-packing supplement](proofs/bandlimited-noisy-wave-packing.md) proves analytically that N independently decodable noisy complex D-mode readout states at fixed conserved mass M must satisfy `N <= (1+sqrt(M)/eta)^(2D)`. This is a universal bound over that specified codebook class, **not** an all-algorithm SAT bound, because an SAT decider need not separately decode all assignments. It is currently outside Lean and does not establish the link between an actual PDE trajectory and a distributed communication transcript.
+
+## ASTRA status update (2 November 2026)
+
+This dated update supplements, and does not rewrite, the table above. Details and exact Lean names: [ASTRA completion report](proofs/astra-completion-report.md); frozen physical model and resource-by-resource status: [physical-model-freeze.md](proofs/physical-model-freeze.md).
+
+- **O3 — complete for the frozen discrete model.** Kernel-checked `P_WCC = P_TM` and `NP_WCC = NP_TM` from explicit simulations in both directions (`PVNP.Discrete.P_WCC_eq_P_TM`, `NP_WCC_eq_NP_TM`), plus flat machine serialization.
+- **O5 / O6 — partial.** The bandlimited packing theorem above is now Lean-verified (`PVNP.Packing.complex_receiver_packing`, `subspace_receiver_packing`); `C_Θ ≤ ‖Δψ‖²/(4ε²)` is proved as a Lebesgue-integral inequality; energy→curvature, distinguishability→curvature and bandwidth preservation are refuted in Lean.
+- **O7 / O9 — new obstruction theorems.** `p_vs_np_discrete_transfer` and `curvature_lower_bound_is_classical`: within the discrete model, any time or curvature lower bound for an NP language *is* a classical P ≠ NP proof, and polynomial curvature rails add nothing (`P_TM_eq_curvature_rail`). The physical universal lower bound remains **OPEN** (missing implications M1–M3).
+- **O8 — OPEN.** **O10 — advanced** (36-declaration axiom audit enforced in CI; Python cross-checks).
+- **Second tranche (same day).** `P_TM ⊆ NP_TM` and `P_WCC ⊆ NP_WCC` unconditionally (`PSubsetNP`); genuine `L²`-torus Fourier receiver packing (`FourierTorusReceiver`); sharp circle spectral gap and the impossibility of a domain-uniform Poincaré constant (`CircleSpectralGap`); exact classical solutions of the frozen WCT PDE realizing the expanding-domain countermodel (`WCTPlaneWave`). O2 still lacks a Lean CNF-evaluating TM (`SAT ∈ NP_TM`).
+- **O2 (same day).** CNF-SAT under the dense encoding is in `NP_TM` and `NP_WCC` with an explicit, kernel-checked verifier machine (`SATVerifier`: `satTM_decides`, `SAT_dense_mem_NP_TM`, `encDense_mem_SAT_iff`); Part III's `L_check ∈ P` is proved (`V_SAT_mem_P_TM`). Cook–Levin NP-completeness is not formalized.

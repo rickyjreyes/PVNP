@@ -188,3 +188,117 @@ latest_issue_11_head_marker_support:
     - "uniqueness of marker at every valid right/left/stay successor"
     - "unrestricted bounded-tape moving-head trace, boundary safety, acceptance/rejection"
     - "actual serialized ordinary TM interpreter, polynomial simulation proofs, P/NP language equivalence"
+
+astra_completion_2026_11_02:
+  branch: "astra/complete-program-20261102 (built on PR #14 head 98d0ac20)"
+  verification: "local `lake build PVNP` PASS with pinned Lean v4.23.0 / Mathlib v4.23.0; axiom audit `lean/audit/AxiomAudit.lean` (36 declarations, only propext, Classical.choice, Quot.sound); confirm with current-head GitHub Actions before citing as CI-verified"
+  issue_11:
+    classification: PROVED (for the frozen 1-D radius-one finite quiescent WCC model on Z and ordinary single-tape TMs)
+    model: "PVNP/DiscreteMachines.lean: TM (finite Λ, Γ; δ : Λ → Γ → Option (Λ × Γ × Dir); bi-infinite tape; acc/rej flags); WCC (finite S, quiescent blank, radius-one rule on Z, origin-marked input); shared first-answer decision semantics; P_TM, P_WCC, NP_TM := NPOf P_TM, NP_WCC := NPOf P_WCC with explicit Polynomial ℕ time and witness bounds and self-delimiting pairing"
+    proved:
+      - "TM.toWCC_step_encode: exact one-step correspondence, all cases (left, right, stay, halt)"
+      - "TM.toWCC_run_encode: every finite execution; TM.encode_injective, encode_head_unique (global unique head)"
+      - "TM.toWCC_decides: real-time simulation, identical time bound"
+      - "WCC.rsweep_run, lsweep_run, phase_step, global: exact invariants of the alternating shifted-sweep simulator TM"
+      - "WCC.toTM_decides: ordinary TM decides L within 1 + (T n + 1)(n + 2 T n + 5) steps"
+      - "P_TM_subset_P_WCC, P_WCC_subset_P_TM, P_WCC_eq_P_TM, NP_WCC_eq_NP_TM"
+      - "p_vs_np_discrete_transfer: (P_WCC = NP_WCC) ↔ (P_TM = NP_TM); lower_bound_transfer"
+      - "WitnessSizeUniformity: pair_length, pair_length_le, NP_TM_verifier_to_WCC (same q, same p, verifier time ≤ p∘(2X+1+q)), NP_WCC_verifier_to_TM"
+      - "MachineSerialization: Codec laws; encodeTable_decodeTable (round trip), decodeTable_sound and decodeTable_rejects (malformed/noncanonical rejection), encodeTable_injective, encodeTable_length_le (|code| ≤ 4 + 6k + 4m + k m (k+m+4)), TM.normalize_decides, P_TM_eq_tables"
+    remaining_scope_limits:
+      - "radius-r and d-dimensional lattices, and polynomial-time (non-local) input encoders of the manuscript's general Definition: not formalized (standard block/encoder composition)"
+      - "universal TM executing serialized descriptions and a TM-step bound for the parser: not constructed (not needed for the class equalities)"
+      - "P_TM ⊆ NP_TM in Lean requires a pair-parsing TM: not formalized (classically routine)"
+      - "no physical curvature-preserving simulation is claimed"
+  issue_15:
+    classification: PROVED (packing theorem and receiver lemmas); promoted decision bound REFUTED
+    proved:
+      - "Packing.packing_card_le: N ≤ (1 + R/η)^(finrank ℝ E) for 2η-separated vectors of norm ≤ R, any finite-dimensional real normed space (Haar-volume proof)"
+      - "Packing.finrank_real_euclideanSpace_complex: real dimension of C^D is 2D"
+      - "Packing.complex_receiver_packing (≥ 2η separation), complex_receiver_packing_strict (> 2η, supplement's hypothesis)"
+      - "Packing.receiver_projection_norm_le; subspace_receiver_packing (orthogonal projection of mass-≤M states onto any complex D-dim receiver subspace)"
+      - "Packing.capacity_bits_le: n ≤ 2D log2(1 + √M/η); mass_lower_bound: M ≥ η²(2^{n/2D} − 1)²"
+      - "FourierReceiver.mode_count_le, receiver_mode_count: D ≤ (2⌊LK/2π⌋+1)²"
+      - "FourierReceiver.cubic_quintic_generates_new_modes: −β|u|²u + γ|u|⁴u leaves finite support {1,2} for all (β,γ) ≠ 0 (trigonometric-polynomial algebra model)"
+      - "DecisionVsEncoding.robust_decision_readout, promoted_bound_false, decision_forgets_witnesses, decision_image_card_le_two"
+  issue_10:
+    classification: PARTIAL (locality results PROVED; universal physical resource lower bound OPEN; every tested universal candidate REFUTED at stated scope)
+    new_proved:
+      - "Discrete.WCC.run_blank_outside, lap_zero_outside, curvature_le: discrete curvature ≤ 16 K²(n + 2t + 3) for every amplitude embedding"
+      - "Discrete.P_TM_eq_curvature_rail: polynomial curvature rails add nothing in the discrete model"
+      - "Discrete.curvature_lower_bound_is_classical: discrete curvature lower bound for an NP language ⇒ P_TM ≠ NP_TM"
+    frozen_model: "pvnp/proofs/physical-model-freeze.md"
+    open: ["M1 two-way rail-preserving WCT-Phys/TM simulation", "M2 forced 2^Ω(n) distinguishable intermediate states for every decider", "M3 PDE well-posedness and L_n-uniform coercivity"]
+  issue_12:
+    classification: "PARTIAL — completion gate met (every principal Part III statement matched to a Lean theorem, scoped counterexample, conditional statement, or documented obligation; see pvnp/proofs/astra-completion-report.md, Part III map). Remaining formalization items: L_check in P_TM (CNF-evaluating TM), 3-D Fubini lift of prop:highfreq. Physical-class separation OPEN."
+    new_proved:
+      - "PartIIIAnalytic.curvature_cost_le (lem:h2bound), capacity_law (thm:capacity, conditional premise explicit)"
+      - "PartIIIAnalytic.laplacian_const, zero_cost_counterexample (prop:zero_cost, Mathlib Laplacian on R^d)"
+      - "PartIIIAnalytic.highfreq_gradient_energy, highfreq_curvature_lower, no_gradient_energy_control (prop:highfreq, 1-D periodic version; manuscript states 3-D, which follows by Fubini but is not formalized)"
+      - "Discrete.WCC.relabel_decides (time invariant under representation), curvature_not_representation_invariant (curvature is not)"
+      - "Discrete.telescoping_bound (thm:constructibility), conditional_interface_bound (prop:interface, CONDITIONAL)"
+      - "PartIII.directed_boundary_eq (lem:boundary_variation), parity_total_influence, parity_directed_boundary (WIN-21), variation_class_vacuous (cor:var)"
+      - "Discrete.inclusions_do_not_determine, classical_question_well_posed (WIN-17)"
+  forbidden_claims_unchanged:
+    - "no classical P ≠ NP"
+    - "no physical P_WCC ≠ NP_WCC"
+    - "no universal SAT lower bound in any physical model"
+
+astra_second_tranche_2026_11_02:
+  verification: "local lake build PVNP PASS; axiom audit 50 declarations, all [propext, Classical.choice, Quot.sound]"
+  issue_11_12_p_subset_np:
+    module: PVNP/PSubsetNP.lean
+    proved: ["TM.unpair_decides (explicit parse/erase/return/odd-cell simulator, time 2N + 3 + 2p(N))", "P_TM_subset_NP_TM", "P_WCC_subset_NP_WCC"]
+  issue_15_genuine_fourier_receiver:
+    module: PVNP/FourierTorusReceiver.lean
+    proved: ["FourierTorus.receiver_bessel", "FourierTorus.torus_receiver_packing", "FourierTorus.torus2_bandlimited_packing"]
+    model: "L2 fields on Mathlib UnitAddTorus d with normalized Haar measure; receiver = Fourier coefficients on a finite mode set"
+  issue_10_spectral_gap:
+    module: PVNP/CircleSpectralGap.lean
+    proved: ["SpectralGap.fourierCoeff_of_deriv", "SpectralGap.hasSum_sq_fourierCoeff_cont", "SpectralGap.wirtinger", "SpectralGap.wirtinger_sharp", "SpectralGap.no_uniform_poincare"]
+  o4_exact_pde_solutions:
+    module: PVNP/WCTPlaneWave.lean
+    proved: ["WCTPlaneWave.plane_wave_solves", "WCTPlaneWave.classical_derivatives", "WCTPlaneWave.wave_periodic", "WCTPlaneWave.mass_box", "WCTPlaneWave.curvature_box", "WCTPlaneWave.hamiltonian_box", "WCTPlaneWave.expanding_domain_countermodel", "WCTPlaneWave.curvature_energy_vanishes"]
+    scope: "explicit classical solution family of the frozen PDE (classical partial derivatives along coordinates); not a general well-posedness theorem"
+  still_open: ["SAT ∈ NP_TM under a fixed CNF bit encoding (O2)", "general well-posedness of the frozen PDE (O4)", "universal physical lower bound (O7-O9: M1-M3)"]
+
+o2_sat_in_np:
+  modules: [PVNP/TMScan.lean, PVNP/SATVerifier.lean]
+  verification: "local lake build PVNP PASS; axiom audit 57 declarations (standard axioms or subsets)"
+  encoding: "dense CNF: each clause = n slots of 3 bits (x_j occurs, not-x_j occurs, last-slot flag); witness = assignment of length n"
+  proved:
+    - "TM.scan1, TM.scan2, TM.frozen, TM.none_before (generic TM execution lemmas)"
+    - "SATV.rounds: exact round invariants of the verifier TM following chkFrom"
+    - "SATV.satTM_decides: V_SAT decided in time 2(N+3)^2 (malformed pair inputs rejected)"
+    - "SATV.V_SAT_mem_P_TM (Part III prop:assignment-P)"
+    - "SATV.SAT_dense_mem_NP_TM, SATV.SAT_dense_mem_NP_WCC"
+    - "SATV.encDense_mem_SAT_iff: encDense n F ∈ SAT_dense ↔ PVNP.PartI.satisfiable F (variables < n, n ≥ 1)"
+    - "SATV.SAT_curvature_transfer: SAT_dense ∉ P_curvRail → P_TM ≠ NP_TM"
+  not_proved: ["Cook-Levin NP-completeness of SAT_dense", "sparse binary-index CNF encoding"]
+
+part_iii_completion:
+  modules: [PVNP/PartIIIHighFreq3D.lean, PVNP/PhysicalComplexityClasses.lean]
+  proved:
+    - "PartIIIHighFreq3D.lap3_psi, cube_gradient_energy (4π³), cube_curvature_lower ((16/25)π³N²): prop:highfreq on the 3-D cube"
+    - "Discrete.conditional_additive_storage (CONDITIONAL, premises explicit)"
+  issue_12_classification: "PROVED at stated scope: every principal Part III statement is a Lean theorem, counterexample, or explicitly conditional statement; physical separation (O8) OPEN and not claimed by Part III"
+  axiom_audit: "61 declarations, standard axioms or subsets"
+
+transport_calculus:
+  module: PVNP/TransportCalculus.lean
+  proved:
+    - "sq_integral_le, power_mean_four: (∫₀ᵀ f)⁴ ≤ T³ ∫₀ᵀ f⁴ for continuous f ≥ 0"
+    - "transport_tradeoff: |J(T)-J(0)|⁴ ≤ Γ⁴T³∫₀ᵀD² from |J'| ≤ Γ√D (FTC + Hölder)"
+    - "curvature_time_lower_bound: ∫₀ᵀ D² ≥ δ⁴/(Γ⁴T³)"
+    - "hamiltonian_controls_bandpass: ∫‖B‖² ≤ H + (3β²/(16γ))∫‖ψ‖² on any measure space"
+  premise_kept_explicit: "instantaneous flux inequality |J'(t)| ≤ Γ√D(t) (PDE integration by parts, analytic)"
+  axiom_audit: "65 declarations, standard axioms or subsets"
+
+analog_split_sat_capacity:
+  module: PVNP/AnalogSplitSATCapacity.lean
+  closes: "split_sat_channel_capacity.analytic_not_lean (amplitude/noise scalar-symbol packing)"
+  proved:
+    - "AnalogSplitSAT.scalar_level_count: 2η-separated levels in [-A, A] number at most 1 + A/η"
+    - "AnalogSplitSAT.analog_split_sat_capacity: 2^n ≤ (1 + A/η)^m for exact rectangular split-3SAT protocols over robust amplitude slots"
+  scope: "transcript-resource bound for the split-input problem only; not a SAT time lower bound (O(n) centralized solver exists)"
+  axiom_audit: "67 declarations, standard axioms or subsets"
