@@ -60,6 +60,7 @@ import PVNP.R13_PhysicalComplexity
 import PVNP.PhysicalModelAudit
 import PVNP.WCCRadius
 import PVNP.WCCGenerality
+import PVNP.WCCDFiniteSupport
 import PVNP.WCTLattice
 
 import PVNP.DecoderUniformity
