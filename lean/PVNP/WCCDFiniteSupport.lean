@@ -27,7 +27,7 @@ theorem off_bounds (u : Fin 3) : -1 ≤ off u ∧ off u ≤ 1 := by
 
 /-- The initial configuration is blank outside its finite axis segment. -/
 theorem init_blank_outside (x : List Bool) (p : Site d)
-    (hout : ¬ A.InCone x 0 p) : A.init x p = A.blank := by
+    (hout : ¬ InCone x 0 p) : A.init x p = A.blank := by
   by_cases haxis : p.2 = 0
   · have hrange : ¬ ((0 : ℤ) ≤ p.1 ∧ p.1 ≤ (x.length : ℤ)) := by
       intro hj
@@ -47,7 +47,7 @@ theorem init_blank_outside (x : List Bool) (p : Site d)
 /-- Finite propagation speed: after `t` steps the configuration agrees with
 the quiescent blank outside a width-`t` rectangular neighborhood of input. -/
 theorem run_blank_outside (x : List Bool) (t : ℕ) (p : Site d)
-    (hout : ¬ A.InCone x t p) :
+    (hout : ¬ InCone x t p) :
     A.run (A.init x) t p = A.blank := by
   induction t generalizing p with
   | zero =>
@@ -57,7 +57,7 @@ theorem run_blank_outside (x : List Bool) (t : ℕ) (p : Site d)
       change A.rule (fun u => A.run (A.init x) t
         (p.1 + off u.1, fun i => p.2 i + off (u.2 i))) = A.blank
       have hneigh : ∀ u : Fin 3 × (Fin d → Fin 3),
-          ¬ A.InCone x t
+          ¬ InCone x t
             (p.1 + off u.1, fun i => p.2 i + off (u.2 i)) := by
         intro u hin
         apply hout
