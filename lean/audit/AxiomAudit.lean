@@ -126,3 +126,8 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.WCTLattice.flux_bound
 #print axioms PVNP.WCTLattice.lattice_flux_inequality
 #print axioms PVNP.WCTLattice.lattice_curvature_time_bound
+-- M3-G: quantitative mass bounds along local solutions
+#print axioms PVNP.WCTLattice.coordinate_norm_sq_le_mass
+#print axioms PVNP.WCTLattice.coordinate_norm_le_sqrt_mass
+#print axioms PVNP.WCTLattice.solution_uniform_coordinate_bound
+#print axioms PVNP.WCTLattice.exists_local_solution_bounded
