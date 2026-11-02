@@ -119,3 +119,17 @@ configuration, whether a marker appears at one of the three candidate
 sites still depends on the transition direction. Complete moving-head
 traces and P/NP class equality remain open. Verify the file by
 current-head Lean CI before describing it as kernel checked.
+
+## ASTRA completion checkpoint — 2 November 2026 (issues #10, #11, #12, #15)
+
+Full report: [`pvnp/proofs/astra-completion-report.md`](../pvnp/proofs/astra-completion-report.md). Frozen physical model: [`pvnp/proofs/physical-model-freeze.md`](../pvnp/proofs/physical-model-freeze.md). Axiom audit: [`audit/AxiomAudit.lean`](audit/AxiomAudit.lean) (CI fails on any axiom beyond `propext`, `Classical.choice`, `Quot.sound`).
+
+**#11 — PROVED for the frozen discrete model.** `DiscreteMachines` defines an ordinary finite single-tape TM and a finite quiescent radius-one WCC on `ℤ`, a shared first-answer decision semantics, and `P_TM`, `P_WCC`, `NP_TM`, `NP_WCC` with explicit polynomial time and witness bounds. `TMtoWCC` proves exact real-time simulation for every transition case; `WCCtoTM` builds an explicit alternating shifted-sweep TM with time `1 + (T+1)(n+2T+5)`; `ComplexityEquivalence` derives `P_WCC_eq_P_TM`, `NP_WCC_eq_NP_TM` and `p_vs_np_discrete_transfer`. `MachineSerialization` gives a flat binary machine code with verified round trip, canonical rejection, injectivity and size bound, and normalizes every TM to a serializable table. Not formalized: radius-`r`/`d`-dimensional lattices, non-local poly-time encoders, a universal TM.
+
+**#15 — PROVED.** `BandlimitedNoisyPacking` (Haar-volume packing; `N ≤ (1+√M/η)^{2D}`; projected-subspace version; capacity and mass corollaries), `FourierReceiverProjection` (mode count; WCT nonlinearity leaves finite support), `DecisionVsEncodingCounterexample` (storage bound is not a decision bound).
+
+**#10 — PARTIAL.** `DiscreteCurvatureRail` proves discrete curvature is polynomially bounded for every embedding, `P_curvRail = P_TM`, and that a discrete curvature lower bound for an NP language would prove `P_TM ≠ NP_TM`. The universal physical lower bound remains OPEN (missing implications M1–M3 in the freeze document).
+
+**#12 — PARTIAL (gate met).** `PartIIIAnalytic` (Lebesgue-integral curvature bound, Laplacian zero-cost counterexample, high-frequency counterexample with real derivatives/integrals) and `PhysicalComplexityClasses` (time invariant / curvature not invariant under representation change, telescoping and interface conditionals, exact boundary identity, parity, vacuous variation class, class logic, well-posedness).
+
+No classical `P ≠ NP`, physical class separation, or universal SAT lower bound is claimed.

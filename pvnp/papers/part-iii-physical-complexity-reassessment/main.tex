@@ -414,6 +414,20 @@ physical decider, not only against a particular geometric search protocol.
 Classical $P$ versus $NP$ remains mathematically well posed and unresolved
 by these constructions.
 
+\paragraph{Formal verification status (November 2026).}
+Lemma~\ref{lem:h2bound} and Theorem~\ref{thm:capacity} are
+kernel-checked as Lebesgue-integral inequalities on an arbitrary
+measure space; Proposition~\ref{prop:zero_cost} is checked with the
+genuine Laplacian; Proposition~\ref{prop:highfreq} is checked in its
+one-dimensional periodic form; Lemma~\ref{lem:boundary_variation},
+Theorem~\ref{thm:influence} and Corollary~\ref{cor:var} are checked
+exactly. In the discrete model the Lean theorem
+\texttt{PVNP.Discrete.P\_TM\_eq\_curvature\_rail} shows that polynomial
+curvature rails exclude no polynomial-time language, and
+\texttt{PVNP.Discrete.curvature\_not\_representation\_invariant} shows
+that the curvature functional, unlike running time, depends on the
+chosen representation. Conditional statements remain conditional.
+
 \clearpage
 \appendix
 \section{Conditional Curvature--Capacity Analysis}
