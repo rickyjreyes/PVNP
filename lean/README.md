@@ -161,3 +161,14 @@ No classical `P ≠ NP`, physical class separation, or universal SAT lower bound
 ### Transport calculus
 
 `TransportCalculus` proves the FTC and time-Hölder steps of the WCT readout-transport bound (`transport_tradeoff`, `curvature_time_lower_bound`: `∫₀ᵀ‖Δψ‖₂² ≥ δ⁴/(Γ⁴T³)` from the flux inequality) and the integrated Hamiltonian control of `∫|(Δ+κ)ψ|²`, replacing hypotheses that `HamiltonianTransport` previously assumed. Axiom audit: 65 declarations.
+
+### November 2: fixed sign encoding / decoder-uniformity countermodel
+
+`PVNP.DecoderUniformity` proves that a *language-independent* sign code stores exactly
+`2^n` labels in `n` real coordinates with total squared amplitude `n`,
+and remains coordinatewise decodable under every error strictly below `1`.
+Nevertheless, an unrestricted decoder may apply an arbitrary predicate to
+those recovered bits. Decoder complexity therefore **must be charged**
+before encoding/packing capacity can imply a decision-time lower bound.
+The decoder in this countermodel may be noncomputable; this is **not** an
+efficient SAT algorithm, a physical realization, or a classical separation.
