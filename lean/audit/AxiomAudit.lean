@@ -71,6 +71,25 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TransportCalculus.hamiltonian_controls_bandpass
 #print axioms PVNP.AnalogSplitSAT.scalar_level_count
 #print axioms PVNP.AnalogSplitSAT.analog_split_sat_capacity
+#print axioms PVNP.PhysicalAudit.device_physics
+#print axioms PVNP.PhysicalAudit.unrestricted_encoder_trivializes
+#print axioms PVNP.PhysicalAudit.unrestricted_decoder_trivializes
+#print axioms PVNP.PhysicalAudit.P_TM_subset_PhysConst
+#print axioms PVNP.PhysicalAudit.PhysConst_polyEnc_eq_P_TM
+#print axioms PVNP.PhysicalAudit.physical_SAT_lower_bound_is_classical
+#print axioms PVNP.PhysicalAudit.two_states_suffice
+#print axioms PVNP.Discrete.WCCR.rsweep_run
+#print axioms PVNP.Discrete.WCCR.lsweep_run
+#print axioms PVNP.Discrete.WCCR.phase_step
+#print axioms PVNP.Discrete.WCCR.global
+#print axioms PVNP.Discrete.WCCR.toTM_decides
+#print axioms PVNP.Discrete.WCC.toR_decides
+#print axioms PVNP.Discrete.P_WCCR_subset_P_TM
+#print axioms PVNP.Discrete.P_WCCR_eq_P_TM
+#print axioms PVNP.Discrete.NP_WCCR_eq_NP_TM
+#print axioms PVNP.Discrete.P_WCCR_radius_invariant
+#print axioms PVNP.Discrete.p_vs_np_radius_transfer
+#print axioms PVNP.Discrete.explicit_radius_simulations
 
 -- Fixed, language-independent robust encoding / unrestricted receiver countermodel
 #print axioms PVNP.DecoderUniformity.signDecode_signCode
@@ -79,3 +98,24 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.DecoderUniformity.signDecode_noise
 #print axioms PVNP.DecoderUniformity.arbitrary_predicate_has_robust_decoder
 #print axioms PVNP.DecoderUniformity.number_of_labels
+-- Part II generality: (1+d)-dimensional lattices, encoders, advice
+#print axioms PVNP.Discrete.WCC.toD_run
+#print axioms PVNP.Discrete.WCC.toD_decides
+#print axioms PVNP.Discrete.P_TM_subset_P_WCCD
+#print axioms PVNP.Discrete.NP_TM_subset_NP_WCCD
+#print axioms PVNP.Discrete.P_WCC_enc_id
+#print axioms PVNP.Discrete.unrestricted_encoder_trivializes_WCC
+#print axioms PVNP.Discrete.advice_bit_trivializes
+-- Lattice WCT system: conservation, coercivity, derived flux inequality, transport bound
+#print axioms PVNP.WCTLattice.ip_Aop
+#print axioms PVNP.WCTLattice.hasDerivAt_mass
+#print axioms PVNP.WCTLattice.hasDerivAt_ham
+#print axioms PVNP.WCTLattice.mass_conserved
+#print axioms PVNP.WCTLattice.ham_conserved
+#print axioms PVNP.WCTLattice.exists_local_solution
+#print axioms PVNP.WCTLattice.local_conservation
+#print axioms PVNP.WCTLattice.bandpass_le_ham
+#print axioms PVNP.WCTLattice.hasDerivAt_flux
+#print axioms PVNP.WCTLattice.flux_bound
+#print axioms PVNP.WCTLattice.lattice_flux_inequality
+#print axioms PVNP.WCTLattice.lattice_curvature_time_bound

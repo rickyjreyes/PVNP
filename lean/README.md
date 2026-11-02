@@ -1,10 +1,27 @@
 > **Current status (2026-11-02, authoritative):** see `formalization.yaml` → `current_status`.
-> Kernel-checked for the frozen 1-D radius-one discrete model: `P_WCC = P_TM`, `NP_WCC = NP_TM`
-> (`PVNP.Discrete.P_WCC_eq_P_TM`, `NP_WCC_eq_NP_TM`), `P ⊆ NP`, `SAT_dense ∈ NP_TM`; plus the
-> L²-torus receiver packing theorem, the sharp circle spectral gap, exact plane-wave solutions of
-> the frozen WCT PDE, and the Part III analytic results. Older dated sections below are kept for
-> provenance; where they say a result is open, the current status supersedes them.
-> No classical P ≠ NP, physical class separation, or universal SAT lower bound is claimed.
+> Kernel-checked discrete results:
+> - `P_WCC = P_TM` and `NP_WCC = NP_TM` for the 1-D radius-one model;
+> - the same equalities for **every fixed radius `r ≥ 1`** (`PVNP.Discrete.P_WCCR_eq_P_TM`,
+>   `NP_WCCR_eq_NP_TM`);
+> - `P_TM ⊆ P_WCCD d` on `ℤ^(1+d)` (inclusion only);
+> - `P ⊆ NP` and `SAT_dense ∈ NP_TM`;
+> - encoder and advice trivialization countermodels.
+>
+> Physical-model audit (`PVNP.PhysicalAudit`): unrestricted encoders and decoders trivialize the
+> model, and a physical SAT lower bound under polynomial-time encoders would imply `P_TM ≠ NP_TM`.
+>
+> PDE results:
+> - the lattice WCT system (`PVNP.WCTLattice`), with exact conservation, uniform coercivity and a
+>   **derived** flux inequality and transport bound;
+> - the L²-torus receiver packing, the sharp circle spectral gap, exact plane-wave solutions and the
+>   Part III analytic results;
+> - external whole-plane well-posedness in `rickyjreyes/math@30a5ddc`, with definitions matched in
+>   `bridge/MathBridge.lean`.
+>
+> Remaining obligations are listed in `../pvnp/proofs/remaining-obstructions.md`. Older dated
+> sections below are kept for provenance; where they say a result is open, the current status
+> supersedes them. No classical P ≠ NP, physical class separation, or universal SAT lower bound is
+> claimed.
 
 # PVNP Lean verification — extended formalization
 
