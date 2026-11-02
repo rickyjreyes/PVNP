@@ -13,8 +13,12 @@ Targeted CI: [run 41540246765](https://github.com/rickyjreyes/PVNP/actions/runs/
 at code commit `518da92dc70b284383b71c4dd4615b505a77ae7a`: **success**.
 All three modules individually built through the kernel. The targeted
 workflow also rejected `sorry`, `admit`, and custom `axiom` declarations.
-The full-project build and 123-declaration axiom audit require their
-separate GitHub Actions run on the current PR head.
+Full-project Lean CI: [run 41540246810](https://github.com/rickyjreyes/PVNP/actions/runs/41540246810)
+at code commit `518da92dc70b284383b71c4dd4615b505a77ae7a`: **success**.
+It passed the full PVNP import tree, targeted regression modules, and an
+**axiom audit of 123 declarations** (only `propext`, `Classical.choice`,
+`Quot.sound`, or subsets). The subsequent commits modify only the
+formalization ledger and this documentation, not the checked theorem files.
 
 | Obligation | New code | Actually proved | Remains open |
 |---|---|---|---|
