@@ -14,3 +14,7 @@ import PVNP.PhaseObservability
 import PVNP.FixedMassNodal
 import PVNP.ExpandingDomain
 import PVNP.SplitSATCapacity
+
+import PVNP.R03_CurvatureComplexity
+import PVNP.R12_DiscreteEquivalence
+import PVNP.R13_PhysicalComplexity
