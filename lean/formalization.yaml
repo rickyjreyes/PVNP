@@ -20,6 +20,7 @@ current_status:
     - "PVNP.Discrete.P_WCCR_eq_P_TM, NP_WCCR_eq_NP_TM (every fixed radius r >= 1, 1-D); WCCR.toTM_decides time 1 + (T+1)(n + 2r(T+1) + 2r + 1); WCC.toR_decides; P_WCCR_radius_invariant; p_vs_np_radius_transfer (added 2026-11-02, PR #19)"
     - "PVNP.Discrete.P_TM_subset_P_WCCD, NP_TM_subset_NP_WCCD, WCC.toD_run (Z^(1+d), Moore radius one: inclusion only; converse NOT formalized)"
     - "PVNP.Discrete.P_WCC_enc_id (frozen model = identity encoder)"
+    - "PVNP.Discrete.WCCD.off_bounds, init_blank_outside, run_blank_outside, run_blank_left, run_blank_right, run_blank_transverse: finite active rectangular causal region on Z^(1+d) with quiescent blank; PR #21 targeted Lean CI 41540246765; D-1 polynomial TM simulation remains OPEN"
   proved_analysis_and_pde:
     - "PVNP.Packing.complex_receiver_packing, subspace_receiver_packing; PVNP.FourierTorus.torus_receiver_packing, torus2_bandlimited_packing (genuine L2-torus Fourier receiver)"
     - "PVNP.SpectralGap.wirtinger, wirtinger_sharp, no_uniform_poincare"
@@ -30,6 +31,8 @@ current_status:
     - "PVNP.DecoderUniformity.signCode_mass, signDecode_noise, arbitrary_predicate_has_robust_decoder, number_of_labels (fixed, language-independent n-coordinate sign code of mass n; arbitrary decoder is uncharged and may be noncomputable)"
     - "PVNP.WCTLattice (method-of-lines WCT system on Z/NZ, any N, h, kappa, beta, gamma): ip_Aop (self-adjointness), mass_conserved, ham_conserved, exists_local_solution, local_conservation, bandpass_le_ham (uniform in N), hasDerivAt_flux (J' = 2 Im<[A,w]z, Az>), flux_bound, lattice_flux_inequality (|J'| <= Gamma sqrt(D), Gamma explicit from initial data; DERIVED, not assumed), lattice_curvature_time_bound"
     - "PVNP.PhysicalAudit.device_physics, unrestricted_encoder_trivializes, unrestricted_decoder_trivializes, P_TM_subset_PhysConst, PhysConst_polyEnc_eq_P_TM, physical_SAT_lower_bound_is_classical, two_states_suffice"
+    - "PVNP.WCTLattice.coordinate_norm_sq_le_mass, coordinate_norm_le_sqrt_mass, solution_uniform_coordinate_bound, exists_local_solution_bounded: explicit mass-controlled coordinate bounds on existing local lattice solutions; PR #21 targeted Lean CI 41540246765; M3-G global continuation remains OPEN"
+    - "PVNP.WCTLattice.mesh_flux_prefactor, mesh_flux_prefactor_unit: the existing lattice flux-bound prefactor scales as 4/h when a=h^(-2), omega=h, and as 4n when h=1/n; PR #21 targeted Lean CI 41540246765; M3-C convergence and sharper mesh-uniform estimates remain OPEN"
     - "EXTERNAL, verified 2026-11-02 (not in the PVNP library): rickyjreyes/math@30a5ddc ReyesMath.Sobolev.global_wellposed, continuous_dependence, conservation, norm_toSp_sq_le (H2(R^2), gamma > 0), axioms propext/Classical.choice/Quot.sound; definition match proved in lean/bridge/MathBridge.lean (opK_comp, fnl_eq_pvnp, hamDensity_comp, lap_comp_mathlib). Whole plane only; tori NOT covered."
   refuted_as_stated:
     - "storage/packing bound implies a decision lower bound (PVNP.DecisionVsEncoding.promoted_bound_false)"
