@@ -1,3 +1,11 @@
+> **Current status (2026-11-02, authoritative):** see `formalization.yaml` → `current_status`.
+> Kernel-checked for the frozen 1-D radius-one discrete model: `P_WCC = P_TM`, `NP_WCC = NP_TM`
+> (`PVNP.Discrete.P_WCC_eq_P_TM`, `NP_WCC_eq_NP_TM`), `P ⊆ NP`, `SAT_dense ∈ NP_TM`; plus the
+> L²-torus receiver packing theorem, the sharp circle spectral gap, exact plane-wave solutions of
+> the frozen WCT PDE, and the Part III analytic results. Older dated sections below are kept for
+> provenance; where they say a result is open, the current status supersedes them.
+> No classical P ≠ NP, physical class separation, or universal SAT lower bound is claimed.
+
 # PVNP Lean verification — extended formalization
 
 **Scope:** Exact finite Boolean semantics, deterministic local WCC dynamics, and finite Boolean-hypercube inequalities. This is a mechanized **consistent mathematical core**, not proof of the complete manuscripts or of P ≠ NP.
