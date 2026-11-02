@@ -93,7 +93,7 @@ theorem run_blank_right (x : List Bool) (t : ℕ) (p : Site d)
     (hp : (x.length : ℤ) + (t : ℤ) < p.1) :
     A.run (A.init x) t p = A.blank :=
   A.run_blank_outside x t p (fun h => by
-    exact (not_le_of_gt hp) h.2)
+    exact (not_le_of_gt hp) h.2.1)
 
 /-- Explicit transverse causal bound in every fixed spatial dimension. -/
 theorem run_blank_transverse (x : List Bool) (t : ℕ) (p : Site d)
