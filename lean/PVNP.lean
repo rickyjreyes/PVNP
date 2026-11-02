@@ -51,3 +51,4 @@ import PVNP.CircleSpectralGap
 import PVNP.WCTPlaneWave
 import PVNP.TMScan
 import PVNP.SATVerifier
+import PVNP.PartIIIHighFreq3D

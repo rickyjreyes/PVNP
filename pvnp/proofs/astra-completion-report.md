@@ -2,7 +2,7 @@
 
 Author of the research program: **Richard J. Reyes**. Original publications (Zenodo releases 03, 12, 13 and the May/November/December 2025 versions) are preserved unchanged; this report records the current, revised state of the mathematics.
 
-Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (which itself extends `main`). Every result below was checked locally with the pinned toolchain (`leanprover/lean4:v4.23.0`, Mathlib `v4.23.0`) via `lake build PVNP`, and the axiom audit `lean/audit/AxiomAudit.lean` reports only `propext`, `Classical.choice`, `Quot.sound` for all 57 principal declarations. GitHub Actions on the branch head is the authoritative CI record.
+Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (which itself extends `main`). Every result below was checked locally with the pinned toolchain (`leanprover/lean4:v4.23.0`, Mathlib `v4.23.0`) via `lake build PVNP`, and the axiom audit `lean/audit/AxiomAudit.lean` reports only `propext`, `Classical.choice`, `Quot.sound` for all 61 principal declarations. GitHub Actions on the branch head is the authoritative CI record.
 
 ---
 
@@ -56,15 +56,15 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
 ### #12 — Part III reassessment
 
 - **Starting status:** OPEN; mostly symbolic Lean (e.g. `zeroLaplacian _ = 0`).
-- **New Lean files:** `PartIIIAnalytic.lean`, `PhysicalComplexityClasses.lean` (plus `DiscreteCurvatureRail`, `ComplexityEquivalence`).
-- **Classification: PARTIAL**, with the completion gate met: every principal statement is matched below. One routine formalization item remains (Fubini lift of `prop:highfreq` from 1-D to 3-D); `L_check ∈ P_TM` is now proved (`SATVerifier.lean`).
+- **New Lean files:** `PartIIIAnalytic.lean`, `PartIIIHighFreq3D.lean`, `PhysicalComplexityClasses.lean`, `SATVerifier.lean` (plus `DiscreteCurvatureRail`, `ComplexityEquivalence`, `PSubsetNP`).
+- **Classification: PROVED at the stated scope** — every principal mathematical statement of Part III now has a Lean declaration: a proved theorem, a proved counterexample, or a statement formalized *as conditional* with its premises explicit (map below). Part III itself claims no physical class separation; that question is recorded as OPEN (O8) and is not part of this classification.
 
 #### Part III statement map
 
 | Part III statement | Status | Lean / evidence |
 |---|---|---|
 | Def. `def:regularized`, Prop. `prop:zero_cost` | Lean, counterexample (genuine Laplacian) | `PartIIIAnalytic.theta`, `curvatureCost`, `laplacian_const`, `zero_cost_counterexample` |
-| Prop. conditional additive storage | Conditional (sums `n` assumed cellwise premises) | Documented conditional; same pattern as `Discrete.conditional_interface_bound`; positive `c₀` is *not* provided by `C_Θ` (`zero_cost_counterexample`) |
+| Prop. conditional additive storage | Lean, **conditional** (sums `n` assumed cellwise premises) | `Discrete.conditional_additive_storage`; positive `c₀` is *not* provided by `C_Θ` (`zero_cost_counterexample`) |
 | Def. physical complexity classes | Definitions; machine-relative | `Discrete.NPOf`, `P_curvRail`, freeze doc |
 | Lem. `lem:h2bound` | Lean, unconditional | `PartIIIAnalytic.curvature_cost_le`, `theta_pointwise_le` |
 | WIN-13 shifted denominator | Lean, counterexample | `PartIII.shifted_denominator_no_uniform_gap` |
@@ -75,7 +75,7 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
 | Prop. `prop:interface` | Lean, **conditional** | `Discrete.conditional_interface_bound` |
 | Prop. `prop:assignment-P` (`L_check ∈ P`) | **Lean, proved** (dense CNF encoding, pair-encoded instance/assignment) | `Discrete.SATV.satTM_decides`, `V_SAT_mem_P_TM`; semantics `encDense_mem_SAT_iff` against `PVNP.PartI.satisfiable` |
 | Thm. `thm:constructibility` | Lean, conditional premise explicit | `Discrete.telescoping_bound` |
-| Prop. `prop:highfreq` | Lean, 1-D periodic version | `highfreq_gradient_energy`, `highfreq_curvature_lower`, `no_gradient_energy_control` |
+| Prop. `prop:highfreq` | **Lean, on the 3-D periodic cube with the manuscript's constants** (`4π³`, `(16/25)π³N²`), and in 1-D | `PartIIIHighFreq3D.cube_gradient_energy`, `cube_curvature_lower`, `lap3_psi`; `PartIIIAnalytic.highfreq_*`, `no_gradient_energy_control` |
 | Thm. `thm:capacity` | Lean, conditional premise explicit | `PartIIIAnalytic.capacity_law` |
 | Lem. `lem:boundary_variation` | Lean, exact | `PartIII.directed_boundary_eq` |
 | Thm. `thm:influence` | Lean | `PartIII.normalized_total_influence_le_n` |
@@ -119,7 +119,7 @@ No percentages are used. Status words follow the charter's labels.
 | O7 | **Open;** every tested universal statement refuted at stated scope; discrete version proved equivalent to classical P ≠ NP. | M2. |
 | O8 | **Open.** No candidate language with a physical verifier and a proved all-decider lower bound. | M1 + M2. |
 | O9 | **Reduced to classical P vs NP** for the discrete model (`p_vs_np_discrete_transfer`); for the physical model blocked on M1. | Classical P ≠ NP itself (unresolved). |
-| O10 | **Advanced.** 57 principal declarations axiom-audited; CI enforces the audit; Python cross-checks added (`pvnp/tests/test_astra_discrete.py`). | Independent adversarial review; manuscript text alignment (section D). |
+| O10 | **Advanced.** 61 principal declarations axiom-audited; CI enforces the audit; Python cross-checks added (`pvnp/tests/test_astra_discrete.py`). | Independent adversarial review; manuscript text alignment (section D). |
 
 ---
 
@@ -133,7 +133,7 @@ Claims that remain **unsupported** by the verified mathematics, and must stay ma
 4. "Finite energy bounds curvature." *Refuted* (`no_gradient_energy_control`).
 5. "Storage capacity bounds imply decision-time bounds." *Refuted* (`promoted_bound_false`).
 6. "Bandlimited receivers reflect a bandlimited evolution." *Refuted* (`cubic_quintic_generates_new_modes`).
-7. Part II Theorem `thm:tm_to_wcc` states a factor-2 overhead; the Lean construction achieves factor 1 — consistent (stronger). Part II Theorem `thm:wcc_to_tm` is stated for general `d`, `r`, and lattice size; Lean covers `d = 1`, `r = 1`. Part III `prop:highfreq` is stated in 3-D; Lean covers the 1-D periodic case.
+7. Part II Theorem `thm:tm_to_wcc` states a factor-2 overhead; the Lean construction achieves factor 1 — consistent (stronger). Part II Theorem `thm:wcc_to_tm` is stated for general `d`, `r`, and lattice size; Lean covers `d = 1`, `r = 1`. Part III `prop:highfreq` is now checked in 3-D with the stated constants.
 8. `NP^{phys}_{WCC} = ∅` (WIN-16) remains withdrawn; P ⊆ NP holds under the explicit closure premise.
 
 The classical P versus NP problem remains a well-defined, open mathematical question; nothing here proves or disproves it.

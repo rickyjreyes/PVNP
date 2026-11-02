@@ -107,6 +107,16 @@ theorem telescoping_bound (C : ℕ → ℝ) (T : ℕ) (p0 K : ℝ)
     have h2 := (abs_le.1 (hstep T (by omega))).2
     push_cast; linarith
 
+/-- **Part III Proposition "conditional additive storage estimate"**: if a
+storage functional is additive over `n` disjoint cells and each cell costs at
+least `c₀`, the total is at least `n c₀`.  Both premises are explicit; neither
+follows from the curvature functional (`zero_cost_counterexample`). -/
+theorem conditional_additive_storage {n : ℕ} (cell : Fin n → ℝ) (total c₀ : ℝ)
+    (hadd : total = ∑ j, cell j) (hcell : ∀ j, c₀ ≤ cell j) : n * c₀ ≤ total := by
+  rw [hadd]
+  calc (n : ℝ) * c₀ = ∑ _j : Fin n, c₀ := by simp
+    _ ≤ ∑ j, cell j := Finset.sum_le_sum fun j _ => hcell j
+
 /-- **Part III Proposition `prop:interface`** — conditional composition. -/
 theorem conditional_interface_bound {R : Type*} (cost area : R → ℝ) (A κ : ℝ)
     (hκ : 0 ≤ κ) (harea : ∀ ψ, A ≤ area ψ) (hcoerc : ∀ ψ, κ * area ψ ≤ cost ψ) :

@@ -61,3 +61,7 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Discrete.SATV.SAT_dense_mem_NP_WCC
 #print axioms PVNP.Discrete.SATV.encDense_mem_SAT_iff
 #print axioms PVNP.Discrete.SATV.SAT_curvature_transfer
+#print axioms PVNP.PartIIIHighFreq3D.lap3_psi
+#print axioms PVNP.PartIIIHighFreq3D.cube_gradient_energy
+#print axioms PVNP.PartIIIHighFreq3D.cube_curvature_lower
+#print axioms PVNP.Discrete.conditional_additive_storage

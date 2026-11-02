@@ -145,3 +145,7 @@ No classical `P ≠ NP`, physical class separation, or universal SAT lower bound
 ### O2: CNF-SAT is in NP_TM (explicit verifier machine)
 
 `SATVerifier` defines the dense CNF encoding `encDense`, an explicit ordinary TM `satTM` that checks a supplied assignment against a pair-encoded formula (zig-zag witness marking, clause flag in the finite control), and proves `satTM_decides` (time `2(N+3)²`), `V_SAT_mem_P_TM` (Part III `prop:assignment-P`), `SAT_dense_mem_NP_TM`, `SAT_dense_mem_NP_WCC`, and `encDense_mem_SAT_iff` (agreement with `PVNP.PartI.satisfiable`). `TMScan` provides reusable scan and halting lemmas. Axiom audit: 57 declarations, standard axioms only (one theorem uses a strict subset, accepted by `audit/check_axioms.py`).
+
+### Part III completed at stated scope
+
+`PartIIIHighFreq3D` proves Proposition `prop:highfreq` on the 3-D periodic cube with the manuscript's constants (gradient energy `4π³`, curvature `≥ (16/25)π³N²`), and `conditional_additive_storage` formalizes the conditional additive storage estimate. Every principal Part III statement now has a Lean declaration (theorem, counterexample, or explicitly conditional statement). Axiom audit: 61 declarations.

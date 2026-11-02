@@ -275,3 +275,11 @@ o2_sat_in_np:
     - "SATV.encDense_mem_SAT_iff: encDense n F ∈ SAT_dense ↔ PVNP.PartI.satisfiable F (variables < n, n ≥ 1)"
     - "SATV.SAT_curvature_transfer: SAT_dense ∉ P_curvRail → P_TM ≠ NP_TM"
   not_proved: ["Cook-Levin NP-completeness of SAT_dense", "sparse binary-index CNF encoding"]
+
+part_iii_completion:
+  modules: [PVNP/PartIIIHighFreq3D.lean, PVNP/PhysicalComplexityClasses.lean]
+  proved:
+    - "PartIIIHighFreq3D.lap3_psi, cube_gradient_energy (4π³), cube_curvature_lower ((16/25)π³N²): prop:highfreq on the 3-D cube"
+    - "Discrete.conditional_additive_storage (CONDITIONAL, premises explicit)"
+  issue_12_classification: "PROVED at stated scope: every principal Part III statement is a Lean theorem, counterexample, or explicitly conditional statement; physical separation (O8) OPEN and not claimed by Part III"
+  axiom_audit: "61 declarations, standard axioms or subsets"
