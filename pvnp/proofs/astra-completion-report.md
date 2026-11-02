@@ -2,7 +2,7 @@
 
 Author of the research program: **Richard J. Reyes**. Original publications (Zenodo releases 03, 12, 13 and the May/November/December 2025 versions) are preserved unchanged; this report records the current, revised state of the mathematics.
 
-Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (which itself extends `main`). Every result below was checked locally with the pinned toolchain (`leanprover/lean4:v4.23.0`, Mathlib `v4.23.0`) via `lake build PVNP`, and the axiom audit `lean/audit/AxiomAudit.lean` reports only `propext`, `Classical.choice`, `Quot.sound` for all 65 principal declarations. GitHub Actions on the branch head is the authoritative CI record.
+Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (which itself extends `main`). Every result below was checked locally with the pinned toolchain (`leanprover/lean4:v4.23.0`, Mathlib `v4.23.0`) via `lake build PVNP`, and the axiom audit `lean/audit/AxiomAudit.lean` (checked in CI by `lean/audit/check_axioms.py`) reports only the standard axioms `propext`, `Classical.choice`, `Quot.sound` (or a subset) for all 65 principal declarations. GitHub Actions on the branch head is the authoritative CI record.
 
 ---
 
@@ -12,7 +12,7 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
 
 - **Starting status:** OPEN. PR #14 had one-step head motion, safe moving-head traces (left/right only), stationary-head traces, bit-grid machine tables with strict one-hot decoding; no stay/halt in traces, no reverse interpreter, no class theorems.
 - **Work performed:** froze one discrete model pair and proved both simulations end-to-end, the class equalities, and a flat binary serialization.
-- **New Lean files:** `DiscreteMachines.lean`, `TMtoWCC.lean`, `WCCtoTM.lean`, `ComplexityEquivalence.lean`, `MachineSerialization.lean`, `WitnessSizeUniformity.lean` (the issue's requested `UniformSimulationBridge` content is `ComplexityEquivalence.explicit_simulations`).
+- **New Lean files:** `DiscreteMachines.lean`, `TMtoWCC.lean`, `WCCtoTM.lean`, `ComplexityEquivalence.lean`, `MachineSerialization.lean`, `WitnessSizeUniformity.lean`, `PSubsetNP.lean`, `TMScan.lean` (the issue's requested `UniformSimulationBridge` content is `ComplexityEquivalence.explicit_simulations`).
 - **New theorems (qualified names, namespace `PVNP.Discrete`):**
   - `TM.toWCC_step_encode` — `M.toWCC.step (M.encode c) = M.encode (M.next c)` for **every** configuration (left, right, stay, halt).
   - `TM.toWCC_run_encode`, `TM.encode_injective`, `TM.encode_head_unique` — all finite executions; exactly one head marker at every step.
@@ -22,12 +22,12 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
   - `P_TM_subset_P_WCC`, `P_WCC_subset_P_TM`, **`P_WCC_eq_P_TM`**, **`NP_WCC_eq_NP_TM`**.
   - `p_vs_np_discrete_transfer : (P_WCC = NP_WCC) ↔ (P_TM = NP_TM)`, `lower_bound_transfer`.
   - Witness quantifiers: `pair_length` (`|pair x w| = 2|x|+1+|w|`), `NP_TM_verifier_to_WCC` (same language, same witness polynomial `q`, same time `p`, verifier time in `|x|` at most `p ∘ (2X+1+q)`), `NP_WCC_verifier_to_TM`.
+  - **`P ⊆ NP`, unconditionally** (`PSubsetNP.lean`): `TM.unpair_decides` builds an explicit ordinary TM that parses `pair x w` (rejecting every malformed string), erases the witness, returns, and simulates `M` on odd cells, deciding `{pair x w | x ∈ L}` within `2N + 3 + 2p(N)` steps; hence **`P_TM_subset_NP_TM`** and **`P_WCC_subset_NP_WCC`**.
   - Serialization: `Codec` laws, `encodeTable_decodeTable`, `decodeTable_sound`, `decodeTable_rejects`, `encodeTable_injective`, `encodeTable_length_le` (`|code| ≤ 4 + 6k + 4m + km(k+m+4)`), `TM.normalize_decides`, `P_TM_eq_tables`.
 - **Exact definitions used (no hypothesis restates the conclusion):** `P_TM = {L | ∃ M p, M.Decides L (p.eval ·)}`, `P_WCC` likewise; `NP_X = NPOf P_X` with `x ∈ L ↔ ∃ w, |w| ≤ q(|x|) ∧ pair x w ∈ V`. `Decides` = for every input, the first non-`none` output occurs by step `T |x|` and equals the membership bit. Both alphabets/state sets are `Fintype`.
 - **Readout convention:** a WCC answers when *some* cell carries an accepting/rejecting symbol (acceptance takes precedence). The TM→WCC compiler only ever produces such symbols in the single head cell, and the WCC→TM simulator handles the global readout explicitly, so the class is the same under the local head-cell readout; no non-local readout power is hidden in `P_WCC`.
 - **Reused:** the head-marker idea and `OracleObstruction` motivation from PR #14 (the new modules are self-contained and do not modify PR #14 files).
 - **Counterexamples:** none needed — the exact formulation holds.
-  - **`P ⊆ NP`, unconditionally** (`PSubsetNP.lean`): `TM.unpair_decides` builds an explicit ordinary TM that parses `pair x w` (rejecting every malformed string), erases the witness, returns, and simulates `M` on odd cells, deciding `{pair x w | x ∈ L}` within `2N + 3 + 2p(N)` steps; hence **`P_TM_subset_NP_TM`** and **`P_WCC_subset_NP_WCC`**.
 - **Remaining scope limits (not mathematical obstructions):** radius-`r`/`d`-dimensional lattices and polynomial-time non-local encoders from the manuscript's general definition (standard block/encoder composition, not formalized); a universal TM executing serialized descriptions and a TM-step bound for the parser (not needed for the class equalities, since the classes quantify over machines).
 - **Classification: PROVED** for the frozen 1-D radius-one finite quiescent model — the project's declared Part II Lean semantics.
 
@@ -44,7 +44,7 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
 
 - **Starting status:** OPEN; PR #14 proved the unconditional finite-radius causality family (`R = m + Σ tᵢ rᵢ`, `MultiStageCausality`), preserved here unchanged.
 - **Work performed:** froze the physical model (`pvnp/proofs/physical-model-freeze.md`), classified every resource inequality, proved the discrete curvature-rail theorems, and ran the adversarial suite against each universal candidate.
-- **New Lean files:** `DiscreteCurvatureRail.lean`, `CircleSpectralGap.lean`, `WCTPlaneWave.lean` (+ #12 modules used here).
+- **New Lean files:** `DiscreteCurvatureRail.lean`, `CircleSpectralGap.lean`, `WCTPlaneWave.lean`, `TransportCalculus.lean` (+ #12 modules used here).
 - **Genuine function-space / PDE results (new):**
   - `SpectralGap.wirtinger`: for a continuous periodic field `f` on the circle of length `L` with continuous derivative `g`, `(2π/L)²(∫‖f‖² − ‖f̂(0)‖²) ≤ ∫‖g‖²` (normalized Haar measure); `wirtinger_sharp` (equality for `e^{2πix/L}`); `no_uniform_poincare` (for every `c > 0` some domain length defeats the constant `c`). Proved from Mathlib's Parseval identity and Fourier coefficients of derivatives.
   - `TransportCalculus.transport_tradeoff` / `curvature_time_lower_bound`: from the instantaneous flux inequality `|J'(t)| ≤ Γ√D(t)` (a PDE-derived premise, kept explicit), the FTC and a genuine time-Hölder inequality (`power_mean_four`: `(∫₀ᵀf)⁴ ≤ T³∫₀ᵀf⁴`) give `∫₀ᵀ D² ≥ δ⁴/(Γ⁴T³)` with `D(t) = ‖Δψ(t)‖₂` — replacing the algebraic hypotheses of `HamiltonianTransport.finite_time_curvature_transport_tradeoff`; `hamiltonian_controls_bandpass`: `∫|(Δ+κ)ψ|² ≤ H + (3β²/16γ)·mass` as a Lebesgue-integral theorem (replacing the hypothesis-restating `bandpass_norm_sq_control`).
@@ -96,7 +96,7 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
 3b. **`P ⊆ NP` for TMs and discrete WCCs** with an explicit pair-parsing verifier. *Formal model infrastructure.*
 3c. **CNF-SAT ∈ NP_TM with an explicit verified verifier TM** (`SATVerifier.lean`, ~1100 lines): dense CNF encoding, zig-zag witness marking machine, exact round invariants, time `2(N+3)²`, and agreement with Part I CNF semantics. Closes O2 and Part III `prop:assignment-P`; yields `SAT_curvature_transfer` (a discrete curvature lower bound for SAT would prove `P_TM ≠ NP_TM`). *Formalization of classical facts in the project's own machine model.*
 4. **Refutation of storage-to-decision promotion** (`promoted_bound_false`) and of finite-Fourier-support preservation by the WCT nonlinearity. *Counterexamples / no-go.*
-5. **Function-space Part III theorems:** Lebesgue-integral curvature bound; zero-cost counterexample with Mathlib's Laplacian; high-frequency counterexample with genuine derivatives and integrals. *Formalizations of existing analytic proofs (1-D for `prop:highfreq`).*
+5. **Function-space Part III and transport theorems:** Lebesgue-integral curvature bound; zero-cost counterexample with Mathlib's Laplacian; high-frequency counterexample with genuine derivatives and integrals, on the 3-D cube with the manuscript's constants; FTC + time-Hölder readout-transport bound and integrated Hamiltonian control. *Formalizations of existing analytic proofs (PDE-derived flux inequality kept as an explicit premise).*
 6. **Representation (non)invariance:** time classes invariant under alphabet relabelling; curvature not. *New theorem + counterexample.*
 7. **Flat binary machine serialization** with verified prefix-codec combinators and normalization of every TM. *Supporting infrastructure.*
 8. Exact Boolean identities (boundary = `2ⁿ`·Var, parity `Var = n`), telescoping and interface conditionals. *Supporting lemmas.*
@@ -135,6 +135,6 @@ Claims that remain **unsupported** by the verified mathematics, and must stay ma
 5. "Storage capacity bounds imply decision-time bounds." *Refuted* (`promoted_bound_false`).
 6. "Bandlimited receivers reflect a bandlimited evolution." *Refuted* (`cubic_quintic_generates_new_modes`).
 7. Part II Theorem `thm:tm_to_wcc` states a factor-2 overhead; the Lean construction achieves factor 1 — consistent (stronger). Part II Theorem `thm:wcc_to_tm` is stated for general `d`, `r`, and lattice size; Lean covers `d = 1`, `r = 1`. Part III `prop:highfreq` is now checked in 3-D with the stated constants.
-8. `NP^{phys}_{WCC} = ∅` (WIN-16) remains withdrawn; P ⊆ NP holds under the explicit closure premise.
+8. `NP^{phys}_{WCC} = ∅` (WIN-16) remains withdrawn; `P ⊆ NP` is now proved unconditionally for the discrete classes, while the physical version remains under its explicit closure premise.
 
 The classical P versus NP problem remains a well-defined, open mathematical question; nothing here proves or disproves it.
