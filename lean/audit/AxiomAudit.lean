@@ -71,3 +71,11 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TransportCalculus.hamiltonian_controls_bandpass
 #print axioms PVNP.AnalogSplitSAT.scalar_level_count
 #print axioms PVNP.AnalogSplitSAT.analog_split_sat_capacity
+
+-- Fixed, language-independent robust encoding / unrestricted receiver countermodel
+#print axioms PVNP.DecoderUniformity.signDecode_signCode
+#print axioms PVNP.DecoderUniformity.signCode_mass
+#print axioms PVNP.DecoderUniformity.signCode_injective
+#print axioms PVNP.DecoderUniformity.signDecode_noise
+#print axioms PVNP.DecoderUniformity.arbitrary_predicate_has_robust_decoder
+#print axioms PVNP.DecoderUniformity.number_of_labels
