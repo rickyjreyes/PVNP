@@ -27,6 +27,9 @@
 | Finite-radius causality: `R = m + Σᵢ tᵢ rᵢ` cells of causal coverage needed to read a distal bit | **Lean, unconditional (discrete locality model)** | `MultiStageCausality.multistage_required_causal_coverage`, `no_multistage_prefix_last_bit` (PR #14) |
 | Receiver packing `N ≤ (1+√M/η)^{2D}` for `N` robustly distinguishable readouts | **Lean, unconditional** for the declared receiver class | `Packing.complex_receiver_packing`, `Packing.subspace_receiver_packing` |
 | Mode count `D ≤ (2⌊LK/2π⌋+1)²` | **Lean** | `FourierReceiver.receiver_mode_count` |
+| Genuine Fourier receiver on `L²(𝕋²)`: Bessel + packing + bandwidth | **Lean, unconditional** | `FourierTorus.receiver_bessel`, `torus_receiver_packing`, `torus2_bandlimited_packing` |
+| Domain-uniform Poincaré / spectral-gap constant | **Lean, refuted** (sharp constant `(2π/L)²` on length-`L` circles) | `SpectralGap.wirtinger`, `wirtinger_sharp`, `no_uniform_poincare` |
+| Exact solutions of the frozen PDE with fixed mass and vanishing curvature energy on expanding tori | **Lean** (classical derivatives) | `WCTPlaneWave.plane_wave_solves`, `expanding_domain_countermodel`, `curvature_energy_vanishes` |
 | Receiver bandwidth = dynamical bandwidth | **Refuted** (the nonlinearity creates modes outside any finite support) | `FourierReceiver.cubic_quintic_generates_new_modes` |
 | Packing ⇒ decision lower bound | **Refuted** (one mode, mass `η²` suffices for every language) | `DecisionVsEncoding.promoted_bound_false`, `robust_decision_readout` |
 | `C_{Θ,ε} ≤ ‖Δψ‖²/(4ε²)` | **Lean, unconditional** (Lebesgue integral, any measure) | `PartIIIAnalytic.curvature_cost_le` |
@@ -37,7 +40,7 @@
 | Expander/Tseitin hardness for every algorithm | **Refuted as stated** (GF(2) elimination) | `Tseitin.parity_sum_zero`, `odd_charge_unsatisfiable`; analytic Gaussian-elimination bypass |
 | Curvature as a discrete resource beyond time | **Lean, refuted**: every poly-time discrete run has poly curvature for every embedding | `Discrete.P_TM_eq_curvature_rail` |
 | Curvature is a representation-invariant cost | **Lean, refuted** | `Discrete.curvature_not_representation_invariant` (time *is* invariant: `WCC.relabel_decides`) |
-| Existence/conservation for the frozen PDE (well-posedness) | **Open in Lean**; analytic for smooth periodic solutions (mass/Hamiltonian conservation) | `pvnp/proofs/wct-pde-transport-bound.md` |
+| Existence/conservation for the frozen PDE (well-posedness) | **Open in Lean** for general data; explicit exact solution family **in Lean** | `WCTPlaneWave`; analytic: `pvnp/proofs/wct-pde-transport-bound.md` |
 | Nodal/phase coercivity with uniform constants as `L_n → ∞` | **Open** (fixed-domain version only) | `FixedMassNodal`, `PhaseObservability` |
 | Simulation `P^{phys}_{WCT} ⊆ P_TM` (physical runs simulable in poly time) | **Open** (needs PDE numerical analysis with certified error at precision `η_n`) | — |
 | Simulation `P_TM ⊆ P^{phys}_{WCT}` (realize any TM in the PDE within rails) | **Open** | — |

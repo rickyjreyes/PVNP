@@ -243,3 +243,21 @@ astra_completion_2026_11_02:
     - "no classical P ≠ NP"
     - "no physical P_WCC ≠ NP_WCC"
     - "no universal SAT lower bound in any physical model"
+
+astra_second_tranche_2026_11_02:
+  verification: "local lake build PVNP PASS; axiom audit 50 declarations, all [propext, Classical.choice, Quot.sound]"
+  issue_11_12_p_subset_np:
+    module: PVNP/PSubsetNP.lean
+    proved: ["TM.unpair_decides (explicit parse/erase/return/odd-cell simulator, time 2N + 3 + 2p(N))", "P_TM_subset_NP_TM", "P_WCC_subset_NP_WCC"]
+  issue_15_genuine_fourier_receiver:
+    module: PVNP/FourierTorusReceiver.lean
+    proved: ["FourierTorus.receiver_bessel", "FourierTorus.torus_receiver_packing", "FourierTorus.torus2_bandlimited_packing"]
+    model: "L2 fields on Mathlib UnitAddTorus d with normalized Haar measure; receiver = Fourier coefficients on a finite mode set"
+  issue_10_spectral_gap:
+    module: PVNP/CircleSpectralGap.lean
+    proved: ["SpectralGap.fourierCoeff_of_deriv", "SpectralGap.hasSum_sq_fourierCoeff_cont", "SpectralGap.wirtinger", "SpectralGap.wirtinger_sharp", "SpectralGap.no_uniform_poincare"]
+  o4_exact_pde_solutions:
+    module: PVNP/WCTPlaneWave.lean
+    proved: ["WCTPlaneWave.plane_wave_solves", "WCTPlaneWave.classical_derivatives", "WCTPlaneWave.wave_periodic", "WCTPlaneWave.mass_box", "WCTPlaneWave.curvature_box", "WCTPlaneWave.hamiltonian_box", "WCTPlaneWave.expanding_domain_countermodel", "WCTPlaneWave.curvature_energy_vanishes"]
+    scope: "explicit classical solution family of the frozen PDE (classical partial derivatives along coordinates); not a general well-posedness theorem"
+  still_open: ["SAT ∈ NP_TM under a fixed CNF bit encoding (O2)", "general well-posedness of the frozen PDE (O4)", "universal physical lower bound (O7-O9: M1-M3)"]

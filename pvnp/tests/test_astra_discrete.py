@@ -209,5 +209,132 @@ class TestParity(unittest.TestCase):
             self.assertEqual(count, n * 2 ** n)
 
 
+def pair(x, w):
+    out = []
+    for b in x:
+        out += [True, b]
+    return out + [False] + list(w)
+
+
+def unpair_tm(M, y, limit):
+    """Transcription of `TM.uδ` (lean/PVNP/PSubsetNP.lean). M = (delta, start, acc, rej, blank, inp)."""
+    delta, start, acc, rej, blank, inp = M
+    BL = ("g", blank)
+    tape = defaultdict(lambda: BL)
+    for i, b in enumerate(y):
+        tape[i] = ("raw", b)
+
+    def uval(z):
+        if z[0] == "g":
+            return z[1]
+        if z[0] == "raw":
+            return inp[z[1]]
+        return blank  # erased
+
+    q, head = ("E",), 0
+    for t in range(limit + 1):
+        if q[0] == "sim" and acc[q[1]]:
+            return t, True
+        if q[0] == "sim" and rej[q[1]]:
+            return t, False
+        if q[0] == "rejHalt":
+            return t, False
+        z = tape[head]
+        k = q[0]
+        if k == "E":
+            if z == ("raw", True):
+                q, head = ("Skip",), head + 1
+            elif z == ("raw", False):
+                tape[head] = ("erased",); q, head = ("W",), head + 1
+            else:
+                q = ("rejHalt",)
+        elif k == "Skip":
+            if z[0] == "raw":
+                q, head = ("E",), head + 1
+            else:
+                q = ("rejHalt",)
+        elif k == "W":
+            if z[0] == "raw":
+                tape[head] = ("erased",); head += 1
+            else:
+                q, head = ("Back",), head - 1
+        elif k == "Back":
+            if z[0] == "g":
+                q, head = ("Go",), head + 1
+            else:
+                head -= 1
+        elif k == "Go":
+            q, head = ("sim", start), head + 1
+        elif k == "sim":
+            d = delta.get((q[1], uval(z)))
+            if d is None:
+                return None
+            q2, a, mv = d
+            tape[head] = ("g", a)
+            if mv == 0:
+                q = ("sim", q2)
+            elif mv == 1:
+                q, head = ("midR", q2), head + 1
+            else:
+                q, head = ("midL", q2), head - 1
+        elif k in ("midR", "midL"):
+            q, head = ("sim", q[1]), head + (1 if k == "midR" else -1)
+    return None
+
+
+def run_tm(M, x, limit):
+    delta, start, acc, rej, blank, inp = M
+    tape = defaultdict(lambda: blank)
+    for i, b in enumerate(x):
+        tape[i] = inp[b]
+    q, head = start, 0
+    for t in range(limit + 1):
+        if acc[q]:
+            return t, True
+        if rej[q]:
+            return t, False
+        d = delta.get((q, tape[head]))
+        if d is None:
+            return None
+        q, a, mv = d
+        tape[head] = a
+        head += mv
+    return None
+
+
+class TestUnpair(unittest.TestCase):
+    def test_random_machines(self):
+        rng = random.Random(11)
+        checked = 0
+        for _ in range(300):
+            k, m = 4, 3
+            acc = {q: q == 2 for q in range(k)}
+            rej = {q: q == 3 for q in range(k)}
+            delta = {}
+            for q in range(2):
+                for a in range(m):
+                    delta[(q, a)] = (rng.randrange(k), rng.randrange(m), rng.choice([-1, 0, 1]))
+            M = (delta, 0, acc, rej, 0, {False: 1, True: 2})
+            for n in range(0, 4):
+                x = [rng.random() < 0.5 for _ in range(n)]
+                base = run_tm(M, x, 40)
+                if base is None:
+                    continue
+                s, b = base
+                for wl in range(0, 3):
+                    w = [rng.random() < 0.5 for _ in range(wl)]
+                    y = pair(x, w)
+                    bound = 2 * len(y) + 3 + 2 * s
+                    res = unpair_tm(M, y, bound)
+                    self.assertEqual(res[1], b)
+                    self.assertLessEqual(res[0], bound)
+                    checked += 1
+                # malformed inputs are rejected
+                for bad in ([], [True], [True, True], [True, False, True]):
+                    res = unpair_tm(M, bad, 2 * len(bad) + 3)
+                    self.assertEqual(res[1], False)
+        self.assertGreater(checked, 100)
+
+
 if __name__ == "__main__":
     unittest.main()

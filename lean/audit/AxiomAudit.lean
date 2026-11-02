@@ -40,3 +40,17 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.PartIII.parity_total_influence
 #print axioms PVNP.Discrete.NP_TM_verifier_to_WCC
 #print axioms PVNP.Discrete.NP_WCC_verifier_to_TM
+#print axioms PVNP.FourierTorus.receiver_bessel
+#print axioms PVNP.FourierTorus.torus_receiver_packing
+#print axioms PVNP.FourierTorus.torus2_bandlimited_packing
+#print axioms PVNP.Discrete.TM.unpair_decides
+#print axioms PVNP.Discrete.P_TM_subset_NP_TM
+#print axioms PVNP.Discrete.P_WCC_subset_NP_WCC
+#print axioms PVNP.SpectralGap.fourierCoeff_of_deriv
+#print axioms PVNP.SpectralGap.wirtinger
+#print axioms PVNP.SpectralGap.wirtinger_sharp
+#print axioms PVNP.SpectralGap.no_uniform_poincare
+#print axioms PVNP.WCTPlaneWave.plane_wave_solves
+#print axioms PVNP.WCTPlaneWave.classical_derivatives
+#print axioms PVNP.WCTPlaneWave.expanding_domain_countermodel
+#print axioms PVNP.WCTPlaneWave.curvature_energy_vanishes

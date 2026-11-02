@@ -45,3 +45,7 @@ import PVNP.PartIIIAnalytic
 import PVNP.DiscreteCurvatureRail
 import PVNP.PhysicalComplexityClasses
 import PVNP.WitnessSizeUniformity
+import PVNP.FourierTorusReceiver
+import PVNP.PSubsetNP
+import PVNP.CircleSpectralGap
+import PVNP.WCTPlaneWave

@@ -133,3 +133,11 @@ Full report: [`pvnp/proofs/astra-completion-report.md`](../pvnp/proofs/astra-com
 **#12 — PARTIAL (gate met).** `PartIIIAnalytic` (Lebesgue-integral curvature bound, Laplacian zero-cost counterexample, high-frequency counterexample with real derivatives/integrals) and `PhysicalComplexityClasses` (time invariant / curvature not invariant under representation change, telescoping and interface conditionals, exact boundary identity, parity, vacuous variation class, class logic, well-posedness).
 
 No classical `P ≠ NP`, physical class separation, or universal SAT lower bound is claimed.
+
+### Second ASTRA tranche (2 November 2026)
+
+- `PSubsetNP`: explicit pair-parsing, witness-erasing, odd-cell simulating TM; **`P_TM_subset_NP_TM`**, **`P_WCC_subset_NP_WCC`** (Part III `thm:p-in-np` unconditional for the discrete classes).
+- `FourierTorusReceiver`: the receiver is the list of Fourier coefficients of a field in `L²(𝕋^d)`; Bessel from Mathlib's Parseval; `torus_receiver_packing`, `torus2_bandlimited_packing`.
+- `CircleSpectralGap`: sharp Wirtinger inequality `(2π/L)²·Var ≤ ∫|f'|²` on the circle of length `L`, equality for `e^{2πix/L}`, and `no_uniform_poincare` (no domain-uniform constant).
+- `WCTPlaneWave`: exact classical solutions of the frozen WCT PDE; on expanding tori with fixed mass `M` the curvature energy is `(2π/L)⁴M → 0` with explicit Hamiltonian.
+- Axiom audit: 50 declarations, standard axioms only.

@@ -2,7 +2,7 @@
 
 Author of the research program: **Richard J. Reyes**. Original publications (Zenodo releases 03, 12, 13 and the May/November/December 2025 versions) are preserved unchanged; this report records the current, revised state of the mathematics.
 
-Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (which itself extends `main`). Every result below was checked locally with the pinned toolchain (`leanprover/lean4:v4.23.0`, Mathlib `v4.23.0`) via `lake build PVNP`, and the axiom audit `lean/audit/AxiomAudit.lean` reports only `propext`, `Classical.choice`, `Quot.sound` for all 36 principal declarations. GitHub Actions on the branch head is the authoritative CI record.
+Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (which itself extends `main`). Every result below was checked locally with the pinned toolchain (`leanprover/lean4:v4.23.0`, Mathlib `v4.23.0`) via `lake build PVNP`, and the axiom audit `lean/audit/AxiomAudit.lean` reports only `propext`, `Classical.choice`, `Quot.sound` for all 50 principal declarations. GitHub Actions on the branch head is the authoritative CI record.
 
 ---
 
@@ -27,14 +27,15 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
 - **Readout convention:** a WCC answers when *some* cell carries an accepting/rejecting symbol (acceptance takes precedence). The TM→WCC compiler only ever produces such symbols in the single head cell, and the WCC→TM simulator handles the global readout explicitly, so the class is the same under the local head-cell readout; no non-local readout power is hidden in `P_WCC`.
 - **Reused:** the head-marker idea and `OracleObstruction` motivation from PR #14 (the new modules are self-contained and do not modify PR #14 files).
 - **Counterexamples:** none needed — the exact formulation holds.
-- **Remaining scope limits (not mathematical obstructions):** radius-`r`/`d`-dimensional lattices and polynomial-time non-local encoders from the manuscript's general definition (standard block/encoder composition, not formalized); a universal TM executing serialized descriptions and a TM-step bound for the parser (not needed for the class equalities, since the classes quantify over machines); `P_TM ⊆ NP_TM` in Lean (needs a pair-parsing TM).
+  - **`P ⊆ NP`, unconditionally** (`PSubsetNP.lean`): `TM.unpair_decides` builds an explicit ordinary TM that parses `pair x w` (rejecting every malformed string), erases the witness, returns, and simulates `M` on odd cells, deciding `{pair x w | x ∈ L}` within `2N + 3 + 2p(N)` steps; hence **`P_TM_subset_NP_TM`** and **`P_WCC_subset_NP_WCC`**.
+- **Remaining scope limits (not mathematical obstructions):** radius-`r`/`d`-dimensional lattices and polynomial-time non-local encoders from the manuscript's general definition (standard block/encoder composition, not formalized); a universal TM executing serialized descriptions and a TM-step bound for the parser (not needed for the class equalities, since the classes quantify over machines).
 - **Classification: PROVED** for the frozen 1-D radius-one finite quiescent model — the project's declared Part II Lean semantics.
 
 ### #15 — noise-robust bandlimited packing
 
 - **Starting status:** OPEN; analytic proof only.
-- **New Lean files:** `BandlimitedNoisyPacking.lean`, `FourierReceiverProjection.lean`, `DecisionVsEncodingCounterexample.lean`.
-- **New theorems:** `Packing.packing_card_le` (Haar-measure volume argument, any finite-dimensional real normed space); `Packing.finrank_real_euclideanSpace_complex` (`dim_ℝ ℂ^D = 2D`); `Packing.complex_receiver_packing` / `_strict` (**`N ≤ (1+√M/η)^{2D}`**, under `≥ 2η` and the supplement's `> 2η`); `Packing.receiver_projection_norm_le`; `Packing.subspace_receiver_packing` (any complex `D`-dimensional receiver subspace, states of mass `≤ M`); `Packing.capacity_bits_le`; `Packing.mass_lower_bound`; `FourierReceiver.mode_count_le`, `receiver_mode_count`.
+- **New Lean files:** `BandlimitedNoisyPacking.lean`, `FourierReceiverProjection.lean`, `DecisionVsEncodingCounterexample.lean`, `FourierTorusReceiver.lean`.
+- **New theorems:** `Packing.packing_card_le` (Haar-measure volume argument, any finite-dimensional real normed space); `Packing.finrank_real_euclideanSpace_complex` (`dim_ℝ ℂ^D = 2D`); `Packing.complex_receiver_packing` / `_strict` (**`N ≤ (1+√M/η)^{2D}`**, under `≥ 2η` and the supplement's `> 2η`); `Packing.receiver_projection_norm_le`; `Packing.subspace_receiver_packing` (any complex `D`-dimensional receiver subspace, states of mass `≤ M`); `Packing.capacity_bits_le`; `Packing.mass_lower_bound`; `FourierReceiver.mode_count_le`, `receiver_mode_count`; and on the **genuine `L²` torus** (`FourierTorusReceiver.lean`): `FourierTorus.receiver_bessel` (Parseval ⇒ Bessel for the observed Fourier coefficients), `torus_receiver_packing` (`N ≤ (1+√M/η)^{2|S|}` for fields in `L²(𝕋^d)`), `torus2_bandlimited_packing` (2-torus receiver observing all modes with `|2πk/L| ≤ K`: `N ≤ (1+√M/η)^{2(2⌊LK/2π⌋+1)²}`). The receiver is now literally the list of Fourier coefficients of an `L²` field, not an abstract projection.
 - **New counterexamples:** `FourierReceiver.cubic_quintic_generates_new_modes` (the WCT nonlinearity leaves the finite support `{1,2}` for every `(β,γ) ≠ 0`; algebraic Fourier-coefficient model); `DecisionVsEncoding.promoted_bound_false` (storage bound ≠ decision bound; one mode and mass `η²` give an η-robust readout of **every** language: `robust_decision_readout`); `decision_forgets_witnesses`.
 - **Assumptions match the supplement:** adversarial error radius `η > 0`, codeword norm `≤ √M`, pairwise separation (we prove the stronger `≥ 2η` version), finite complex receiver dimension `D`.
 - **Classification: PROVED** (packing theorem and receiver lemmas); promotion to a SAT/decision lower bound **REFUTED**.
@@ -43,7 +44,10 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
 
 - **Starting status:** OPEN; PR #14 proved the unconditional finite-radius causality family (`R = m + Σ tᵢ rᵢ`, `MultiStageCausality`), preserved here unchanged.
 - **Work performed:** froze the physical model (`pvnp/proofs/physical-model-freeze.md`), classified every resource inequality, proved the discrete curvature-rail theorems, and ran the adversarial suite against each universal candidate.
-- **New Lean file:** `DiscreteCurvatureRail.lean` (+ #12 modules used here).
+- **New Lean files:** `DiscreteCurvatureRail.lean`, `CircleSpectralGap.lean`, `WCTPlaneWave.lean` (+ #12 modules used here).
+- **Genuine function-space / PDE results (new):**
+  - `SpectralGap.wirtinger`: for a continuous periodic field `f` on the circle of length `L` with continuous derivative `g`, `(2π/L)²(∫‖f‖² − ‖f̂(0)‖²) ≤ ∫‖g‖²` (normalized Haar measure); `wirtinger_sharp` (equality for `e^{2πix/L}`); `no_uniform_poincare` (for every `c > 0` some domain length defeats the constant `c`). Proved from Mathlib's Parseval identity and Fourier coefficients of derivatives.
+  - `WCTPlaneWave.plane_wave_solves` + `classical_derivatives`: `u = A e^{i(kx₁−ωt)}`, `ω = (κ−k²)² − β|A|² + γ|A|⁴`, is an exact classical solution of the frozen PDE `i∂ₜu = (Δ+κ)²u − β|u|²u + γ|u|⁴u` (genuine partial derivatives); `expanding_domain_countermodel`: on the torus of side `L` with fixed mass `M`, exact solutions have mass exactly `M`, curvature energy `(2π/L)⁴M → 0` (`curvature_energy_vanishes`), and Hamiltonian `M(κ−(2π/L)²)² − βM²/(2L²) + γM³/(3L⁴)`.
 - **New theorems:** `WCC.run_blank_outside` (light cone), `WCC.lap_zero_outside`, `WCC.curvature_le` (`curv ≤ 16K²(n+2t+3)` for *every* amplitude embedding), **`P_TM_eq_curvature_rail`**, **`curvature_lower_bound_is_classical`**, `no_curvature_lower_bound_in_P`.
 - **Counterexamples (new):** `promoted_bound_false`, `no_gradient_energy_control`, `zero_cost_counterexample`, `curvature_not_representation_invariant`, `cubic_quintic_generates_new_modes`. **Preserved:** polynomial static storage, bounded-degree expanders, GF(2)/Tseitin bypass, affine/zero-curvature channels, phase-only and nodal obstructions, expanding-domain plane waves, nonlocal readout (`RadiusCausality.shortcut_encoding_reads_far_at_zero`), uncharged preprocessing.
 - **Universal resource statement:** within the discrete model it is **proved equivalent to classical P ≠ NP**; within `WCT-Phys` it is **OPEN**, with missing implications M1 (rail-preserving two-way simulation), M2 (forced `2^{Ω(n)}` distinguishable intermediate states for every decider), M3 (PDE well-posedness and `L_n`-uniform coercivity).
@@ -65,7 +69,7 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
 | Lem. `lem:h2bound` | Lean, unconditional | `PartIIIAnalytic.curvature_cost_le`, `theta_pointwise_le` |
 | WIN-13 shifted denominator | Lean, counterexample | `PartIII.shifted_denominator_no_uniform_gap` |
 | Thm. `thm:disc-equiv` | **Lean, proved** (1-D radius-one) | `Discrete.P_WCC_eq_P_TM`, `NP_WCC_eq_NP_TM` |
-| Thm. `thm:p-in-np` | Lean, conditional on "verifiers may ignore witnesses" (closure premise) | `Discrete.P_subset_NPOf`; `PartIII.deterministic_verifier_is_np_style` |
+| Thm. `thm:p-in-np` | **Lean, unconditional for the discrete classes** (`P_TM ⊆ NP_TM`, `P_WCC ⊆ NP_WCC`); physical version conditional on its closure premise | `Discrete.P_TM_subset_NP_TM`, `P_WCC_subset_NP_WCC`, `TM.unpair_decides`; `Discrete.P_subset_NPOf` |
 | Prop. "no logical conflict" | Lean | `Discrete.inclusions_do_not_determine` |
 | WIN-17 well-posedness | Lean (definitional) | `Discrete.classical_question_well_posed`, `p_vs_np_discrete_transfer` |
 | Prop. `prop:interface` | Lean, **conditional** | `Discrete.conditional_interface_bound` |
@@ -86,7 +90,9 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
 
 1. **`P_WCC = P_TM` and `NP_WCC = NP_TM`, kernel-checked** with explicit simulations in both directions (real-time TM→WCC; `1 + (T+1)(n+2T+5)` WCC→TM). *Formal model equivalence; formalization of an existing analytic claim, now with a fully explicit sweep simulator.*
 2. **Obstruction theorems for the program's lower-bound strategy:** `p_vs_np_discrete_transfer`, `P_TM_eq_curvature_rail`, `curvature_lower_bound_is_classical`. Any discrete time **or curvature** lower bound for an NP language is exactly a classical `P ≠ NP` proof; curvature rails add no power in the discrete model. *New theorems (no-go).*
-3. **Noise-robust receiver packing `N ≤ (1+√M/η)^{2D}`**, including the projected-subspace form and mass/capacity corollaries. *Formalization of an existing analytic proof, with a strengthened (`≥ 2η`) hypothesis and general-dimension form.*
+3. **Noise-robust receiver packing `N ≤ (1+√M/η)^{2D}`**, including the projected-subspace form, the genuine `L²`-torus Fourier receiver (Parseval/Bessel), the bandlimited 2-torus bound, and mass/capacity corollaries. *Formalization of an existing analytic proof, strengthened (`≥ 2η`) and made concrete on `L²(𝕋^d)`.*
+3a. **Sharp spectral gap and its collapse on expanding domains** (`SpectralGap.wirtinger`, `wirtinger_sharp`, `no_uniform_poincare`) and **exact classical solutions of the frozen WCT PDE** with fixed mass and vanishing curvature energy (`WCTPlaneWave.expanding_domain_countermodel`). *Formalization of the analytic core of the expanding-domain countermodel; converts O4/O5 "analytic only" items into kernel-checked statements.*
+3b. **`P ⊆ NP` for TMs and discrete WCCs** with an explicit pair-parsing verifier. *Formal model infrastructure.*
 4. **Refutation of storage-to-decision promotion** (`promoted_bound_false`) and of finite-Fourier-support preservation by the WCT nonlinearity. *Counterexamples / no-go.*
 5. **Function-space Part III theorems:** Lebesgue-integral curvature bound; zero-cost counterexample with Mathlib's Laplacian; high-frequency counterexample with genuine derivatives and integrals. *Formalizations of existing analytic proofs (1-D for `prop:highfreq`).*
 6. **Representation (non)invariance:** time classes invariant under alphabet relabelling; curvature not. *New theorem + counterexample.*
@@ -104,15 +110,15 @@ No percentages are used. Status words follow the charter's labels.
 | ID | Status after ASTRA | Evidence / outstanding dependency |
 |---|---|---|
 | O1 | **Maintained.** Original releases and titles untouched; revisions recorded in manuscripts' revision registers and this report. | Ongoing: keep original-vs-revised ledger with source anchors. |
-| O2 | **Partial.** Finite CNF semantics and zero-penalty theorem in Lean (`PartI`, `PartIExtended`); uniform witness quantifiers and pairing defined (`NPOf`, `pair`, `pair_injective`). | Missing: Lean TM for CNF evaluation (`L_check ∈ P_TM`) and a uniform CNF/witness bit encoding. |
+| O2 | **Partial.** Finite CNF semantics and zero-penalty theorem in Lean (`PartI`, `PartIExtended`); uniform witness quantifiers, pairing and verifier overheads (`NPOf`, `pair`, `pair_injective`, `WitnessSizeUniformity`); unconditional `P_TM ⊆ NP_TM`. | Missing: Lean TM for CNF evaluation (`L_check ∈ P_TM`) under a fixed uniform CNF/witness bit encoding, hence `SAT ∈ NP_TM`. |
 | O3 | **Complete for the frozen discrete model** (1-D, radius one, quiescent, finite). | Optional generalizations: radius-`r`, `d`-dim, poly-time encoders, universal TM. |
-| O4 | **Frozen** (`physical-model-freeze.md`); **open** in Lean. | Well-posedness/conservation of the frozen PDE (analytic only). |
-| O5 | **Partial.** Packing, projection, mode count, `C_Θ ≤ ‖Δψ‖²/4ε²` proved; energy→curvature, distinguishability→curvature, bandwidth-preservation refuted. | Uniform-in-`L_n` nodal/phase coercivity. |
+| O4 | **Frozen** (`physical-model-freeze.md`). Lean: explicit exact classical solution family of the frozen PDE (`WCTPlaneWave.plane_wave_solves`), with exact mass and Hamiltonian on every torus. | General well-posedness and conservation for arbitrary admissible data (open). |
+| O5 | **Partial.** Packing (abstract and genuine `L²`-torus Fourier receiver), mode count, `C_Θ ≤ ‖Δψ‖²/4ε²`, sharp circle spectral gap proved; energy→curvature, distinguishability→curvature, bandwidth-preservation, and domain-uniform Poincaré constants refuted. | Uniform-in-`L_n` nodal/phase coercivity (now known to be impossible for the plain Poincaré constant: `no_uniform_poincare`). |
 | O6 | **Partial.** All resources specified as functions of `n`; discrete curvature polynomially accounted. | Hidden-resource accounting for continuum devices (precision/switching), M3. |
 | O7 | **Open;** every tested universal statement refuted at stated scope; discrete version proved equivalent to classical P ≠ NP. | M2. |
 | O8 | **Open.** No candidate language with a physical verifier and a proved all-decider lower bound. | M1 + M2. |
 | O9 | **Reduced to classical P vs NP** for the discrete model (`p_vs_np_discrete_transfer`); for the physical model blocked on M1. | Classical P ≠ NP itself (unresolved). |
-| O10 | **Advanced.** 36 principal declarations axiom-audited; CI enforces the audit; Python cross-checks added (`pvnp/tests/test_astra_discrete.py`). | Independent adversarial review; manuscript text alignment (section D). |
+| O10 | **Advanced.** 50 principal declarations axiom-audited; CI enforces the audit; Python cross-checks added (`pvnp/tests/test_astra_discrete.py`). | Independent adversarial review; manuscript text alignment (section D). |
 
 ---
 
