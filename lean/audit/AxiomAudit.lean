@@ -106,6 +106,13 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Discrete.P_WCC_enc_id
 #print axioms PVNP.Discrete.unrestricted_encoder_trivializes_WCC
 #print axioms PVNP.Discrete.advice_bit_trivializes
+-- D-1 finite propagation on higher-dimensional Moore lattices
+#print axioms PVNP.Discrete.WCCD.off_bounds
+#print axioms PVNP.Discrete.WCCD.init_blank_outside
+#print axioms PVNP.Discrete.WCCD.run_blank_outside
+#print axioms PVNP.Discrete.WCCD.run_blank_left
+#print axioms PVNP.Discrete.WCCD.run_blank_right
+#print axioms PVNP.Discrete.WCCD.run_blank_transverse
 -- Lattice WCT system: conservation, coercivity, derived flux inequality, transport bound
 #print axioms PVNP.WCTLattice.ip_Aop
 #print axioms PVNP.WCTLattice.hasDerivAt_mass
