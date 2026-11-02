@@ -33,3 +33,8 @@ import PVNP.TMHeadUniqueRight
 import PVNP.TMHeadUniqueLeft
 import PVNP.TMHeadStep
 import PVNP.TMMovingTrace
+import PVNP.DiscreteMachines
+import PVNP.TMtoWCC
+import PVNP.WCCtoTM
+import PVNP.ComplexityEquivalence
+import PVNP.MachineSerialization
