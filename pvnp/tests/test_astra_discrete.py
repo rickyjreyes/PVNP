@@ -336,5 +336,138 @@ class TestUnpair(unittest.TestCase):
         self.assertGreater(checked, 100)
 
 
+def lit(p, q, a):
+    return (p and a) or (q and not a)
+
+
+def chk_from(w, xs, j, fl, atb):
+    """Transcription of `SATV.chkFrom`."""
+    while True:
+        if len(xs) == 0:
+            return atb
+        if len(xs) < 3:
+            return False
+        p, q, e, xs = xs[0], xs[1], xs[2], xs[3:]
+        if j >= len(w):
+            return False
+        fl2 = fl or lit(p, q, w[j])
+        if e:
+            if not (j + 1 == len(w) and fl2):
+                return False
+            j, fl, atb = 0, False, True
+        else:
+            j, fl, atb = j + 1, fl2, False
+
+
+def sat_tm(y, limit):
+    """Transcription of `SATV.δ` (lean/PVNP/SATVerifier.lean)."""
+    tape = defaultdict(lambda: ("blank",))
+    for i, b in enumerate(y):
+        tape[i] = ("raw", b)
+    st, h = ("P0",), 0
+    for t in range(limit + 1):
+        k = st[0]
+        if k == "yes":
+            return t, True
+        if k == "no":
+            return t, False
+        z = tape[h]
+        def go(nst, sym, mv):
+            nonlocal st, h
+            tape[h] = sym
+            st = nst
+            h += mv
+        if k == "P0":
+            if z == ("raw", True): go(("P1",), z, 1)
+            elif z == ("raw", False): go(("back", False, True), z, -1)
+            else: go(("no",), z, 0)
+        elif k == "P1":
+            go(("P0",), z, 1) if z[0] == "raw" else go(("no",), z, 0)
+        elif k == "back":
+            go(("seek", st[1], st[2]), z, 1) if z == ("blank",) else go(st, z, -1)
+        elif k == "seek":
+            fl, atb = st[1], st[2]
+            if z == ("raw", True): go(("rdP", fl), ("done",), 1)
+            elif z == ("raw", False): go(("yes",) if atb else ("no",), z, 0)
+            elif z == ("done",): go(("skipD", fl, atb), z, 1)
+            else: go(("no",), z, 0)
+        elif k == "skipD":
+            go(("seek", st[1], st[2]), z, 1)
+        elif k == "rdP":
+            go(("t2", st[1], z[1]), z, 1) if z[0] == "raw" else go(("no",), z, 0)
+        elif k == "t2":
+            go(("rdQ", st[1], st[2]), ("done",), 1) if z == ("raw", True) else go(("no",), z, 0)
+        elif k == "rdQ":
+            go(("t3", st[1], st[2], z[1]), z, 1) if z[0] == "raw" else go(("no",), z, 0)
+        elif k == "t3":
+            go(("rdE",) + st[1:], ("done",), 1) if z == ("raw", True) else go(("no",), z, 0)
+        elif k == "rdE":
+            go(("toW",) + st[1:] + (z[1],), z, 1) if z[0] == "raw" else go(("no",), z, 0)
+        elif k == "toW":
+            if z == ("raw", True): go(("toWD",) + st[1:], z, 1)
+            elif z == ("raw", False): go(("inW",) + st[1:], z, 1)
+            else: go(("no",), z, 0)
+        elif k == "toWD":
+            go(("toW",) + st[1:], z, 1)
+        elif k == "inW":
+            fl, p, q, e = st[1:]
+            if z[0] == "wm": go(st, z, 1)
+            elif z[0] == "raw":
+                f2 = fl or lit(p, q, z[1])
+                go(("chkEnd", f2), ("wm", z[1]), 1) if e else go(("back", f2, False), ("wm", z[1]), -1)
+            else: go(("no",), z, 0)
+        elif k == "chkEnd":
+            if z == ("blank",) and st[1]: go(("unmark",), z, -1)
+            else: go(("no",), z, 0)
+        elif k == "unmark":
+            if z[0] == "wm": go(("unmark",), ("raw", z[1]), -1)
+            elif z[0] == "raw": go(("back", False, True), z, -1)
+            else: go(("no",), z, 0)
+    return None
+
+
+def enc_dense(n, formula):
+    out = []
+    for clause in formula:
+        for j in range(n):
+            out += [(j, True) in clause, (j, False) in clause, j + 1 == n]
+    return out
+
+
+def eval_formula(a, formula):
+    return all(any((a[v] == pos) for (v, pos) in clause) for clause in formula)
+
+
+class TestSATVerifier(unittest.TestCase):
+    def test_against_brute_force(self):
+        rng = random.Random(2026)
+        for _ in range(400):
+            n = rng.randint(1, 3)
+            m = rng.randint(0, 3)
+            formula = [[(rng.randrange(n), rng.random() < 0.5) for _ in range(rng.randint(0, 3))]
+                       for _ in range(m)]
+            x = enc_dense(n, formula)
+            sat = any(eval_formula(list(a), formula) for a in itertools.product([False, True], repeat=n))
+            found = False
+            for wl in range(0, len(x) + 1 if len(x) <= 4 else 5):
+                for w in itertools.product([False, True], repeat=wl):
+                    y = pair(x, list(w))
+                    bound = 2 * (len(y) + 3) ** 2
+                    res = sat_tm(y, bound)
+                    self.assertIsNotNone(res)
+                    self.assertLessEqual(res[0], bound)
+                    self.assertEqual(res[1], chk_from(list(w), x, 0, False, True))
+                    if res[1]:
+                        found = True
+                        self.assertTrue(eval_formula(list(w) + [False] * n, formula))
+            if m > 0:
+                self.assertEqual(found, sat)
+
+    def test_malformed_rejected(self):
+        for y in ([], [True], [True, True], [True, False, True], [True, True, True]):
+            res = sat_tm(y, 2 * (len(y) + 3) ** 2)
+            self.assertEqual(res[1], False)
+
+
 if __name__ == "__main__":
     unittest.main()

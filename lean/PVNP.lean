@@ -49,3 +49,5 @@ import PVNP.FourierTorusReceiver
 import PVNP.PSubsetNP
 import PVNP.CircleSpectralGap
 import PVNP.WCTPlaneWave
+import PVNP.TMScan
+import PVNP.SATVerifier

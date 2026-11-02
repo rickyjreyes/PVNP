@@ -2,7 +2,7 @@
 
 Author of the research program: **Richard J. Reyes**. Original publications (Zenodo releases 03, 12, 13 and the May/November/December 2025 versions) are preserved unchanged; this report records the current, revised state of the mathematics.
 
-Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (which itself extends `main`). Every result below was checked locally with the pinned toolchain (`leanprover/lean4:v4.23.0`, Mathlib `v4.23.0`) via `lake build PVNP`, and the axiom audit `lean/audit/AxiomAudit.lean` reports only `propext`, `Classical.choice`, `Quot.sound` for all 50 principal declarations. GitHub Actions on the branch head is the authoritative CI record.
+Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (which itself extends `main`). Every result below was checked locally with the pinned toolchain (`leanprover/lean4:v4.23.0`, Mathlib `v4.23.0`) via `lake build PVNP`, and the axiom audit `lean/audit/AxiomAudit.lean` reports only `propext`, `Classical.choice`, `Quot.sound` for all 57 principal declarations. GitHub Actions on the branch head is the authoritative CI record.
 
 ---
 
@@ -57,7 +57,7 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
 
 - **Starting status:** OPEN; mostly symbolic Lean (e.g. `zeroLaplacian _ = 0`).
 - **New Lean files:** `PartIIIAnalytic.lean`, `PhysicalComplexityClasses.lean` (plus `DiscreteCurvatureRail`, `ComplexityEquivalence`).
-- **Classification: PARTIAL**, with the completion gate met: every principal statement is matched below. Two routine formalization items remain (CNF-evaluating TM for `L_check ∈ P_TM`; Fubini lift of `prop:highfreq` from 1-D to 3-D).
+- **Classification: PARTIAL**, with the completion gate met: every principal statement is matched below. One routine formalization item remains (Fubini lift of `prop:highfreq` from 1-D to 3-D); `L_check ∈ P_TM` is now proved (`SATVerifier.lean`).
 
 #### Part III statement map
 
@@ -73,7 +73,7 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
 | Prop. "no logical conflict" | Lean | `Discrete.inclusions_do_not_determine` |
 | WIN-17 well-posedness | Lean (definitional) | `Discrete.classical_question_well_posed`, `p_vs_np_discrete_transfer` |
 | Prop. `prop:interface` | Lean, **conditional** | `Discrete.conditional_interface_bound` |
-| Prop. `prop:assignment-P` (`L_check ∈ P`) | Documented obligation (classically routine) | CNF semantics: `PVNP.PartI.supplied_assignment_decidable` (in `PartIExtended.lean`) |
+| Prop. `prop:assignment-P` (`L_check ∈ P`) | **Lean, proved** (dense CNF encoding, pair-encoded instance/assignment) | `Discrete.SATV.satTM_decides`, `V_SAT_mem_P_TM`; semantics `encDense_mem_SAT_iff` against `PVNP.PartI.satisfiable` |
 | Thm. `thm:constructibility` | Lean, conditional premise explicit | `Discrete.telescoping_bound` |
 | Prop. `prop:highfreq` | Lean, 1-D periodic version | `highfreq_gradient_energy`, `highfreq_curvature_lower`, `no_gradient_energy_control` |
 | Thm. `thm:capacity` | Lean, conditional premise explicit | `PartIIIAnalytic.capacity_law` |
@@ -93,6 +93,7 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
 3. **Noise-robust receiver packing `N ≤ (1+√M/η)^{2D}`**, including the projected-subspace form, the genuine `L²`-torus Fourier receiver (Parseval/Bessel), the bandlimited 2-torus bound, and mass/capacity corollaries. *Formalization of an existing analytic proof, strengthened (`≥ 2η`) and made concrete on `L²(𝕋^d)`.*
 3a. **Sharp spectral gap and its collapse on expanding domains** (`SpectralGap.wirtinger`, `wirtinger_sharp`, `no_uniform_poincare`) and **exact classical solutions of the frozen WCT PDE** with fixed mass and vanishing curvature energy (`WCTPlaneWave.expanding_domain_countermodel`). *Formalization of the analytic core of the expanding-domain countermodel; converts O4/O5 "analytic only" items into kernel-checked statements.*
 3b. **`P ⊆ NP` for TMs and discrete WCCs** with an explicit pair-parsing verifier. *Formal model infrastructure.*
+3c. **CNF-SAT ∈ NP_TM with an explicit verified verifier TM** (`SATVerifier.lean`, ~1100 lines): dense CNF encoding, zig-zag witness marking machine, exact round invariants, time `2(N+3)²`, and agreement with Part I CNF semantics. Closes O2 and Part III `prop:assignment-P`; yields `SAT_curvature_transfer` (a discrete curvature lower bound for SAT would prove `P_TM ≠ NP_TM`). *Formalization of classical facts in the project's own machine model.*
 4. **Refutation of storage-to-decision promotion** (`promoted_bound_false`) and of finite-Fourier-support preservation by the WCT nonlinearity. *Counterexamples / no-go.*
 5. **Function-space Part III theorems:** Lebesgue-integral curvature bound; zero-cost counterexample with Mathlib's Laplacian; high-frequency counterexample with genuine derivatives and integrals. *Formalizations of existing analytic proofs (1-D for `prop:highfreq`).*
 6. **Representation (non)invariance:** time classes invariant under alphabet relabelling; curvature not. *New theorem + counterexample.*
@@ -110,7 +111,7 @@ No percentages are used. Status words follow the charter's labels.
 | ID | Status after ASTRA | Evidence / outstanding dependency |
 |---|---|---|
 | O1 | **Maintained.** Original releases and titles untouched; revisions recorded in manuscripts' revision registers and this report. | Ongoing: keep original-vs-revised ledger with source anchors. |
-| O2 | **Partial.** Finite CNF semantics and zero-penalty theorem in Lean (`PartI`, `PartIExtended`); uniform witness quantifiers, pairing and verifier overheads (`NPOf`, `pair`, `pair_injective`, `WitnessSizeUniformity`); unconditional `P_TM ⊆ NP_TM`. | Missing: Lean TM for CNF evaluation (`L_check ∈ P_TM`) under a fixed uniform CNF/witness bit encoding, hence `SAT ∈ NP_TM`. |
+| O2 | **Complete for the dense CNF encoding.** One uniform instance/witness language (`SATV.encDense`, assignment witness, `|w| ≤ |x|`); an explicit verifier TM with yes/no correctness and time `2(N+3)²` (`satTM_decides`, `V_SAT_mem_P_TM`); `SAT_dense_mem_NP_TM`, `SAT_dense_mem_NP_WCC`; semantic agreement with Part I CNF satisfiability (`encDense_mem_SAT_iff`). "Physical admissibility" of the encoding is a separate O4–O6 question. | NP-completeness (Cook–Levin) of the dense encoding is classical but not formalized; the sparse/binary-index encoding is not formalized. |
 | O3 | **Complete for the frozen discrete model** (1-D, radius one, quiescent, finite). | Optional generalizations: radius-`r`, `d`-dim, poly-time encoders, universal TM. |
 | O4 | **Frozen** (`physical-model-freeze.md`). Lean: explicit exact classical solution family of the frozen PDE (`WCTPlaneWave.plane_wave_solves`), with exact mass and Hamiltonian on every torus. | General well-posedness and conservation for arbitrary admissible data (open). |
 | O5 | **Partial.** Packing (abstract and genuine `L²`-torus Fourier receiver), mode count, `C_Θ ≤ ‖Δψ‖²/4ε²`, sharp circle spectral gap proved; energy→curvature, distinguishability→curvature, bandwidth-preservation, and domain-uniform Poincaré constants refuted. | Uniform-in-`L_n` nodal/phase coercivity (now known to be impossible for the plain Poincaré constant: `no_uniform_poincare`). |
@@ -118,7 +119,7 @@ No percentages are used. Status words follow the charter's labels.
 | O7 | **Open;** every tested universal statement refuted at stated scope; discrete version proved equivalent to classical P ≠ NP. | M2. |
 | O8 | **Open.** No candidate language with a physical verifier and a proved all-decider lower bound. | M1 + M2. |
 | O9 | **Reduced to classical P vs NP** for the discrete model (`p_vs_np_discrete_transfer`); for the physical model blocked on M1. | Classical P ≠ NP itself (unresolved). |
-| O10 | **Advanced.** 50 principal declarations axiom-audited; CI enforces the audit; Python cross-checks added (`pvnp/tests/test_astra_discrete.py`). | Independent adversarial review; manuscript text alignment (section D). |
+| O10 | **Advanced.** 57 principal declarations axiom-audited; CI enforces the audit; Python cross-checks added (`pvnp/tests/test_astra_discrete.py`). | Independent adversarial review; manuscript text alignment (section D). |
 
 ---
 

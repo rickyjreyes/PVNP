@@ -261,3 +261,17 @@ astra_second_tranche_2026_11_02:
     proved: ["WCTPlaneWave.plane_wave_solves", "WCTPlaneWave.classical_derivatives", "WCTPlaneWave.wave_periodic", "WCTPlaneWave.mass_box", "WCTPlaneWave.curvature_box", "WCTPlaneWave.hamiltonian_box", "WCTPlaneWave.expanding_domain_countermodel", "WCTPlaneWave.curvature_energy_vanishes"]
     scope: "explicit classical solution family of the frozen PDE (classical partial derivatives along coordinates); not a general well-posedness theorem"
   still_open: ["SAT ∈ NP_TM under a fixed CNF bit encoding (O2)", "general well-posedness of the frozen PDE (O4)", "universal physical lower bound (O7-O9: M1-M3)"]
+
+o2_sat_in_np:
+  modules: [PVNP/TMScan.lean, PVNP/SATVerifier.lean]
+  verification: "local lake build PVNP PASS; axiom audit 57 declarations (standard axioms or subsets)"
+  encoding: "dense CNF: each clause = n slots of 3 bits (x_j occurs, not-x_j occurs, last-slot flag); witness = assignment of length n"
+  proved:
+    - "TM.scan1, TM.scan2, TM.frozen, TM.none_before (generic TM execution lemmas)"
+    - "SATV.rounds: exact round invariants of the verifier TM following chkFrom"
+    - "SATV.satTM_decides: V_SAT decided in time 2(N+3)^2 (malformed pair inputs rejected)"
+    - "SATV.V_SAT_mem_P_TM (Part III prop:assignment-P)"
+    - "SATV.SAT_dense_mem_NP_TM, SATV.SAT_dense_mem_NP_WCC"
+    - "SATV.encDense_mem_SAT_iff: encDense n F ∈ SAT_dense ↔ PVNP.PartI.satisfiable F (variables < n, n ≥ 1)"
+    - "SATV.SAT_curvature_transfer: SAT_dense ∉ P_curvRail → P_TM ≠ NP_TM"
+  not_proved: ["Cook-Levin NP-completeness of SAT_dense", "sparse binary-index CNF encoding"]

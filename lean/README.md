@@ -141,3 +141,7 @@ No classical `P ≠ NP`, physical class separation, or universal SAT lower bound
 - `CircleSpectralGap`: sharp Wirtinger inequality `(2π/L)²·Var ≤ ∫|f'|²` on the circle of length `L`, equality for `e^{2πix/L}`, and `no_uniform_poincare` (no domain-uniform constant).
 - `WCTPlaneWave`: exact classical solutions of the frozen WCT PDE; on expanding tori with fixed mass `M` the curvature energy is `(2π/L)⁴M → 0` with explicit Hamiltonian.
 - Axiom audit: 50 declarations, standard axioms only.
+
+### O2: CNF-SAT is in NP_TM (explicit verifier machine)
+
+`SATVerifier` defines the dense CNF encoding `encDense`, an explicit ordinary TM `satTM` that checks a supplied assignment against a pair-encoded formula (zig-zag witness marking, clause flag in the finite control), and proves `satTM_decides` (time `2(N+3)²`), `V_SAT_mem_P_TM` (Part III `prop:assignment-P`), `SAT_dense_mem_NP_TM`, `SAT_dense_mem_NP_WCC`, and `encDense_mem_SAT_iff` (agreement with `PVNP.PartI.satisfiable`). `TMScan` provides reusable scan and halting lemmas. Axiom audit: 57 declarations, standard axioms only (one theorem uses a strict subset, accepted by `audit/check_axioms.py`).

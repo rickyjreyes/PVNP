@@ -430,7 +430,12 @@ chosen representation. For the discrete classes,
 Theorem~\ref{thm:p-in-np} holds without its closure premise
 (\texttt{PVNP.Discrete.P\_TM\_subset\_NP\_TM} and
 \texttt{PVNP.Discrete.P\_WCC\_subset\_NP\_WCC}, via an explicit
-pair-parsing verifier machine). Conditional statements remain conditional.
+pair-parsing verifier machine). Proposition~\ref{prop:assignment-P} is
+kernel-checked for a dense CNF encoding by an explicit verifier machine
+(\texttt{PVNP.Discrete.SATV.V\_SAT\_mem\_P\_TM}), which also gives
+CNF-SAT $\in NP$ in both discrete models
+(\texttt{PVNP.Discrete.SATV.SAT\_dense\_mem\_NP\_TM}).
+Conditional statements remain conditional.
 
 \clearpage
 \appendix

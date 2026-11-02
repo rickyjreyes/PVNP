@@ -54,3 +54,10 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.WCTPlaneWave.classical_derivatives
 #print axioms PVNP.WCTPlaneWave.expanding_domain_countermodel
 #print axioms PVNP.WCTPlaneWave.curvature_energy_vanishes
+#print axioms PVNP.Discrete.SATV.rounds
+#print axioms PVNP.Discrete.SATV.satTM_decides
+#print axioms PVNP.Discrete.SATV.V_SAT_mem_P_TM
+#print axioms PVNP.Discrete.SATV.SAT_dense_mem_NP_TM
+#print axioms PVNP.Discrete.SATV.SAT_dense_mem_NP_WCC
+#print axioms PVNP.Discrete.SATV.encDense_mem_SAT_iff
+#print axioms PVNP.Discrete.SATV.SAT_curvature_transfer
