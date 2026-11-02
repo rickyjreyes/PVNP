@@ -4,7 +4,7 @@ import PVNP.DecisionVsEncodingCounterexample
 # Uniform sign encoding versus unrestricted receiver computation
 
 The encoder below is *fixed*, coordinatewise, and independent of any
-decision language. It stores n bits in n real amplitudes +/-1 with total
+decision language. It stores n bits in n real amplitudes +1 or -1 with total
 squared mass n. Under coordinatewise additive error strictly below 1,
 the signs recover every bit exactly.
 
@@ -71,6 +71,7 @@ theorem arbitrary_predicate_has_robust_decoder (L : Set (Fin n → Bool)) :
   classical
   refine ⟨fun y => decide (signDecode y ∈ L), ?_⟩
   intro x e he
+  change decide (signDecode (fun i => signCode x i + e i) ∈ L) = true ↔ x ∈ L
   rw [signDecode_noise x e he]
   simp
 
