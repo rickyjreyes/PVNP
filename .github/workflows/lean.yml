@@ -1,7 +1,7 @@
 name: PVNP Lean supporting theorems
 on:
   push:
-    branches: [main, formal/wcc-locality-resource-audit-10-11-20261027]
+    branches: [main, formal/wcc-locality-resource-audit-10-11-20261027, astra/complete-program-20261102]
     paths: ['lean/**', '.github/workflows/lean.yml']
   pull_request:
   workflow_dispatch:
@@ -34,3 +34,12 @@ jobs:
         run: lake build PVNP
       - name: Check issue 10 and 11 proof modules explicitly
         run: lake build PVNP.LocalityLowerBound PVNP.ReplayCost PVNP.TMCellCompiler PVNP.RadiusCausality PVNP.TMGlobal PVNP.TMStayTrace PVNP.MachineCode PVNP.FiniteWCCCode PVNP.OracleObstruction PVNP.TMHeadMotion PVNP.TMHeadSupport PVNP.TMHeadUniqueRight PVNP.TMHeadUniqueLeft PVNP.TMHeadStep PVNP.TMMovingTrace
+      - name: Check ASTRA completion modules explicitly (#10, #11, #12, #15)
+        run: lake build PVNP.DiscreteMachines PVNP.TMtoWCC PVNP.WCCtoTM PVNP.ComplexityEquivalence PVNP.MachineSerialization PVNP.BandlimitedNoisyPacking PVNP.FourierReceiverProjection PVNP.DecisionVsEncodingCounterexample PVNP.PartIIIAnalytic PVNP.DiscreteCurvatureRail PVNP.PhysicalComplexityClasses
+      - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
+        run: |
+          lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt
+          test "$(grep -c "depends on axioms" axiom-audit.txt)" -eq "$(grep -c "^#print axioms" audit/AxiomAudit.lean)"
+          if grep "depends on axioms" axiom-audit.txt | grep -v "depends on axioms: \[propext, Classical.choice, Quot.sound\]$"; then
+            echo "non-standard axiom dependency found"; exit 1
+          fi

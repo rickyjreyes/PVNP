@@ -41,3 +41,6 @@ import PVNP.MachineSerialization
 import PVNP.BandlimitedNoisyPacking
 import PVNP.FourierReceiverProjection
 import PVNP.DecisionVsEncodingCounterexample
+import PVNP.PartIIIAnalytic
+import PVNP.DiscreteCurvatureRail
+import PVNP.PhysicalComplexityClasses
