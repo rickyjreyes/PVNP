@@ -62,5 +62,6 @@ import PVNP.WCCRadius
 import PVNP.WCCGenerality
 import PVNP.WCCDFiniteSupport
 import PVNP.WCTLattice
+import PVNP.WCTLatticeGlobalBounds
 
 import PVNP.DecoderUniformity
