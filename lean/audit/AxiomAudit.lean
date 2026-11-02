@@ -78,3 +78,15 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.PhysicalAudit.PhysConst_polyEnc_eq_P_TM
 #print axioms PVNP.PhysicalAudit.physical_SAT_lower_bound_is_classical
 #print axioms PVNP.PhysicalAudit.two_states_suffice
+#print axioms PVNP.Discrete.WCCR.rsweep_run
+#print axioms PVNP.Discrete.WCCR.lsweep_run
+#print axioms PVNP.Discrete.WCCR.phase_step
+#print axioms PVNP.Discrete.WCCR.global
+#print axioms PVNP.Discrete.WCCR.toTM_decides
+#print axioms PVNP.Discrete.WCC.toR_decides
+#print axioms PVNP.Discrete.P_WCCR_subset_P_TM
+#print axioms PVNP.Discrete.P_WCCR_eq_P_TM
+#print axioms PVNP.Discrete.NP_WCCR_eq_NP_TM
+#print axioms PVNP.Discrete.P_WCCR_radius_invariant
+#print axioms PVNP.Discrete.p_vs_np_radius_transfer
+#print axioms PVNP.Discrete.explicit_radius_simulations
