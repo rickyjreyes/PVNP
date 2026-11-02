@@ -106,3 +106,16 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Discrete.P_WCC_enc_id
 #print axioms PVNP.Discrete.unrestricted_encoder_trivializes_WCC
 #print axioms PVNP.Discrete.advice_bit_trivializes
+-- Lattice WCT system: conservation, coercivity, derived flux inequality, transport bound
+#print axioms PVNP.WCTLattice.ip_Aop
+#print axioms PVNP.WCTLattice.hasDerivAt_mass
+#print axioms PVNP.WCTLattice.hasDerivAt_ham
+#print axioms PVNP.WCTLattice.mass_conserved
+#print axioms PVNP.WCTLattice.ham_conserved
+#print axioms PVNP.WCTLattice.exists_local_solution
+#print axioms PVNP.WCTLattice.local_conservation
+#print axioms PVNP.WCTLattice.bandpass_le_ham
+#print axioms PVNP.WCTLattice.hasDerivAt_flux
+#print axioms PVNP.WCTLattice.flux_bound
+#print axioms PVNP.WCTLattice.lattice_flux_inequality
+#print axioms PVNP.WCTLattice.lattice_curvature_time_bound
