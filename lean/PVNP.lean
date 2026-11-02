@@ -38,3 +38,6 @@ import PVNP.TMtoWCC
 import PVNP.WCCtoTM
 import PVNP.ComplexityEquivalence
 import PVNP.MachineSerialization
+import PVNP.BandlimitedNoisyPacking
+import PVNP.FourierReceiverProjection
+import PVNP.DecisionVsEncodingCounterexample
