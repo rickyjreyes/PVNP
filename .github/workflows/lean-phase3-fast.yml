@@ -31,14 +31,15 @@ jobs:
               PVNP/WCCDFiniteSupport.lean \
               PVNP/WCTLatticeGlobalBounds.lean \
               PVNP/WCTMeshScaling.lean \
-              PVNP/WCTLatticeGlobal.lean; then
+              PVNP/WCTLatticeGlobal.lean \
+              PVNP/WCCDFiniteSnapshot.lean; then
             exit 1
           fi
       - name: Kernel check targeted Phase III-IV proof modules
         run: |
           lake build \
             PVNP.WCCDFiniteSupport \
-            PVNP.WCTLatticeGlobal \
-            PVNP.WCCDFiniteSnapshotBounds \
+            PVNP.WCTLatticeGlobalBounds \
             PVNP.WCTMeshScaling \
-            PVNP.WCTLatticeGlobal
+            PVNP.WCTLatticeGlobal \
+            PVNP.WCCDFiniteSnapshot
