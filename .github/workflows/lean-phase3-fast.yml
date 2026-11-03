@@ -38,6 +38,7 @@ jobs:
         run: |
           lake build \
             PVNP.WCCDFiniteSupport \
-            PVNP.WCTLatticeGlobalBounds \
+            PVNP.WCTLatticeGlobal \
+            PVNP.WCCDFiniteSnapshotBounds \
             PVNP.WCTMeshScaling \
             PVNP.WCTLatticeGlobal
