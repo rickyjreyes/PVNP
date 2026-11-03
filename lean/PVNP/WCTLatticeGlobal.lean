@@ -180,7 +180,7 @@ noncomputable def truncated (a b β γ R : ℝ) (u : Fld N) : Fld N :=
 
 theorem truncated_bounded_lipschitz (a b β γ : ℝ) {R : ℝ} (hR : 0 ≤ R) :
     ∃ K B : ℝ≥0, LipschitzWith K (truncated (N := N) a b β γ R) ∧
-      ∀ u, ‖truncated a b β γ R u‖ ≤ B := by
+      ∀ u : Fld N, ‖truncated a b β γ R u‖ ≤ B := by
   obtain ⟨K, hK⟩ := vf_lipschitz_ball (N := N) a b β γ R
   obtain ⟨B, hB⟩ := (isCompact_closedBall (0 : Fld N) R).bddAbove_image
     (contDiff_vf a b β γ).continuous.norm.continuousOn
