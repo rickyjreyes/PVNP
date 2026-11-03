@@ -66,3 +66,5 @@ import PVNP.WCTLatticeGlobalBounds
 import PVNP.WCTMeshScaling
 
 import PVNP.DecoderUniformity
+
+import PVNP.WCTLatticeGlobal

@@ -134,3 +134,19 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 -- M3-C: flux prefactor mesh-refinement limitation
 #print axioms PVNP.WCTLattice.mesh_flux_prefactor
 #print axioms PVNP.WCTLattice.mesh_flux_prefactor_unit
+
+
+-- M3-G: constructed global flow, uniqueness and degenerate cases
+#print axioms PVNP.BoundedODE.exists_global
+#print axioms PVNP.BoundedODE.lipschitz_retract
+#print axioms PVNP.WCTLattice.vf_locallyLipschitz
+#print axioms PVNP.WCTLattice.vf_lipschitz_ball
+#print axioms PVNP.WCTLattice.truncated_bounded_lipschitz
+#print axioms PVNP.WCTLattice.sum_inner_truncated
+#print axioms PVNP.WCTLattice.exists_global_solution
+#print axioms PVNP.WCTLattice.global_solution_unique
+#print axioms PVNP.WCTLattice.global_wellposed
+#print axioms PVNP.WCTLattice.exists_global_conserved_bounded
+#print axioms PVNP.WCTLattice.local_global_agree
+#print axioms PVNP.WCTLattice.zero_initial_stationary
+#print axioms PVNP.WCTLattice.zero_coefficients_stationary
