@@ -15,6 +15,7 @@ statement directly; it imports no whole-space PDE existence theorem.
 -/
 
 open Filter Topology Set
+open scoped NNReal
 
 namespace PVNP.BoundedODE
 
@@ -327,7 +328,7 @@ theorem zero_initial_stationary {a b β γ : ℝ} {z : ℝ → Fld N}
 /-- With all coefficients zero the unique global flow fixes every datum. -/
 theorem zero_coefficients_stationary {z : ℝ → Fld N} (hz : IsSol 0 0 0 0 z) :
     z = fun _ => z 0 := by
-  apply global_solution_unique hz _ rfl
+  apply global_solution_unique (w := fun _ => z 0) hz _ rfl
   intro t j
   simpa [vf, grad, Aop, nlin] using hasDerivAt_const t (z 0 j)
 
