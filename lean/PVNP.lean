@@ -61,6 +61,7 @@ import PVNP.PhysicalModelAudit
 import PVNP.WCCRadius
 import PVNP.WCCGenerality
 import PVNP.WCCDFiniteSupport
+import PVNP.WCCDFiniteSnapshot
 import PVNP.WCTLattice
 import PVNP.WCTLatticeGlobalBounds
 import PVNP.WCTMeshScaling
