@@ -1,4 +1,4 @@
-name: PVNP Phase III targeted Lean checks
+name: PVNP Phase III-IV targeted Lean checks
 
 on:
   pull_request:
@@ -30,12 +30,14 @@ jobs:
           if grep -nE '^[[:space:]]*(sorry|admit|axiom)([[:space:]]|$)' \
               PVNP/WCCDFiniteSupport.lean \
               PVNP/WCTLatticeGlobalBounds.lean \
-              PVNP/WCTMeshScaling.lean; then
+              PVNP/WCTMeshScaling.lean \
+              PVNP/WCTLatticeGlobal.lean; then
             exit 1
           fi
-      - name: Kernel check targeted Phase III proof modules
+      - name: Kernel check targeted Phase III-IV proof modules
         run: |
           lake build \
             PVNP.WCCDFiniteSupport \
             PVNP.WCTLatticeGlobalBounds \
-            PVNP.WCTMeshScaling
+            PVNP.WCTMeshScaling \
+            PVNP.WCTLatticeGlobal
