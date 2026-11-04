@@ -168,6 +168,7 @@ theorem hasWitness_iff {d : ℕ} (A : WCCD d) (x : List Bool) (t : ℕ)
     · left
       simpa only [read, dif_neg h] using hp
 
+open Classical in
 theorem hasWitness_correct {d : ℕ} (A : WCCD d) (x : List Bool) (t : ℕ)
     (s : A.Snapshot x t) (P : A.S → Bool) :
     A.hasWitness x t s P =
