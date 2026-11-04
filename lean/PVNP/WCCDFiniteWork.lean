@@ -109,4 +109,36 @@ theorem totalNeighborReads_polynomial_bound (n d T : ℕ) :
   unfold totalNeighborReads
   exact Nat.mul_le_mul_left _ (totalCells_polynomial_bound n d T)
 
+
+/-- An explicit polynomial witness in the same `Polynomial ℕ` type used
+by the project's computational-complexity classes. This bounds abstract
+finite-array writes, **not** ordinary Turing-machine transitions. -/
+def workPoly (d : ℕ) : Polynomial ℕ :=
+  Polynomial.C (2 ^ (d + 2)) * (Polynomial.X + Polynomial.C 1) ^ (d + 2)
+
+/-- The polynomial is exactly the elementary cost expression. -/
+theorem workPoly_eval (d m : ℕ) :
+    (workPoly d).eval m = 2 ^ (d + 2) * (m + 1) ^ (d + 2) := by
+  simp [workPoly]
+
+/-- The finite replay work count is dominated by the evaluation of one
+fixed polynomial for each dimension d. -/
+theorem totalCells_le_workPoly (n d T : ℕ) :
+    totalCells n d T ≤ (workPoly d).eval (n + T) := by
+  simpa only [workPoly_eval] using totalCells_polynomial_bound n d T
+
+/-- Polynomial witness for the abstract neighborhood-read count. -/
+def neighborWorkPoly (d : ℕ) : Polynomial ℕ :=
+  Polynomial.C (3 ^ (d + 1)) * workPoly d
+
+theorem neighborWorkPoly_eval (d m : ℕ) :
+    (neighborWorkPoly d).eval m =
+      3 ^ (d + 1) * (2 ^ (d + 2) * (m + 1) ^ (d + 2)) := by
+  simp [neighborWorkPoly, workPoly_eval]
+
+theorem totalNeighborReads_le_workPoly (n d T : ℕ) :
+    totalNeighborReads n d T ≤ (neighborWorkPoly d).eval (n + T) := by
+  simpa only [neighborWorkPoly_eval] using
+    totalNeighborReads_polynomial_bound n d T
+
 end PVNP.Discrete.WCCD
