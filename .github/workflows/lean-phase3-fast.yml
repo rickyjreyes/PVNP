@@ -43,4 +43,5 @@ jobs:
             PVNP.WCTLatticeGlobalBounds \
             PVNP.WCTMeshScaling \
             PVNP.WCTLatticeGlobal \
-            PVNP.WCCDFiniteSnapshot
+            PVNP.WCCDFiniteSnapshot \
+            PVNP.WCCDFiniteWork
