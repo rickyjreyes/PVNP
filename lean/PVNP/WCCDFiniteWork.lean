@@ -65,11 +65,22 @@ theorem totalCells_polynomial_bound (n d T : ℕ) :
   have hsize : (T + 1) * boxCells n d T ≤
       (n + 2 * T + 2) ^ (d + 2) := by
     unfold boxCells
+    have ha : T + 1 ≤ n + 2 * T + 2 := by omega
+    have hb : n + 2 * T + 1 ≤ n + 2 * T + 2 := by omega
+    have hc : (2 * T + 1) ^ d ≤ (n + 2 * T + 2) ^ d := by
+      gcongr
+      omega
     calc
       (T + 1) * ((n + 2 * T + 1) * (2 * T + 1) ^ d)
-          ≤ (n + 2 * T + 2) * ((n + 2 * T + 2) *
-              (n + 2 * T + 2) ^ d) := by
-            gcongr <;> omega
+          ≤ (n + 2 * T + 2) * ((n + 2 * T + 1) *
+              (2 * T + 1) ^ d) :=
+            Nat.mul_le_mul_right _ ha
+      _ ≤ (n + 2 * T + 2) * ((n + 2 * T + 2) *
+              (2 * T + 1) ^ d) :=
+            Nat.mul_le_mul_left _ (Nat.mul_le_mul_right _ hb)
+      _ ≤ (n + 2 * T + 2) * ((n + 2 * T + 2) *
+              (n + 2 * T + 2) ^ d) :=
+            Nat.mul_le_mul_left _ (Nat.mul_le_mul_left _ hc)
       _ = (n + 2 * T + 2) ^ (d + 2) := by
         simp only [pow_add, pow_two]
         ring
