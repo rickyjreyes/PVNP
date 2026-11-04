@@ -113,7 +113,7 @@ theorem totalNeighborReads_polynomial_bound (n d T : ℕ) :
 /-- An explicit polynomial witness in the same `Polynomial ℕ` type used
 by the project's computational-complexity classes. This bounds abstract
 finite-array writes, **not** ordinary Turing-machine transitions. -/
-def workPoly (d : ℕ) : Polynomial ℕ :=
+noncomputable def workPoly (d : ℕ) : Polynomial ℕ :=
   Polynomial.C (2 ^ (d + 2)) * (Polynomial.X + Polynomial.C 1) ^ (d + 2)
 
 /-- The polynomial is exactly the elementary cost expression. -/
@@ -128,7 +128,7 @@ theorem totalCells_le_workPoly (n d T : ℕ) :
   simpa only [workPoly_eval] using totalCells_polynomial_bound n d T
 
 /-- Polynomial witness for the abstract neighborhood-read count. -/
-def neighborWorkPoly (d : ℕ) : Polynomial ℕ :=
+noncomputable def neighborWorkPoly (d : ℕ) : Polynomial ℕ :=
   Polynomial.C (3 ^ (d + 1)) * workPoly d
 
 theorem neighborWorkPoly_eval (d m : ℕ) :
