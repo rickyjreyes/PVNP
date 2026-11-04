@@ -113,6 +113,20 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Discrete.WCCD.run_blank_left
 #print axioms PVNP.Discrete.WCCD.run_blank_right
 #print axioms PVNP.Discrete.WCCD.run_blank_transverse
+-- D-1 exact finite snapshot interpreter: coordinates, updates, blank-aware output
+#print axioms PVNP.Discrete.WCCD.point_inCone
+#print axioms PVNP.Discrete.WCCD.point_index
+#print axioms PVNP.Discrete.WCCD.index_point
+#print axioms PVNP.Discrete.WCCD.box_card
+#print axioms PVNP.Discrete.WCCD.read_point
+#print axioms PVNP.Discrete.WCCD.read_snapshot
+#print axioms PVNP.Discrete.WCCD.advance_snapshot
+#print axioms PVNP.Discrete.WCCD.hasWitness_iff
+#print axioms PVNP.Discrete.WCCD.hasWitness_correct
+#print axioms PVNP.Discrete.WCCD.finiteOutput_snapshot
+#print axioms PVNP.Discrete.WCCD.replay_correct
+#print axioms PVNP.Discrete.WCCD.replay_output
+#print axioms PVNP.Discrete.WCCD.firstAnswer_replay
 -- Lattice WCT system: conservation, coercivity, derived flux inequality, transport bound
 #print axioms PVNP.WCTLattice.ip_Aop
 #print axioms PVNP.WCTLattice.hasDerivAt_mass
