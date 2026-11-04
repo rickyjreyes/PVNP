@@ -11,6 +11,7 @@ simulating `T` rounds of a `(1+d)`-dimensional radius-one CA in time `poly(n, T)
 - *Proved:* the inclusion `P_TM ⊆ P_WCCD d` for every `d` (`P_TM_subset_P_WCCD`, via the exact
   axis embedding `WCC.toD_run`).
 - *Proved:* `P_WCCR r = P_TM` for every fixed radius in dimension one (`P_WCCR_eq_P_TM`).
+- *Additional finite groundwork (draft PR #23):* a computable signed-coordinate box of exact size `(n + 2T + 1)(2T + 1)^d`, finite synchronous replay, exact infinite-to-finite readback, and blank-aware existential first-answer output (`WCCDFiniteSnapshot.lean`, targeted Lean CI #41745573154). This is NOT an ordinary-TM simulation; the finite-program-to-single-tape transition compiler and its polynomial step bound remain missing.
 - *Obstruction:* the statement is classical and true, but the 1-D sweep invariants do not lift. A
   2-D configuration needs a row-major layout with markers and transport over distance `Θ(width)`.
   The radius-`r` alphabet trick fails because the column alphabet grows with `n`.
@@ -83,7 +84,7 @@ format. It is a large, self-contained project and is not started.
 | Lattice system on `ℤ/Nℤ`: local existence, exact conservation, uniform coercivity, flux inequality | **Proved in PVNP** (`WCTLattice`) |
 | **M3-T** Periodic torus `T²_L`: global `H²` well-posedness | **Open in Lean.** The external proof transfers in outline: Fourier series instead of Fourier transform; the interaction picture; Picard–Lindelöf with the radial retraction; conservation. It has not been carried out. |
 | **M3-U** Constants uniform in `L` | Bandpass coercivity `‖(Δ+κ)ψ‖² ≤ H + (3β²/16γ)M` is uniform: **proved**, in integrated form (`TransportCalculus.hamiltonian_controls_bandpass`) and on the lattice for every `N` (`WCTLattice.bandpass_le_ham`). Poincaré/spectral-gap coercivity is **false** uniformly in `L`, with sharp constant `(2π/L)²` (`SpectralGap.no_uniform_poincare`, `wirtinger_sharp`). The density floor fails on expanding tori (`WCTPlaneWave.expanding_domain_countermodel`). |
-| **M3-G** Global existence for the lattice ODE | **Not formalized.** It is standard: mass conservation together with local existence and an extension argument, or a retraction-truncated Picard–Lindelöf as in the external proof. |
+| **M3-G** Global existence for the lattice ODE | **PROVED in Lean** (`WCTLattice.global_wellposed`, `exists_global_solution`, `global_solution_unique`, `exists_global_conserved_bounded`), merged PR #22 at `4acb9d8`; global flow for every finite nonempty lattice and arbitrary real coefficients. |
 | **M3-C** Lattice → continuum convergence with certified error bounds | **Open.** This is also the missing piece for M1-a. |
 | Stability of plane waves / orbital stability on tori | **Open.** External orbital-stability work in `rickyjreyes/math` (`OrbitalStability.lean`) concerns `ℝ²` minimizers and was not audited here. |
 
