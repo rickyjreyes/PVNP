@@ -187,7 +187,10 @@ theorem finiteOutput_snapshot {d : ℕ} (A : WCCD d) (x : List Bool) (t : ℕ) :
     A.finiteOutput x t (A.snapshot x t) = A.out x t := by
   unfold finiteOutput WCCD.out WCCD.outCfg
   rw [A.hasWitness_correct, A.hasWitness_correct]
-  simpa only [A.read_snapshot]
+  have hread : A.read x t (A.snapshot x t) = A.run (A.init x) t := by
+    funext p
+    exact A.read_snapshot x t p
+  rw [hread]
 
 /-- Actual finite replay, using only the finite initial array and
 the finite update routine (no reference to the infinite run). -/
