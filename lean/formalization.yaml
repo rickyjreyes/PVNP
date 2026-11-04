@@ -2,7 +2,7 @@
 # `current_status` is AUTHORITATIVE.  `history` preserves dated snapshots
 # verbatim for provenance; stale entries there are marked [SUPERSEDED ...].
 toolchain: "leanprover/lean4:v4.23.0 (Mathlib v4.23.0)"
-status_as_of: "2026-11-02"
+status_as_of: "2026-11-03"
 verify: "cd lean && lake exe cache get && lake build PVNP && lake env lean audit/AxiomAudit.lean | tee out.txt && python3 audit/check_axioms.py audit/AxiomAudit.lean out.txt"
 kernel_verified_status: "a statement counts as verified only for a commit whose GitHub Actions Lean workflow passed"
 
@@ -21,6 +21,8 @@ current_status:
     - "PVNP.Discrete.P_TM_subset_P_WCCD, NP_TM_subset_NP_WCCD, WCC.toD_run (Z^(1+d), Moore radius one: inclusion only; converse NOT formalized)"
     - "PVNP.Discrete.P_WCC_enc_id (frozen model = identity encoder)"
     - "PVNP.Discrete.WCCD.off_bounds, init_blank_outside, run_blank_outside, run_blank_left, run_blank_right, run_blank_transverse: finite active rectangular causal region on Z^(1+d) with quiescent blank; PR #21 targeted Lean CI 41540246765; D-1 polynomial TM simulation remains OPEN"
+    - "PVNP.Discrete.WCCD.point_inCone, point_index, index_point, box_card, read_snapshot, advance_snapshot, hasWitness_iff, finiteOutput_snapshot, replay_correct, replay_output, firstAnswer_replay: executable finite-coordinate box representation and exact round-by-round synchronous evolution and first-answer output, including accepting/rejecting exterior blanks (draft PR #23, targeted CI 41745573154; full audit pending); the single-tape compiler and P_WCCD d subset P_TM remain OPEN"
+    - "PVNP.Discrete.WCCD.boxCells_card, boxCells_mono, totalCells_le, totalCells_polynomial_bound, neighborhood_card, totalNeighborReads_polynomial_bound, workPoly_eval, totalCells_le_workPoly, neighborWorkPoly_eval, totalNeighborReads_le_workPoly: explicit Polynomial Nat witnesses bound finite-array cell updates by 2^(d+2)*(n+T+1)^(d+2) for every fixed d, with a similar Moore-neighborhood read count. Draft PR #23, targeted kernel CI 41750685872 and full Lean CI 41750685881 passed on the unchanged code at commit 297426f5; the axiom audit accepted 159 declarations with only standard axioms. This is NOT a single-tape TM-time bound and D-1 remains OPEN."
   proved_analysis_and_pde:
     - "PVNP.Packing.complex_receiver_packing, subspace_receiver_packing; PVNP.FourierTorus.torus_receiver_packing, torus2_bandlimited_packing (genuine L2-torus Fourier receiver)"
     - "PVNP.SpectralGap.wirtinger, wirtinger_sharp, no_uniform_poincare"
@@ -31,7 +33,8 @@ current_status:
     - "PVNP.DecoderUniformity.signCode_mass, signDecode_noise, arbitrary_predicate_has_robust_decoder, number_of_labels (fixed, language-independent n-coordinate sign code of mass n; arbitrary decoder is uncharged and may be noncomputable)"
     - "PVNP.WCTLattice (method-of-lines WCT system on Z/NZ, any N, h, kappa, beta, gamma): ip_Aop (self-adjointness), mass_conserved, ham_conserved, exists_local_solution, local_conservation, bandpass_le_ham (uniform in N), hasDerivAt_flux (J' = 2 Im<[A,w]z, Az>), flux_bound, lattice_flux_inequality (|J'| <= Gamma sqrt(D), Gamma explicit from initial data; DERIVED, not assumed), lattice_curvature_time_bound"
     - "PVNP.PhysicalAudit.device_physics, unrestricted_encoder_trivializes, unrestricted_decoder_trivializes, P_TM_subset_PhysConst, PhysConst_polyEnc_eq_P_TM, physical_SAT_lower_bound_is_classical, two_states_suffice"
-    - "PVNP.WCTLattice.coordinate_norm_sq_le_mass, coordinate_norm_le_sqrt_mass, solution_uniform_coordinate_bound, exists_local_solution_bounded: explicit mass-controlled coordinate bounds on existing local lattice solutions; PR #21 targeted Lean CI 41540246765; M3-G global continuation remains OPEN"
+    - "PVNP.WCTLattice.coordinate_norm_sq_le_mass, coordinate_norm_le_sqrt_mass, solution_uniform_coordinate_bound, exists_local_solution_bounded: explicit mass-controlled coordinate bounds on existing local lattice solutions; PR #21 targeted Lean CI 41540246765; M3-G is now fully PROVED by global_wellposed"
+    - "PVNP.WCTLattice.exists_global_solution, global_solution_unique, global_wellposed, exists_global_conserved_bounded, local_global_agree: globally unique classical finite-lattice flow for every N>0 and arbitrary real coefficients, with mass and Hamiltonian conservation; PR #22 merged as 4acb9d8, full Lean CI passed"
     - "PVNP.WCTLattice.mesh_flux_prefactor, mesh_flux_prefactor_unit: the existing lattice flux-bound prefactor scales as 4/h when a=h^(-2), omega=h, and as 4n when h=1/n; PR #21 targeted Lean CI 41540246765; M3-C convergence and sharper mesh-uniform estimates remain OPEN"
     - "EXTERNAL, verified 2026-11-02 (not in the PVNP library): rickyjreyes/math@30a5ddc ReyesMath.Sobolev.global_wellposed, continuous_dependence, conservation, norm_toSp_sq_le (H2(R^2), gamma > 0), axioms propext/Classical.choice/Quot.sound; definition match proved in lean/bridge/MathBridge.lean (opK_comp, fnl_eq_pvnp, hamDensity_comp, lap_comp_mathlib). Whole plane only; tori NOT covered."
   refuted_as_stated:
@@ -49,7 +52,7 @@ current_status:
     - "Discrete.telescoping_bound, conditional_interface_bound, conditional_additive_storage"
   open:
     - "P_WCCD d subset P_TM for d >= 1 (classical multidimensional CA simulation; not formalized); universal TM"
-    - "M3-T: well-posedness of the frozen PDE on tori with constants uniform in the side length; global existence for the lattice ODE; lattice-to-continuum convergence with certified error bounds"
+    - "M3-T: well-posedness of the frozen PDE on tori with constants uniform in the side length; M3-C: lattice-to-continuum convergence with certified error bounds (M3-G finite-lattice global existence is PROVED)"
     - "M1: PhysConst subset P_TM for general rail-bounded devices (certified PDE simulation); M2: universal physical lower bound (at least as hard as P != NP by physical_SAT_lower_bound_is_classical)"
     - "continuum flux inequality in Lean (periodic integration by parts, differentiation under the integral)"
     - "Cook-Levin NP-completeness of SAT_dense (not needed by any current claim; see pvnp/proofs/remaining-obstructions.md CL-1)"
