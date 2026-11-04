@@ -75,6 +75,16 @@ theorem box_card (d : ℕ) (x : List Bool) (t : ℕ) :
       (x.length + 2 * t + 1) * (2 * t + 1) ^ d := by
   simp [Box, Fintype.card_prod, Fintype.card_fun]
 
+/-- Constructive decidability of membership in the finite causal rectangle.
+The only quantified coordinates range over the finite type `Fin d`. -/
+instance decidableInCone {d : ℕ} (x : List Bool) (t : ℕ) (p : Site d) :
+    Decidable (InCone x t p) := by
+  unfold InCone
+  letI : Decidable (∀ i : Fin d,
+      -(t : ℤ) ≤ p.2 i ∧ p.2 i ≤ (t : ℤ)) :=
+    Fintype.decidableForallFintype
+  infer_instance
+
 /-- A finite array of states indexed by all sites in the rectangle. -/
 abbrev Snapshot {d : ℕ} (A : WCCD d) (x : List Bool) (t : ℕ) :=
   Box d x t → A.S
@@ -162,6 +172,7 @@ theorem hasWitness_correct {d : ℕ} (A : WCCD d) (x : List Bool) (t : ℕ)
     (s : A.Snapshot x t) (P : A.S → Bool) :
     A.hasWitness x t s P =
       decide (∃ p : Site d, P (A.read x t s p) = true) := by
+  classical
   exact decide_eq_decide.2 (A.hasWitness_iff x t s P)
 
 /-- Finite output preserving acceptance precedence. -/
@@ -175,7 +186,7 @@ theorem finiteOutput_snapshot {d : ℕ} (A : WCCD d) (x : List Bool) (t : ℕ) :
     A.finiteOutput x t (A.snapshot x t) = A.out x t := by
   unfold finiteOutput WCCD.out WCCD.outCfg
   rw [A.hasWitness_correct, A.hasWitness_correct]
-  simp only [A.read_snapshot]
+  simpa only [A.read_snapshot]
 
 /-- Actual finite replay, using only the finite initial array and
 the finite update routine (no reference to the infinite run). -/
@@ -191,7 +202,8 @@ theorem replay_correct {d : ℕ} (A : WCCD d) (x : List Bool) (t : ℕ) :
   induction t with
   | zero => rfl
   | succ t ih =>
-    simp only [replay, ih, A.advance_snapshot]
+      change A.advance x t (A.replay x t) = A.snapshot x (t + 1)
+      rw [ih, A.advance_snapshot]
 
 /-- Exact equality of the full finite output stream with WCCD's output
 stream.  In particular the shared first-answer semantics is preserved. -/
