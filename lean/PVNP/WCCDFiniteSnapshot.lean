@@ -215,4 +215,16 @@ theorem replay_output {d : ℕ} (A : WCCD d) (x : List Bool) (t : ℕ) :
     A.finiteOutput x t (A.replay x t) = A.out x t := by
   rw [A.replay_correct, A.finiteOutput_snapshot]
 
+
+/-- Exact first-answer timing and values are preserved by the computable
+finite snapshot interpreter, including when the exterior blank responds. -/
+theorem firstAnswer_replay {d : ℕ} (A : WCCD d) (x : List Bool)
+    (T : ℕ) (b : Bool) :
+    FirstAnswer (fun t => A.finiteOutput x t (A.replay x t)) T b ↔
+      FirstAnswer (A.out x) T b := by
+  have heq : (fun t => A.finiteOutput x t (A.replay x t)) = A.out x := by
+    funext t
+    exact A.replay_output x t
+  rw [heq]
+
 end PVNP.Discrete.WCCD
