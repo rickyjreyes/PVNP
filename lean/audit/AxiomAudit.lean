@@ -127,6 +127,17 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Discrete.WCCD.replay_correct
 #print axioms PVNP.Discrete.WCCD.replay_output
 #print axioms PVNP.Discrete.WCCD.firstAnswer_replay
+-- D-1 polynomial finite-array work accounting (does not imply TM-time bound)
+#print axioms PVNP.Discrete.WCCD.boxCells_card
+#print axioms PVNP.Discrete.WCCD.boxCells_mono
+#print axioms PVNP.Discrete.WCCD.totalCells_le
+#print axioms PVNP.Discrete.WCCD.totalCells_polynomial_bound
+#print axioms PVNP.Discrete.WCCD.neighborhood_card
+#print axioms PVNP.Discrete.WCCD.totalNeighborReads_polynomial_bound
+#print axioms PVNP.Discrete.WCCD.workPoly_eval
+#print axioms PVNP.Discrete.WCCD.totalCells_le_workPoly
+#print axioms PVNP.Discrete.WCCD.neighborWorkPoly_eval
+#print axioms PVNP.Discrete.WCCD.totalNeighborReads_le_workPoly
 -- Lattice WCT system: conservation, coercivity, derived flux inequality, transport bound
 #print axioms PVNP.WCTLattice.ip_Aop
 #print axioms PVNP.WCTLattice.hasDerivAt_mass
