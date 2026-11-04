@@ -12,6 +12,7 @@ simulating `T` rounds of a `(1+d)`-dimensional radius-one CA in time `poly(n, T)
   axis embedding `WCC.toD_run`).
 - *Proved:* `P_WCCR r = P_TM` for every fixed radius in dimension one (`P_WCCR_eq_P_TM`).
 - *Additional finite groundwork (draft PR #23):* a computable signed-coordinate box of exact size `(n + 2T + 1)(2T + 1)^d`, finite synchronous replay, exact infinite-to-finite readback, and blank-aware existential first-answer output (`WCCDFiniteSnapshot.lean`, targeted Lean CI #41745573154). This is NOT an ordinary-TM simulation; the finite-program-to-single-tape transition compiler and its polynomial step bound remain missing.
+- *Finite-array work accounting (draft PR #23):* `WCCDFiniteWork.lean` proves a maximum of `2^(d+2)*(n+T+1)^(d+2)` cell writes over T replay rounds for fixed d, along with `3^(d+1)` Moore neighbors per cell, a polynomial count of abstract neighbor reads, and explicit `Polynomial ℕ` witnesses (targeted kernel CI #41750685872). These bounds do **not** charge tape-head travel, multi-cell lookup, tape initialization, or serialization. A genuine `TM` construction and transition-count proof remain missing.
 - *Obstruction:* the statement is classical and true, but the 1-D sweep invariants do not lift. A
   2-D configuration needs a row-major layout with markers and transport over distance `Θ(width)`.
   The radius-`r` alphabet trick fails because the column alphabet grows with `n`.
