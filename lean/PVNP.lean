@@ -62,6 +62,7 @@ import PVNP.WCCRadius
 import PVNP.WCCGenerality
 import PVNP.WCCDFiniteSupport
 import PVNP.WCCDFiniteSnapshot
+import PVNP.WCCDFiniteWork
 import PVNP.WCTLattice
 import PVNP.WCTLatticeGlobalBounds
 import PVNP.WCTMeshScaling
