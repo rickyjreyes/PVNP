@@ -7,6 +7,7 @@ verify: "cd lean && lake exe cache get && lake build PVNP && lake env lean audit
 kernel_verified_status: "a statement counts as verified only for a commit whose GitHub Actions Lean workflow passed"
 
 current_status:
+  part_i_crossing_capacity: "CrossingCapacity supplies bounded optional-state cut-record counting for split 3-CNF SAT under an explicit rectangular-splicing hypothesis, plus local transition/head-speed lemmas for the actual single-tape TM. The machine-level splicing theorem, any superpolynomial lower bound, and P != NP remain open."
   torus_flux_checkpoint: "ContinuumFlux.flux_static and flux_split give the spatial commutator identities on a smooth periodic square with a real detector. The detector time derivative and M3-T global H2 flow are separate obligations."
   scope_note: "Lean theorems hold relative to their formal definitions. Discrete results concern 1-D finite quiescent WCC models (radius one, and every fixed radius r >= 1), (1+d)-dimensional radius-one Moore WCCD models (class equality with P_TM for every d), and ordinary single-tape TMs; they do not establish anything about physical curvature-preserving realizations."
   proved_discrete_complexity:
