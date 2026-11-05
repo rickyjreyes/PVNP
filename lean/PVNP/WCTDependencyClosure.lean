@@ -42,9 +42,9 @@ theorem physical_hardness_plus_TM_realization (S : PhysSemantics)
 
 The area function represents the charged interface measure for a decider
 and input, expressed in integral physical resource units. The chosen
-resource rail r must pay at least κ * area. At every input length n and
-for every correct decider, there is an input of length n whose interface
-is at least B(n). The growth condition must dominate all polynomial
+resource rail r must pay at least κ * area. For every correct decider,
+there are arbitrarily large hard-input lengths whose interface exceeds
+B(input length). The growth condition must dominate all polynomial
 resource bounds *eventually*.
 
 These are mathematical premises: this theorem does not derive the
@@ -56,23 +56,20 @@ theorem interface_growth_implies_hardness
     (hprice : ∀ D x, S.decides D SATV.SAT_dense →
       κ * area D x ≤ S.cost D r x)
     (hinterfaces : ∀ D, S.decides D SATV.SAT_dense →
-      ∀ n : ℕ, ∃ x : List Bool, x.length = n ∧ B n ≤ area D x)
+      ∀ N : ℕ, ∃ x : List Bool, N ≤ x.length ∧ B x.length ≤ area D x)
     (hdom : ∀ p : Polynomial ℕ, ∃ threshold : ℕ,
       ∀ n, threshold ≤ n → p.eval n < κ * B n) :
     S.Hard SATV.SAT_dense := by
   intro D hD p N
   obtain ⟨threshold, hlarge⟩ := hdom (p r)
   obtain ⟨x, hx, harea⟩ := hinterfaces D hD (max N threshold)
-  refine ⟨x, ?_, r, ?_⟩
-  · rw [hx]
-    exact le_max_left _ _
-  · have hp : κ * area D x ≤ S.cost D r x := hprice D x hD
-    have hq : (p r).eval (max N threshold) < κ * B (max N threshold) :=
-      hlarge _ (le_max_right _ _)
-    have hg : κ * B (max N threshold) ≤ κ * area D x :=
-      Nat.mul_le_mul_left κ harea
-    rw [hx]
-    exact lt_of_lt_of_le hq (le_trans hg hp)
+  refine ⟨x, le_trans (le_max_left _ _) hx, r, ?_⟩
+  have hp : κ * area D x ≤ S.cost D r x := hprice D x hD
+  have hq : (p r).eval x.length < κ * B x.length :=
+    hlarge _ (le_trans (le_max_right _ _) hx)
+  have hg : κ * B x.length ≤ κ * area D x :=
+    Nat.mul_le_mul_left κ harea
+  exact lt_of_lt_of_le hq (le_trans hg hp)
 
 /-- Conditional composition of the actual interface growth and
 physical-realization obligations. -/
@@ -83,7 +80,7 @@ theorem full_interface_route
     (hprice : ∀ D x, S.decides D SATV.SAT_dense →
       κ * area D x ≤ S.cost D r x)
     (hinterfaces : ∀ D, S.decides D SATV.SAT_dense →
-      ∀ n : ℕ, ∃ x : List Bool, x.length = n ∧ B n ≤ area D x)
+      ∀ N : ℕ, ∃ x : List Bool, N ≤ x.length ∧ B x.length ≤ area D x)
     (hdom : ∀ p : Polynomial ℕ, ∃ threshold : ℕ,
       ∀ n, threshold ≤ n → p.eval n < κ * B n) :
     P_TM ≠ NP_TM := by
