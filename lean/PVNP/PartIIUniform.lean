@@ -32,10 +32,11 @@ A uniform discrete WCC machine `W = ({Λ_n}, S, r, U, enc, dec)` has:
   paragraph that the encoder may compute the decision bit (`rem:verified-scope`).  The
   answer-writing machine `MTM.answerWriter` is explicit: it simulates the decider, tracks on which
   side of cell `0` the head is, walks back, and writes the answer.
-* The converse inclusion `P^{disc}_{WCC} ⊆ P_TM` is **not** trivial and is not proved here.  It
-  needs a Turing-machine simulation of the local rule on canonical codes, composed with the
-  encoder and decoder.  So the manuscript's sentence that the uniform equality "also holds for
-  this trivial reason" is right only for the inclusion `P_Turing ⊆ P^{disc}_{WCC}`.
+* The converse inclusion `P^{disc}_{WCC} ⊆ P_TM` is **not** trivial.  It needs a Turing-machine
+  simulation of the local rule on canonical codes, composed with the encoder and decoder; this is
+  `PVNP.PartIIUniform.P_disc_subset_P_TM` in `PVNP.PartIIUniformEquiv` (the simulator is the
+  sweep program of `PVNP.UniformSim`).  So the manuscript's sentence that the uniform equality
+  "also holds for this trivial reason" is right only for the inclusion `P_Turing ⊆ P^{disc}_{WCC}`.
 -/
 
 /-! ## Poly-time computable functions -/

@@ -42,8 +42,8 @@ jobs:
         run: lake build PVNP.PartIPsiSat PVNP.PartISeparation PVNP.PartILocality PVNP.PartIDimLock
       - name: Check manuscript Part II/III modules explicitly
         run: lake build PVNP.PartIIManuscript PVNP.ManuscriptRemarks PVNP.PartIITuringModel PVNP.PartIITwoPhase PVNP.PartIIUniform
-      - name: Check Milestone 5 partial simulator infrastructure explicitly
-        run: lake build PVNP.UniformSimLib PVNP.UniformSimProg
+      - name: Check Milestone 5 uniform simulator and class equalities explicitly
+        run: lake build PVNP.UniformSimLib PVNP.UniformSimProg PVNP.UniformSimSem PVNP.UniformSimMath PVNP.UniformSimPre PVNP.UniformSimGrow PVNP.UniformSimLoad PVNP.UniformSimInit PVNP.UniformSimPack PVNP.UniformSimRot PVNP.UniformSimApply PVNP.UniformSimRound PVNP.UniformSimMain PVNP.PartIIUniformEquiv
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt
