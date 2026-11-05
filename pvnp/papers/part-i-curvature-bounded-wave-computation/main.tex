@@ -164,6 +164,33 @@ model. The all-algorithm physical curvature lower bound and any physical or
 classical $P$ versus $NP$ separation remain unproved.
 
 
+\paragraph{Manuscript-faithful Lean status (5 November 2026, repository addendum).}
+This addendum postdates the original release and preserves the manuscript
+statements above for provenance. The all-dimensional fixed-radius-one
+symbolic WCC equivalences are now kernel-checked for every fixed $d$:
+\texttt{PVNP.Discrete.P\_WCCD\_eq\_P\_TM} and
+\texttt{PVNP.Discrete.NP\_WCCD\_eq\_NP\_TM}. The distinct uniform
+finite-lattice model with polynomial-time encoders, lattice-generation
+and decoders has the verified inclusion
+$P_{\mathrm{TM}}\subseteq P_{\mathrm{WCC}}^{\mathrm{disc}}$
+(\texttt{PVNP.PartIIUniform.P\_TM\_subset\_P\_disc});
+its reverse inclusion is not yet proved. The author's real-phase
+$\psi$-SAT zero-penalty theorem and its verifier are formalized
+(\texttt{PVNP.PartIPsiSat}); all principal separation implications
+are formalized with their assumptions
+(\texttt{PVNP.PartISeparation}). The discrete-depth conjecture
+\texttt{conj:wcc\_depth} is kernel-checked as a statement
+\emph{equivalent} to exclusion from classical polynomial time
+(\texttt{PVNP.PartISeparation.WCCDepth\_iff\_not\_P\_TM}),
+not established as a new lower bound. The universal interface-price
+and expander-growth hypotheses remain open. Lean counterexamples also
+show that certain state-level nonconstructibility claims do not imply
+language-level separation. Consequently, these formalizations do not
+prove a physical or classical $P$ versus $NP$ separation. See the
+dated claim-by-claim inventory in
+\texttt{pvnp/proofs/manuscript-lean-inventory.md}.
+
+
 
 \section{Introduction}
 The $\mathbf{P}$ vs.\ $\mathbf{NP}$ problem asks whether every computational problem
