@@ -34,7 +34,8 @@ jobs:
               PVNP/WCTLatticeGlobal.lean \
               PVNP/WCCDFiniteSnapshot.lean \
               PVNP/WCCDFiniteWork.lean \
-              PVNP/TMStackScan.lean; then
+              PVNP/TMStackScan.lean \
+              PVNP/ContinuumFluxBudget.lean; then
             exit 1
           fi
       - name: Kernel check targeted Phase III-IV proof modules
@@ -46,4 +47,5 @@ jobs:
             PVNP.WCTLatticeGlobal \
             PVNP.WCCDFiniteSnapshot \
             PVNP.WCCDFiniteWork \
-            PVNP.TMStackScan
+            PVNP.TMStackScan \
+            PVNP.ContinuumFluxBudget
