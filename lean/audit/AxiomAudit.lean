@@ -338,3 +338,10 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.PartIIUniform.NP_disc_subset_NP_TM
 #print axioms PVNP.PartIIUniform.NP_TM_subset_NP_disc
 #print axioms PVNP.PartIIUniform.NP_disc_eq_NP_TM
+
+-- Spatial F-1 identities on the periodic square.
+#print axioms PVNP.ContinuumFlux.I2_lap_symm
+#print axioms PVNP.ContinuumFlux.flux_static
+#print axioms PVNP.ContinuumFlux.flux_split
+#print axioms PVNP.ContinuumFlux.I2_bound
+#print axioms PVNP.ContinuumFlux.norm_Gd_le
