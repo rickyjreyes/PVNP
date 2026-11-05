@@ -82,6 +82,7 @@ import PVNP.PartIIManuscript
 import PVNP.ManuscriptRemarks
 import PVNP.PartIITuringModel
 import PVNP.PartIITwoPhase
+import PVNP.PartIIUniform
 import PVNP.WCTLattice
 import PVNP.WCTLatticeGlobalBounds
 import PVNP.WCTMeshScaling

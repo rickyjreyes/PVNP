@@ -238,6 +238,12 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.PartIITwoPhase.tm_to_wcc_decides
 #print axioms PVNP.PartIITwoPhase.one_step_literal_fails
 #print axioms PVNP.PartIITwoPhase.invariant_literal_fails
+#print axioms PVNP.PartIITuring.MTM.aw_sim
+#print axioms PVNP.PartIITuring.MTM.answerWriter_outputs
+#print axioms PVNP.PartIIUniform.latMTM_outputs
+#print axioms PVNP.PartIIUniform.decMTM_outputs
+#print axioms PVNP.PartIIUniform.P_Turing_subset_P_disc
+#print axioms PVNP.PartIIUniform.P_TM_subset_P_disc
 -- D-1 polynomial finite-array work accounting (does not imply TM-time bound)
 #print axioms PVNP.Discrete.WCCD.boxCells_card
 #print axioms PVNP.Discrete.WCCD.boxCells_mono
