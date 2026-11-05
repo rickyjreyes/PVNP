@@ -33,7 +33,8 @@ jobs:
               PVNP/WCTMeshScaling.lean \
               PVNP/WCTLatticeGlobal.lean \
               PVNP/WCCDFiniteSnapshot.lean \
-              PVNP/WCCDFiniteWork.lean; then
+              PVNP/WCCDFiniteWork.lean \
+              PVNP/TMStackScan.lean; then
             exit 1
           fi
       - name: Kernel check targeted Phase III-IV proof modules
@@ -44,4 +45,5 @@ jobs:
             PVNP.WCTMeshScaling \
             PVNP.WCTLatticeGlobal \
             PVNP.WCCDFiniteSnapshot \
-            PVNP.WCCDFiniteWork
+            PVNP.WCCDFiniteWork \
+            PVNP.TMStackScan
