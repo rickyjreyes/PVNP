@@ -211,3 +211,4 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.ContinuumFlux.grad_le_sqrt
 #print axioms PVNP.ContinuumFlux.static_to_sqrt
 #print axioms PVNP.ContinuumFlux.transport_from_static
+#print axioms PVNP.ContinuumFlux.curvature_lower_from_static
