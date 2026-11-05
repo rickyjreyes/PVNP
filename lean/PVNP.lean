@@ -54,6 +54,7 @@ import PVNP.TMStackScan
 import PVNP.SATVerifier
 import PVNP.PartIIIHighFreq3D
 import PVNP.TransportCalculus
+import PVNP.ContinuumFlux
 import PVNP.ContinuumFluxBudget
 import PVNP.AnalogSplitSATCapacity
 import PVNP.R03_CurvatureComplexity
