@@ -112,4 +112,32 @@ theorem transport_from_static (J J' G D : ℝ → ℝ)
     ha hb hP (hpos t ht) (hG t ht) (hcap t ht)
     (hinterp t ht) (hstatic t ht)
 
+/-- The corresponding curvature-time lower bound.  The static flux estimate
+is still an explicit analytic hypothesis; no PDE theorem is being asserted
+through it. -/
+theorem curvature_lower_from_static (J J' G D : ℝ → ℝ)
+    (a b κ P Dmax T δ : ℝ) (hT : 0 < T)
+    (ha : 0 ≤ a) (hb : 0 ≤ b) (hP : 0 ≤ P)
+    (hbudget : 0 < budget a b κ P Dmax)
+    (hJ : ∀ t ∈ uIcc 0 T, HasDerivAt J (J' t) t)
+    (hJ' : ContinuousOn J' (Icc 0 T))
+    (hD : ContinuousOn D (Icc 0 T))
+    (hpos : ∀ t ∈ Icc 0 T, 0 ≤ D t)
+    (hG : ∀ t ∈ Icc 0 T, 0 ≤ G t)
+    (hcap : ∀ t ∈ Icc 0 T, D t ≤ Dmax)
+    (hinterp : ∀ t ∈ Icc 0 T, (G t) ^ 2 ≤ P * D t)
+    (hstatic : ∀ t ∈ Icc 0 T,
+      |J' t| ≤ (4 * a * G t + 2 * b * P) * D t + 4 * |κ| * a * P * G t)
+    (hδ : 0 ≤ δ) (hchange : δ ≤ |J T - J 0|) :
+    δ ^ 4 / (budget a b κ P Dmax ^ 4 * T ^ 3) ≤
+      ∫ t in (0 : ℝ)..T, D t ^ 2 := by
+  apply PVNP.TransportCalculus.curvature_time_lower_bound
+    J J' D hT hbudget hJ hJ' hD hpos
+  · intro t ht
+    exact static_to_sqrt a b κ P (G t) (D t) Dmax (J' t)
+      ha hb hP (hpos t ht) (hG t ht) (hcap t ht)
+      (hinterp t ht) (hstatic t ht)
+  · exact hδ
+  · exact hchange
+
 end PVNP.ContinuumFlux
