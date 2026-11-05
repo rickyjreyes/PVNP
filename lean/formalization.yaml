@@ -7,6 +7,7 @@ verify: "cd lean && lake exe cache get && lake build PVNP && lake env lean audit
 kernel_verified_status: "a statement counts as verified only for a commit whose GitHub Actions Lean workflow passed"
 
 current_status:
+  phase_vii_diagonal_target: "Accepted-diagonal mixed-splicing consequence suffices to make actual TM crossing records injective for split SAT. The mixed-input splicing consequence is still an explicit premise."
   phase_vii_crossing_trace: "Machine-derived crossing event extraction, explicit time bound, and unilateral tape-splicing for actual ordinary TM runs; complete crossing-sequence rectangularity and superpolynomial SAT lower bounds remain open."
   part_i_crossing_capacity: "CrossingCapacity supplies bounded optional-state cut-record counting for split 3-CNF SAT under an explicit rectangular-splicing hypothesis, plus local transition/head-speed lemmas for the actual single-tape TM. The machine-level splicing theorem, any superpolynomial lower bound, and P != NP remain open."
   torus_flux_checkpoint: "ContinuumFlux.flux_static and flux_split give the spatial commutator identities on a smooth periodic square with a real detector. The detector time derivative and M3-T global H2 flow are separate obligations."
