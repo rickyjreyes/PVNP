@@ -127,6 +127,8 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Discrete.WCCD.replay_correct
 #print axioms PVNP.Discrete.WCCD.replay_output
 #print axioms PVNP.Discrete.WCCD.firstAnswer_replay
+-- D-1 concrete ordinary single-tape scan subroutine
+#print axioms PVNP.Discrete.TMStackScan.scan_return
 -- D-1 polynomial finite-array work accounting (does not imply TM-time bound)
 #print axioms PVNP.Discrete.WCCD.boxCells_card
 #print axioms PVNP.Discrete.WCCD.boxCells_mono

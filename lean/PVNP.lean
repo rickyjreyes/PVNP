@@ -50,6 +50,7 @@ import PVNP.PSubsetNP
 import PVNP.CircleSpectralGap
 import PVNP.WCTPlaneWave
 import PVNP.TMScan
+import PVNP.TMStackScan
 import PVNP.SATVerifier
 import PVNP.PartIIIHighFreq3D
 import PVNP.TransportCalculus
