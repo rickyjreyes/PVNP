@@ -369,3 +369,5 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.CrossingSplice.answer_splice_left
 #print axioms PVNP.CrossingDiagonal.diagonal_trace_injective
 #print axioms PVNP.CrossingDiagonal.diagonal_trace_capacity
+#print axioms PVNP.CrossingSplice.run_splice_right
+#print axioms PVNP.CrossingSplice.answer_splice_right
