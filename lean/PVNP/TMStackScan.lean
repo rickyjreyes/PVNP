@@ -69,7 +69,9 @@ theorem scan_return (T : ℤ → TapeSym α) (n : ℕ)
     simpa [Dir.shift] using M.scan1 .right .R T 0 (n + 1) hright
   have hturn : M.δ .right (T ((n + 1 : ℕ) : ℤ)) =
       some (.left, T ((n + 1 : ℕ) : ℤ), .L) := by
-    simp [M, machine, delta, hend]
+    have hend' : T ((n : ℤ) + 1) = .blank := by
+      simpa only [Nat.cast_add, Nat.cast_one] using hend
+    simp [M, machine, delta, hend']
   have hB : M.run ⟨.right, T, ((n + 1 : ℕ) : ℤ)⟩ 1 =
       ⟨.left, T, (n : ℤ)⟩ := by
     simpa [Dir.shift, Nat.cast_add] using
