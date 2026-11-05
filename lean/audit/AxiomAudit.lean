@@ -345,3 +345,10 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.ContinuumFlux.flux_split
 #print axioms PVNP.ContinuumFlux.I2_bound
 #print axioms PVNP.ContinuumFlux.norm_Gd_le
+
+-- Part I: bounded crossing-record capacity and finite-control TM locality.
+#print axioms PVNP.CrossingCapacity.bounded_crossing_record_capacity
+#print axioms PVNP.CrossingCapacity.no_short_crossing_record
+#print axioms PVNP.CrossingCapacity.same_scanned_symbol_same_instruction
+#print axioms PVNP.CrossingCapacity.one_tape_head_speed
+#print axioms PVNP.CrossingCapacity.right_crossing_is_adjacent
