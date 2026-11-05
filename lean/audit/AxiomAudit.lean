@@ -352,3 +352,22 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.CrossingCapacity.same_scanned_symbol_same_instruction
 #print axioms PVNP.CrossingCapacity.one_tape_head_speed
 #print axioms PVNP.CrossingCapacity.right_crossing_is_adjacent
+
+-- Phase VII: crossing events extracted from actual TM steps and local tape splicing.
+#print axioms PVNP.CrossingTrace.event_right
+#print axioms PVNP.CrossingTrace.event_left
+#print axioms PVNP.CrossingTrace.left_crossing_adjacent
+#print axioms PVNP.CrossingTrace.right_crossing_adjacent
+#print axioms PVNP.CrossingTrace.trace_length_le
+#print axioms PVNP.CrossingTrace.inputTrace_length_le
+#print axioms PVNP.CrossingTrace.actual_trace_split_sat_capacity
+#print axioms PVNP.CrossingSplice.update_mix_left
+#print axioms PVNP.CrossingSplice.update_mix_right
+#print axioms PVNP.CrossingSplice.next_splice_left
+#print axioms PVNP.CrossingSplice.next_splice_right
+#print axioms PVNP.CrossingSplice.run_splice_left
+#print axioms PVNP.CrossingSplice.answer_splice_left
+#print axioms PVNP.CrossingDiagonal.diagonal_trace_injective
+#print axioms PVNP.CrossingDiagonal.diagonal_trace_capacity
+#print axioms PVNP.CrossingSplice.run_splice_right
+#print axioms PVNP.CrossingSplice.answer_splice_right

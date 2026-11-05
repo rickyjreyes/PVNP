@@ -15,6 +15,9 @@ import PVNP.FixedMassNodal
 import PVNP.ExpandingDomain
 import PVNP.SplitSATCapacity
 import PVNP.CrossingCapacity
+import PVNP.CrossingTrace
+import PVNP.CrossingSplice
+import PVNP.CrossingDiagonal
 import PVNP.TMCellCompiler
 import PVNP.ReplayCost
 import PVNP.LocalityLowerBound
