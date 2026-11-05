@@ -15,6 +15,12 @@ namespace PVNP.UniformSim
 
 open PVNP.Discrete PVNP.Discrete.Sweep PVNP.PartIITuring PVNP.PartIIUniform
 
+/-- A round trip costs at most `2ℓ + 3` transitions. -/
+theorem tripCost_le (P : Prog) (i : P.I) (l : List P.D) : P.tripCost i l ≤ 2 * l.length + 3 := by
+  unfold Prog.tripCost
+  have : (P.ext i (P.fpass i l).2).toList.length ≤ 1 := by cases P.ext _ _ <;> simp
+  omega
+
 namespace Spec
 
 variable (σ : Spec)
@@ -143,6 +149,19 @@ theorem toTM_firstAnswer_of_dec (hC : σ.Correct) (x : List Bool)
   obtain ⟨C, hH, hC'⟩ := σ.sim_halts hC x hg t hnone b hb
   obtain ⟨s, hs, h1, h2⟩ := Prog.toTM_firstAnswer σ.prog x hH
   exact ⟨s, le_trans hs hC', h1, h2⟩
+
+/-- With the format guard on, a malformed input is rejected by the first round trip. -/
+theorem sim_invalid (x : List Bool) (hg : σ.guard = true) (hbad : PS.run .tag x ≠ .ok) :
+    ∃ C, σ.prog.Halts (σ.prog.start, x.map σ.prog.lift) false C ∧ C ≤ 2 * x.length + 3 := by
+  have hn : σ.next .init (σ.prog.trip .init (x.map σ.lift)).2 = .inr false := by
+    simp only [next]
+    rw [(σ.init_trip x).2, hg]
+    simp [hbad]
+  have hs := σ.stepP_inr_of hn
+  refine ⟨_, .last hs, ?_⟩
+  have h := tripCost_le σ.prog (σ.prog.start, x.map σ.prog.lift).1
+    (σ.prog.start, x.map σ.prog.lift).2
+  simpa using h
 
 end Spec
 
