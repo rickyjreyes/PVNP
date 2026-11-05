@@ -59,10 +59,12 @@ without changing computation.
 
 **H3. Algorithm-independent interface growth.**
 
-For **every** correct SAT decider `D` and every (sufficiently large) length
-`n`, at least one input `x` of that length must satisfy
+For **every** correct SAT decider `D` and **every threshold** `N`, at least
+one input `x` of length `n ≥ N` must satisfy
 
   `B(n) ≤ area(D,x)`.
+
+This requires arbitrarily large hard lengths, not necessarily every length.
 
 This includes algebraic shortcuts, globally organized updates, phase-based
 channels, and encodings not forced to traverse an enumerated witness list.
