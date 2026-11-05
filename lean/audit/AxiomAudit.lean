@@ -194,6 +194,27 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.PartILocality.clause_flip_rounds
 #print axioms PVNP.PartILocality.clause_flip_ceil
 #print axioms PVNP.PartILocality.parallel_flips
+#print axioms PVNP.PartIDimLock.fderiv_fderiv_ψ
+#print axioms PVNP.PartIDimLock.laplacian_ψ
+#print axioms PVNP.PartIDimLock.integrable_ψ
+#print axioms PVNP.PartIDimLock.win04_gaussian
+#print axioms PVNP.PartIIManuscript.wave_symbol_forward
+#print axioms PVNP.PartIIManuscript.wave_symbol_converse
+#print axioms PVNP.PartIIManuscript.compatibility_necessary
+#print axioms PVNP.PartIIManuscript.bandlimit_eff
+#print axioms PVNP.PartIIManuscript.bandlimit_sharp
+#print axioms PVNP.PartIIManuscript.spatial_capacity
+#print axioms PVNP.PartIIManuscript.spatial_capacity_energy
+#print axioms PVNP.PartIIManuscript.lane_update_bound
+#print axioms PVNP.PartIIManuscript.spacetime_capacity
+#print axioms PVNP.PartIIManuscript.phys_step_ceiling
+#print axioms PVNP.PartIIManuscript.rounds_le_events
+#print axioms PVNP.ManuscriptRemarks.valid_telescoping
+#print axioms PVNP.ManuscriptRemarks.padding_stability
+#print axioms PVNP.ManuscriptRemarks.superlinear_padding
+#print axioms PVNP.ManuscriptRemarks.win13_counterexample
+#print axioms PVNP.ManuscriptRemarks.p_in_np_phys
+#print axioms PVNP.ManuscriptRemarks.win16
 -- D-1 polynomial finite-array work accounting (does not imply TM-time bound)
 #print axioms PVNP.Discrete.WCCD.boxCells_card
 #print axioms PVNP.Discrete.WCCD.boxCells_mono

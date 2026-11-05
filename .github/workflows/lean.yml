@@ -39,7 +39,9 @@ jobs:
       - name: Check D-1 single-tape TM compiler modules explicitly
         run: lake build PVNP.TMStackScan PVNP.SweepTM PVNP.WCCDCyclic PVNP.WCCDSweep PVNP.WCCDSweepSteps PVNP.WCCDSweepLoops PVNP.WCCDSweepRound PVNP.WCCDSweepBuild PVNP.WCCDSweepMain
       - name: Check manuscript Part I modules explicitly
-        run: lake build PVNP.PartIPsiSat PVNP.PartISeparation PVNP.PartILocality
+        run: lake build PVNP.PartIPsiSat PVNP.PartISeparation PVNP.PartILocality PVNP.PartIDimLock
+      - name: Check manuscript Part II/III modules explicitly
+        run: lake build PVNP.PartIIManuscript PVNP.ManuscriptRemarks
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt

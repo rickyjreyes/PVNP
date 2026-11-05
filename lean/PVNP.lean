@@ -76,6 +76,9 @@ import PVNP.WCCDSweepMain
 import PVNP.PartIPsiSat
 import PVNP.PartISeparation
 import PVNP.PartILocality
+import PVNP.PartIDimLock
+import PVNP.PartIIManuscript
+import PVNP.ManuscriptRemarks
 import PVNP.WCTLattice
 import PVNP.WCTLatticeGlobalBounds
 import PVNP.WCTMeshScaling
