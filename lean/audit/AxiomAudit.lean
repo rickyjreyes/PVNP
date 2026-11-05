@@ -206,3 +206,9 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.WCTLattice.local_global_agree
 #print axioms PVNP.WCTLattice.zero_initial_stationary
 #print axioms PVNP.WCTLattice.zero_coefficients_stationary
+
+-- F-1 static budget reduction; PDE identity remains separate
+#print axioms PVNP.ContinuumFlux.grad_le_sqrt
+#print axioms PVNP.ContinuumFlux.static_to_sqrt
+#print axioms PVNP.ContinuumFlux.transport_from_static
+#print axioms PVNP.ContinuumFlux.curvature_lower_from_static
