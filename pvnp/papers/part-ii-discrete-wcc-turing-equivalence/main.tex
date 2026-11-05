@@ -1901,6 +1901,30 @@ question $P^{\mathrm{disc}}_{\mathrm{WCC}}
 \stackrel{?}{=} NP^{\mathrm{disc}}_{\mathrm{WCC}}$ is exactly the
 classical one; it is not resolved here.
 
+\paragraph{Formalization notes (repository addendum, 5 November 2026).}
+This addendum postdates the release of the paper. The statements
+above are left unchanged; the following corrections are kernel-checked.
+(i) Read literally, Definition~\ref{def:pturing} (``$T_M(n)\le cn^k$
+for all $n$'') forces $T_M(0)=0$, so it defines only $\{\emptyset,\Sigma^*\}$
+(\texttt{PVNP.PartIITuring.P\_Turing\_lit\_eq}). With the bound
+$c\max(n,1)^k$ the class is $P$
+(\texttt{PVNP.PartIITuring.P\_Turing\_eq\_P\_TM}); the verifier class of
+Definition~\ref{def:npturing} is $NP$ as stated
+(\texttt{PVNP.PartIITuring.NP\_Turing\_eq\_NP\_TM}).
+(ii) Lemmas~\ref{lem:invariant} and~\ref{lem:one_step} hold for all
+$t\le L(n)$, hence for all $t\le T_M(n)$, which is the range used in
+Lemma~\ref{lem:runtime}. ``For all $t\ge0$'' fails once the head leaves
+$\Lambda_n$ (\texttt{PVNP.PartIITwoPhase.invariant\_literal\_fails}).
+Lemma~\ref{lem:runtime} holds as stated, with first output at time exactly
+$2T_M(x)$ (\texttt{PVNP.PartIITwoPhase.runtime}).
+(iii) For the uniform model of Definition~\ref{def:wcc_machine}, the
+remark that the encoder may compute the decision bit gives the inclusion
+$P_{\mathrm{Turing}}\subseteq P^{\mathrm{disc}}_{\mathrm{WCC}}$ only
+(\texttt{PVNP.PartIIUniform.P\_TM\_subset\_P\_disc}). The reverse
+inclusion for that model requires the simulation of
+Theorem~\ref{thm:wcc_to_tm}, which is not yet kernel-checked for
+general radius and lattice with polynomial-time encoders and decoders.
+
 
 \section{Conclusion}
 
