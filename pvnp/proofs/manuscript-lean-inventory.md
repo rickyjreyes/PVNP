@@ -21,13 +21,15 @@ Lean paths are relative to `lean/`. "(new)" marks declarations added in this pas
 
 | Paper | Claims | Exact | Restricted | Refuted | Open |
 |---|---|---|---|---|---|
-| Part I | 41 | 21 | 4 | 8 | 8 |
-| Part II | 27 | 6 | 6 | 0 | 15 |
-| Part III | 22 | 17 | 2 | 0 | 3 |
-| **Total** | **90** | **44** | **12** | **8** | **26** |
+| Part I | 41 | 24 | 3 | 8 | 6 |
+| Part II | 27 | 15 | 6 | 0 | 6 |
+| Part III | 22 | 20 | 1 | 0 | 1 |
+| **Total** | **90** | **59** | **10** | **8** | **13** |
 
-* Exact verification coverage = Exact / Total = 44/90 ≈ 49%.
-* Status conclusively determined by a proof or a counterexample (Exact + Refuted) = 52/90 ≈ 58%.
+* Exact verification coverage = Exact / Total = 59/90 ≈ 66%.
+* Status conclusively determined by a proof or a counterexample (Exact + Refuted) = 67/90 ≈ 74%.
+* Milestone history: milestone 1 (PR #27) 44 Exact / 8 Refuted; milestone 2 adds I-8, I-22, I-23,
+  II-4, II-5, II-18 to II-23, II-27, III-5, III-7 and III-8.
 
 **What the "Exact" count does not mean.** It includes conditional propositions whose
 implications are verified while their premises remain open, for example
@@ -45,7 +47,7 @@ classical `P ≠ NP`.
 | I-5 | "Conditional Classical Corollary" §4.4 | TM⇄WCC^∞ ⇒ P^∞=P, NP^∞=NP; separation ⇒ P≠NP | `P_WCC_eq_P_TM`, `NP_WCC_eq_NP_TM`, `p_vs_np_discrete_transfer`, `PartISeparation.conditional_bridge_WCC/WCCD` (new) | Exact (premises proved for the discrete model) |
 | I-6 | Thm. `thm:psi-sat-completeness` §5.4 | 3-CNF F sat ⟺ ∃ binary-phase ψ, E_logic=0 ⟺ ∃ nonzero-amplitude ψ, E_logic=0 | `PartIPsiSat.psi_sat_completeness`, `psi_sat_completeness_field` (new) | Exact |
 | I-7 | Remark WIN-03 | E_logic=0 ⇏ δ(E_geom+λE_logic)=0 | `PartIPsiSat.zero_penalty_not_stationary` (new) | Exact |
-| I-8 | Prop. WIN-04 `lem:dim-lock` | Gaussian on ℝ⁴ has finite ‖∇ψ‖² and ‖Θ_ε‖² | — | Open (not yet formalized; next) |
+| I-8 | Prop. WIN-04 `lem:dim-lock` | Gaussian on ℝ⁴ has finite ‖∇ψ‖² and ‖Θ_ε‖² | `PartIDimLock.win04_gaussian`, `laplacian_ψ` (new) | Exact (Mathlib's Laplacian; Δψ = (4‖x‖²−8)e^{−‖x‖²} proved; integrability of ψ, ‖∇ψ‖², Θ_ε² for every ε > 0, α ≥ 0) |
 | I-9 | Prop. WIN-05 `thm:pwcc-neq-npwcc` | verifier + every decider exceeds a rail i.o. ⇒ P^phys≠NP^phys | `PartISeparation.win05` (new) | Exact |
 | I-10 | Prop. `prop:collapse-grammar` | (1) no finite invariant partition; (2) L(ψ)∈{∅,Σ*}; (3) rule unrecoverable | `PartISeparation.trivial_partition_invariant` (new) | Refuted ((1) as literally stated; (2),(3) undefined) |
 | I-11 | Remark `rem:infinite-compute` | within the rail, P_WCC = P_Turing | `P_WCC_eq_P_TM` | Restricted (discrete model) |
@@ -59,8 +61,8 @@ classical `P ≠ NP`.
 | I-19 | "any proof of conj would yield P≠NP" | conj ⇒ P≠NP | `internal_sep_conditional` (3rd component) | Exact |
 | I-20 | Conj. "Dimensional-Lock Hypothesis (Physical)" §7 | K(ψ*) > poly ∧ slow descent ⇒ ψ* ∈ NP^phys\P^phys | `PartISeparation.high_K_not_poly_witness` (new) | Refuted (hypothesis (1) forces \|ψ*\| > every polynomial bound q, so ψ* is no polynomial-size witness) |
 | I-21 | Prop. `thm:separator_curvature` | substitution of two lower bounds | `conditional_interface_bound` | Exact |
-| I-22 | Prop. `thm:mass_complexity` | T ≥ (C_T − C_0)_+/Δ_max | `telescoping_bound` (equivalent form C_T ≤ C_0 + TΔ) | Restricted (exact quotient form: next) |
-| I-23 | Prop. `thm:padding_stability` | additive padding with zero padding energy | — | Open (not yet formalized; next) |
+| I-22 | Prop. `thm:mass_complexity` | T ≥ (C_T − C_0)_+/Δ_max | `ManuscriptRemarks.valid_telescoping` (new), `telescoping_bound` | Exact (the manuscript's quotient form) |
+| I-23 | Prop. `thm:padding_stability` + remark | additive padding with zero padding energy; superlinear padding loses 2^{Ω(N)} | `ManuscriptRemarks.padding_stability`, `superlinear_padding` (new) | Exact (functional = integral of a local density, no interface term) |
 | I-24 | Prop. `thm:np-type-conditional` | verifier ∧ no decider ⇒ L ∈ NP^phys\P^phys | `PartISeparation.np_type_conditional` (new) | Exact |
 | I-25 | Prop. "Model-Relative Separation in Ideal WCC" §8.4 | state-level separation; + P^∞=P, NP^∞=NP ⇒ P≠NP | `conditional_symbolic_separation`; `state_separation_not_language_separation` (new) | Refuted (the state-to-language step: a verifiable unreachable state exists in a model whose language classes are equal) |
 | I-26 | Prop. "Formal Model-Theoretic Separation in WCT" §9.4 | family in NP_WCT\P_WCT ⇒ P_WCT≠NP_WCT ⇒ (with identifications) P≠NP | same | Refuted (same step) |
@@ -81,10 +83,11 @@ classical `P ≠ NP`.
 | I-41 | Prop. `thm:curv-bdd-sep` + remark | conditional physical separation; fixed-n impossibility | `PartISeparation.curv_bdd_sep`, `fixed_n_impossible` (new) | Exact |
 
 Counts:
-* Exact (21): I-1, 4, 5, 6, 7, 9, 14, 15, 17, 18, 19, 21, 24, 29, 30, 33, 34, 35, 36, 40, 41.
-* Restricted (4): I-11, 22, 38, 39.
+* Exact (24): I-1, 4, 5, 6, 7, 8, 9, 14, 15, 17, 18, 19, 21, 22, 23, 24, 29, 30, 33, 34, 35, 36,
+  40, 41.
+* Restricted (3): I-11, 38, 39.
 * Refuted (8): I-10, 12, 13, 20, 25, 26, 27, 28.
-* Open (8): I-2, 3, 8, 16, 23, 31, 32, 37.
+* Open (6): I-2, 3, 16, 31, 32, 37.
 
 ### Status of the Part I separation argument
 
@@ -106,8 +109,8 @@ Counts:
 | II-1 | Lemma `lem:precision-stability` | local rule keeps ⌈log₂\|S\|⌉ bits | typing of `WCC.step` | Exact (by construction) |
 | II-2 | Prop. `prop:local-tm` | TM transitions realizable by a radius-1 rule (two-phase encoding) | `TM.toWCC_step_encode` (one-phase encoding) | Restricted (different encoding) |
 | II-3 | Prop. `prop:deterministic-replay` | trajectory determined by C₀ and U | `WCC.run` is a function | Exact (by construction) |
-| II-4 | Thm. `thm:wave-symbol-isomorphism` | quantization compatibility ⇒ exact symbolic update; converse construction | — | Open (not yet formalized; next) |
-| II-5 | Remark `rem:wave-symbol-obstruction` | counterexample without compatibility | — | Open (not yet formalized; next) |
+| II-4 | Thm. `thm:wave-symbol-isomorphism` | quantization compatibility ⇒ exact symbolic update; converse construction | `PartIIManuscript.wave_symbol_forward`, `wave_symbol_converse` (new) | Exact (abstract neighbourhood map; covers the background-extended lattice) |
+| II-5 | Remark `rem:wave-symbol-obstruction` | counterexample without compatibility | `PartIIManuscript.compatibility_necessary` (new) | Exact (the manuscript's Z = {−1, ½, 1}) |
 | II-6 | Prop. `prop:gandy-wcc` + Cor. | Gandy axioms | `WCC.step` definition | Exact (by construction) |
 | II-7 | Lemma `lem:invariant` | two-phase invariant | — | Open (specific construction not formalized) |
 | II-8 | Lemma `lem:one_step` | one TM step = two WCC steps | — | Open (same) |
@@ -120,21 +123,21 @@ Counts:
 | II-15 | Thm. `thm:uniform-discrete-bijection` | P, NP equalities | as II-12/13 | Restricted |
 | II-16 | Prop. `prop:conditional-classical-lift` | L ∈ NP^disc\P^disc ⇒ P≠NP | `p_vs_np_discrete_transfer` | Exact |
 | II-17 | Definitions of the manuscript TM (total δ, L/R moves, q_acc/q_rej) vs Lean `TM` | class correspondence | — | Open (TM-model translation not formalized) |
-| II-18 | Lemma `lem:bandlimit` | k_eff ≤ C₁E_max/(ħc); conditional k_max bound | — | Open (next) |
-| II-19 | Lemma `lem:spatial_capacity` | N_lanes ≤ C₂Vk_max³ | — | Open (next; lattice-point count) |
-| II-20 | Lemma `lem:lane_update_bound` | ≤ Tck_max/C₃ transitions per lane | — | Open (next) |
-| II-21 | Thm. `thm:spacetime_capacity` | N_updates ≤ C₄VTk_max⁴ ≤ KVTE⁴ | — | Open (next) |
-| II-22 | Thm. `thm:channel_capacity` | restatement | — | Open (next) |
-| II-23 | Prop. `prop:phys_step_ceiling` | N_updates(n) ≤ C'n^d; T_W polynomial | — | Open (next) |
+| II-18 | Lemma `lem:bandlimit` | k_eff ≤ C₁E_max/(ħc); conditional k_max bound | `PartIIManuscript.bandlimit_eff`, `bandlimit_sharp` (new) | Exact (physical identities as explicit hypotheses, as in the manuscript) |
+| II-19 | Lemma `lem:spatial_capacity` | N_lanes ≤ C₂Vk_max³ | `PartIIManuscript.spatial_capacity`, `spatial_capacity_energy` (new) | Exact (periodic cube of side ℓ, explicit C₂ = 27/(8π³); genuine lattice-point count) |
+| II-20 | Lemma `lem:lane_update_bound` | ≤ Tck_max/C₃ transitions per lane | `PartIIManuscript.lane_update_bound` (new) | Exact |
+| II-21 | Thm. `thm:spacetime_capacity` | N_updates ≤ C₄VTk_max⁴ ≤ KVTE⁴ | `PartIIManuscript.spacetime_capacity` (new) | Exact (C₄ = C₂c/C₃, K = C₄C₁⁴/(ħc)⁴; independent-lane premise explicit) |
+| II-22 | Thm. `thm:channel_capacity` | restatement | `PartIIManuscript.spacetime_capacity` (new) | Exact |
+| II-23 | Prop. `prop:phys_step_ceiling` | N_updates(n) ≤ C'n^d; T_W polynomial | `PartIIManuscript.phys_step_ceiling`, `rounds_le_events` (new) | Exact (C' = KC_VC_TC_E⁴, d = a+b+4c; T_W ≤ N_updates + 1 under the counting premise) |
 | II-24 | Thm. `thm:conditional_np_safety` | (i)–(iii) ⇒ no poly-resource WCT AGI decides an NP-complete L | — | Open (needs Cook–Levin (CL-1) and closure of P_TM under finite modification) |
 | II-25 | Remark `rem:compatibility` and the Part II formal-status paragraph | encoder triviality statements | `unrestricted_encoder_trivializes_WCC`, `advice_bit_trivializes`, `P_WCC_enc_id` | Exact |
 | II-26 | Def./claim "P^disc = P also for the trivial reason that a poly-time encoder can compute the answer" | P_TM ⊆ P^disc via encoder | — | Open (needs TM composition for ⊆) |
-| II-27 | Remark `rem:poly_resources` | poly resources ⇒ poly updates | — | Open (with II-23) |
+| II-27 | Remark `rem:poly_resources` | poly resources ⇒ poly updates | `PartIIManuscript.phys_step_ceiling` (new) | Exact |
 
 Counts:
-* Exact (6): II-1, 3, 6, 14, 16, 25.
+* Exact (15): II-1, 3, 4, 5, 6, 14, 16, 18, 19, 20, 21, 22, 23, 25, 27.
 * Restricted (6): II-2, 10, 11, 12, 13, 15.
-* Open (15): II-4, 5, 7, 8, 9, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27.
+* Open (6): II-7, 8, 9, 17, 24, 26.
 
 ## Part III — *Classical Complexity and Curvature-Bounded Physical Computation*
 
@@ -144,10 +147,10 @@ Counts:
 | III-2 | Remark WIN-12 | original lemma false | same | Exact |
 | III-3 | Prop. "Conditional additive storage" | E_store ≥ nc₀ | `conditional_additive_storage` | Exact |
 | III-4 | Lemma `lem:h2bound` | C_Θ ≤ ‖Δψ‖²/(4ε²) | `PartIIIAnalytic.curvature_cost_le` | Exact |
-| III-5 | Remark WIN-13 | ψ=−ε violates \|ψ+ε\| ≥ ε | — | Open (trivial; next) |
+| III-5 | Remark WIN-13 | ψ=−ε violates \|ψ+ε\| ≥ ε | `ManuscriptRemarks.win13_counterexample` (new) | Exact |
 | III-6 | Thm. `thm:disc-equiv` | P^disc=P, NP^disc=NP | as II-12/13 | Restricted |
-| III-7 | Thm. `thm:p-in-np` | P^phys ⊆ NP^phys when verifiers may ignore witnesses | `P_TM_subset_NP_TM`, `P_WCC_subset_NP_WCC` | Restricted (abstract physical version: next) |
-| III-8 | Remark WIN-16 | NP^phys = ∅ contradicts nonempty P^phys | — | Open (trivial; next) |
+| III-7 | Thm. `thm:p-in-np` | P^phys ⊆ NP^phys when verifiers may ignore witnesses | `ManuscriptRemarks.p_in_np_phys` (new), `P_TM_subset_NP_TM`, `P_WCC_subset_NP_WCC` | Exact (any model whose verifiers may ignore witnesses under the same rails) |
+| III-8 | Remark WIN-16 | NP^phys = ∅ contradicts nonempty P^phys | `ManuscriptRemarks.win16` (new) | Exact |
 | III-9 | Prop. "No logical conflict" | inclusions compatible with = and ≠ | `inclusions_do_not_determine` | Exact |
 | III-10 | Remark WIN-17 | classical P vs NP is well posed | `classical_question_well_posed` | Exact |
 | III-11 | Prop. `prop:interface` | C_Θ ≥ κA_n | `conditional_interface_bound` | Exact |
@@ -164,9 +167,9 @@ Counts:
 | III-22 | §8 arrow-of-time remark | no equivalence with retrocausality | — | Open (no mathematical content to formalize) |
 
 Counts:
-* Exact (17): III-1, 2, 3, 4, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21.
-* Restricted (2): III-6, 7.
-* Open (3): III-5, 8, 22.
+* Exact (20): III-1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21.
+* Restricted (1): III-6.
+* Open (1): III-22.
 
 ## Smallest missing lemmas (for the P-versus-NP conclusion)
 
