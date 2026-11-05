@@ -203,12 +203,12 @@ theorem d2_add {f g : ℝ × ℝ → ℂ} (hf : Differentiable ℝ f) (hg : Diff
 theorem d1_mul {f g : ℝ × ℝ → ℂ} (hf : Differentiable ℝ f) (hg : Differentiable ℝ g) :
     d1 (fun q => f q * g q) = fun q => d1 f q * g q + f q * d1 g q := by
   funext q; show fderiv ℝ (f * g) q (1, 0) = _; rw [fderiv_mul (hf q) (hg q)]
-  simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply, smul_eq_mul, d1, d2]; ring
+  simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply, smul_eq_mul, d1]; ring
 
 theorem d2_mul {f g : ℝ × ℝ → ℂ} (hf : Differentiable ℝ f) (hg : Differentiable ℝ g) :
     d2 (fun q => f q * g q) = fun q => d2 f q * g q + f q * d2 g q := by
   funext q; show fderiv ℝ (f * g) q (0, 1) = _; rw [fderiv_mul (hf q) (hg q)]
-  simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply, smul_eq_mul, d1, d2]; ring
+  simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply, smul_eq_mul, d2]; ring
 
 theorem d1_const_mul (c : ℂ) {f : ℝ × ℝ → ℂ} (hf : Differentiable ℝ f) :
     d1 (fun q => c * f q) = fun q => c * d1 f q := by
@@ -483,7 +483,9 @@ theorem cs_real {L : ℝ} {f g : ℝ × ℝ → ℝ} (hf : Continuous f) (hg : C
       have i2 : IntegrableOn (fun q => 2 * s * (f q * g q)) (cell L) :=
         integrableOn_cell' (continuous_const.mul (hf.mul hg))
       have i3 : IntegrableOn (fun q => g q ^ 2) (cell L) := integrableOn_cell' (hg.pow 2)
-      rw [e, MeasureTheory.integral_add (i1.sub i2) i3, MeasureTheory.integral_sub i1 i2,
+      have hadd := MeasureTheory.integral_add (i1.sub i2) i3
+      simp only [Pi.sub_apply] at hadd
+      rw [e, hadd, MeasureTheory.integral_sub i1 i2,
         MeasureTheory.integral_const_mul, MeasureTheory.integral_const_mul]
     rw [← h]
     exact setIntegral_nonneg (measurableSet_cell L) (fun q _ => sq_nonneg _)
