@@ -2,12 +2,12 @@
 # `current_status` is AUTHORITATIVE.  `history` preserves dated snapshots
 # verbatim for provenance; stale entries there are marked [SUPERSEDED ...].
 toolchain: "leanprover/lean4:v4.23.0 (Mathlib v4.23.0)"
-status_as_of: "2026-11-03"
+status_as_of: "2026-11-05"
 verify: "cd lean && lake exe cache get && lake build PVNP && lake env lean audit/AxiomAudit.lean | tee out.txt && python3 audit/check_axioms.py audit/AxiomAudit.lean out.txt"
 kernel_verified_status: "a statement counts as verified only for a commit whose GitHub Actions Lean workflow passed"
 
 current_status:
-  scope_note: "Lean theorems hold relative to their formal definitions. Discrete results concern 1-D finite quiescent WCC models (radius one, and every fixed radius r >= 1), (1+d)-dimensional inclusion results, and ordinary single-tape TMs; they do not establish anything about physical curvature-preserving realizations."
+  scope_note: "Lean theorems hold relative to their formal definitions. Discrete results concern 1-D finite quiescent WCC models (radius one, and every fixed radius r >= 1), (1+d)-dimensional radius-one Moore WCCD models (class equality with P_TM for every d), and ordinary single-tape TMs; they do not establish anything about physical curvature-preserving realizations."
   proved_discrete_complexity:
     - "PVNP.Discrete.P_WCC_eq_P_TM : P_WCC = P_TM (1-D, radius one, finite alphabet, quiescent blank, origin-marked input)"
     - "PVNP.Discrete.NP_WCC_eq_NP_TM : NP_WCC = NP_TM (verifier definition, explicit witness polynomial, self-delimiting pairing)"
@@ -18,11 +18,12 @@ current_status:
     - "PVNP.Discrete.encodeTable_decodeTable, decodeTable_sound, encodeTable_length_le, TM.normalize_decides (flat binary machine code)"
     - "PVNP.Discrete.P_TM_eq_curvature_rail, curvature_lower_bound_is_classical (discrete curvature rails are vacuous)"
     - "PVNP.Discrete.P_WCCR_eq_P_TM, NP_WCCR_eq_NP_TM (every fixed radius r >= 1, 1-D); WCCR.toTM_decides time 1 + (T+1)(n + 2r(T+1) + 2r + 1); WCC.toR_decides; P_WCCR_radius_invariant; p_vs_np_radius_transfer (added 2026-11-02, PR #19)"
-    - "PVNP.Discrete.P_TM_subset_P_WCCD, NP_TM_subset_NP_WCCD, WCC.toD_run (Z^(1+d), Moore radius one: inclusion only; converse NOT formalized)"
+    - "PVNP.Discrete.P_TM_subset_P_WCCD, NP_TM_subset_NP_WCCD, WCC.toD_run (Z^(1+d), Moore radius one: inclusion direction)"
+    - "D-1 CLOSED (2026-11-05): PVNP.Discrete.P_WCCD_subset_P_TM, P_WCCD_eq_P_TM : P_WCCD d = P_TM and NP_WCCD_eq_NP_TM : NPOf (P_WCCD d) = NP_TM for EVERY d.  Machine: WCCDSweep.toTM A, an ordinary PVNP.Discrete.TM (finite state set, finite tape alphabet, one head) compiled by Sweep.Prog.toTM from the explicit 23-instruction round-trip sweep program WCCDSweep.prog; exact step accounting (Sweep.Prog.reach_run, halts_run, toTM_firstAnswer) charges every head move; no random access, no unbounded registers, no oracle.  Bound: WCCDSweep.toTM_decides gives (128 d + 421)(n + 2T(n) + 3)^(2d+3) steps.  Exact semantics: cyclic flattening WCCD.flat_inj, cyclic_exact, cyclic_out; round, axes_run, loopL, loopR; reference construction inner_loop, outer_loop, build_axes; arrAns_eq (tape answer = WCCD output incl. blank exterior and acceptance precedence); halts_of_first.  Axioms: propext, Classical.choice, Quot.sound.  Modules SweepTM, WCCDCyclic, WCCDSweep, WCCDSweepSteps, WCCDSweepLoops, WCCDSweepRound, WCCDSweepBuild, WCCDSweepMain.  CI: see the D-1 PR entry in pvnp/proofs/remaining-obstructions.md."
     - "PVNP.Discrete.P_WCC_enc_id (frozen model = identity encoder)"
-    - "PVNP.Discrete.WCCD.off_bounds, init_blank_outside, run_blank_outside, run_blank_left, run_blank_right, run_blank_transverse: finite active rectangular causal region on Z^(1+d) with quiescent blank; PR #21 targeted Lean CI 41540246765; D-1 polynomial TM simulation remains OPEN"
-    - "PVNP.Discrete.WCCD.point_inCone, point_index, index_point, box_card, read_snapshot, advance_snapshot, hasWitness_iff, finiteOutput_snapshot, replay_correct, replay_output, firstAnswer_replay: executable finite-coordinate box representation and exact round-by-round synchronous evolution and first-answer output, including accepting/rejecting exterior blanks (draft PR #23, targeted CI 41745573154; full audit pending); the single-tape compiler and P_WCCD d subset P_TM remain OPEN"
-    - "PVNP.Discrete.WCCD.boxCells_card, boxCells_mono, totalCells_le, totalCells_polynomial_bound, neighborhood_card, totalNeighborReads_polynomial_bound, workPoly_eval, totalCells_le_workPoly, neighborWorkPoly_eval, totalNeighborReads_le_workPoly: explicit Polynomial Nat witnesses bound finite-array cell updates by 2^(d+2)*(n+T+1)^(d+2) for every fixed d, with a similar Moore-neighborhood read count. Draft PR #23, targeted kernel CI 41750685872 and full Lean CI 41750685881 passed on the unchanged code at commit 297426f5; the axiom audit accepted 159 declarations with only standard axioms. This is NOT a single-tape TM-time bound and D-1 remains OPEN."
+    - "PVNP.Discrete.WCCD.off_bounds, init_blank_outside, run_blank_outside, run_blank_left, run_blank_right, run_blank_transverse: finite active rectangular causal region on Z^(1+d) with quiescent blank; PR #21 targeted Lean CI 41540246765; groundwork for D-1 (now CLOSED by P_WCCD_eq_P_TM)"
+    - "PVNP.Discrete.WCCD.point_inCone, point_index, index_point, box_card, read_snapshot, advance_snapshot, hasWitness_iff, finiteOutput_snapshot, replay_correct, replay_output, firstAnswer_replay: executable finite-coordinate box representation and exact round-by-round synchronous evolution and first-answer output, including accepting/rejecting exterior blanks (PR #23, targeted CI 41745573154); groundwork only; the single-tape compiler is WCCDSweep.toTM and D-1 is now CLOSED by P_WCCD_eq_P_TM"
+    - "PVNP.Discrete.WCCD.boxCells_card, boxCells_mono, totalCells_le, totalCells_polynomial_bound, neighborhood_card, totalNeighborReads_polynomial_bound, workPoly_eval, totalCells_le_workPoly, neighborWorkPoly_eval, totalNeighborReads_le_workPoly: explicit Polynomial Nat witnesses bound finite-array cell updates by 2^(d+2)*(n+T+1)^(d+2) for every fixed d, with a similar Moore-neighborhood read count. Draft PR #23, targeted kernel CI 41750685872 and full Lean CI 41750685881 passed on the unchanged code at commit 297426f5; the axiom audit accepted 159 declarations with only standard axioms. This is NOT a single-tape TM-time bound by itself; the single-tape bound is WCCDSweep.toTM_decides and D-1 is now CLOSED."
   proved_analysis_and_pde:
     - "PVNP.Packing.complex_receiver_packing, subspace_receiver_packing; PVNP.FourierTorus.torus_receiver_packing, torus2_bandlimited_packing (genuine L2-torus Fourier receiver)"
     - "PVNP.SpectralGap.wirtinger, wirtinger_sharp, no_uniform_poincare"
@@ -51,7 +52,7 @@ current_status:
     - "PartIIIAnalytic.capacity_law: assumes a uniform second-derivative bound"
     - "Discrete.telescoping_bound, conditional_interface_bound, conditional_additive_storage"
   open:
-    - "P_WCCD d subset P_TM for d >= 1 (classical multidimensional CA simulation; not formalized); universal TM"
+    - "universal TM (not needed by any current claim; D-1 is CLOSED by P_WCCD_eq_P_TM)"
     - "M3-T: well-posedness of the frozen PDE on tori with constants uniform in the side length; M3-C: lattice-to-continuum convergence with certified error bounds (M3-G finite-lattice global existence is PROVED)"
     - "M1: PhysConst subset P_TM for general rail-bounded devices (certified PDE simulation); M2: universal physical lower bound (at least as hard as P != NP by physical_SAT_lower_bound_is_classical)"
     - "continuum flux inequality in Lean (periodic integration by parts, differentiation under the integral)"

@@ -129,6 +129,35 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Discrete.WCCD.firstAnswer_replay
 -- D-1 concrete ordinary single-tape scan subroutine
 #print axioms PVNP.Discrete.TMStackScan.scan_return
+-- D-1 completion: round-trip sweep programs compiled to ordinary single-tape TMs
+#print axioms PVNP.Discrete.Sweep.Prog.reach_run
+#print axioms PVNP.Discrete.Sweep.Prog.halts_run
+#print axioms PVNP.Discrete.Sweep.Prog.toTM_firstAnswer
+-- D-1 completion: exact cyclic flattening of WCCD runs
+#print axioms PVNP.Discrete.WCCD.flat_inj
+#print axioms PVNP.Discrete.WCCD.cyclic_exact
+#print axioms PVNP.Discrete.WCCD.cyclic_out
+-- D-1 completion: the explicit WCCD-simulating sweep program
+#print axioms PVNP.Discrete.WCCDSweep.step_chk
+#print axioms PVNP.Discrete.WCCDSweep.loopL
+#print axioms PVNP.Discrete.WCCDSweep.loopR
+#print axioms PVNP.Discrete.WCCDSweep.axis_step
+#print axioms PVNP.Discrete.WCCDSweep.axes_run
+#print axioms PVNP.Discrete.WCCDSweep.round
+#print axioms PVNP.Discrete.WCCDSweep.inner_loop
+#print axioms PVNP.Discrete.WCCDSweep.outer_loop
+#print axioms PVNP.Discrete.WCCDSweep.build_axes
+#print axioms PVNP.Discrete.WCCDSweep.xfin_inv
+#print axioms PVNP.Discrete.WCCDSweep.arrAns_eq
+#print axioms PVNP.Discrete.WCCDSweep.restart
+#print axioms PVNP.Discrete.WCCDSweep.enter
+#print axioms PVNP.Discrete.WCCDSweep.init_phase
+#print axioms PVNP.Discrete.WCCDSweep.halts_of_first
+#print axioms PVNP.Discrete.WCCDSweep.final_arith
+#print axioms PVNP.Discrete.WCCDSweep.toTM_decides
+#print axioms PVNP.Discrete.P_WCCD_subset_P_TM
+#print axioms PVNP.Discrete.P_WCCD_eq_P_TM
+#print axioms PVNP.Discrete.NP_WCCD_eq_NP_TM
 -- D-1 polynomial finite-array work accounting (does not imply TM-time bound)
 #print axioms PVNP.Discrete.WCCD.boxCells_card
 #print axioms PVNP.Discrete.WCCD.boxCells_mono
