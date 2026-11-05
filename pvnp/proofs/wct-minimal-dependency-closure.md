@@ -26,6 +26,28 @@
    encoders excludes SAT **iff classical SAT is outside P_TM**.
    That example does not establish physical computation in the evolution.
 
+## Source-model identification is an additional physical prerequisite
+
+The foundational regularized WCT curvature operator in
+`geometry_of_resonance` is
+
+  `Theta_eps(psi) = -(Delta psi) * conjugate(psi) /
+   (|psi|^2 + eps^2 exp(-2 alpha |psi|^2))`.
+
+The PVNP frozen Hamiltonian evolution instead uses
+
+  `i psi_t = (Delta + kappa)^2 psi - beta |psi|^2 psi
+             + gamma |psi|^4 psi`.
+
+The second equation does not explicitly contain the first operator.
+They are **distinct** specified dynamics; a proof for the frozen PDE
+is not automatically a theorem about the full corrected WCT parent
+action or curvature-feedback postulate. This is a physical
+model-identification and reduction obligation, separate from the
+purely computational implications below. The foundational repository's
+current action audit also records unresolved parent-action stability
+and high-frequency/ghost obstructions. Do not silently equate models.
+
 ## The *actual* WCT-specific statements that remain unproved
 
 The five WCT foundational postulates are not a substitute for the following
