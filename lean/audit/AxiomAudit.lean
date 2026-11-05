@@ -305,3 +305,7 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.WCTDependencyClosure.full_interface_route
 #print axioms PVNP.WCTDependencyClosure.no_route_under_classical_collapse
 #print axioms PVNP.WCTDependencyClosure.indicator_physical_barrier_iff_TM
+
+-- Milestone 5 partial simulator infrastructure (not uniform equivalence)
+#print axioms PVNP.UniformSim.simTrip_spec
+#print axioms PVNP.UniformSim.RN.reach
