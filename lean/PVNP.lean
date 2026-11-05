@@ -75,6 +75,7 @@ import PVNP.WCCDSweepBuild
 import PVNP.WCCDSweepMain
 import PVNP.PartIPsiSat
 import PVNP.PartISeparation
+import PVNP.WCTDependencyClosure
 import PVNP.PartILocality
 import PVNP.PartIDimLock
 import PVNP.PartIIManuscript

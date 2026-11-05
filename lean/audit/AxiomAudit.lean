@@ -292,3 +292,10 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.ContinuumFlux.static_to_sqrt
 #print axioms PVNP.ContinuumFlux.transport_from_static
 #print axioms PVNP.ContinuumFlux.curvature_lower_from_static
+
+-- WCT minimal dependency closure, exactly conditional on physical/computational hypotheses
+#print axioms PVNP.WCTDependencyClosure.physical_hardness_plus_TM_realization
+#print axioms PVNP.WCTDependencyClosure.interface_growth_implies_hardness
+#print axioms PVNP.WCTDependencyClosure.full_interface_route
+#print axioms PVNP.WCTDependencyClosure.no_route_under_classical_collapse
+#print axioms PVNP.WCTDependencyClosure.indicator_physical_barrier_iff_TM
