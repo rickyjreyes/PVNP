@@ -28,14 +28,12 @@ theorem trip_def (i : Ins σ) (l : List (Cell σ)) :
 theorem stepP_inl_of {i i' : Ins σ} {l : List (Cell σ)}
     (h : σ.next i (σ.prog.trip i l).2 = .inl i') :
     σ.prog.stepP (i, l) = .inl (i', (σ.prog.trip i l).1) := by
-  have h' : σ.prog.next i (σ.prog.trip i l).2 = .inl i' := h
-  simp only [Prog.stepP, h']
+  simp only [Prog.stepP, h]
 
 theorem stepP_inr_of {i : Ins σ} {a : Bool} {l : List (Cell σ)}
     (h : σ.next i (σ.prog.trip i l).2 = .inr a) :
     σ.prog.stepP (i, l) = .inr (a, (σ.prog.trip i l).1) := by
-  have h' : σ.prog.next i (σ.prog.trip i l).2 = .inr a := h
-  simp only [Prog.stepP, h']
+  simp only [Prog.stepP, h]
 
 /-- A round trip whose backward pass is the identity and which never extends. -/
 theorem trip_fwd (i : Ins σ) (hb : ∀ b a, σ.bwd i b a = (a, b)) (he : ∀ b, σ.ext i b = none)

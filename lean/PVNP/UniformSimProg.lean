@@ -521,7 +521,7 @@ def next : Ins σ → Buf σ → Ins σ ⊕ Bool
 def lift (x : Bool) : Cell σ := {σ.dflt with inp := some x}
 
 /-- **The simulating sweep program.** -/
-def prog : Prog where
+abbrev prog : Prog where
   D := Cell σ
   I := Ins σ
   B := Buf σ
