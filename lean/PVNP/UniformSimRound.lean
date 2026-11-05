@@ -186,6 +186,175 @@ theorem dread_run (l : List (Cell σ)) (hpos : 0 < l.length)
   have := σ.stepP_inl_of hn
   rwa [ht] at this
 
+/-! ### One round -/
+
+/-- Round trips of one round of the simulator. -/
+def roundCost (hC : σ.Correct) (x : List Bool) : ℕ :=
+  (σ.Mx x).length + 2 + hC.pD.eval x.length + 1 +
+    σ.K * (2 + σ.W.d * σ.W.r * (2 * side (σ.Rx x) + 1) ^ σ.W.d) + 1
+
+theorem cfg_succ (x : List Bool) (t : ℕ) :
+    σ.W.cfg x (t + 1) = σ.W.step x.length (σ.W.cfg x t) := by
+  simp only [UWCC.cfg, Function.iterate_succ_apply']
+
+/-- The ruler facts hold after decoding. -/
+theorem ruler_after (x : List Bool) (t : ℕ) (l l3 : List (Cell σ)) (hg : σ.Good x t l)
+    (hlen : l.length ≤ l3.length)
+    (hfr : ∀ (j : ℕ) (hj : j < l3.length), σ.eraseD l3[j] = σ.eraseD (l.getD j σ.dflt)) :
+    σ.RulerOK (σ.Rx x + 1) (side (σ.Rx x)) l3 := by
+  have hroom := hg.room
+  have hbox := hg.boxIn
+  have hs := σ.side_le_Bx x
+  have eS : side (σ.Rx x) = 2 * σ.Rx x + 1 := rfl
+  refine ⟨by omega, by omega, side_pos _, fun j hj => ?_, fun j hj => ?_, fun j hj => ?_⟩
+  · rw [(σ.eraseD_stat (hfr j hj)).2.1]
+    by_cases hjl : j < l.length
+    · rw [List.getD_eq_getElem _ _ hjl, hg.fst j hjl]
+    · rw [List.getD_eq_default _ _ (by omega)]; exact (decide_eq_false (by omega)).symm
+  · rw [(σ.eraseD_stat (hfr j hj)).2.2.2.2.1]
+    by_cases hjl : j < l.length
+    · rw [List.getD_eq_getElem _ _ hjl, hg.rfst j hjl]
+    · rw [List.getD_eq_default _ _ (by omega)]; exact (decide_eq_false (by omega)).symm
+  · rw [(σ.eraseD_stat (hfr j hj)).2.2.2.2.2.1]
+    by_cases hjl : j < l.length
+    · rw [List.getD_eq_getElem _ _ hjl, hg.rul j hjl]
+      exact decide_eq_decide.2 (by omega)
+    · rw [List.getD_eq_default _ _ (by omega)]; exact (decide_eq_false (by omega)).symm
+
+/-- **A deciding round**: if the decoder outputs `some b` on `C_t`, the program reaches `dread`
+and halts with answer `b`. -/
+theorem round_halt (hC : σ.Correct) (x : List Bool) (t : ℕ) (l : List (Cell σ))
+    (hg : σ.Good x t l) (b : Bool) (hb : σ.W.dec x.length (σ.W.cfg x t) = some b) :
+    ∃ (l3 : List (Cell σ)) (k : ℕ), RN σ.prog (.dprep, l) (.dread, l3) k ∧
+      k ≤ (σ.Mx x).length + 2 + hC.pD.eval x.length ∧
+      l3.length ≤ l.length + hC.pD.eval x.length ∧ σ.prog.stepP (.dread, l3) = .inr (b, l3) := by
+  obtain ⟨l3, k, cD, hrn, hk, hlo, hhi, hfr, hrep, hsh⟩ := σ.decode_phase hC x t l hg
+  have hroom := hg.room
+  have hpos : 0 < l3.length := by omega
+  have hr := σ.ruler_after x t l l3 hg hlo hfr
+  have h0 : (l3[0]'hpos).dec.r = σ.MD.inp b := by
+    have h := congrArg FCell.r (hrep.cell 0 hpos)
+    have e : (l3[0]'hpos).dec.r = cD.tape ((0 : ℕ) : ℤ) := h
+    rw [e]
+    rw [hb] at hsh
+    have := hsh.1 0 (by simp [decOut])
+    simpa [decOut] using this
+  exact ⟨l3, k, hrn, hk, hhi, σ.dread_halt l3 hpos hr.fst b h0⟩
+
+/-- **One round of the uniform machine.**  If the decoder outputs `none` on `C_t`, the round ends
+at `dprep` with the round invariant for `C_{t+1} = UWCC.step n C_t`. -/
+theorem round_spec (hC : σ.Correct) (x : List Bool) (t : ℕ) (l : List (Cell σ))
+    (hg : σ.Good x t l) (hnone : σ.W.dec x.length (σ.W.cfg x t) = none) :
+    ∃ (l' : List (Cell σ)) (k : ℕ), RN σ.prog (.dprep, l) (.dprep, l') k ∧
+      k ≤ σ.roundCost hC x ∧ l.length ≤ l'.length ∧
+      l'.length ≤ l.length + hC.pD.eval x.length ∧ σ.Good x (t + 1) l' := by
+  obtain ⟨l3, k1, cD, hrn1, hk1, hlo, hhi, hfr, hrep, hsh⟩ := σ.decode_phase hC x t l hg
+  have hroom := hg.room
+  have hboxIn := hg.boxIn
+  have hpos : 0 < l3.length := by omega
+  have hr := σ.ruler_after x t l l3 hg hlo hfr
+  -- the decoder says `run`
+  have h0 : (l3[0]'hpos).dec.r = σ.MD.blank := by
+    have h := congrArg FCell.r (hrep.cell 0 hpos)
+    have e : (l3[0]'hpos).dec.r = cD.tape ((0 : ℕ) : ℤ) := h
+    rw [e]
+    rw [hnone] at hsh
+    simpa [decOut] using hsh.2
+  have hs2 := σ.dread_run l3 hpos hr.fst h0
+  -- the windows
+  obtain ⟨l4, c4, hrn4, hc4, hoff⟩ := σ.offset_loop (σ.Rx x + 1) (side (σ.Rx x)) l3 hr
+    (σ.K - 1) 0 σ.K_pos (by have := σ.K_pos; omega) l3
+    ⟨rfl, fun _ _ _ => rfl, fun _ _ i' h => absurd h (Nat.not_lt_zero _)⟩
+  -- the local rule
+  obtain ⟨hs5, hlen5, hget5⟩ := σ.apply_trip l4
+  set l5 : List (Cell σ) := (σ.prog.trip .apply l4).1 with hl5
+  have hlen4 := hoff.len
+  have hlen55 : l5.length = l3.length := by rw [hlen5, hlen4]
+  -- static fields of the new list
+  have hstat : ∀ (j : ℕ) (hj : j < l5.length),
+      l5[j].inp = (l.getD j σ.dflt).inp ∧ l5[j].fst = (l.getD j σ.dflt).fst ∧
+      l5[j].box = (l.getD j σ.dflt).box ∧ l5[j].mem = (l.getD j σ.dflt).mem ∧
+      l5[j].rfst = (l.getD j σ.dflt).rfst ∧ l5[j].rul = (l.getD j σ.dflt).rul := by
+    intro j hj
+    have hA := σ.eraseW_stat (hoff.frame j (by omega) (by omega))
+    have hD := σ.eraseD_stat (hfr j (by omega))
+    rw [hget5 j hj (by omega)]
+    exact ⟨hA.1.trans hD.1, hA.2.1.trans hD.2.1, hA.2.2.1.trans hD.2.2.1,
+      hA.2.2.2.1.trans hD.2.2.2.1, hA.2.2.2.2.1.trans hD.2.2.2.2.1,
+      hA.2.2.2.2.2.1.trans hD.2.2.2.2.2.1⟩
+  have eB : σ.Bx x = side (σ.Rx x) ^ σ.W.d := rfl
+  have eS : side (σ.Rx x) = 2 * σ.Rx x + 1 := rfl
+  have hside := σ.side_le_Bx x
+  refine ⟨l5, k1 + 1 + c4 + 1, ?_, ?_, by omega, by omega, ?_⟩
+  · exact ((hrn1.trans (RN.single hs2)).trans hrn4).trans (RN.single hs5)
+  · simp only [roundCost]
+    have : σ.K - 1 + 1 = σ.K := by have := σ.K_pos; omega
+    rw [this] at hc4
+    omega
+  refine ⟨by omega, by omega, fun j hj => ?_, fun j hj => ?_, fun j hj => ?_, fun j hj => ?_,
+    fun j hj => ?_, fun j hj => ?_, fun j hj h1 h2 => ?_⟩
+  · rw [(hstat j hj).1]
+    by_cases hjl : j < l.length
+    · rw [List.getD_eq_getElem _ _ hjl, hg.inp j hjl]
+    · rw [List.getD_eq_default _ _ (by omega), List.getElem?_eq_none (by omega)]; rfl
+  · rw [(hstat j hj).2.1]
+    by_cases hjl : j < l.length
+    · rw [List.getD_eq_getElem _ _ hjl, hg.fst j hjl]
+    · rw [List.getD_eq_default _ _ (by omega)]; exact (decide_eq_false (by omega)).symm
+  · rw [(hstat j hj).2.2.1]
+    by_cases hjl : j < l.length
+    · rw [List.getD_eq_getElem _ _ hjl, hg.box j hjl]
+    · rw [List.getD_eq_default _ _ (by omega)]; exact (decide_eq_false (by omega)).symm
+  · rw [(hstat j hj).2.2.2.1]
+    by_cases hjl : j < l.length
+    · rw [List.getD_eq_getElem _ _ hjl, hg.mem j hjl]
+    · rw [List.getD_eq_default _ _ (by omega),
+        decide_eq_false (show ¬ (σ.Rx x + 1 ≤ j ∧ j < σ.Rx x + 1 + σ.Bx x) by omega),
+        Bool.false_and]
+      rfl
+  · rw [(hstat j hj).2.2.2.2.1]
+    by_cases hjl : j < l.length
+    · rw [List.getD_eq_getElem _ _ hjl, hg.rfst j hjl]
+    · rw [List.getD_eq_default _ _ (by omega)]; exact (decide_eq_false (by omega)).symm
+  · rw [(hstat j hj).2.2.2.2.2]
+    by_cases hjl : j < l.length
+    · rw [List.getD_eq_getElem _ _ hjl, hg.rul j hjl]
+    · rw [List.getD_eq_default _ _ (by omega)]; exact (decide_eq_false (by omega)).symm
+  · -- the configuration on the box
+    have hjl : j < l.length := by omega
+    have hA := σ.eraseW_stat (hoff.frame j (by omega) (by omega))
+    have hD := σ.eraseD_stat (hfr j (by omega))
+    rw [List.getD_eq_getElem _ _ hjl] at hD
+    have hbox4 : l4[j].box = true := by
+      rw [hA.2.2.1, hD.2.2.1, hg.box j hjl]; exact decide_eq_true ⟨h1, h2⟩
+    have hmem4 : l4[j].mem = σ.bmx x j := by
+      rw [hA.2.2.2.1, hD.2.2.2.1, hg.mem j hjl, decide_eq_true ⟨h1, h2⟩, Bool.true_and]
+    rw [hget5 j hj (by omega)]
+    simp only [hbox4, if_true, hmem4]
+    rw [cfg_succ]
+    simp only [UWCC.step]
+    by_cases hmem : site σ.W.d (σ.Rx x) (j - (σ.Rx x + 1)) ∈ σ.W.Λ x.length
+    · have hb : σ.bmx x j = true := decide_eq_true hmem
+      rw [hb, if_pos rfl, if_pos hmem]
+      congr 1
+      funext v
+      rw [hoff.win_all σ j (by omega) v]
+      obtain ⟨idx', hidx', hδ, hsite⟩ := σ.member_nbr x (j - (σ.Rx x + 1)) (by omega) hmem v
+      have hcyc : cyc l3.length j (σ.delta (side (σ.Rx x)) v) = σ.Rx x + 1 + idx' := by
+        have hc := cyc_of_lt (ℓ := l3.length) (j := j) (s := σ.delta (side (σ.Rx x)) v)
+          (by omega) (by omega)
+        have : (j : ℤ) + σ.delta (side (σ.Rx x)) v = ((σ.Rx x + 1 + idx' : ℕ) : ℤ) := by
+          push_cast at hδ ⊢; omega
+        rw [this] at hc
+        exact_mod_cast hc
+      rw [hcyc, List.getD_eq_getElem _ _ (by omega)]
+      have hD' := σ.eraseD_stat (hfr (σ.Rx x + 1 + idx') (by omega))
+      rw [hD'.2.2.2.2.2.2, List.getD_eq_getElem _ _ (by omega),
+        hg.cur _ (by omega) (by omega) (by omega)]
+      rw [show σ.Rx x + 1 + idx' - (σ.Rx x + 1) = idx' by omega, hsite]
+    · have hb : σ.bmx x j = false := decide_eq_false hmem
+      rw [hb, if_neg (by simp), if_neg hmem]
+
 end Spec
 
 end PVNP.UniformSim
