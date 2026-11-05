@@ -329,6 +329,34 @@ def dprepPh (ph : Fin 3) : Option Bool → Fin 3
   | some _ => ph
   | none => if ph = 0 then 1 else 2
 
+/-- One step of a slot walk over `w` cells starting at the pointer cell: the new phase, counter
+and pointer flag, and the label of this cell. -/
+def walk (w : ℕ) (ph : Fin 3) (rc : Fin (w + 1)) (ptr : Bool) :
+    Fin 3 × Fin (w + 1) × Bool × Option (Fin w) :=
+  match ph with
+  | 0 =>
+    if ptr then
+      if h : 0 < w then (1, ⟨1, by omega⟩, false, some ⟨0, h⟩) else (2, rc, ptr, none)
+    else (0, rc, ptr, none)
+  | 1 => if h : rc.val < w then (1, ⟨rc.val + 1, by omega⟩, ptr, some ⟨rc.val, h⟩)
+    else (2, rc, true, none)
+  | _ => (2, rc, ptr, none)
+
+/-- Record the bit of a labelled cell. -/
+def readBit {w : ℕ} : Option (Fin w) → (Fin w → Bool) → Bool → (Fin w → Bool)
+  | some k, bs, v => Function.update bs k v
+  | none, bs, _ => bs
+
+/-- Load: mark the first member not yet loaded. -/
+def ldMark (b : Buf σ) (a : Cell σ) : Cell σ × Buf σ :=
+  if a.box && a.mem && !a.ld && !b.f1 then ({a with tgt := true}, {b with f1 := true}) else (a, b)
+
+/-- Pack: mark the first member not yet packed and capture its state. -/
+def pkMark (b : Buf σ) (a : Cell σ) : Cell σ × Buf σ :=
+  if a.box && a.mem && !a.pk && !b.f1 then
+    ({a with pk := true}, {b with f1 := true, cS := some a.cur})
+  else (a, b)
+
 /-- Forward transducers. -/
 def fwd : Ins σ → Buf σ → Cell σ → Cell σ × Buf σ
   | .init, b, a =>
@@ -380,27 +408,13 @@ def fwd : Ins σ → Buf σ → Cell σ → Cell σ × Buf σ
   | .growB _, b, a => (a, b)
   | .load0, b, a => ({a with cur := σ.W.sbd, ld := false, tgt := false, rp := a.fst}, b)
   | .load, b, a =>
-    let (a1, b1) : Cell σ × Buf σ :=
-      if a.box && a.mem && !a.ld && !b.f1 then ({a with tgt := true}, {b with f1 := true})
-      else (a, b)
-    match b1.ph with
-    | 0 =>
-      if a1.rp then
-        if h : 0 < σ.W.w then
-          ({a1 with rp := false},
-            {b1 with
-              ph := 1
-              rc := ⟨1, by omega⟩
-              bits := Function.update b1.bits ⟨0, h⟩ (symBit σ.ME a1.enc.r)})
-        else (a1, {b1 with ph := 2})
-      else (a1, b1)
-    | 1 =>
-      if h : b1.rc.val < σ.W.w then
-        (a1, {b1 with
-          rc := ⟨b1.rc.val + 1, by omega⟩
-          bits := Function.update b1.bits ⟨b1.rc.val, h⟩ (symBit σ.ME a1.enc.r)})
-      else ({a1 with rp := true}, {b1 with ph := 2})
-    | _ => (a1, b1)
+    ({(σ.ldMark b a).1 with
+        rp := (walk σ.W.w (σ.ldMark b a).2.ph (σ.ldMark b a).2.rc (σ.ldMark b a).1.rp).2.2.1},
+      {(σ.ldMark b a).2 with
+        ph := (walk σ.W.w (σ.ldMark b a).2.ph (σ.ldMark b a).2.rc (σ.ldMark b a).1.rp).1
+        rc := (walk σ.W.w (σ.ldMark b a).2.ph (σ.ldMark b a).2.rc (σ.ldMark b a).1.rp).2.1
+        bits := readBit (walk σ.W.w (σ.ldMark b a).2.ph (σ.ldMark b a).2.rc
+          (σ.ldMark b a).1.rp).2.2.2 (σ.ldMark b a).2.bits (symBit σ.ME a.enc.r)})
   | .dprep, b, a =>
     ({a with
         dec := ⟨σ.dprepSym b.ph a.inp, σ.MD.blank, if a.fst then some true else none, none⟩
@@ -409,22 +423,12 @@ def fwd : Ins σ → Buf σ → Cell σ → Cell σ × Buf σ
         lab := none},
       {b with ph := dprepPh b.ph a.inp})
   | .pack, b, a =>
-    let (a1, b1) : Cell σ × Buf σ :=
-      if a.box && a.mem && !a.pk && !b.f1 then
-        ({a with pk := true}, {b with f1 := true, cS := some a.cur})
-      else (a, b)
-    match b1.ph with
-    | 0 =>
-      if a1.sp then
-        if h : 0 < σ.W.w then
-          ({a1 with sp := false, lab := some ⟨0, h⟩}, {b1 with ph := 1, rc := ⟨1, by omega⟩})
-        else (a1, {b1 with ph := 2})
-      else (a1, b1)
-    | 1 =>
-      if h : b1.rc.val < σ.W.w then
-        ({a1 with lab := some ⟨b1.rc.val, h⟩}, {b1 with rc := ⟨b1.rc.val + 1, by omega⟩})
-      else ({a1 with sp := true}, {b1 with ph := 2})
-    | _ => (a1, b1)
+    ({(σ.pkMark b a).1 with
+        sp := (walk σ.W.w (σ.pkMark b a).2.ph (σ.pkMark b a).2.rc (σ.pkMark b a).1.sp).2.2.1
+        lab := (walk σ.W.w (σ.pkMark b a).2.ph (σ.pkMark b a).2.rc (σ.pkMark b a).1.sp).2.2.2},
+      {(σ.pkMark b a).2 with
+        ph := (walk σ.W.w (σ.pkMark b a).2.ph (σ.pkMark b a).2.rc (σ.pkMark b a).1.sp).1
+        rc := (walk σ.W.w (σ.pkMark b a).2.ph (σ.pkMark b a).2.rc (σ.pkMark b a).1.sp).2.1})
   | .simD q, b, a => gF σ.MD σ.decL σ.sDL q b a
   | .dread, b, a => (a, if a.fst then {b with dout := some a.dec.r} else b)
   | .wcopy _, b, a => ({a with tmp := a.cur}, b)
