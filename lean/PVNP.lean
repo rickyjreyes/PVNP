@@ -64,6 +64,14 @@ import PVNP.WCCGenerality
 import PVNP.WCCDFiniteSupport
 import PVNP.WCCDFiniteSnapshot
 import PVNP.WCCDFiniteWork
+import PVNP.SweepTM
+import PVNP.WCCDCyclic
+import PVNP.WCCDSweep
+import PVNP.WCCDSweepSteps
+import PVNP.WCCDSweepLoops
+import PVNP.WCCDSweepRound
+import PVNP.WCCDSweepBuild
+import PVNP.WCCDSweepMain
 import PVNP.WCTLattice
 import PVNP.WCTLatticeGlobalBounds
 import PVNP.WCTMeshScaling

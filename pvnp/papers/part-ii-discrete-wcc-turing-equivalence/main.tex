@@ -1046,11 +1046,15 @@ P_{\mathrm{WCC}} = P_{\mathrm{Turing}}.
 \label{rem:verified-scope}
 Corollary~\ref{cor:pwcc_equals_pturing} is kernel-checked in dimension
 one for every fixed radius $r\ge1$ and the fixed origin-marked encoding
-(Section~\ref{sec:uniform-bridge}). For $d\ge2$ only
-$P_{\mathrm{Turing}}\subseteq P_{\mathrm{WCC}}$ is kernel-checked; the
+(Section~\ref{sec:uniform-bridge}). For $d\ge2$ the inclusion
+$P_{\mathrm{Turing}}\subseteq P_{\mathrm{WCC}}$ is kernel-checked for the
+radius-one Moore neighbourhood. At the original release of this paper the
 inclusion $P_{\mathrm{WCC}}\subseteq P_{\mathrm{Turing}}$ in dimension
-$d\ge2$ is supported here by the proof sketch of
-Theorem~\ref{thm:wcc_to_tm} only. For the polynomial-time encoder class
+$d\ge2$ was supported by the proof sketch of Theorem~\ref{thm:wcc_to_tm}
+only. A later repository verification (5 November 2026) kernel-checks it
+for every dimension by an explicit single-tape machine
+(\texttt{PVNP.Discrete.P\_WCCD\_eq\_P\_TM}); see the formal verification
+status paragraph below. For the polynomial-time encoder class
 of Definition~\ref{def:wcc_machine}, the inclusion
 $P_{\mathrm{Turing}}\subseteq P_{\mathrm{WCC}}$ also follows trivially,
 because the encoder may compute the decision bit.
@@ -1860,9 +1864,21 @@ Moore neighbourhood, an exact axis embedding
 $P_{\mathrm{TM}}\subseteq P^{(1+d)}_{\mathrm{WCC}}$
 (\texttt{PVNP.Discrete.P\_TM\_subset\_P\_WCCD}). The converse inclusion
 for $d\ge1$ is the classical polynomial simulation of a multidimensional
-automaton sketched in Theorem~\ref{thm:wcc_to_tm}; it is \emph{not}
-formalized, and every statement of this paper about $d\ge2$ that needs it
-is conditional on it. The radius-$0$ case of
+automaton sketched in Theorem~\ref{thm:wcc_to_tm}. It was not formalized
+at the original release of this paper. A later repository verification
+(5 November 2026, postdating that release) kernel-checks it:
+\texttt{PVNP.Discrete.P\_WCCD\_eq\_P\_TM} and
+\texttt{PVNP.Discrete.NP\_WCCD\_eq\_NP\_TM} hold for every $d$. The
+simulating machine \texttt{WCCDSweep.toTM} is an ordinary single-tape
+Turing machine with a finite alphabet, compiled from an explicit
+round-trip sweep program with exact step accounting. It stores the
+configuration as a cyclic array of length $M^{d+1}+1$ with
+$M=n+2G+3$. In each round it rotates the neighbourhood tracks by
+$\pm M^k$ using one-cell marker moves, and it restarts with horizons
+$G=0,1,2,\dots$. It decides within
+$(128d+421)\,(n+2T(n)+3)^{2d+3}$ steps
+(\texttt{WCCDSweep.toTM\_decides}). These are discrete model-equivalence
+results only. The radius-$0$ case of
 Definition~\ref{def:wcc_machine} has no communication between cells and
 is excluded from the formal statements.
 

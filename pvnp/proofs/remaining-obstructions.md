@@ -1,4 +1,4 @@
-# Remaining obstructions and obligations (ASTRA v2, 2 November 2026)
+# Remaining obstructions and obligations (ASTRA v2, 2 November 2026; D-1 closed 5 November 2026)
 
 Each item gives the precise missing statement, what has already been proved around it, and why it
 is not closed. None of these items is assumed by any kernel-checked PVNP theorem. Each appears
@@ -6,18 +6,43 @@ either as an explicit premise of a conditional theorem or not at all.
 
 ## Part II: generality of the discrete equivalence
 
-**D-1. Multidimensional converse.** Missing: `P_WCCD d ⊆ P_TM` for `d ≥ 1`, that is, a one-tape TM
-simulating `T` rounds of a `(1+d)`-dimensional radius-one CA in time `poly(n, T)`.
-- *Proved:* the inclusion `P_TM ⊆ P_WCCD d` for every `d` (`P_TM_subset_P_WCCD`, via the exact
-  axis embedding `WCC.toD_run`).
-- *Proved:* `P_WCCR r = P_TM` for every fixed radius in dimension one (`P_WCCR_eq_P_TM`).
-- *Additional finite groundwork (draft PR #23):* a computable signed-coordinate box of exact size `(n + 2T + 1)(2T + 1)^d`, finite synchronous replay, exact infinite-to-finite readback, and blank-aware existential first-answer output (`WCCDFiniteSnapshot.lean`, targeted Lean CI #41745573154). This is NOT an ordinary-TM simulation; the finite-program-to-single-tape transition compiler and its polynomial step bound remain missing.
-- *Finite-array work accounting (draft PR #23):* `WCCDFiniteWork.lean` proves a maximum of `2^(d+2)*(n+T+1)^(d+2)` cell writes over T replay rounds for fixed d, along with `3^(d+1)` Moore neighbors per cell, a polynomial count of abstract neighbor reads, and explicit `Polynomial ℕ` witnesses (targeted kernel CI #41750685872, full Lean/159-declaration axiom audit CI #41750685881). These bounds do **not** charge tape-head travel, multi-cell lookup, tape initialization, or serialization. A genuine `TM` construction and transition-count proof remain missing.
-- *Obstruction:* the statement is classical and true, but the 1-D sweep invariants do not lift. A
-  2-D configuration needs a row-major layout with markers and transport over distance `Θ(width)`.
-  The radius-`r` alphabet trick fails because the column alphabet grows with `n`.
-- *Manuscript action taken:* Part II Remark `rem:verified-scope` and the formal-status paragraph
-  restrict the verified claim to `d = 1`.
+**D-1. Multidimensional converse — CLOSED (kernel-checked, 5 November 2026).**
+`P_WCCD d = P_TM` and `NPOf (P_WCCD d) = NP_TM` for **every** `d`
+(`PVNP.Discrete.P_WCCD_subset_P_TM`, `P_WCCD_eq_P_TM`, `NP_WCCD_eq_NP_TM`, in
+`lean/PVNP/WCCDSweepMain.lean`).
+- *Machine.* `WCCDSweep.toTM A` is an ordinary `PVNP.Discrete.TM`: a finite state set, a finite tape
+  alphabet, one head with moves `L/S/R`, and the shared `FirstAnswer`/`DecidesAt` semantics. It is
+  obtained by compiling an explicit 23-instruction round-trip sweep program (`WCCDSweep.prog`) with
+  the generic compiler `Sweep.Prog.toTM` (`SweepTM.lean`). Each instruction is one left-to-right
+  finite-state transduction, an optional one-cell extension, and one right-to-left transduction. The
+  compiler's step count is exact (`reach_run`, `halts_run`, `toTM_firstAnswer`), so every head move is
+  charged.
+  - There is no random access, no unbounded register and no oracle.
+  - Every coordinate operation is done by unary markers that move one cell per pass.
+- *Simulation.*
+  - The `(1+d)`-dimensional configuration is flattened to a cyclic array on `ℤ/Nℤ` with
+    `N = M^(d+1) + 1` and `M = n + 2G + 3`. This is exact for rounds `≤ G` (`WCCDCyclic.lean`:
+    `flat_inj`, `cyclic_exact`, `cyclic_out`).
+  - One round rotates the `3^(d+1)` window tracks by `±M^k` with count-down markers started at
+    reference cells `M^k` (`loopL`, `loopR`, `axis_step`, `axes_run`, `round`), then applies the local
+    rule.
+  - The reference cells are built by unary loops (`inner_loop`, `outer_loop`, `build_axes`,
+    `xfin_inv`).
+  - Horizons `G = 0, 1, 2, …` are tried in turn (`restart`, `enter`, `guesses`).
+- *Decision semantics.*
+  - At every check, the tape answer equals the WCCD output `A.out x t` exactly. This includes
+    accepting or rejecting blank exteriors and acceptance precedence (`arrAns_eq`).
+  - The TM's first answer is the WCCD's first answer (`halts_of_first`).
+- *Explicit polynomial.* If `A` decides `L` in time `T`, then `toTM A` decides `L` within
+  `(128 d + 421)·(n + 2T(n) + 3)^(2d+3)` steps (`toTM_decides`). The class theorem uses the witness
+  `C(128d+421)·(X + 2p + 3)^(2d+3)`.
+- *Axioms:* `propext`, `Classical.choice`, `Quot.sound` only.
+- *Scope.* This is the discrete model equivalence for the frozen WCCD model: radius-one Moore
+  neighbourhood, origin-marked input on the first axis, and existential output with acceptance
+  precedence. It gives no information about classical `P` vs `NP`, the continuum PDE or physical
+  devices.
+- *Superseded groundwork* (still valid, no longer the frontier): `WCCDFiniteSupport`,
+  `WCCDFiniteSnapshot`, `WCCDFiniteWork` and `TMStackScan` (PRs #21, #23, #24).
 
 **E-1. Encoders.** No obligation. With polynomial-time encoders the class equality is trivially true,
 because the encoder can compute the answer. With unrestricted encoders, or with one advice bit, it is

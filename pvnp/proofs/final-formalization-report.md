@@ -12,7 +12,7 @@ declaration uses only `propext`, `Classical.choice` or `Quot.sound`. The full ax
 | Paper | Main theorem proved? | Lean verified? | Remaining gap | Publication readiness |
 |---|---|---|---|---|
 | **Part I**: curvature-bounded wave computation | **No.** The physical/curvature separation is conditional and open. Its discrete form is proved equivalent to classical `P ≠ NP` (`p_vs_np_discrete_transfer`, `curvature_lower_bound_is_classical`), and its physical form is proved at least as hard (`physical_SAT_lower_bound_is_classical`). | The supporting discrete and conditional statements are verified; the separation is not. | M2 (universal lower bound); the dimensional-lock hypothesis; F-1; CL-1 (converse transfers only) | **Not ready** as a separation paper. It could be submitted as a conditional framework plus obstruction analysis after the title, abstract and claims are rescoped. |
-| **Part II**: discrete WCC ⇄ Turing equivalence | **Yes, in dimension 1 for every fixed radius** with the fixed origin-marked encoding. For `ℤ^(1+d)` only `P_TM ⊆ P_WCC` is proved. | Yes: `P_WCC_eq_P_TM`, `NP_WCC_eq_NP_TM`, `P_WCCR_eq_P_TM`, `NP_WCCR_eq_NP_TM`, `P_TM_subset_P_WCCD` | D-1 (multidimensional converse; classical but not formalized). The physical capacity sections are conditional. | **Near-ready** for the discrete part with the restricted scope now stated in the text (Remark `rem:verified-scope`). The physical sections need their conditional status kept explicit. |
+| **Part II**: discrete WCC ⇄ Turing equivalence | **Yes, in dimension 1 for every fixed radius and on `ℤ^(1+d)` for every `d`** (radius-one Moore neighbourhood) with the fixed origin-marked encoding. | Yes: `P_WCC_eq_P_TM`, `NP_WCC_eq_NP_TM`, `P_WCCR_eq_P_TM`, `NP_WCCR_eq_NP_TM`, `P_WCCD_eq_P_TM`, `NP_WCCD_eq_NP_TM` (D-1 closed 2026-11-05 by an explicit single-tape TM, `WCCDSweep.toTM_decides`) | none for the discrete equivalence. The physical capacity sections are conditional. | **Near-ready** for the discrete part with the restricted scope now stated in the text (Remark `rem:verified-scope`). The physical sections need their conditional status kept explicit. |
 | **Part III**: physical complexity reassessment | **Yes** for its corrective content: counterexamples, corrected conditional bounds, Boolean-influence results and `P ⊆ NP`. **No** for M1–M3 on tori. | All 14 numbered statements have kernel-checked counterparts: 9 proved, 1 proved for a restricted scope, 4 conditional with explicit premises. The continuum flux inequality stays a premise. | F-1 (continuum flux inequality), M3-T (torus well-posedness), M1-a (certified simulation), M2 | **Ready** as a reassessment note after copy-editing. Every claim is classified. |
 
 Every numbered statement is classified in `theorem-manuscript-map.md`, and every open item in
@@ -115,7 +115,7 @@ Full statements are in `remaining-obstructions.md`.
 
 | Item | Missing statement |
 |---|---|
-| **D-1** | `P_WCCD d ⊆ P_TM` for `d ≥ 1`. |
+| ~~**D-1**~~ | **CLOSED 2026-11-05**: `P_WCCD_eq_P_TM`, `NP_WCCD_eq_NP_TM` (explicit single-tape TM `WCCDSweep.toTM`, bound `(128d+421)(n+2T+3)^(2d+3)`). |
 | **CL-1** | Cook–Levin for `SAT_dense`. Decision: **not necessary** for any current claim, which uses only `SAT_dense ∈ NP_TM`; isolated as an obligation. |
 | **M1-a** | Certified simulation `P^phys ⊆ P_TM`. Needs PDE error bounds at precision `η_n`. |
 | **M1-b** | Physical realization of TM computation with a language-independent encoder. |

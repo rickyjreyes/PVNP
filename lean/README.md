@@ -1,9 +1,13 @@
-> **Current status (2026-11-02, authoritative):** see `formalization.yaml` → `current_status`.
+> **Current status (2026-11-05, authoritative):** see `formalization.yaml` → `current_status`.
 > Kernel-checked discrete results:
 > - `P_WCC = P_TM` and `NP_WCC = NP_TM` for the 1-D radius-one model;
 > - the same equalities for **every fixed radius `r ≥ 1`** (`PVNP.Discrete.P_WCCR_eq_P_TM`,
 >   `NP_WCCR_eq_NP_TM`);
-> - `P_TM ⊆ P_WCCD d` on `ℤ^(1+d)` (inclusion only);
+> - **`P_WCCD d = P_TM` and `NPOf (P_WCCD d) = NP_TM` on `ℤ^(1+d)` for every `d`**
+>   (`PVNP.Discrete.P_WCCD_eq_P_TM`, `NP_WCCD_eq_NP_TM`; D-1, closed 2026-11-05). The converse
+>   direction is an explicit ordinary single-tape TM (`WCCDSweep.toTM`, compiled by
+>   `Sweep.Prog.toTM`). Every head move is charged, and it decides within
+>   `(128d+421)(n+2T(n)+3)^(2d+3)` steps (`WCCDSweep.toTM_decides`);
 > - `P ⊆ NP` and `SAT_dense ∈ NP_TM`;
 > - encoder and advice trivialization countermodels.
 >
