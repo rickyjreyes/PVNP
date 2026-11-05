@@ -190,6 +190,22 @@ prove a physical or classical $P$ versus $NP$ separation. See the
 dated claim-by-claim inventory in
 \texttt{pvnp/proofs/manuscript-lean-inventory.md}.
 
+\paragraph{Uniform discrete equivalence (5 November 2026, later repository addendum).}
+This addendum supersedes the sentence above stating that the reverse
+inclusion for the uniform finite-lattice model is not yet proved. For the
+uniform discrete WCC machine of Section~\ref{sec:discrete-equivalence}
+(any dimension $d\ge1$, any fixed radius $r\ge0$, polynomial-time lattice
+generation, encoding and readout, all charged) both theorems of that section
+are now kernel-checked:
+\texttt{PVNP.PartIIUniform.P\_disc\_eq\_P\_TM} for
+Theorem~\ref{thm:P-equivalence} and
+\texttt{PVNP.PartIIUniform.NP\_disc\_eq\_NP\_TM} for
+Theorem~\ref{thm:NP-equivalence}. The simulating machine is an ordinary
+single-tape Turing machine compiled from an explicit sweep program
+(\texttt{PVNP.PartIIUniform.wcc\_to\_tm}). These are discrete
+model-equivalence results only. They establish no physical equality and no
+separation.
+
 
 
 \section{Introduction}

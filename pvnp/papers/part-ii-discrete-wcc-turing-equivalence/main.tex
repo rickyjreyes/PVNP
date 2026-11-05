@@ -1925,6 +1925,34 @@ inclusion for that model requires the simulation of
 Theorem~\ref{thm:wcc_to_tm}, which is not yet kernel-checked for
 general radius and lattice with polynomial-time encoders and decoders.
 
+\paragraph{Uniform-model completion (repository addendum, 5 November 2026).}
+This later addendum supersedes the last sentence of item~(iii) above.
+For the uniform model of Definition~\ref{def:wcc_machine}, the simulation of
+Theorem~\ref{thm:wcc_to_tm} is kernel-checked
+(\texttt{PVNP.PartIIUniform.wcc\_to\_tm}). For every machine $W$ there are
+an ordinary single-tape Turing machine $M_W$ and a polynomial $q_W$ with the
+following property: if the decoder first outputs a decision $b$ at time
+$T_W(x)$, then $M_W$ first answers $b$ within $q_W(|x|+T_W(x)+1)$ steps.
+$M_W$ runs the lattice algorithm, the encoder and the decoder of $W$ as
+simulated Turing machines, all charged. It computes each synchronous update
+on the flattened box by cyclic rotations by
+$\delta_v=\sum_k(v_k-r)(2R+1)^k$.
+Consequently, for this model the following are kernel-checked:
+Corollary~\ref{cor:pwcc_equals_pturing} (with the bound $c\max(n,1)^k$ of
+item~(i)), Theorem~\ref{thm:np_equiv} and
+Theorem~\ref{thm:uniform-discrete-bijection}
+(\texttt{PVNP.PartIIUniform.P\_disc\_eq\_P\_TM},
+\texttt{PVNP.PartIIUniform.NP\_disc\_eq\_NP\_TM}).
+The verifier class of Definition~\ref{def:wcc_verifier} is formalized with:
+\begin{itemize}
+  \item binary alphabets, the input word encoding the pair $(x,y)$;
+  \item the first-decision acceptance convention of Definition~\ref{def:pwcc};
+  \item the runtime bound $p(N)$ on every pair, as for Turing verifiers
+    (Definition~\ref{def:tm_verifier}).
+\end{itemize}
+Theorem~\ref{thm:tm_to_wcc} for the author's own $W_M$ still lacks a proof
+that $W_M$ is uniform.
+
 
 \section{Conclusion}
 

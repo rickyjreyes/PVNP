@@ -21,13 +21,13 @@ Lean paths are relative to `lean/`. "(new)" marks declarations added in this pas
 
 | Paper | Claims | Exact | Restricted | Refuted | Open |
 |---|---|---|---|---|---|
-| Part I | 41 | 24 | 3 | 8 | 6 |
-| Part II | 28 | 19 | 5 | 3 | 1 |
-| Part III | 22 | 20 | 1 | 0 | 1 |
-| **Total** | **91** | **63** | **9** | **11** | **8** |
+| Part I | 41 | 26 | 1 | 8 | 6 |
+| Part II | 28 | 23 | 1 | 3 | 1 |
+| Part III | 22 | 21 | 0 | 0 | 1 |
+| **Total** | **91** | **70** | **2** | **11** | **8** |
 
-* Exact verification coverage = Exact / Total = 63/91 ≈ 69%.
-* Status conclusively determined by a proof or a counterexample (Exact + Refuted) = 74/91 ≈ 81%.
+* Exact verification coverage = Exact / Total = 70/91 ≈ 77% (63/91 before Milestone 5).
+* Status conclusively determined by a proof or a counterexample (Exact + Refuted) = 81/91 ≈ 89%.
 * Milestone history:
   * Milestone 1 (PR #27): 44 Exact, 8 Refuted.
   * Milestone 2 (PR #28): adds I-8, I-22, I-23, II-4, II-5, II-18 to II-23, II-27, III-5, III-7
@@ -35,6 +35,10 @@ Lean paths are relative to `lean/`. "(new)" marks declarations added in this pas
   * Milestone 3 (PR #30): adds the manuscript's Turing-machine model and two-phase
     construction (II-2, II-7, II-8, II-9, II-17, new row II-28).
   * Milestone 4: adds the uniform model of `def:wcc_machine` and `P_TM ⊆ P^disc` (II-26).
+  * Milestone 5 (5 November 2026): adds the reverse simulation for the uniform model,
+    `P^disc ⊆ P_TM`, hence `P_disc_eq_P_TM`, and the uniform verifier class with
+    `NP_disc_eq_NP_TM` (`PVNP.PartIIUniformEquiv`, simulator `PVNP.UniformSim*`). Upgrades
+    I-38, I-39, II-11, II-12, II-13, II-15 and III-6 to Exact; I-11 and II-10 stay Restricted.
 
 **What the "Exact" count does not mean.** It includes conditional propositions whose
 implications are verified while their premises remain open, for example
@@ -55,7 +59,7 @@ classical `P ≠ NP`.
 | I-8 | Prop. WIN-04 `lem:dim-lock` | Gaussian on ℝ⁴ has finite ‖∇ψ‖² and ‖Θ_ε‖² | `PartIDimLock.win04_gaussian`, `laplacian_ψ` (new) | Exact (Mathlib's Laplacian; Δψ = (4‖x‖²−8)e^{−‖x‖²} proved; integrability of ψ, ‖∇ψ‖², Θ_ε² for every ε > 0, α ≥ 0) |
 | I-9 | Prop. WIN-05 `thm:pwcc-neq-npwcc` | verifier + every decider exceeds a rail i.o. ⇒ P^phys≠NP^phys | `PartISeparation.win05` (new) | Exact |
 | I-10 | Prop. `prop:collapse-grammar` | (1) no finite invariant partition; (2) L(ψ)∈{∅,Σ*}; (3) rule unrecoverable | `PartISeparation.trivial_partition_invariant` (new) | Refuted ((1) as literally stated; (2),(3) undefined) |
-| I-11 | Remark `rem:infinite-compute` | within the rail, P_WCC = P_Turing | `P_WCC_eq_P_TM` | Restricted (discrete model) |
+| I-11 | Remark `rem:infinite-compute` | within the rail, P_WCC = P_Turing | `P_WCC_eq_P_TM`; `PartIIUniform.P_disc_eq_P_TM` (new) | Restricted (the discrete equality is kernel-checked, also for the uniform model; that the PWCC rail induces such a machine is a physical premise, unproved by Part I's own `rem:physical-bridge`) |
 | I-12 | §6.4 "even if P=NP, any SAT algorithm would violate the rails" | physical barrier claim | `PartISeparation.PNP_SAT_physically_constant`, `category_error_claim_implies_classical` (new) | Refuted under P=NP in the frozen model with charged poly-time encoders; the claim implies `P_TM ≠ NP_TM` |
 | I-13 | Lemma `lem:local_growth` | supp(C_{t+1}) ⊆ supp(C_t)^{+r}; \|supp C_t\| ≤ \|supp C_0\| + O(rt\|∂supp C_0\|) | `PartILocality.supp_step_subset`, `local_growth_needs_quiescence`, `linear_growth_false_d2`, `support_poly_bound` (new) | Refuted (needs quiescence; linear bound false for d=2); corrected (2rt+1)^d bound proved |
 | I-14 | Lemma `lem:clause_flip` | local signature change needs local activity; k ≤ Tb | `PartILocality.clause_flip_local`, `clause_flip_rounds`, `clause_flip_ceil` (new) | Exact |
@@ -82,15 +86,15 @@ classical `P ≠ NP`.
 | I-35 | Prop. `cor:P-neq-NP-conditional` (1) | same-class identifications ⇒ separation gives P≠NP | `conditional_bridge_WCC/WCCD` (new) | Exact |
 | I-36 | Prop. `cor:P-neq-NP-conditional` (2) | restricted separation does not give P≠NP | `PartISeparation.restricted_separation_schema_iff` (new) | Exact (the schema is equivalent to P≠NP) |
 | I-37 | §12.3 "nonexistence of a toroidal locking configuration ⟺ unsatisfiability" | informal | — | Open (not well posed) |
-| I-38 | Thm. `thm:P-equivalence` | P^disc_WCC = P | `P_WCC_eq_P_TM`, `P_WCCR_eq_P_TM`, `P_WCCD_eq_P_TM` | Restricted (fixed origin-marked encoding; 1-D any radius, ℤ^(1+d) radius one; the manuscript allows radius r in ℤ^d and poly-time enc/readout) |
-| I-39 | Thm. `thm:NP-equivalence` | NP^disc_WCC = NP | `NP_WCC_eq_NP_TM`, `NP_WCCR_eq_NP_TM`, `NP_WCCD_eq_NP_TM` | Restricted (same gaps) |
+| I-38 | Thm. `thm:P-equivalence` | P^disc_WCC = P | `PartIIUniform.P_disc_eq_P_TM` (new); also `P_WCC_eq_P_TM`, `P_WCCR_eq_P_TM`, `P_WCCD_eq_P_TM` | Exact (uniform model `PartIIUniform.UWCC`: any d ≥ 1 and radius r ≥ 0, poly-time lattice algorithm, encoder and readout, all charged) |
+| I-39 | Thm. `thm:NP-equivalence` | NP^disc_WCC = NP | `PartIIUniform.NP_disc_eq_NP_TM` (new); also `NP_WCC_eq_NP_TM`, `NP_WCCR_eq_NP_TM`, `NP_WCCD_eq_NP_TM` | Exact (polynomial-size witness strings, uniform poly-time WCC verifiers: `PartIIUniform.NP_disc`) |
 | I-40 | Thm. `thm:supplied-assignment-in-P` | L* (uniform F_n) ∈ P; explicit (F,a) ∈ P | `SATV.V_SAT_mem_P_TM` (explicit version) | Exact for explicit (F,a); uniform-family version needs TM composition (counted Exact for the explicit claim) |
 | I-41 | Prop. `thm:curv-bdd-sep` + remark | conditional physical separation; fixed-n impossibility | `PartISeparation.curv_bdd_sep`, `fixed_n_impossible` (new) | Exact |
 
 Counts:
-* Exact (24): I-1, 4, 5, 6, 7, 8, 9, 14, 15, 17, 18, 19, 21, 22, 23, 24, 29, 30, 33, 34, 35, 36,
-  40, 41.
-* Restricted (3): I-11, 38, 39.
+* Exact (26): I-1, 4, 5, 6, 7, 8, 9, 14, 15, 17, 18, 19, 21, 22, 23, 24, 29, 30, 33, 34, 35, 36,
+  38, 39, 40, 41.
+* Restricted (1): I-11.
 * Refuted (8): I-10, 12, 13, 20, 25, 26, 27, 28.
 * Open (6): I-2, 3, 16, 31, 32, 37.
 
@@ -121,11 +125,11 @@ Counts:
 | II-8 | Lemma `lem:one_step` | one TM step = two WCC steps; C_{2t} encodes the TM configuration "for all t ≥ 0" | `PartIITwoPhase.two_steps`, `one_step`, `one_step_of_inWin`, `one_step_literal_fails` (new) | Refuted (quantifier range only, same counterexample). Corrected statement for all t ≤ L(n)+1, and for every t while the head stays in Λ_n, proved |
 | II-9 | Lemma `lem:runtime` | acceptance ⟺ q_acc; T_{W_M} = 2T_M; \|Λ_n\| = 2L(n)+1 | `PartIITwoPhase.runtime`, `runtime_accepts`, `card_window` (new) | Exact (first output of dec_M at time exactly 2T_M(x), when T_M(x) ≤ L(n)) |
 | II-10 | Thm. `thm:tm_to_wcc` | W_M decides L in time 2T_M ≤ 2cn^k; P_Turing ⊆ P_WCC | `PartIITwoPhase.tm_to_wcc_decides`, `PartIIUniform.P_Turing_subset_P_disc` (new), `TM.toWCC_decides`, `P_TM_subset_P_WCC` | Restricted. Both conclusions are verified: the decision-and-time statement for the author's W_M, and P_Turing ⊆ P^disc in the uniform model of `def:wcc_machine`, via the one-cell machine whose encoder computes the decision bit. Not formalized: that W_M itself is uniform, i.e. that enc_M, dec_M and Λ_n are computable in polynomial time |
-| II-11 | Thm. `thm:wcc_to_tm` | P_WCC ⊆ P_Turing | `WCC.toTM_decides`, `WCCR.toTM_decides`, `WCCDSweep.toTM_decides` | Restricted (radius r > 1 in ℤ^d, d ≥ 2, and poly-time enc/dec composition missing) |
-| II-12 | Cor. `cor:pwcc_equals_pturing` | P_WCC = P_Turing | `P_WCC_eq_P_TM`, …; `PartIITuring.P_Turing_eq_P_TM` (new, corrected def:pturing) | Restricted (repository WCC models; uniform model not formalized; with the literal def:pturing the right side is {∅, Σ*}, see II-17) |
-| II-13 | Thm. `thm:np_equiv` | NP_WCC = NP_Turing | `NP_WCC_eq_NP_TM`, …; `PartIITuring.NP_Turing_eq_NP_TM` (new) | Restricted (repository WCC models; uniform model not formalized) |
+| II-11 | Thm. `thm:wcc_to_tm` | P_WCC ⊆ P_Turing | `PartIIUniform.wcc_to_tm`, `P_disc_subset_P_TM` (new); also `WCC.toTM_decides`, `WCCR.toTM_decides`, `WCCDSweep.toTM_decides` | Exact (uniform model, every d ≥ 1 and r ≥ 0: an explicit single-tape machine M_W, compiled from a sweep program, first answers within q_W(\|x\| + T_W(x) + 1) steps, lattice algorithm, encoder and decoder simulated and charged; P_Turing read with the corrected def:pturing, see II-17) |
+| II-12 | Cor. `cor:pwcc_equals_pturing` | P_WCC = P_Turing | `PartIIUniform.P_disc_eq_P_TM` (new), `PartIITuring.P_Turing_eq_P_TM` (corrected def:pturing) | Exact (uniform model of def:wcc_machine; with the literal def:pturing the right side is {∅, Σ*}, see II-17) |
+| II-13 | Thm. `thm:np_equiv` | NP_WCC = NP_Turing | `PartIIUniform.NP_disc_eq_NP_TM` (new), `PartIITuring.NP_Turing_eq_NP_TM` | Exact (verifier class `NP_disc` of def:wcc_verifier with binary alphabets: input word `pair x y`; \|Λ\| ≤ p(N) for \|y\| ≤ q(\|x\|), N = \|x\|+\|y\|; first decision within p(N) on every pair, the runtime scaling of def:tm_verifier; acceptance = first decision 1, the first-output convention of def:pwcc) |
 | II-14 | Lemma `lem:verifier-encoding` | preservation of verifier outcomes | `TM.toWCC_decides` on `pair x w` | Exact |
-| II-15 | Thm. `thm:uniform-discrete-bijection` | P, NP equalities | as II-12/13 | Restricted |
+| II-15 | Thm. `thm:uniform-discrete-bijection` | P, NP equalities | `PartIIUniform.P_disc_eq_P_TM`, `NP_disc_eq_NP_TM` (new) | Exact |
 | II-16 | Prop. `prop:conditional-classical-lift` | L ∈ NP^disc\P^disc ⇒ P≠NP | `p_vs_np_discrete_transfer` | Exact |
 | II-17 | Def. `def:pturing` (T_M(n) ≤ cn^k for all n, c,k ≥ 1) as the classical class P | the manuscript's P_Turing is P | `PartIITuring.P_Turing_lit_eq`, `P_Turing_lit_ne_P_TM`, `P_Turing_lit_ne_NP_Turing`, `P_Turing_eq_P_TM` (new) | Refuted (literal: n = 0 forces T_M(0) = 0, so P_Turing^lit = {∅, Σ*}; literally then P_Turing ≠ NP_Turing, a meaningless artefact). Corrected bound c·max(n,1)^k: P_Turing = P_TM proved, via explicit simulations in both directions (manuscript TM: total δ, moves L/R, q_acc/q_rej) |
 | II-18 | Lemma `lem:bandlimit` | k_eff ≤ C₁E_max/(ħc); conditional k_max bound | `PartIIManuscript.bandlimit_eff`, `bandlimit_sharp` (new) | Exact (physical identities as explicit hypotheses, as in the manuscript) |
@@ -136,13 +140,14 @@ Counts:
 | II-23 | Prop. `prop:phys_step_ceiling` | N_updates(n) ≤ C'n^d; T_W polynomial | `PartIIManuscript.phys_step_ceiling`, `rounds_le_events` (new) | Exact (C' = KC_VC_TC_E⁴, d = a+b+4c; T_W ≤ N_updates + 1 under the counting premise) |
 | II-24 | Thm. `thm:conditional_np_safety` | (i)–(iii) ⇒ no poly-resource WCT AGI decides an NP-complete L | — | Open (needs Cook–Levin (CL-1) and closure of P_TM under finite modification) |
 | II-25 | Remark `rem:compatibility` and the Part II formal-status paragraph | encoder triviality statements | `unrestricted_encoder_trivializes_WCC`, `advice_bit_trivializes`, `P_WCC_enc_id` | Exact |
-| II-26 | Formal-status paragraph: "P^disc = P also for the trivial reason that a poly-time encoder can compute the answer" | P_TM ⊆ P^disc via encoder | `PartIIUniform.P_TM_subset_P_disc`, `MTM.answerWriter`, `answerWriter_outputs` (new; uniform model `UWCC`, `FP`) | Exact for the inclusion P_TM ⊆ P^disc. The trivial reason gives only this inclusion; the reverse inclusion P^disc ⊆ P_TM needs the simulation of `thm:wcc_to_tm` and is not formalized for the uniform model |
+| II-26 | Formal-status paragraph: "P^disc = P also for the trivial reason that a poly-time encoder can compute the answer" | P_TM ⊆ P^disc via encoder | `PartIIUniform.P_TM_subset_P_disc`, `MTM.answerWriter`, `answerWriter_outputs` (new; uniform model `UWCC`, `FP`) | Exact for the inclusion P_TM ⊆ P^disc. The trivial reason gives only this inclusion; the reverse inclusion P^disc ⊆ P_TM needs the simulation of `thm:wcc_to_tm`, now kernel-checked (II-11) |
 | II-27 | Remark `rem:poly_resources` | poly resources ⇒ poly updates | `PartIIManuscript.phys_step_ceiling` (new) | Exact |
 | II-28 | Defs. `def:tm_verifier`, `def:npturing` vs Lean `NP_TM` | the manuscript's verifier class is NP | `PartIITuring.NP_Turing_eq_NP_TM`, `MTM.guard` (new) | Exact (binary input and witness alphabets, pair format `pair`; time bound p(\|x\|+\|y\|) required only on well-formed pairs, as in the manuscript) |
 
 Counts:
-* Exact (19): II-1, 2, 3, 4, 5, 6, 9, 14, 16, 18, 19, 20, 21, 22, 23, 25, 26, 27, 28.
-* Restricted (5): II-10, 11, 12, 13, 15.
+* Exact (23): II-1, 2, 3, 4, 5, 6, 9, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23, 25, 26, 27,
+  28.
+* Restricted (1): II-10.
 * Refuted (3): II-7, 8, 17. In each, only the literal quantifier or boundary case fails; the
   corrected statement is proved.
 * Open (1): II-24.
@@ -164,10 +169,16 @@ Counts:
    * Its lattice description is the box bitmap with margin `r`; its configuration code lists
      member states in flattened order.
    * `P_TM ⊆ P^disc` is proved (II-26).
-4. **What remains** is the inclusion `P^disc ⊆ P_TM` for the uniform model. It needs a
-   Turing-machine simulation of the radius-`r` rule on canonical codes over `ℤ^d`, composed with
-   the encoder and the decoder. It would complete II-10 to II-13, II-15, I-11, I-38, I-39 and
-   III-6. II-24 additionally needs an NP-complete language (Cook–Levin).
+   * `P^disc ⊆ P_TM` is proved (Milestone 5, II-11): `PartIIUniform.wcc_to_tm` compiles an
+     explicit sweep program (`UniformSim.Spec.prog`) into a single-tape machine. The program runs
+     the lattice algorithm, the encoder and the decoder of `W` as simulated manuscript machines,
+     parses the box bitmap, loads `C_0`, and per round writes the decoder input
+     `1^n 0 cfgCode(C_t)` (`decode_phase`) and computes `C_{t+1} = UWCC.step n C_t` on the box
+     (`round_spec`). The windows are gathered by cyclic rotations by
+     `δ_v = Σ_k (v_k − r)(2R+1)^k` (`tasks_shift`, `member_nbr`). Hence `P_disc_eq_P_TM` and,
+     for the verifier class `NP_disc`, `NP_disc_eq_NP_TM`.
+4. **What remains.** II-10 asks that the author's own `W_M` be uniform (poly-time `enc_M`,
+   `dec_M`, `Λ_n`); this is not formalized. II-24 needs an NP-complete language (Cook–Levin).
 
 ## Part III — *Classical Complexity and Curvature-Bounded Physical Computation*
 
@@ -178,7 +189,7 @@ Counts:
 | III-3 | Prop. "Conditional additive storage" | E_store ≥ nc₀ | `conditional_additive_storage` | Exact |
 | III-4 | Lemma `lem:h2bound` | C_Θ ≤ ‖Δψ‖²/(4ε²) | `PartIIIAnalytic.curvature_cost_le` | Exact |
 | III-5 | Remark WIN-13 | ψ=−ε violates \|ψ+ε\| ≥ ε | `ManuscriptRemarks.win13_counterexample` (new) | Exact |
-| III-6 | Thm. `thm:disc-equiv` | P^disc=P, NP^disc=NP | as II-12/13 | Restricted |
+| III-6 | Thm. `thm:disc-equiv` | P^disc=P, NP^disc=NP | `PartIIUniform.P_disc_eq_P_TM`, `NP_disc_eq_NP_TM` (new) | Exact (uniform finite-state fixed-radius model `UWCC`) |
 | III-7 | Thm. `thm:p-in-np` | P^phys ⊆ NP^phys when verifiers may ignore witnesses | `ManuscriptRemarks.p_in_np_phys` (new), `P_TM_subset_NP_TM`, `P_WCC_subset_NP_WCC` | Exact (any model whose verifiers may ignore witnesses under the same rails) |
 | III-8 | Remark WIN-16 | NP^phys = ∅ contradicts nonempty P^phys | `ManuscriptRemarks.win16` (new) | Exact |
 | III-9 | Prop. "No logical conflict" | inclusions compatible with = and ≠ | `inclusions_do_not_determine` | Exact |
@@ -197,8 +208,8 @@ Counts:
 | III-22 | §8 arrow-of-time remark | no equivalence with retrocausality | — | Open (no mathematical content to formalize) |
 
 Counts:
-* Exact (20): III-1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21.
-* Restricted (1): III-6.
+* Exact (21): III-1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21.
+* Restricted (0).
 * Open (1): III-22.
 
 ## Smallest missing lemmas (for the P-versus-NP conclusion)

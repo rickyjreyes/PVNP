@@ -10,7 +10,7 @@ axiom audit admits only `propext`, `Classical.choice` and `Quot.sound`. There is
 
 ## A. Part I (*P vs NP in Curvature-Bounded Wave Computation*)
 
-41 claims: 24 Exact, 3 Restricted, 8 Refuted, 6 Open.
+41 claims: 26 Exact, 1 Restricted, 8 Refuted, 6 Open.
 
 * **Verified skeleton.** Each separation statement is formalized with its own hypotheses and
   universal quantifiers over admissible machines. The implications are proved:
@@ -47,12 +47,18 @@ axiom audit admits only `propext`, `Classical.choice` and `Quot.sound`. There is
     Program, `lem:separator-price`, `prop:locked-expander-full`.
   * Two informal statements that are not well posed: the phase-locking criterion and the
     toroidal locking configuration.
-* **Restricted (I-11, I-38, I-39).** These are the discrete class equivalences. They are proved
-  for the repository models, but not in the uniform model (see E).
+* **Discrete class equivalences (I-38, I-39): Exact.** `thm:P-equivalence` and
+  `thm:NP-equivalence` concern Part I's *uniform discrete WCC machine*. That model is
+  `PartIIUniform.UWCC`: any dimension `d ≥ 1` and radius `r ≥ 0`, a poly-time lattice algorithm,
+  encoder and readout, all charged. `P_disc_eq_P_TM` and `NP_disc_eq_NP_TM` prove both theorems
+  (Milestone 5).
+* **Restricted (I-11).** `rem:infinite-compute` asserts the equality *within the physical rail*.
+  The discrete equality is proved, but that the rail induces a uniform discrete machine is a
+  physical premise, which Part I itself (`rem:physical-bridge`) leaves unproved.
 
 ## B. Part II correspondence audit (*Discrete WCC and Classical Complexity*)
 
-28 claims: 19 Exact, 5 Restricted, 3 Refuted, 1 Open.
+28 claims: 23 Exact, 1 Restricted, 3 Refuted, 1 Open.
 
 * **Machine model.**
   * The manuscript's Turing machine (`def:tm`: total `δ`, moves `L`/`R`, `q_acc`/`q_rej`) is
@@ -83,22 +89,45 @@ axiom audit admits only `propext`, `Classical.choice` and `Quot.sound`. There is
   `P_TM ⊆ P^disc` is proved by an explicit answer-writing machine (II-26). The status
   paragraph's phrase "the equality also holds for this trivial reason" is right only for this
   inclusion.
+* **The reverse simulation (`thm:wcc_to_tm`, Milestone 5).** `PartIIUniform.wcc_to_tm` gives,
+  for every uniform machine `W`, an ordinary single-tape machine `M_W` and a polynomial `q_W`.
+  Whenever the decoder of `W` first outputs `some b` at time `T_W(x)`, `M_W` first answers `b`
+  within `q_W(|x| + T_W(x) + 1)` steps. `M_W` is compiled by `Prog.toTM` from an explicit
+  round-trip sweep program (`UniformSim.Spec.prog`), which works as follows.
+  * The lattice algorithm, the encoder and the decoder of `W` run as simulated manuscript
+    machines on folded tracks, one round trip per step (`simTrip_spec`). Their cost is charged
+    through the FP time bounds.
+  * The box bitmap `1^R 0 b` is parsed, a ruler of `B = 2R+1` cells is built, and `C_0` is loaded
+    from the encoder's code (`pre_round`).
+  * Each round writes the decoder input `1^n 0 cfgCode(C_t)` (`decode_phase`), reads the first
+    decision (`round_halt`), and otherwise computes `C_{t+1} = UWCC.step n C_t` on the box
+    (`round_spec`).
+  * The windows come from cyclic rotations by `δ_v = Σ_k (v_k − r) B^k`, nested over the ruler
+    (`rot_level`, `tasks_shift`). The flattened-index geometry is proved (`nbr_idx`,
+    `member_nbr`), not assumed.
+
+  Hence `P_disc_eq_P_TM`. The verifier class of `def:wcc_verifier` is `NP_disc`, and
+  `NP_disc_eq_NP_TM` holds (II-13; reading of the definition in the inventory).
 * **Capacity section.** `lem:bandlimit`, `lem:spatial_capacity` (a genuine lattice-point count,
   `C₂ = 27/(8π³)`), `lem:lane_update_bound`, `thm:spacetime_capacity` and
   `prop:phys_step_ceiling` are proved. Their physical premises are explicit hypotheses, as in
   the manuscript.
 * **Wave–symbol correspondence.** Both directions of `thm:wave-symbol-isomorphism` and the
   manuscript's counterexample are proved.
-* **Restricted (II-10 to II-13, II-15).** Proved for the repository models: 1-D any radius;
-  `ℤ^(1+d)` radius one; fixed origin-marked encoding. The uniform model's inclusion
-  `P^disc ⊆ P_TM` is not formalized.
+* **Exact (II-11, II-12, II-13, II-15).** `thm:wcc_to_tm`, `cor:pwcc_equals_pturing`,
+  `thm:np_equiv` and `thm:uniform-discrete-bijection` hold for the uniform model. `P_Turing` is
+  read with the corrected `def:pturing`; with the literal one the right side is `{∅, Σ*}` (II-17).
+* **Restricted (II-10).** Both conclusions of `thm:tm_to_wcc` are proved. What is not formalized
+  is that the author's own `W_M` is uniform, i.e. that `enc_M`, `dec_M` and `Λ_n` are computable
+  in polynomial time.
 * **Open (II-24, `thm:conditional_np_safety`).** It needs an NP-complete language (Cook–Levin)
   and closure of `P` under poly-time reductions.
 
 ## C. Part III (*Physical Complexity Reassessment*)
 
-22 claims: 20 Exact, 1 Restricted (III-6, the same uniform-model gap), 1 Open (III-22, a remark
-without mathematical content). New in this pass:
+22 claims: 21 Exact (including III-6, `thm:disc-equiv`, via `P_disc_eq_P_TM` and
+`NP_disc_eq_NP_TM`), 0 Restricted, 1 Open (III-22, a remark without mathematical content).
+New in earlier passes:
 * WIN-13;
 * `thm:p-in-np`, for any model whose verifiers may ignore witnesses under the same rails;
 * WIN-16.
@@ -107,13 +136,13 @@ without mathematical content). New in this pass:
 
 | Paper | Claims | Exact | Restricted | Refuted | Open |
 |---|---|---|---|---|---|
-| I | 41 | 24 | 3 | 8 | 6 |
-| II | 28 | 19 | 5 | 3 | 1 |
-| III | 22 | 20 | 1 | 0 | 1 |
-| **Total** | **91** | **63** | **9** | **11** | **8** |
+| I | 41 | 26 | 1 | 8 | 6 |
+| II | 28 | 23 | 1 | 3 | 1 |
+| III | 22 | 21 | 0 | 0 | 1 |
+| **Total** | **91** | **70** | **2** | **11** | **8** |
 
-* Exact coverage is 63/91 ≈ 69%.
-* The proportion determined (Exact + Refuted) is 74/91 ≈ 81%.
+* Exact coverage is 70/91 ≈ 77% (63/91 before Milestone 5).
+* The proportion determined (Exact + Refuted) is 81/91 ≈ 89%.
 * "Exact" includes conditional implications whose premises are open. No conditional theorem is
   counted as verifying an unconditional claim.
 
@@ -127,10 +156,8 @@ without mathematical content). New in this pass:
 
    Even then, a physical SAT lower bound under poly-time encoders already implies
    `P_TM ≠ NP_TM` (`physical_SAT_lower_bound_is_classical`).
-3. **Uniform model, `P^disc ⊆ P_TM`.** This is a Turing-machine simulation of a radius-`r` rule on
-   canonical codes over `ℤ^d`, composed with the poly-time encoder and the decoder. It closes
-   I-11, I-38, I-39, II-10 to II-13, II-15 and III-6. It is standard but long: the analogous
-   repository result D-1 took about 3,800 lines.
+3. **Done in Milestone 5:** the uniform model's `P^disc ⊆ P_TM`, hence `P_disc_eq_P_TM` and
+   `NP_disc_eq_NP_TM` (about 4,950 lines in `UniformSim*` and `PartIIUniformEquiv`).
 4. **II-24.** An NP-complete language and closure of `P_TM` under poly-time reductions and finite
    modification.
 5. **Uniformity of the author's `W_M`.** A poly-time machine computing `enc_M` on
@@ -142,6 +169,9 @@ without mathematical content). New in this pass:
 * `PartIPsiSat`, `PartISeparation`, `PartILocality`, `PartIDimLock`;
 * `PartIIManuscript`, `ManuscriptRemarks`;
 * `PartIITuringModel`, `PartIITwoPhase`, `PartIIUniform`;
+* Milestone 5: `UniformSimLib`, `UniformSimProg`, `UniformSimSem`, `UniformSimMath`,
+  `UniformSimPre`, `UniformSimGrow`, `UniformSimLoad`, `UniformSimInit`, `UniformSimPack`,
+  `UniformSimRot`, `UniformSimApply`, `UniformSimRound`, `UniformSimMain`, `PartIIUniformEquiv`;
 * the earlier D-1 modules: `SweepTM`, `WCCDCyclic`, `WCCDSweep*`.
 
 **PRs, merged once CI (`lean`, `build`, `phase-iii-targeted`) was green on the exact head:**
@@ -152,10 +182,12 @@ without mathematical content). New in this pass:
 | #27 | Milestone 1 | `529058b` | `ccd2c51` |
 | #28 | Milestone 2 | `1f56405` | `6c4f537` |
 | #30 | Milestone 3 | `c5454af` | `2d3a8ee` |
+| #31 | Milestone 4 (uniform model, `P_TM ⊆ P^disc`) | — | `ad18b6a` |
+| #32 | Milestone 5 checkpoint (simulator library and program) | — | `08899d7` |
 
-Milestone 4 (uniform model, this report) is submitted as its own PR.
+Milestone 5 (`P_disc_eq_P_TM`, `NP_disc_eq_NP_TM`) is submitted as its own PR.
 
-**Axiom audit:** `lean/audit/AxiomAudit.lean`, 275 principal declarations, checked by
+**Axiom audit:** `lean/audit/AxiomAudit.lean`, 311 principal declarations, checked by
 `audit/check_axioms.py`. CI also builds each manuscript module explicitly.
 
 ## G. Conclusion on P versus NP
@@ -168,7 +200,8 @@ here.**
   * the interface/expander hypotheses;
   * the non-constructibility premises.
 * The state-level routes contain an inference refuted in Lean.
-* The discrete equivalences that are verified (`P_WCC = P_TM`, `NP_WCC = NP_TM`, on `ℤ^(1+d)`,
-  and for the manuscript's own Turing model with the corrected bound) show only that the
-  discrete WCC question is *exactly* the classical one.
+* The discrete equivalences that are verified (`P_WCC = P_TM`, `NP_WCC = NP_TM` on `ℤ^(1+d)`;
+  `P_disc = P_TM` and `NP_disc = NP_TM` for the uniform model of `def:wcc_machine`; the
+  manuscript's own Turing model with the corrected bound) show only that the discrete WCC
+  question is *exactly* the classical one.
 * The entire chain is not verified, because its decisive premise is the open problem itself.

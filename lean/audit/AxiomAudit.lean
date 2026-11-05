@@ -306,6 +306,35 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.WCTDependencyClosure.no_route_under_classical_collapse
 #print axioms PVNP.WCTDependencyClosure.indicator_physical_barrier_iff_TM
 
--- Milestone 5 partial simulator infrastructure (not uniform equivalence)
+-- Milestone 5: the uniform simulator (`UniformSim*`) and the uniform class equalities
 #print axioms PVNP.UniformSim.simTrip_spec
 #print axioms PVNP.UniformSim.RN.reach
+#print axioms PVNP.UniformSim.nbr_idx
+#print axioms PVNP.UniformSim.Spec.sim_loop
+#print axioms PVNP.UniformSim.Spec.pre_machines
+#print axioms PVNP.UniformSim.Spec.parse_trip
+#print axioms PVNP.UniformSim.Spec.rul_loop
+#print axioms PVNP.UniformSim.Spec.grow_loop
+#print axioms PVNP.UniformSim.Spec.load_loop
+#print axioms PVNP.UniformSim.Spec.pre_round
+#print axioms PVNP.UniformSim.Spec.pack_loop
+#print axioms PVNP.UniformSim.Spec.packSym_eq_inputTape
+#print axioms PVNP.UniformSim.Spec.rotU_trip
+#print axioms PVNP.UniformSim.Spec.rot_level
+#print axioms PVNP.UniformSim.Spec.tasks_shift
+#print axioms PVNP.UniformSim.Spec.tasks_loop
+#print axioms PVNP.UniformSim.Spec.offset_loop
+#print axioms PVNP.UniformSim.Spec.member_nbr
+#print axioms PVNP.UniformSim.Spec.decode_phase
+#print axioms PVNP.UniformSim.Spec.round_halt
+#print axioms PVNP.UniformSim.Spec.round_spec
+#print axioms PVNP.UniformSim.Spec.rounds
+#print axioms PVNP.UniformSim.Spec.sim_halts
+#print axioms PVNP.UniformSim.Spec.sim_invalid
+#print axioms PVNP.UniformSim.Spec.toTM_firstAnswer_of_dec
+#print axioms PVNP.PartIIUniform.wcc_to_tm
+#print axioms PVNP.PartIIUniform.P_disc_subset_P_TM
+#print axioms PVNP.PartIIUniform.P_disc_eq_P_TM
+#print axioms PVNP.PartIIUniform.NP_disc_subset_NP_TM
+#print axioms PVNP.PartIIUniform.NP_TM_subset_NP_disc
+#print axioms PVNP.PartIIUniform.NP_disc_eq_NP_TM
