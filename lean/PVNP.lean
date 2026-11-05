@@ -73,6 +73,9 @@ import PVNP.WCCDSweepLoops
 import PVNP.WCCDSweepRound
 import PVNP.WCCDSweepBuild
 import PVNP.WCCDSweepMain
+import PVNP.PartIPsiSat
+import PVNP.PartISeparation
+import PVNP.PartILocality
 import PVNP.WCTLattice
 import PVNP.WCTLatticeGlobalBounds
 import PVNP.WCTMeshScaling

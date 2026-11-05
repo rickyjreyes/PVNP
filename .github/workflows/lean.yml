@@ -38,6 +38,8 @@ jobs:
         run: lake build PVNP.DiscreteMachines PVNP.TMtoWCC PVNP.WCCtoTM PVNP.ComplexityEquivalence PVNP.MachineSerialization PVNP.BandlimitedNoisyPacking PVNP.FourierReceiverProjection PVNP.DecisionVsEncodingCounterexample PVNP.PartIIIAnalytic PVNP.DiscreteCurvatureRail PVNP.PhysicalComplexityClasses PVNP.WitnessSizeUniformity PVNP.FourierTorusReceiver PVNP.PSubsetNP PVNP.CircleSpectralGap PVNP.WCTPlaneWave PVNP.TMScan PVNP.SATVerifier PVNP.PartIIIHighFreq3D PVNP.TransportCalculus PVNP.AnalogSplitSATCapacity PVNP.PhysicalModelAudit PVNP.WCCRadius PVNP.WCCGenerality PVNP.WCCDFiniteSupport PVNP.WCTLattice PVNP.WCTLatticeGlobalBounds PVNP.WCTMeshScaling PVNP.DecoderUniformity
       - name: Check D-1 single-tape TM compiler modules explicitly
         run: lake build PVNP.TMStackScan PVNP.SweepTM PVNP.WCCDCyclic PVNP.WCCDSweep PVNP.WCCDSweepSteps PVNP.WCCDSweepLoops PVNP.WCCDSweepRound PVNP.WCCDSweepBuild PVNP.WCCDSweepMain
+      - name: Check manuscript Part I modules explicitly
+        run: lake build PVNP.PartIPsiSat PVNP.PartISeparation PVNP.PartILocality
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt
