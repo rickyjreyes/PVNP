@@ -1,5 +1,15 @@
 # Faithful Lean formalization of the three PVNP manuscripts: report (5 November 2026)
 
+> **Current amended-manuscript status (6 November 2026): 77 Exact, 2 Restricted,
+> 4 Refuted, 8 Open (91 total).** I-12 is now a conditional compatibility theorem
+> in the restricted frozen model with charged polynomial-time encoders, not an
+> unconditional WCT physical barrier or proof of P != NP. I-20 now states the
+> explicit-state description-length obstruction already proved in Lean; a
+> separate short certificate need not encode or reconstruct the target state.
+> The full physical construction-versus-verification complexity question remains
+> open. See [repair note](part-i-physical-barrier-certificate-repair.md) and
+> [live inventory](manuscript-lean-inventory.md).
+
 > **Current amended-manuscript status (6 November 2026): 75 Exact, 2 Restricted,
 > 6 Refuted, 8 Open (91 total).** I-13 now states the proved quiescent
 > finite-support bound. I-10 is **re-scoped** to a conditional theorem about

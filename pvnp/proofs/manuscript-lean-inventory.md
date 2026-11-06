@@ -1,7 +1,7 @@
 # Manuscript-to-Lean inventory (Parts I–III), live checklist
 
 Started 5 November 2026. The source of truth is the three manuscripts in
-`pvnp/papers/*/main.tex` (October 27 source, with Part I I-10/I-13 and Part II II-7/II-8/II-17 corrections on November 6, 2026), read in full. Each mathematically
+`pvnp/papers/*/main.tex` (October 27 source, with Part I I-10/I-12/I-13/I-20 and Part II II-7/II-8/II-17 corrections on November 6, 2026), read in full. Each mathematically
 substantive claim is listed with its source, the Lean declaration that matches it (if any), and
 its status. Pure definitions, purely empirical sections and research-direction remarks without
 mathematical content are not counted.
@@ -21,14 +21,15 @@ Lean paths are relative to `lean/`. "(new)" marks declarations added in this pas
 
 | Paper | Claims | Exact | Restricted | Refuted | Open |
 |---|---|---|---|---|---|
-| Part I | 41 | 28 | 1 | 6 | 6 |
+| Part I | 41 | 30 | 1 | 4 | 6 |
 | Part II | 28 | 26 | 1 | 0 | 1 |
 | Part III | 22 | 21 | 0 | 0 | 1 |
-| **Total** | **91** | **75** | **2** | **6** | **8** |
+| **Total** | **91** | **77** | **2** | **4** | **8** |
 
-* Exact verification coverage for the amended manuscripts = Exact / Total = 75/91 ≈ 82.4% (73/91 after the earlier Part II corrections; 70/91 in the October 27 original).
+* Exact verification coverage for the amended manuscripts = Exact / Total = 77/91 ≈ 84.6% (75/91 after I-10/I-13, 73/91 after II-7/II-8/II-17, 70/91 original).
 * Status conclusively determined by a proof or a counterexample (Exact + Refuted) = 81/91 ≈ 89%.
 * **Provenance:** The original October 27 manuscript inventory was 70 Exact, 2 Restricted, 11 Refuted, 8 Open. Claims II-7, II-8 and II-17 were false as written in that version. Their original Lean counterexamples remain in the repository. In the amended manuscript, their statements are restricted/corrected to match the already-proved Lean theorems; the historical count is not retroactively overwritten.
+* **I-12/I-20 scope:** I-12 now states an exact **conditional counterargument** in the frozen WCT submodel with charged polynomial-time indicator encoders: under the *hypothetical* P_TM = NP_TM, dense SAT is implementable; an unconditional barrier in that submodel would imply P_TM != NP_TM. This does not prove either equality or inequality. I-20 now states the proved **explicit-state description-size obstruction** K_D(s) <= |s|+c. A separate physical cost model distinguishes preparation from verification of a *succinct* certificate and from decision; its claimed lower-bound premises remain open, and the original state-as-short-witness inference is withdrawn.
 * **I-10/I-13 scope:** I-10 is now a new *conditional* obstruction to exact nonconstant symbolic readouts under an explicit common-successor transition-relation hypothesis. Curvature collapse is **not** proved to imply this hypothesis. The original language triviality and unique-rule non-identifiability assertions are no longer claimed as theorems. I-13 now states the quiescent finite-support bound already proved in Lean. All original counterexamples are preserved.
 * Milestone history:
   * Milestone 1 (PR #27): 44 Exact, 8 Refuted.
@@ -43,6 +44,7 @@ Lean paths are relative to `lean/`. "(new)" marks declarations added in this pas
     I-38, I-39, II-11, II-12, II-13, II-15 and III-6 to Exact; I-11 and II-10 stay Restricted.
   * Manuscript correction (6 November 2026): II-7, II-8 and II-17 now match the existing corrected Lean statements.
   * Part I correction (6 November 2026): I-10 is re-scoped to a conditional common-successor theorem with a new Lean proof; I-13 now matches the existing quiescent finite-support bound. Neither proves WCT-induced mixing nor complexity-class separation.
+  * Part I computational-model clarification (6 November 2026): I-12 is replaced with the previously kernel-proved conditional charged-encoder compatibility statement; I-20 is replaced by the existing explicit-state description-length obstruction, with preparation and certificate verification separated. Original counterarguments remain in Lean.
 
 **What the "Exact" count does not mean.** It includes conditional propositions whose
 implications are verified while their premises remain open, for example
@@ -64,7 +66,7 @@ classical `P ≠ NP`.
 | I-9 | Prop. WIN-05 `thm:pwcc-neq-npwcc` | verifier + every decider exceeds a rail i.o. ⇒ P^phys≠NP^phys | `PartISeparation.win05` (new) | Exact |
 | I-10 | Prop. `prop:collapse-grammar` (amended) | Under common-successor mixing of an observable transition relation, no nonconstant symbolic readout is invariant on every allowed transition | `PartISeparation.invariant_constant_of_common_successor`, `no_nontrivial_invariant_of_common_successor`; original `trivial_partition_invariant` preserved | Exact (conditional on an **unproved** observable mixing hypothesis). Original curvature ⇒ collapse, language triviality, and rule non-identifiability are not derived or counted as verified |
 | I-11 | Remark `rem:infinite-compute` | within the rail, P_WCC = P_Turing | `P_WCC_eq_P_TM`; `PartIIUniform.P_disc_eq_P_TM` (new) | Restricted (the discrete equality is kernel-checked, also for the uniform model; that the PWCC rail induces such a machine is a physical premise, unproved by Part I's own `rem:physical-bridge`) |
-| I-12 | §6.4 "even if P=NP, any SAT algorithm would violate the rails" | physical barrier claim | `PartISeparation.PNP_SAT_physically_constant`, `category_error_claim_implies_classical` (new) | Refuted under P=NP in the frozen model with charged poly-time encoders; the claim implies `P_TM ≠ NP_TM` |
+| I-12 | Prop. `prop:charged-encoder-barrier` (amended) | In the charged polynomial-time indicator-encoder frozen WCT model, P_TM = NP_TM implies dense SAT has an admissible constant-evolution-cost implementation; any barrier forbidding it even in that case entails P_TM != NP_TM | `PartISeparation.PNP_SAT_physically_constant`, `category_error_claim_implies_classical`, `PhysicalAudit.PhysConst_polyEnc_eq_P_TM` | Exact **conditional implication in the explicitly restricted model**. The hypothetical equality is NOT proved, no universal WCT physical barrier is established, and the encoder computation remains charged |
 | I-13 | Lemma `lem:local_growth` (amended) | Quiescent radius-r local updates, finite initial support: supp(C_t) ⊆ supp(C_0)^{+rt} and |supp C_t| ≤ |supp C_0|(2rt+1)^d | `PartILocality.supp_step_subset`, `supp_iterate_subset`, `support_poly_bound`; original `local_growth_needs_quiescence`, `linear_growth_false_d2` preserved | Exact (amended assumptions and dimension-dependent bound); locality alone does not imply superpolynomial time |
 | I-14 | Lemma `lem:clause_flip` | local signature change needs local activity; k ≤ Tb | `PartILocality.clause_flip_local`, `clause_flip_rounds`, `clause_flip_ceil` (new) | Exact |
 | I-15 | Remark after `lem:clause_flip` | locality alone gives no T ≥ k | `PartILocality.parallel_flips` (new) | Exact |
@@ -72,7 +74,7 @@ classical `P ≠ NP`.
 | I-17 | "precisely as difficult as P≠NP via 3-SAT ∉ P" | conj(L) ⟺ L ∉ P | `PartISeparation.WCCDepth_iff_not_P_TM`, `WCCDDepth_iff_not_P_TM` (new) | Exact |
 | I-18 | Prop. `prop:internal_sep_conditional` | conj ⇒ L* ∈ NP_WCC\P_WCC, P_WCC ⊊ NP_WCC | `PartISeparation.internal_sep_conditional`, `internal_sep_SAT` (new) | Exact (L* = dense CNF-SAT; 3-CNF restriction not encoded) |
 | I-19 | "any proof of conj would yield P≠NP" | conj ⇒ P≠NP | `internal_sep_conditional` (3rd component) | Exact |
-| I-20 | Conj. "Dimensional-Lock Hypothesis (Physical)" §7 | K(ψ*) > poly ∧ slow descent ⇒ ψ* ∈ NP^phys\P^phys | `PartISeparation.high_K_not_poly_witness` (new) | Refuted (hypothesis (1) forces \|ψ*\| > every polynomial bound q, so ψ* is no polynomial-size witness) |
+| I-20 | Prop. `prop:explicit-state-witness-size` (amended; original dimensional-lock conjecture withdrawn) | With literal-description overhead c, K_D(s) <= |s|+c; if K_D(s)>q(n)+c, then the explicit state s is longer than the witness budget q(n) | `PartISeparation.Kc_le`, `high_K_not_poly_witness` (original incompatibility proof preserved) | Exact **negative size obstruction**, not a construction lower bound or physical NP/P separation. The separate succinct-certificate verification and universal-decider lower-bound program remains open |
 | I-21 | Prop. `thm:separator_curvature` | substitution of two lower bounds | `conditional_interface_bound` | Exact |
 | I-22 | Prop. `thm:mass_complexity` | T ≥ (C_T − C_0)_+/Δ_max | `ManuscriptRemarks.valid_telescoping` (new), `telescoping_bound` | Exact (the manuscript's quotient form) |
 | I-23 | Prop. `thm:padding_stability` + remark | additive padding with zero padding energy; superlinear padding loses 2^{Ω(N)} | `ManuscriptRemarks.padding_stability`, `superlinear_padding` (new) | Exact (functional = integral of a local density, no interface term) |
@@ -96,10 +98,10 @@ classical `P ≠ NP`.
 | I-41 | Prop. `thm:curv-bdd-sep` + remark | conditional physical separation; fixed-n impossibility | `PartISeparation.curv_bdd_sep`, `fixed_n_impossible` (new) | Exact |
 
 Counts:
-* Exact (28): I-1, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 17, 18, 19, 21, 22, 23, 24, 29, 30, 33, 34, 35, 36,
+* Exact (30): I-1, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 29, 30, 33, 34, 35, 36,
   38, 39, 40, 41.
 * Restricted (1): I-11.
-* Refuted (6): I-12, 20, 25, 26, 27, 28. Original I-10 and I-13 counterexamples are retained against their superseded statements.
+* Refuted (4): I-25, 26, 27, 28. Original I-10, I-12, I-13 and I-20 counterarguments/counterexamples remain preserved against superseded statements.
 * Open (6): I-2, 3, 16, 31, 32, 37.
 
 ### Status of the Part I separation argument
