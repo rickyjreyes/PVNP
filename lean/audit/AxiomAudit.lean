@@ -461,3 +461,8 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.SATProjection.NP_subset_PPoly_of_SAT
 #print axioms PVNP.SATProjection.SAT_circuit_lower_iff
 #print axioms PVNP.SATProjection.SATLowerBound_of_NP_circuit_lower
+#print axioms PVNP.CrossingSATMatrix.instanceWord_mem
+#print axioms PVNP.CrossingSATMatrix.matrix_time
+#print axioms PVNP.CrossingSATMatrix.quadratic_diagonal
+#print axioms PVNP.CrossingSATMatrix.quadratic_arbitrarily_large
+#print axioms PVNP.CrossingSATMatrix.matrix_promise_circuit
