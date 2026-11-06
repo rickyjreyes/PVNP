@@ -16,7 +16,7 @@ This directory follows the pattern used by [rickyjreyes/math](https://github.com
 [Manuscript & scope](preprints/part-iii-physical-complexity-reassessment/README.md) · [PDF](preprints/part-iii-physical-complexity-reassessment/paper.pdf) · [LaTeX](papers/part-iii-physical-complexity-reassessment/main.tex)
 
 ### Lean Formalization Dashboard
-[Interactive dashboard](dashboard/index.html) · [Authoritative claim inventory](proofs/manuscript-lean-inventory.md). The dashboard derives 91 claim statuses and coverage directly from the current inventory. For local use, serve the repository over HTTP; if a static host does not expose the relative inventory, the page retrieves the `main` inventory from GitHub. Verify dashboard consistency with `node pvnp/dashboard/check.js`.
+[Interactive dashboard](dashboard/index.html) · [How it is built](dashboard/README.md) · [Authoritative claim inventory](proofs/manuscript-lean-inventory.md). Every total on the dashboard is recomputed from the 91 claim rows of the inventory; the original-statement view is read from the inventory's git history. Open `dashboard/index.html` directly in a browser (no server or network needed). Regenerate with `node pvnp/dashboard/build.js` and verify with `node pvnp/dashboard/check.js`.
 
 ### Lean
 [Auxiliary formally checked claims](../lean/README.md) across all three parts.

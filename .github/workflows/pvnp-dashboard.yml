@@ -22,10 +22,16 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+        with:
+          # The original-statement view is read from the inventory's git history,
+          # and the PR #49 entry is checked against that PR's head commit.
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Check dashboard parser syntax
-        run: node --check pvnp/dashboard/app.js
-      - name: Validate authoritative inventory and per-claim statuses
+      - name: Check dashboard script syntax
+        run: for f in pvnp/dashboard/*.js; do node --check "$f"; done
+      - name: Require data.js to match a fresh build of the inventory, registry and Lean sources
+        run: node pvnp/dashboard/build.js --check
+      - name: Validate totals, per-claim statuses, provenance and declaration links
         run: node pvnp/dashboard/check.js
