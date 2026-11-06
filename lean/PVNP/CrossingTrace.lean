@@ -16,6 +16,12 @@ def CrossRight (M : TM) (cut : ℤ) (c : M.Cfg) : Prop :=
 def CrossLeft (M : TM) (cut : ℤ) (c : M.Cfg) : Prop :=
   cut ≤ c.head ∧ (M.next c).head < cut
 
+instance (M : TM) (cut : ℤ) (c : M.Cfg) : Decidable (CrossRight M cut c) := by
+  unfold CrossRight; infer_instance
+
+instance (M : TM) (cut : ℤ) (c : M.Cfg) : Decidable (CrossLeft M cut c) := by
+  unfold CrossLeft; infer_instance
+
 /-- Post-transition control state and direction of a real crossing. -/
 def event (M : TM) (cut : ℤ) (c : M.Cfg) : Option (M.Λ × Dir) :=
   if CrossRight M cut c then some ((M.next c).q, .R)
