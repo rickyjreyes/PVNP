@@ -1,5 +1,16 @@
 # Faithful Lean formalization of the three PVNP manuscripts: report (5 November 2026)
 
+> **Historical snapshot; superseded for three Part II statements on 6 November 2026.**
+> The October 27 Part II manuscript contained three literal defects, II-7, II-8
+> and II-17. The amended manuscript now states exactly the existing Lean-proved
+> finite-window invariant, two-step correspondence, and empty-input-safe
+> polynomial-time definition. Its **current** inventory is **73 Exact, 2
+> Restricted, 8 Refuted, 8 Open**, with Part II **26/28 Exact**. The
+> pre-repair snapshot below (70 Exact, 11 Refuted) remains intentionally
+> unchanged as historical audit evidence. See
+> [the repair note](part-ii-quantifier-boundary-repair.md) and
+> [live inventory](manuscript-lean-inventory.md).
+
 The source of truth is the three manuscripts in `pvnp/papers/*/main.tex` (revised 27 October 2026),
 read in full. The claim-by-claim table, with Lean names and statuses, is
 `pvnp/proofs/manuscript-lean-inventory.md`. This report summarizes it.
