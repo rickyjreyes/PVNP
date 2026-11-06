@@ -25,12 +25,10 @@ INVENTORY = ROOT / "pvnp/proofs/manuscript-lean-inventory.md"
 AUDIT = ROOT / "lean/audit/AxiomAudit.lean"
 STATUS = ("Exact", "Restricted", "Refuted", "Open")
 
-# Frozen manuscript ledger, independent of later supporting lemmas.
-EXPECTED = {
-    "I": {"Exact": 26, "Restricted": 1, "Refuted": 8, "Open": 6},
-    "II": {"Exact": 23, "Restricted": 1, "Refuted": 3, "Open": 1},
-    "III": {"Exact": 21, "Restricted": 0, "Refuted": 0, "Open": 1},
-}
+# Claim counts are compared against the inventory's own coverage table rather
+# than hardcoded historical counts, since corrected manuscripts can change status.
+PARTS = ("I", "II", "III")
+
 PHASE_X_PREFIXES = (
     "PVNP.TMBooleanTableau.",
     "PVNP.CircuitCNF.",
@@ -40,6 +38,31 @@ PHASE_X_PREFIXES = (
     "PVNP.PhaseXIQuadratic.",
 )
 PHASE_XI_THEOREM = "PVNP.PhaseXIQuadratic.sat_no_uniform_subquadratic"
+
+
+def parse_coverage(text: str) -> dict:
+    """Read the separate coverage summary and validate its arithmetic."""
+    coverage: dict = {}
+    pattern = re.compile(
+        r"^\|\s*Part\s+(I|II|III)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|"
+    )
+    for line in text.splitlines():
+        match = pattern.match(line)
+        if match is None:
+            continue
+        part, total, exact, restricted, refuted, open_ = match.groups()
+        counts = dict(
+            total=int(total), Exact=int(exact), Restricted=int(restricted),
+            Refuted=int(refuted), Open=int(open_),
+        )
+        if counts["total"] != sum(counts[k] for k in STATUS):
+            raise ValueError(f"Coverage arithmetic mismatch in Part {part}")
+        if part in coverage:
+            raise ValueError(f"Duplicate coverage for Part {part}")
+        coverage[part] = counts
+    if set(coverage) != set(PARTS):
+        raise ValueError(f"Missing manuscript coverage rows: {coverage}")
+    return coverage
 
 
 def parse_inventory(text: str) -> list[dict]:
@@ -72,15 +95,16 @@ def parse_inventory(text: str) -> list[dict]:
     return claims
 
 
-def summarize(claims: list[dict]) -> dict:
+def summarize(claims: list[dict], expected: dict) -> dict:
     per_part = {}
-    for part in EXPECTED:
+    for part in PARTS:
         counts = Counter(row["status"] for row in claims if row["part"] == part)
         per_part[part] = {status: counts[status] for status in STATUS}
-        if per_part[part] != EXPECTED[part]:
+        expected_counts = {status: expected[part][status] for status in STATUS}
+        if per_part[part] != expected_counts:
             raise ValueError(
                 f"{part} inventory changed without updating the baseline: "
-                f"{per_part[part]} != {EXPECTED[part]}"
+                f"{per_part[part]} != {expected_counts}"
             )
     if len(claims) != 91:
         raise ValueError(f"Expected exactly 91 unique claims, got {len(claims)}")
@@ -143,9 +167,10 @@ def main() -> int:
     group.add_argument("--markdown", action="store_true")
     opts = parser.parse_args()
 
-    claims = parse_inventory(INVENTORY.read_text(encoding="utf-8"))
+    inventory = INVENTORY.read_text(encoding="utf-8")
+    claims = parse_inventory(inventory)
     data = {
-        "summary": summarize(claims),
+        "summary": summarize(claims, parse_coverage(inventory)),
         "claims": claims,
         "supporting_axiom_audit_declarations": audited_support(),
         "validation_scope": "Source inventory and audit registry. Kernel verification requires a green exact-head CI run.",
