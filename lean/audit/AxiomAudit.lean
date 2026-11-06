@@ -600,3 +600,6 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhaseUniform.originalInputCode_length_le
 #print axioms PVNP.TwoPhaseUniform.originalWindowCode_polynomial_length
 #print axioms PVNP.TwoPhaseUniform.originalInputCode_polynomial_length
+
+-- Reuse the verified finite-control Horner program to write unary W_M radius.
+#print axioms PVNP.CookLevin.Gen.twoPhase_unary_radius
