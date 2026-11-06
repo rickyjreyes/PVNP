@@ -528,3 +528,9 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.ToroidalDiagonal.odd_encRing_not_SAT
 #print axioms PVNP.ToroidalDiagonal.even_encRing_mem_SAT
 #print axioms PVNP.ToroidalDiagonal.encRing_length
+
+-- I-3 phase-locking logical sufficiency test.
+#print axioms PVNP.PhaseLockScope.contradictory_unsat
+#print axioms PVNP.PhaseLockScope.all_phases_zero_exists
+#print axioms PVNP.PhaseLockScope.contradiction_phase_locked_but_not_logical
+#print axioms PVNP.PhaseLockScope.bare_phase_lock_not_sat
