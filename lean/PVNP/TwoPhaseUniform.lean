@@ -109,4 +109,59 @@ theorem original_state_bits_injective (M : MTM) :
     Function.Injective (stateBits M) :=
   stateBits_injective M
 
+/-- The word representing the original lattice window contains a unary
+radius prefix, a separator, and one membership bit per bounding-box cell. -/
+theorem originalWindowCode_length (p : Polynomial ℕ) (x : List Bool) :
+    (originalWindowCode p x).length =
+      (p.eval x.length + 1) + 1 + (2 * (p.eval x.length + 1) + 1) := by
+  simp [originalWindowCode, latCode, boxIdx, side]
+
+/-- The original input code is the canonical code of the manuscript's
+initial Turing configuration, not an independently chosen encoder. -/
+theorem originalInputCode_eq_encCfg (M : MTM) (p : Polynomial ℕ)
+    (x : List Bool) :
+    originalInputCode M p x =
+      cfgCode (stateBits M) 1 (p.eval x.length + 1)
+        (window (p.eval x.length))
+        (fun i => encCfg M (p.eval x.length) (M.init x) (i 0)) := by
+  simp only [originalInputCode, encM_eq]
+
+/-- Fixed-width encoded state lists scale linearly in their number of
+cells; this statement is independent of the chosen finite machine. -/
+theorem stateBits_flatMap_length (M : MTM)
+    (l : List (PartIITwoPhase.S M)) :
+    (l.flatMap (stateBits M)).length =
+      l.length * (3 + 2 * Fintype.card (PartIITwoPhase.S M)) := by
+  induction l with
+  | nil => simp
+  | cons s l ih =>
+      simp [ih, stateBits_length, Nat.succ_mul, Nat.add_comm, Nat.add_left_comm,
+        Nat.add_assoc]
+
+/-- The output length of the original canonical encoder is bounded by
+the box size times the fixed state-code width. This is a *length* theorem,
+not an FP witness for the encoder's TM transition count. -/
+theorem originalInputCode_length_le (M : MTM) (p : Polynomial ℕ)
+    (x : List Bool) :
+    (originalInputCode M p x).length ≤
+      (2 * (p.eval x.length + 1) + 1) *
+        (3 + 2 * Fintype.card (PartIITwoPhase.S M)) := by
+  let R := p.eval x.length + 1
+  let ids := ((boxIdx 1 R).filter
+    (fun idx => decide (site 1 R idx ∈ window (p.eval x.length))))
+  let cells : List (PartIITwoPhase.S M) :=
+    ids.map (fun idx => encM M (p.eval x.length) x (site 1 R idx 0))
+  have hlen : (originalInputCode M p x).length =
+      cells.length * (3 + 2 * Fintype.card (PartIITwoPhase.S M)) := by
+    simpa [originalInputCode, cfgCode, cells, ids, R, List.flatMap_map] using
+      stateBits_flatMap_length M cells
+  have hids : ids.length ≤ 2 * R + 1 := by
+    have h := List.length_filter_le
+      (fun idx => decide (site 1 R idx ∈ window (p.eval x.length))) (boxIdx 1 R)
+    simpa [ids, boxIdx, side] using h
+  have hcells : cells.length ≤ 2 * R + 1 := by
+    simpa [cells] using hids
+  rw [hlen]
+  exact Nat.mul_le_mul_right _ hcells
+
 end PVNP.TwoPhaseUniform
