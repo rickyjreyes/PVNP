@@ -224,3 +224,6 @@ decisive premise is unchanged. It is now stated as `CrossingSAT.SATLowerBound`
 No claim changes status: 70 Exact, 11 Refuted, 2 Restricted, 8 Open. See
 `phase-viii-separation-status.md`.
 
+### Phase VI integration addendum (6 November 2026)
+
+PR [#40](https://github.com/rickyjreyes/PVNP/pull/40), merged as `888296e`, formally verifies M3-T periodic-torus global H² well-posedness (`PVNP.Torus.global_wellposed`, conservation, a priori bound and continuous dependence) and F-1 continuum localized-mass flux (`PVNP.Torus.flux_identity`, `flux_inequality`, `curvature_time_bound`) with explicit PDE and detector hypotheses. This supersedes earlier 'M3-T/F-1 open in Lean' statements in the dated report; it does not discharge the missing universal SAT lower bound or alter any of the 91 original claim classifications. [Detailed Phase VI scope](phase-vi-torus-flux-status.md).

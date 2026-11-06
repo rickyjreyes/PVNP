@@ -77,3 +77,11 @@ This dated update supplements, and does not rewrite, the table above. Details an
 - **O8 — OPEN.** **O10 — advanced** (36-declaration axiom audit enforced in CI; Python cross-checks).
 - **Second tranche (same day).** `P_TM ⊆ NP_TM` and `P_WCC ⊆ NP_WCC` unconditionally (`PSubsetNP`); genuine `L²`-torus Fourier receiver packing (`FourierTorusReceiver`); sharp circle spectral gap and the impossibility of a domain-uniform Poincaré constant (`CircleSpectralGap`); exact classical solutions of the frozen WCT PDE realizing the expanding-domain countermodel (`WCTPlaneWave`). O2 still lacks a Lean CNF-evaluating TM (`SAT ∈ NP_TM`).
 - **O2 (same day).** CNF-SAT under the dense encoding is in `NP_TM` and `NP_WCC` with an explicit, kernel-checked verifier machine (`SATVerifier`: `satTM_decides`, `SAT_dense_mem_NP_TM`, `encDense_mem_SAT_iff`); Part III's `L_check ∈ P` is proved (`V_SAT_mem_P_TM`). Cook–Levin NP-completeness is not formalized.
+
+## Verified integration update (6 November 2026)
+
+**O4 and the torus-specific part of O5:** Phase VI PR [#40](https://github.com/rickyjreyes/PVNP/pull/40) integrated global H² well-posedness and the PDE-derived localized-mass flux inequality in Lean on the periodic torus, with explicit `L > 0`, `γ > 0`, solution and detector hypotheses. This does **not** close O6's resource scaling for every input family, O7's universal computational hardness or M3-C lattice-to-continuum convergence. [Phase VI theorem ledger](proofs/phase-vi-torus-flux-status.md).
+
+**O7 and O9:** Phase VIII PR [#38](https://github.com/rickyjreyes/PVNP/pull/38) proves full single-tape crossing-sequence splicing and a near-quadratic time lower bound for `SAT_dense`. It does not exclude all polynomial-time SAT deciders and does not establish `P ≠ NP`. The missing statement is `CrossingSAT.SATLowerBound`. [Phase VIII status](proofs/phase-viii-separation-status.md).
+
+**O10:** All three exact-head PR #40 checks passed (`lean`, `phase-iii-targeted`, PDF `build`). The standard-axiom audit is part of the full Lean job. Manually dated status entries above should be read as historical checkpoints; [the formalization ledger](../lean/formalization.yaml) remains authoritative. The manuscript inventory remains 70 Exact, 2 Restricted, 11 Refuted, 8 Open.

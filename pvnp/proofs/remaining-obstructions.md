@@ -1,4 +1,4 @@
-# Remaining obstructions and obligations (ASTRA v2, 2 November 2026; D-1 closed 5 November 2026)
+# Remaining obstructions and obligations (updated November 6, 2026; Phase VI and VIII integrated)
 
 Each item gives the precise missing statement, what has already been proved around it, and why it
 is not closed. None of these items is assumed by any kernel-checked PVNP theorem. Each appears
@@ -122,7 +122,7 @@ implication is `CrossingSAT.SATLowerBound` (`SAT_dense ∉ P_TM`), which would g
 |---|---|
 | Whole plane `ℝ²`, data in `H²` (`γ > 0`): global existence, uniqueness, continuous dependence, mass and Hamiltonian conservation, a priori bound `‖u‖²_{H²} ≤ 3(E + 3β²M/16γ) + (2+3k⁴)M` | **Proved externally**, `rickyjreyes/math@30a5ddc` (`ReyesMath.Sobolev.global_wellposed`, `continuous_dependence`, `conservation`, `norm_toSp_sq_le`). Built locally against the pinned Mathlib; only standard axioms. Definition match proved in `lean/bridge/MathBridge.lean`. |
 | Lattice system on `ℤ/Nℤ`: local existence, exact conservation, uniform coercivity, flux inequality | **Proved in PVNP** (`WCTLattice`) |
-| **M3-T** Periodic torus `T²_L`: global `H²` well-posedness | **Open in Lean.** The external proof transfers in outline: Fourier series instead of Fourier transform; the interaction picture; Picard–Lindelöf with the radial retraction; conservation. It has not been carried out. |
+| **M3-T** Periodic torus `T²_L`: global `H²` well-posedness | **CLOSED in Lean (PR #40).** `PVNP.Torus.global_wellposed`, `conservation`, `apriori`, `continuous_dependence` for `L > 0`, `γ > 0`, for the specified Fourier-coefficient `IsSolution` of the frozen PDE. The a priori H² bound is uniform in `L`; this does not prove uniform spectral gap, detector efficiency or M3-C convergence. See [Phase VI scope](phase-vi-torus-flux-status.md). |
 | **M3-U** Constants uniform in `L` | Bandpass coercivity `‖(Δ+κ)ψ‖² ≤ H + (3β²/16γ)M` is uniform: **proved**, in integrated form (`TransportCalculus.hamiltonian_controls_bandpass`) and on the lattice for every `N` (`WCTLattice.bandpass_le_ham`). Poincaré/spectral-gap coercivity is **false** uniformly in `L`, with sharp constant `(2π/L)²` (`SpectralGap.no_uniform_poincare`, `wirtinger_sharp`). The density floor fails on expanding tori (`WCTPlaneWave.expanding_domain_countermodel`). |
 | **M3-G** Global existence for the lattice ODE | **PROVED in Lean** (`WCTLattice.global_wellposed`, `exists_global_solution`, `global_solution_unique`, `exists_global_conserved_bounded`), merged PR #22 at `4acb9d8`; global flow for every finite nonempty lattice and arbitrary real coefficients. |
 | **M3-C** Lattice → continuum convergence with certified error bounds | **Open.** This is also the missing piece for M1-a. |
@@ -136,13 +136,7 @@ implication is `CrossingSAT.SATLowerBound` (`SAT_dense ∉ P_TM`), which would g
     drops out;
   - `|J'| ≤ 4|a| ω √M ‖Az‖`;
   - hence `|J'| ≤ Γ√‖Az‖` with `Γ = 4|a|ω√M₀ (H₀ + 3β²M₀/16γ)^{1/4}`.
-- **F-1 (continuum, open in Lean).** The analytic derivation (`wct-pde-transport-bound.md` §3) needs
-  two ingredients:
-  - periodic integration by parts for `C⁴` fields;
-  - differentiation of `∫ χ|ψ|²` under the integral sign;
-  together with the a priori bound `D(t) ≤ D₀` from conservation and coercivity. None of these is
-  formalized for the continuum. The Lean continuum transport theorem therefore keeps the flux
-  inequality as an explicit premise and **does not promote it**.
+- **F-1 (continuum, CLOSED for the specified periodic-torus model; PR #40).** `PVNP.Torus.flux_identity` derives the localized-mass derivative along a PDE solution, and `flux_inequality` / `flux_inequality_explicit` bound it by `Gam … * sqrt (‖Dc L (u t)‖)`. `curvature_time_bound` integrates this estimate under explicit `L > 0`, `γ > 0`, real regular detector, derivative bounds, `T > 0`, and `Γ > 0` assumptions. The earlier `TransportCalculus` theorem remains conditional on its abstract flux premise; it is now instantiated by the torus PDE proof, not promoted to arbitrary detectors or continuum models. See [Phase VI scope](phase-vi-torus-flux-status.md).
 - **Why the inequality has the `√D` form.** In the continuum derivation, `D = ‖Δψ‖₂` is the norm.
   The `κ`-term of the flux contributes `4κ a P ‖∇ψ‖ ≤ 4κ a P^{3/2} √D`. That term is what forces the
   `√D` form. The stronger form `|J'| ≤ Γ D` does not follow from this argument, and it is not

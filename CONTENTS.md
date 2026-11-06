@@ -18,6 +18,12 @@
 
 The PDFs in this repository are revised manuscripts and should not be conflated with the original Zenodo release versions.
 
+## Verified Phase VI and Phase VIII results (November 2026)
+
+- **Phase VI:** [Periodic-torus H² well-posedness and F-1 continuum flux](pvnp/proofs/phase-vi-torus-flux-status.md), in `TorusWellPosed.lean` and `TorusFlux.lean`; [merged PR #40](https://github.com/rickyjreyes/PVNP/pull/40).
+- **Phase VIII:** [Full crossing-sequence splicing and single-tape SAT lower bounds](pvnp/proofs/phase-viii-separation-status.md), in `CrossingHennie.lean`, `CrossingSAT.lean`, `CrossingSATSets.lean`; [merged PR #38](https://github.com/rickyjreyes/PVNP/pull/38).
+- **Status:** All three PR #40 checks passed. Classical `P ≠ NP` remains open; manuscript inventory: 70 Exact, 2 Restricted, 11 Refuted, 8 Open.
+
 ## Outstanding mathematics
 
 The universal lower-bound claim, physical curvature-to-discrete resource equivalence, and any physical or classical `P` versus `NP` separation remain open proof obligations. See each manuscript's scope notes.
