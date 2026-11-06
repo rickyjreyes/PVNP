@@ -84,4 +84,11 @@ This dated update supplements, and does not rewrite, the table above. Details an
 
 **O7 and O9:** Phase VIII PR [#38](https://github.com/rickyjreyes/PVNP/pull/38) proves full single-tape crossing-sequence splicing and a near-quadratic time lower bound for `SAT_dense`. It does not exclude all polynomial-time SAT deciders and does not establish `P ≠ NP`. The missing statement is `CrossingSAT.SATLowerBound`. [Phase VIII status](proofs/phase-viii-separation-status.md).
 
+**O7, Phase IX:** the per-input target is proved equivalent to `SATLowerBound` and to
+`conj:wcc_depth` for `SAT_dense` (`SATTarget`).
+- Two candidate invariants fail, with kernel-checked counterexamples:
+  - expander/Tseitin instances (`TseitinSAT`, component parity);
+  - crossing information (`VerifierCrossing`, `V_SAT ∈ P_TM`).
+- `SATLowerBound` is not proved. [Phase IX status](proofs/phase-ix-universal-lower-bound-status.md).
+
 **O10:** All three exact-head PR #40 checks passed (`lean`, `phase-iii-targeted`, PDF `build`). The standard-axiom audit is part of the full Lean job. Manually dated status entries above should be read as historical checkpoints; [the formalization ledger](../lean/formalization.yaml) remains authoritative. The manuscript inventory remains 70 Exact, 2 Restricted, 11 Refuted, 8 Open.

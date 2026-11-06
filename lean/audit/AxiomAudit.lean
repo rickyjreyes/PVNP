@@ -416,3 +416,36 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Torus.flux_inequality
 #print axioms PVNP.Torus.curvature_time_bound
 #print axioms PVNP.Torus.flux_inequality_explicit
+
+-- Phase IX: exact target statement (equivalent to SATLowerBound; not proved).
+#print axioms PVNP.SATTarget.decidesAt_ftime
+#print axioms PVNP.SATTarget.mem_P_TM_of_eventually_le
+#print axioms PVNP.SATTarget.eval_le_pow_succ
+#print axioms PVNP.SATTarget.satLowerBound_iff_superpolynomial
+#print axioms PVNP.SATTarget.superpolynomial_iff_real
+#print axioms PVNP.SATTarget.satLowerBound_iff_superpolynomialReal
+#print axioms PVNP.SATTarget.satLowerBound_iff_wccDepth
+#print axioms PVNP.SATTarget.satLowerBound_iff_wccdDepth
+#print axioms PVNP.SATTarget.P_ne_NP_of_superpolynomial
+-- Phase IX no-go: Tseitin instances of SAT_dense are decided by component parity.
+#print axioms PVNP.TseitinSAT.parityOK_of_solvable
+#print axioms PVNP.TseitinSAT.solvable_of_parityOK
+#print axioms PVNP.TseitinSAT.solvable_iff_parityOK
+#print axioms PVNP.TseitinSAT.grow_comp
+#print axioms PVNP.TseitinSAT.parityOK_iff_comp
+#print axioms PVNP.TseitinSAT.parityOK_iff_total
+#print axioms PVNP.TseitinSAT.evalFormula_xorCNF
+#print axioms PVNP.TseitinSAT.satisfiable_tseitinCNF_iff
+#print axioms PVNP.TseitinSAT.tseitin_mem_SAT_dense_iff
+#print axioms PVNP.TseitinSAT.tseitin_mem_SAT_dense_iff_comp
+#print axioms PVNP.TseitinSAT.tseitin_connected_iff
+-- Phase IX no-go: crossing information is attained by V_SAT ∈ P_TM.
+#print axioms PVNP.VerifierCrossing.time_of_crossingInfo
+#print axioms PVNP.VerifierCrossing.crossingInfo_SAT_dense
+#print axioms PVNP.VerifierCrossing.vInst_mem_iff
+#print axioms PVNP.VerifierCrossing.vsat_mixed
+#print axioms PVNP.VerifierCrossing.crossingInfo_V_SAT
+#print axioms PVNP.VerifierCrossing.vsat_info_quadratic
+#print axioms PVNP.VerifierCrossing.vsat_time_lower_bound
+#print axioms PVNP.VerifierCrossing.vsat_time_lower_bound_sq
+#print axioms PVNP.VerifierCrossing.crossingInfo_not_superpolynomial

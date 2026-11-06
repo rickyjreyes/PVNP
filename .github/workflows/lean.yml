@@ -46,6 +46,8 @@ jobs:
         run: lake build PVNP.UniformSimLib PVNP.UniformSimProg PVNP.UniformSimSem PVNP.UniformSimMath PVNP.UniformSimPre PVNP.UniformSimGrow PVNP.UniformSimLoad PVNP.UniformSimInit PVNP.UniformSimPack PVNP.UniformSimRot PVNP.UniformSimApply PVNP.UniformSimRound PVNP.UniformSimMain PVNP.PartIIUniformEquiv
       - name: Check Phase VII/VIII crossing-sequence modules explicitly
         run: lake build PVNP.CrossingCapacity PVNP.CrossingTrace PVNP.CrossingSplice PVNP.CrossingDiagonal PVNP.CrossingHennie PVNP.CrossingSAT PVNP.CrossingSATSets
+      - name: Check Phase IX target and no-go modules explicitly
+        run: lake build PVNP.SATTarget PVNP.TseitinSAT PVNP.VerifierCrossing
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt

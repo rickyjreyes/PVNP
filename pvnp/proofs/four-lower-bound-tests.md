@@ -24,6 +24,17 @@ A valid transfer theorem would require a **uniform extraction map** from *every*
 
 **Lean module:** `lean/PVNP/Tseitin.lean` kernel-proves the GF(2) parity obstruction, not the literature's exponential resolution theorem. It also highlights a polynomial-time alternative outside resolution.
 
+**Phase IX update (6 November 2026).** `lean/PVNP/TseitinSAT.lean` now kernel-proves the full
+characterization, not only the obstruction. For every loopless multigraph and charge, the dense
+encoding of the Tseitin CNF lies in `SAT_dense` iff every connected component carries even charge.
+- `TseitinSAT.tseitin_mem_SAT_dense_iff` gives this characterization.
+- `tseitin_mem_SAT_dense_iff_comp` checks it on `|V|` explicitly computed components, which is a
+  polynomial computation.
+
+The polynomial-time bypass of the resolution lower bound is therefore verified for the
+repository's own SAT language. The resolution lower bound itself is still cited, not formalized.
+See `phase-ix-universal-lower-bound-status.md` §2.1.
+
 ## Experiment C. 2D geometric routing
 
 Suppose a layout uses a square of side L and area A≥L². Every balanced vertex partition needs b simultaneous distinct edge channels across the corresponding geometric cut. Suppose at most k channels per unit cut length are permitted and the cut has length at most L. Then b≤kL, and

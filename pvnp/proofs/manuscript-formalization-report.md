@@ -227,3 +227,25 @@ No claim changes status: 70 Exact, 11 Refuted, 2 Restricted, 8 Open. See
 ### Phase VI integration addendum (6 November 2026)
 
 PR [#40](https://github.com/rickyjreyes/PVNP/pull/40), merged as `888296e`, formally verifies M3-T periodic-torus global H² well-posedness (`PVNP.Torus.global_wellposed`, conservation, a priori bound and continuous dependence) and F-1 continuum localized-mass flux (`PVNP.Torus.flux_identity`, `flux_inequality`, `curvature_time_bound`) with explicit PDE and detector hypotheses. This supersedes earlier 'M3-T/F-1 open in Lean' statements in the dated report; it does not discharge the missing universal SAT lower bound or alter any of the 91 original claim classifications. [Detailed Phase VI scope](phase-vi-torus-flux-status.md).
+
+### Phase IX addendum (6 November 2026)
+
+Phase IX states the decisive premise exactly and tests candidate invariants for it. It does not
+prove the premise.
+
+- **Target equivalence** (`SATTarget`). The per-input target is: every correct `SAT_dense` decider
+  exceeds every `C·|x|^k` first-answer steps on arbitrarily long inputs.
+  - It is equivalent to `CrossingSAT.SATLowerBound`, in natural- and real-constant forms
+    (`satLowerBound_iff_superpolynomial`, `satLowerBound_iff_superpolynomialReal`).
+  - It is also equivalent to Part I `conj:wcc_depth` for `SAT_dense`, in the 1-D and `(1+d)`-D
+    models (`satLowerBound_iff_wccDepth`, `satLowerBound_iff_wccdDepth`).
+- **Constraint dependencies and global consistency** (`TseitinSAT`). Tseitin instances of
+  `SAT_dense` lie in the language iff every connected component has even charge. This is decided by
+  an explicit polynomial component computation (`tseitin_mem_SAT_dense_iff_comp`). Resolution-type
+  and expansion-type costs are therefore not paid by every decider.
+- **Crossing information** (`VerifierCrossing`). The polynomial-time language `V_SAT` carries
+  quadratic crossing information (`crossingInfo_not_superpolynomial`). Crossing information
+  therefore cannot force superpolynomial time.
+
+`SATLowerBound` remains open, and `P_TM ≠ NP_TM` is not derived. No claim changes status: 70 Exact,
+11 Refuted, 2 Restricted, 8 Open. See `phase-ix-universal-lower-bound-status.md`.

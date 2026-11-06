@@ -228,5 +228,14 @@ Counts:
   `CrossingSATSets.sat_time_lower_bound_near_sq`. It yields only fixed-polynomial bounds, at most
   `Ω(N²/(log N · log|Λ|))`, which is the ceiling of the method. The missing lemma is
   `CrossingSAT.SATLowerBound` (`SAT_dense ∉ P_TM`). Counts unchanged.
+* **Phase IX (6 November 2026).** The decisive premise is now stated in the per-input `∀ M ∃ x`
+  form and proved equivalent to `SATLowerBound` and to I-16 `conj:wcc_depth` for `SAT_dense`
+  (`SATTarget.satLowerBound_iff_superpolynomial`, `satLowerBound_iff_wccDepth`).
+  - Two candidate invariants are refuted as separation routes, by kernel-checked counterexamples:
+    - expander/Tseitin instances are decided by component parity
+      (`TseitinSAT.tseitin_mem_SAT_dense_iff_comp`);
+    - the polynomial-time language `V_SAT` carries quadratic crossing information
+      (`VerifierCrossing.crossingInfo_not_superpolynomial`).
+  - I-16, I-31 and I-32 remain Open. Counts unchanged.
 * **State-level routes.** Not repairable as stated. A language-level formulation (I-9, I-24,
   I-41) is required, and these reduce to the two items above.

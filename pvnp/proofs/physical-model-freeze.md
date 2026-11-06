@@ -40,7 +40,7 @@
 | Distinguishability ⇒ positive curvature cost | **Refuted** | `PartIIIAnalytic.zero_cost_counterexample` |
 | Volume-uniform density/curvature floor | **Refuted** (expanding-domain plane waves) | `ExpandingDomain.no_positive_uniform_density_ratio` |
 | Static storage needs exponential curvature | **Refuted** (O(n) storage) | `CurvatureBarrier.localStorageCost_le_n`, `graphStorageCost_le_n_mul_d_sq` |
-| Expander/Tseitin hardness for every algorithm | **Refuted as stated** (GF(2) elimination) | `Tseitin.parity_sum_zero`, `odd_charge_unsatisfiable`; analytic Gaussian-elimination bypass |
+| Expander/Tseitin hardness for every algorithm | **Refuted as stated** (GF(2) elimination) | `Tseitin.parity_sum_zero`, `odd_charge_unsatisfiable`; bypass kernel-checked 2026-11-06: `TseitinSAT.tseitin_mem_SAT_dense_iff_comp` (membership in `SAT_dense` iff every component has even charge; explicit polynomial component computation) |
 | Curvature as a discrete resource beyond time | **Lean, refuted**: every poly-time discrete run has poly curvature for every embedding | `Discrete.P_TM_eq_curvature_rail` |
 | Curvature is a representation-invariant cost | **Lean, refuted** | `Discrete.curvature_not_representation_invariant` (time *is* invariant: `WCC.relabel_decides`) |
 | Existence/conservation for the frozen PDE (well-posedness) | **Open in Lean** for general data; explicit exact solution family **in Lean** | `WCTPlaneWave`; analytic: `pvnp/proofs/wct-pde-transport-bound.md` |
