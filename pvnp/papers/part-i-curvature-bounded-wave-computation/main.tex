@@ -1125,10 +1125,11 @@ the intuition of \emph{knowing the answer before knowing}: the
 existence of $w$ is postulated at the logical level without regard to
 the physical process required to generate it.
 
-In the WCT curvature model, such a free nondeterministic jump is not
-available. The system must follow a continuous (or at least
-piecewise-continuous) trajectory in configuration space, constrained
-by the curvature rails.
+The existential quantifier in the classical verifier definition is
+not a physical operation that creates a witness. A particular WCT
+apparatus preparing an explicit target field must instead follow its
+admissible physical dynamics and account for initialization,
+evolution, and readout. The two statements concern different costs.
 
 \begin{hypothesis}[Dimensional lock]
 \label{hyp:dimensional-lock}
@@ -1165,52 +1166,80 @@ with the input size, then the physical transition from ``not knowing''
 to ``knowing'' carries a prohibitive cost, even if a purely logical
 verification exists.
 
-In this sense, the WCT model enforces a strict separation between
-verification and construction at the level of physical resources, even
-if the classical logical relation between $P$ and $NP$ remains
-undecided in Hilbert's universe.
+This motivates measuring \emph{preparation} and \emph{certificate
+verification} separately. A hard preparation task does not alone
+establish a language-class separation: one must show a short,
+admissible certificate verifier and exclude \emph{every} permitted
+polynomial-resource decision algorithm. The classical $P$ versus
+$NP$ question remains open.
 \end{remark}
 
-\subsection{Category error and physical barriers}
+\subsection{Charged-encoder computation and conditional physical barriers}
+\label{sec:category-physical-barriers}
 
-The discussion above can be summarized as follows.
+The Turing classes $P$ and $NP$ are defined by algorithmic time and
+witness verification. Physical implementations impose additional
+resource constraints, but a claim that \emph{all} physically admissible
+SAT algorithms violate a curvature rail requires quantification over
+the entire allowed implementation class, including the encoder,
+initialization, evolution, and readout. A lower bound on one device
+or one specified trajectory does not supply such a universal claim.
 
-\begin{itemize}
-  \item In the classical Turing model, the $P$ versus $NP$ problem is
-  posed entirely within the free logic axiom of
-  Definition~\ref{def:free-logic-axiom}. The question ``$P = NP$?''
-  is a statement about the existence or non-existence of certain
-  abstract algorithms, independent of their physical realizability.
+For a precise model test, consider the frozen constant-field WCT
+submodel formalized in
+\texttt{PVNP.PhysicalAudit.PhysConst}. It has two distinguishable
+readout states, bounded amplitude, and constant physical evolution
+cost. The input-to-amplitude encoder must belong to the charged
+class \texttt{polyEnc}, consisting of indicator encoders of
+polynomial-time decidable languages. The Boolean decision is
+therefore \emph{not free}: its cost is assigned to the encoder.
+For arbitrary fixed physical parameters $\kappa,\beta,\gamma$, the
+Lean-checked identity is
+\[
+ \mathsf{PhysConst}_{\mathrm{polyEnc}}
+ (\kappa,\beta,\gamma)=P_{\mathrm{TM}}.
+\]
 
-  \item In the WCT model, computation is constrained by curvature and
-  entropy. The relevant question is not whether a logical algorithm
-  exists in principle, but whether its realization can remain within
-  the WCC rails without triggering curvature collapse or loss of
-  symbolic structure.
+\begin{proposition}[Conditional failure of a universal physical SAT barrier]
+\label{prop:charged-encoder-barrier}
+In the above charged-encoder frozen model, assume hypothetically that
+$P_{\mathrm{TM}}=NP_{\mathrm{TM}}$. Then dense CNF-SAT admits an
+implementation in
+$\mathsf{PhysConst}_{\mathrm{polyEnc}}(\kappa,\beta,\gamma)$.
+Consequently, the assertion that dense SAT has no admissible
+implementation in this model \emph{even if}
+$P_{\mathrm{TM}}=NP_{\mathrm{TM}}$ implies
+$P_{\mathrm{TM}}\ne NP_{\mathrm{TM}}$.
+\end{proposition}
 
-  \item A hypothetical equality $P = NP$ at the purely logical level
-  would amount to an identification of ``knowing'' and ``not
-  knowing'' in Hilbert's universe. The WCT curvature model suggests
-  that, in the physical universe, such an identification is
-  obstructed by curvature complexity: the path from not knowing to
-  knowing has a cost that cannot be erased from the resource
-  accounting.
-\end{itemize}
+\begin{proof}
+Dense CNF-SAT lies in $NP_{\mathrm{TM}}$. Under the hypothetical
+equality it lies in $P_{\mathrm{TM}}$ and hence has an admissible
+polynomial-time indicator encoder. The frozen submodel reads its
+decision bit with bounded field amplitude and constant evolution
+cost. This proves the conditional membership. If the purported
+universal barrier excluded membership under the same hypothetical
+equality, the two claims would contradict each other. The
+formalizations are
+\texttt{PVNP.PartISeparation.PNP\_SAT\_physically\_constant}
+and
+\texttt{PVNP.PartISeparation.category\_error\_claim\_implies\_classical}.
+\end{proof}
 
-Thus, the present framework does not resolve the classical $P$ versus
-$NP$ problem. Rather, it exhibits a \emph{physical barrier}: even if
-$P = NP$ were true as a statement of pure logic, any algorithm
-realizing this equality for certain $NP$-hard problems would require
-violating the curvature and energy constraints of the WCT model. In
-this sense, classical ``free logic'' and physical ``curvature-bound
-logic'' inhabit different universes, and the translation between them
-must account for the cost of the path, not only the existence of the
-destination.
+\begin{remark}[Scope and remaining physical obligation]
+The proposition \emph{does not} assume or prove $P=NP$, nor does it
+establish $P\ne NP$. It establishes a \emph{conditional counterargument}
+inside one explicitly defined charged-encoder physical model.
+Its constant field-update cost is not constant total computational
+cost, because producing the encoded decision bit is charged.
 
-
-
-
-
+A proposed stronger WCT barrier must specify a narrower,
+physically justified family of admissible encoders and operations,
+then prove a uniform lower bound on the \emph{total} resource cost of
+every decision implementation in that family. The corresponding
+restrictions cannot be inferred solely from curvature rhetoric, and
+no such uniform SAT lower bound is proved here.
+\end{remark}
 
 
 \clearpage
@@ -1536,69 +1565,104 @@ the $\P$ versus $\NP$ question.
 
 
 % ===============================================
-\section{Dimensional-Lock Hypothesis: A Geometric Constructibility Barrier}
+\section{Dimensional Lock: Explicit States versus Succinct Certificates}
 \label{sec:dim-lock}
 
-We now formalize the “dimensional lock’’ mechanism suggested by WCT as a
-\emph{model-relative hypothesis} about symbolic evolution under curvature-regulated
-local rules in the physical WCC/WCT model.
+An explicit description of a physical state and a succinct certificate
+for an associated decision problem are different mathematical objects.
+Their lengths and preparation, encoding, and verification costs must
+not be conflated. In particular, the original dimensional-lock
+conjecture demanded that an \emph{explicit} target $\psi^*$ have
+superpolynomial description complexity and simultaneously act as a
+polynomial-size NP witness. Those requirements are incompatible under
+the usual literal-description convention.
 
-\begin{conjecture}[Dimensional-Lock Hypothesis (Physical Model)]
-Consider deterministic symbolic wave evolution governed by
+Let $D:\{0,1\}^*\rightharpoonup\{0,1\}^*$ be a partial description
+decoder and write
 \[
-\psi_{t+1} = F(\psi_t, \nabla^2 \psi_t),
+ K_D(s)=\min\{\,|d|:D(d)=s\,\}
 \]
-where each update can be simulated by a Turing machine in time $\mathrm{poly}(n)$
-for system size $n$, and where the corresponding WCC implementation respects WCT
-curvature/energy rails. Assume there exists a curvature-locked symbolic configuration
-$\psi^*$ such that:
-\begin{enumerate}
-  \item \textbf{High descriptive complexity.}
-  \[
-  K(\psi^*) > \mathrm{poly}(|\mathrm{SAT}_n|),
-  \]
-  so that $\psi^*$ encodes combinatorially rich structure; and
+for strings with at least one description. Assume a constant
+$c\ge0$ such that every finite string $s$ admits a literal
+description $d_s$ with $D(d_s)=s$ and $|d_s|\le |s|+c$.
 
-  \item \textbf{Slow coherence descent.}
-  For every valid curvature-feedback trajectory $\psi_0 \to \psi^*$ satisfying the
-  monotone coherence/entropy inequality
-  \[
-  \frac{dI}{dt} \ge 0,
-  \]
-  the required symbolic depth satisfies
-  \[
-  \ell(\psi_0 \to \psi^*) \ge n^{\omega(1)}.
-  \]
-\end{enumerate}
-Then
+\begin{proposition}[Explicit-state certificate-size obstruction]
+\label{prop:explicit-state-witness-size}
+For every finite string $s$, its description complexity satisfies
 \[
-\psi^* \in \mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}} 
-\quad\text{but}\quad 
-\psi^* \notin \mathbf{P}_{\mathrm{WCC}}^{\mathrm{phys}},
+ K_D(s)\le |s|+c.
 \]
-and hence
+Therefore, for any polynomial witness-length budget $q(n)$,
 \[
-\mathbf{P}_{\mathrm{WCC}}^{\mathrm{phys}} \subsetneq
-\mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}}
+ K_D(s_n)>q(n)+c
+ \quad\Longrightarrow\quad
+ |s_n|>q(n).
 \]
-within the rail-constrained WCT/WCC model.
-\end{conjecture}
+Such a state $s_n$ cannot itself be a polynomial-size \emph{explicit}
+witness under the budget $q(n)$.
+\end{proposition}
 
-\paragraph{Heuristic background.}
-The WCT picture suggests that coherent, curvature-locked states occupy
-low-entropy “corners’’ of configuration space. Curvature-regulated evolution can
-only reduce entropy and enforce phase-locking at a bounded local rate. If the
-entropy gap separating $\psi_0$ from $\psi^*$ grows super-polynomially, then
-no polynomial-depth curvature trajectory can reach $\psi^*$. Turning this
-mechanism into a theorem is an open problem; the conjecture isolates the barrier
-that must be proved. Our long-term goal is to extend such barriers from the
-physical classes \( \mathbf{P}_{\mathrm{WCC}}^{\mathrm{phys}},
-\mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}} \) to the ideal classes
-\( \mathbf{P}_{\mathrm{WCC}}^{\infty}, \mathbf{NP}_{\mathrm{WCC}}^{\infty} \).
+\begin{proof}
+The literal description $d_s$ is a candidate in the minimization
+defining $K_D(s)$, hence $K_D(s)\le |d_s|\le |s|+c$.
+Combining this with the assumed strict inequality gives the result.
+The corresponding Lean theorems are
+\texttt{PVNP.PartISeparation.Kc\_le} and
+\texttt{PVNP.PartISeparation.high\_K\_not\_poly\_witness}.
+The latter uses the polynomial bound with a fixed overhead $c$.
+\end{proof}
 
+\subsection{A separate construction and verification cost model}
 
+Let $x$ denote a decision instance, $w$ a proposed \emph{succinct}
+binary certificate, and $\psi^*(x,w)$ an optional physical state
+associated with the pair. A proposed physical resource model must
+specify all three quantities independently:
+\[
+ \begin{aligned}
+ C_{\mathrm{prep}}(x,w)&:
+    \text{cost of preparing }\psi^*(x,w),\\
+ C_{\mathrm{ver}}(x,w)&:
+    \text{cost of checking a supplied }(x,w),\\
+ C_{\mathrm{dec}}(x)&:
+    \text{cost of deciding }x\text{ without a supplied witness}.
+ \end{aligned}
+\]
+The certificate property is a language-level statement
+\[
+ x\in L\quad\Longleftrightarrow\quad
+ \exists w\in\{0,1\}^{\le q(|x|)}\;V(x,w)=1
+\]
+with a \emph{uniform}, polynomial-resource verifier $V$. The
+verifier's input encoding, witness preparation if required by the
+\emph{chosen} physical semantics, evolution, and readout must all
+fit the same rails. If verification only checks a short symbolic
+certificate, it need not construct the explicit target field.
+If instead verification is defined to demand preparation of the
+entire target field, then its cost must include $C_{\mathrm{prep}}$.
+This distinction must be fixed before a physical NP claim is made.
 
+A lower bound for $C_{\mathrm{prep}}$ of \emph{one} prescribed target
+state does not imply a lower bound on $C_{\mathrm{dec}}$ for every
+algorithm, nor does it imply that the language belongs to the
+physical NP class. To obtain a physical class separation one must
+prove \emph{both} (i) uniformly polynomial witness size and
+verification cost, and (ii) superpolynomial worst-case decision
+cost for \emph{all} admissible uniform deciders, under identical
+charging conventions. The resulting logical implication is already
+formalized as Proposition~\ref{thm:np-type-conditional}; the
+required physical lower-bound premise is \emph{unproved}.
 
+\begin{remark}[Open dimensional-lock research obligation]
+A curvature or entropy barrier may motivate a conjecture that a
+specific field family is expensive to prepare. But an explicit
+uniform encoder, a certificate representation and decoder, a
+fully charged verifier, and an algorithm-independent decision lower
+bound must be supplied separately. The original incompatible
+\emph{high-$K$ explicit-state-as-short-witness} inference has been
+withdrawn. No classical or physical $P\ne NP$ theorem follows
+from the corrected size obstruction.
+\end{remark}
 
 
 \clearpage
@@ -1741,10 +1805,10 @@ This allows an NP-style verification / P-style construction analogy:
 \hline
 \textbf{Complexity Concept} & \textbf{WCT Interpretation} \\ \hline
 Input string $x$              & Initial configuration $\psi_0$ \\ \hline
-Certificate $w$               & Target coherent state $\psi^*$ \\ \hline
-Verifier $M(x,w)$             & Local test: $\sigma[\psi^*] \le \sigma_{\mathrm{crit}}$ \\ \hline
+Certificate $w$               & Succinct symbolic witness; separate from a target field $\psi^*$ \\ \hline
+Verifier $M(x,w)$             & Charged test on $(x,w)$, with any required physical state preparation counted \\ \hline
 Polynomial-time algorithm     & Local update: $T = O(n^k)$ curvature steps \\ \hline
-Acceptance                    & Overlap test: $\mathrm{Overlap}(\psi_T,\psi^*) > \tau$ \\ \hline
+Acceptance                    & Correct decision bit after charged encoding, evolution, and readout \\ \hline
 \end{tabular}
 \caption{Mapping between classical NP verification and curvature-regulated WCT dynamics.}
 \end{table}
