@@ -795,6 +795,18 @@ sign, these literal truth requirements are mutually consistent across
 clauses. Complete any remaining unspecified Boolean variables
 arbitrarily. The resulting assignment satisfies $F$.
 \end{proof}
+
+\paragraph{Quantitative witness readout.}
+Assign $x_i=1$ when $\cos\theta_i\ge0$. In any clause falsified by this
+assignment each of the three factors $1-s$ is at least $1/2$. Since all
+clause penalties are nonnegative, $E_{\rm logic}<1/8$ guarantees that
+this one assignment satisfies every clause. Along any trajectory with
+$E_{\rm logic}\to0$ this holds at every sufficiently late observation.
+The strict threshold for this decoder is sharp: for the single clause
+$(\neg x\vee\neg x\vee\neg x)$, the phase $\pi/2$ gives energy $1/8$
+and the tie rule chooses $x=1$. Convergence of the actual dynamics
+remains an independent hypothesis.
+
 \begin{remark}[WIN-03: stationarity is a separate obligation]
 The implication $E_{\mathrm{logic}}[\psi]=0\Rightarrow
 \delta(E_{\mathrm{geom}}+\lambda E_{\mathrm{logic}})[\psi]=0$
@@ -2625,7 +2637,7 @@ $\Phi(\psi)$. For an algorithm $M$ and input $x$ write
 \mathsf{Cost}_{\Theta}(M,x):=
 \sum_{t=0}^{T_M(x)}\Phi(\psi_{M,x}^{t}).
 \]
-A genuinely universal language-level cost must take an infimum
+A pointwise optimization of language-level physical cost takes an infimum
 \emph{over all admissible deciders}, with a worst-case input cost:
 \[
 \mathsf{C}_{\Theta,\mathfrak W}(L,n):=
@@ -2636,6 +2648,36 @@ Empty algorithm classes have cost $+\infty$ by convention.
 Any claim of an exponential universal lower bound must justify its
 algorithm-independent quantifiers and clarify whether $\Phi$ counts
 instantaneous energy, total time-integrated expenditure, or both.
+
+\paragraph{Quantifier order and single-tape first-answer time.}
+Fix a correct deterministic one-tape dense-SAT decider $M$. Put
+$b_M=1+\lfloor\log_2(|\Lambda_M\times\mathrm{Dir}|+1)\rfloor$, where
+$\Lambda_M$ denotes its finite control states, and
+$N(j)=18j2^j+6j^3$. For every budget $H\ge N(b_M+4)$ there is a
+rejected word $x$ with
+\[
+ H/3<|x|\le H,\qquad H^2\le 3456 b_M\,T_M(x).
+\]
+To prove this, choose the largest $j$ with $N(j)\le H$.
+For $j\ge4$, expansion of the two polynomials and $2^{j+1}=2\,2^j$
+give $N(j+1)\le3N(j)$. The matrix crossing argument supplies a rejected
+word of length $N(j)$ with $N(j)^2\le384 b_M T_M(x)$. Combining the
+inequalities proves the stated bound. This strengthens the frequency of
+the quadratic guarantee. The superpolynomial exponent in
+Conjecture~\ref{conj:wcc_depth} remains open.
+
+If the machine can instead be chosen after the horizon, the first-answer
+time has a different bound. For every decidable language and every $H$
+there exists a globally correct one-tape machine $D_H$ with
+$T_{D_H}(x)\le 2|x|+5$ on all $|x|\le H$. Its finite control holds
+the complete table through $H$. One round trip reads a short word and
+returns its table entry; longer inputs invoke the original decider.
+The description size is unrestricted and can depend on $H$. Thus a
+pointwise infimum over machines of first-answer times has a linear
+upper bound even on decidable languages with large uniform time
+complexity. A physical cost including machine preparation requires
+separate accounting. The checked statements are
+\texttt{quadratic\_every\_budget} and \texttt{fast\_through\_horizon}.
 
 \subsection{Interface and expander hypotheses}
 \begin{hypothesis}[Uniform interface price]
@@ -2656,6 +2698,26 @@ counting disconnected truth assignments. An expander on $\Theta(n)$
 vertices has only $O(n)$ edges at bounded degree; an exponential
 area bound requires an additional geometric embedding theorem with
 explicit distortion, domain volume, and feature-width controls.
+
+\paragraph{A verified mesh price.}
+Count each selected face $e$ once, give it area $a\ge0$ and dual volume
+$ha$ with $h>0$, and let $J_e$ be the norm of its field difference.
+If each face of a decoded cut has $J_e\ge\delta\ge0$, then
+\[
+ \sum_e (J_e/h)^2ha+R\ \ge\ (\delta^2/h)\,a\,\#\mathrm{cut}
+ \quad(R\ge0).
+\]
+Sum the pointwise squared differences on the cut and use nonnegativity
+on its complement. A scalar $K$-Lipschitz readout ($K>0$) on opposite
+sides of a threshold with margins $\eta$ gives $J_e\ge2\eta/K$.
+Uniform constants follow when $h$ and $K$ have fixed upper bounds and
+$\eta$ has a fixed positive lower bound. On the two-level graph encoding
+with amplitudes $1,2$, the absolute graph Laplacian at a vertex equals
+its number $d_i$ of oppositely labeled neighbors. The quadratic energy
+therefore lies between $\sum_i d_i$ and $d_{\max}\sum_i d_i$.
+These estimates apply to an observed interface. The obligation to force
+such an interface on every admissible decider remains in
+Hypothesis~\ref{prop:locked-expander-full}.
 
 \begin{proposition}[Conditional product of two lower bounds]
 \label{lem:lower}

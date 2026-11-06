@@ -1941,6 +1941,22 @@ inclusion for that model requires the simulation of
 Theorem~\ref{thm:wcc_to_tm}, which is not yet kernel-checked for
 general radius and lattice with polynomial-time encoders and decoders.
 
+\paragraph{Uniform readout for the original two-phase construction.}
+For $R=L(n)+1$, enumerate the active sites of $[-L(n),L(n)]$ in
+the canonical order. Use a fixed state code beginning with the tag $1$,
+then the two flags for an ordinary head in $q_{\rm acc}$ and $q_{\rm rej}$.
+Append a one-hot state identity, encoding each identity bit $b$ as $0b$.
+This code is injective and has width $w=3+2|S|$.
+The decoder skips the unary $n$ and its delimiter, accumulates both flags
+over the entire configuration, and returns to the input origin. An
+accepting flag takes precedence over a rejecting flag; if both are absent
+it writes the empty word. On input of length $m$ the first halt occurs
+after $2m+4$ transitions, including writing the blank output terminator.
+Since $m\le n+1+(2L(n)+3)w$, every fixed polynomial window clock
+has a polynomial decoder in $n$. The theorem
+\texttt{PVNP.TwoPhaseDecoder.decM\_fp} applies to every canonical
+configuration, including multiple-head configurations.
+
 \paragraph{Uniform-model completion (repository addendum, 5 November 2026).}
 This later addendum supersedes the last sentence of item~(iii) above.
 For the uniform model of Definition~\ref{def:wcc_machine}, the simulation of

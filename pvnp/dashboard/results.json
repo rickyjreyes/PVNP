@@ -9,6 +9,7 @@
     "description": "Last inventory revision before the November 6 manuscript corrections (PRs #45, #46 and #47). The same file is on main up to dd7138b, the PR #43 merge.",
     "expected": {"Exact": 70, "Restricted": 2, "Refuted": 11, "Open": 8}
   },
+  "formalizations": [{"id": "II-24", "pr": 54, "decl": "PartIIManuscript.conditional_np_safety", "from": "Open"}],
   "amendments": [
     {"id": "II-7", "pr": 45, "counterexamples": ["invariant_literal_fails"],
      "scope": "Quantifier range corrected from all t ≥ 0 to 0 ≤ t ≤ L(n). The corrected theorem was already kernel-checked; the manuscript now states it."},
@@ -28,6 +29,7 @@
   "conditional": {
     "$comment": "Exact means the stated implication is kernel-checked; it does not prove the premises. 'open' = a premise is an unproved complexity hypothesis. 'model' = explicit physical or modelling hypotheses that are assumptions, not theorems. build.js fails if an Exact row whose text mentions a premise, hypothesis, conditionality or an implication is neither listed here nor exempted with a reason.",
     "open": {
+      "II-24": "Assumes polynomial physical resources, the capacity law, uniform simulation with counted update rounds, and P_Turing \u2260 NP_Turing.",
       "I-1": "Verified: (1) curvature cost above every polynomial-time bound together with (2) verifiability implies ψ* ∈ NP \\ P (state version). Not proved: premise (1).",
       "I-4": "Verified: verifiable and not constructible implies ψ* ∈ NP \\ P and P ≠ NP (state version). Not proved: premise (2), non-constructibility.",
       "I-5": "Verified: the class identifications, whose premises are proved for the discrete model, and the implication from a separation to P ≠ NP. Not proved: any such separation.",
@@ -80,43 +82,43 @@
     {"title": "Quadratic hard-input family", "decl": "CrossingSATMatrix.quadratic_arbitrarily_large", "pr": 43,
      "statement": "Every correct single-tape SAT_dense decider has arbitrarily long rejected inputs x with |x|² ≤ 384·b_M·time_M(x). This quadratic, machine-dependent bound is far from superpolynomial."},
     {"title": "Restricted matrix-family circuit", "decl": "CrossingSATMatrix.matrix_promise_circuit", "pr": 43,
-     "statement": "On valid packed matrix instances, a single-layer circuit of size at most 1+4n·2^n decides membership, so this hard-input family cannot yield circuit lower bounds."}
+     "statement": "On valid packed matrix instances, a single-layer circuit of size at most 1+4n·2^n decides membership, so this hard-input family cannot yield circuit lower bounds."},
+    {"title": "Uniform SAT decision transfer", "decl": "CookLevin.Gen.satLowerBound_iff_P_ne_NP", "pr": 53, "statement": "The uniform construction proves SAT_dense ∉ P_TM if and only if P_TM ≠ NP_TM. The separation itself remains open."},
+    {"title": "Negated toroidal seam", "decl": "ToroidalDiagonal.odd_encRing_not_SAT", "pr": 49, "statement": "The dense encoding of a finite equality ring with a negated seam is unsatisfiable at every ring length. The seam bit determines the answer on this family."},
+    {"title": "Ordinary toroidal seam", "decl": "ToroidalDiagonal.even_encRing_mem_SAT", "pr": 49, "statement": "The dense encoding of the same ring with an ordinary seam has a constant satisfying assignment."}
   ],
-  "pending": [
-    {"title": "Finite toroidal diagonal feedback", "pr": 49,
-     "file": "lean/PVNP/ToroidalDiagonal.lean", "doc": "pvnp/proofs/toroidal-diagonal-finite-cycle.md",
-     "limitation": "A finite cyclic consistency result. The negated-seam loop is a cheaply recognizable unsatisfiable formula with a trivial polynomial-time decision rule. It is not a lower bound on SAT deciders, not a superpolynomial SAT lower bound and not a classical separation, and it does not change the 91-claim coverage.",
-     "parts": [
-       {"title": "Cyclic Boolean feedback", "statement": "Equality edges force a chain of wires to be constant; a negated seam therefore admits no consistent cyclic state, and an ordinary seam does.",
-        "decls": [{"name": "ToroidalDiagonal.edge_chain_constant", "line": 57}, {"name": "ToroidalDiagonal.odd_ring_no_state", "line": 71}, {"name": "ToroidalDiagonal.even_ring_has_state", "line": 78}]},
-       {"title": "Satisfiable and unsatisfiable seam constructions", "statement": "The ring CNF with a negated seam is unsatisfiable for every n; with an ordinary seam it is satisfiable.",
-        "decls": [{"name": "ToroidalDiagonal.odd_ring_unsat", "line": 95}, {"name": "ToroidalDiagonal.even_ring_sat", "line": 142}]},
-       {"title": "Exact finite CNF encoding", "statement": "All variables are bounded by n+1, and the dense encodings are rejected (negated seam) or accepted (ordinary seam) by the repository's SAT_dense semantics.",
-        "decls": [{"name": "ToroidalDiagonal.ring_bounded", "line": 112}, {"name": "ToroidalDiagonal.odd_encRing_not_SAT", "line": 158}, {"name": "ToroidalDiagonal.even_encRing_mem_SAT", "line": 164}]},
-       {"title": "Polynomial encoding size", "statement": "The ring formula has exactly 2n+2 clauses, and its dense encoding has exactly 3(n+1)(2n+2) bits.",
-        "decls": [{"name": "ToroidalDiagonal.ringFormula_length", "line": 177}, {"name": "ToroidalDiagonal.encRing_length", "line": 184}]}
-     ]}
-  ],
+  "pending": [],
   "open": [
-    {"title": "Uniform Cook–Levin reduction (CL-1)",
-     "statement": "A polynomial-time Turing machine computing a reduction from every NP_TM language to SAT_dense. The non-uniform projections above do not provide it. It is needed only for converse transfers such as P_TM ≠ NP_TM → SATLowerBound.",
-     "decls": [], "doc": {"path": "pvnp/proofs/remaining-obstructions.md", "find": "## Phase 7: Cook–Levin"}, "formal": "Not formalized"},
-    {"title": "Superpolynomial SAT circuit lower bound",
-     "statement": "SAT_dense ∉ P/poly. With P_TM ⊆ P/poly (proved) it would imply SATLowerBound, but it is a strictly stronger, non-uniform statement.",
-     "decls": ["SATProjection.SAT_circuit_lower_iff", "SATProjection.SATLowerBound_of_NP_circuit_lower"], "formal": "Stated as a hypothesis; not proved"},
-    {"title": "CrossingSAT.SATLowerBound", "central": true,
-     "statement": "SAT_dense ∉ P_TM: no polynomial-time single-tape machine decides dense CNF-SAT. This is the central unresolved theorem of the program.",
-     "decls": ["CrossingSAT.SATLowerBound"], "formal": "Defined as a Prop; not proved"},
-    {"title": "Classical P_TM ≠ NP_TM",
-     "statement": "Lean proves SATLowerBound → P_TM ≠ NP_TM. The conclusion itself is not proved.",
-     "decls": ["CrossingSAT.P_ne_NP_of_satLowerBound"], "formal": "Implication proved; conclusion open"}
+    {
+      "title": "Superpolynomial SAT circuit lower bound",
+      "statement": "SAT_dense ∉ P/poly. With P_TM ⊆ P/poly (proved) it would imply SATLowerBound, but it is a strictly stronger, non-uniform statement.",
+      "decls": [
+        "SATProjection.SAT_circuit_lower_iff",
+        "SATProjection.SATLowerBound_of_NP_circuit_lower"
+      ],
+      "formal": "Stated as a hypothesis; not proved"
+    },
+    {
+      "title": "CrossingSAT.SATLowerBound",
+      "central": true,
+      "statement": "SAT_dense ∉ P_TM: no polynomial-time single-tape machine decides dense CNF-SAT. This is the central unresolved theorem of the program.",
+      "decls": [
+        "CrossingSAT.SATLowerBound"
+      ],
+      "formal": "Defined as a Prop; not proved"
+    },
+    {
+      "title": "Classical P_TM ≠ NP_TM",
+      "statement": "Uniform Cook–Levin gives SATLowerBound ↔ P_TM ≠ NP_TM. An unconditional proof of either side remains open.",
+      "decls": [
+        "CookLevin.Gen.satLowerBound_iff_P_ne_NP"
+      ],
+      "formal": "Equivalence proved; separation open"
+    }
   ],
   "verification": {
-    "main": {"sha": "0498989903f25290fa0a6346d4a2dacd1c9c34a9", "lean_tree": "780a952de93c91027f8e2b38ce8f026f92417ac7",
-             "workflow": "PVNP Lean supporting theorems", "job": "lean", "run": 42182680725, "conclusion": "success",
-             "completed": "2026-11-06T08:03:24Z",
-             "note": "Push run on main for PR #47's merge commit. The job builds the complete PVNP import tree and runs the axiom audit (only propext, Classical.choice and Quot.sound allowed)."},
-    "checked_at": "2026-11-06T10:29:00Z",
+    "main": {"sha": "713f484cbe4fd16a66ec780308e96fa1a972d9fe", "lean_tree": "a3db75c86a5c8ceb01483a2c5e1762cc61015095", "workflow": "PVNP Lean supporting theorems", "job": "lean", "run": 42279295347, "conclusion": "success", "completed": "2026-11-06T19:43:35Z", "note": "Full import tree and standard-axiom audit on main following #54."},
+    "checked_at": "2026-11-06T21:00:00Z",
     "prs": [
       {"number": 43, "title": "Phase X: first-answer TM circuits, dense SAT projections, and single-tape lower bounds", "head": "03aa90d1029f851ed2e3805d630761ae7776b1d1",
        "state": "merged", "merge_commit": "dd7138bf7a839cbfa0ce55b9f2a12323e5e2a916",
@@ -132,12 +134,15 @@
        "checks": [{"name": "lean", "run": 42182340495, "conclusion": "success"}, {"name": "phase-iii-targeted", "run": 42182340451, "conclusion": "success"}, {"name": "build", "run": 42182340353, "conclusion": "success"}]},
       {"number": 49, "title": "Experiment: finite toroidal diagonal feedback and dense SAT consistency", "head": "58307dcd58d1057a0799ffa542e09e3721369e94",
        "state": "draft",
-       "note": "Draft, not merged. All three checks passed on this exact head, but its Lean results are verified on the PR head only and are not counted on main.",
+       "note": "The original proof was checked at this PR head. Its module was subsequently integrated through PR #55.",
        "checks": [{"name": "lean", "run": 42194502912, "conclusion": "success"}, {"name": "phase-iii-targeted", "run": 42194503004, "conclusion": "success"}, {"name": "build", "run": 42194502991, "conclusion": "success"}]},
       {"number": 50, "title": "Add inventory-driven PVNP Lean formalization dashboard", "head": "acd11cf8f8a49a46410563fd0cbcdacde0953e2e",
        "state": "merged", "merge_commit": "06564704f36dbb2050cd436449f4714e065b57e8",
        "note": "Merged while its lean and PDF build checks were still running. It changed no Lean files; its lean check later passed.",
-       "checks": [{"name": "dashboard", "run": 42198790101, "conclusion": "success"}, {"name": "lean", "run": 42198790258, "conclusion": "success"}, {"name": "build", "run": 42198790112, "conclusion": "in_progress"}]}
+       "checks": [{"name": "dashboard", "run": 42198790101, "conclusion": "success"}, {"name": "lean", "run": 42198790258, "conclusion": "success"}, {"name": "build", "run": 42198790112, "conclusion": "in_progress"}]},
+      {"number": 53, "title": "CL-1 parts 2–3: uniform Cook–Levin and SATLowerBound ↔ P_TM ≠ NP_TM", "head": "fe017eb0c0a640eee4d3e4dc2354c4878f14fbe6", "state": "merged", "merge_commit": "a7507de65e66586b61664d24f6aaec0a5653b4f4", "checks": [{"name": "build", "run": 42270468897, "conclusion": "success"}, {"name": "lean", "run": 42270469201, "conclusion": "success"}, {"name": "phase-iii-targeted", "run": 42270468977, "conclusion": "success"}]},
+      {"number": 54, "title": "II-24: finite-modification closure of P_TM and conditional NP-safety", "head": "943965f66e47a613c7abdaf7d4246fd315d4c5f2", "state": "merged", "merge_commit": "713f484cbe4fd16a66ec780308e96fa1a972d9fe", "checks": [{"name": "lean", "run": 42274055010, "conclusion": "success"}, {"name": "build", "run": 42274055029, "conclusion": "success"}, {"name": "phase-iii-targeted", "run": 42274055062, "conclusion": "success"}]},
+      {"number": 55, "title": "Phase XI integration: I-11 and I-3 scope tests, quadratic SAT bound, finite toroidal proof", "head": "e2a3818d99b262e99c59382cab848fe9203158a8", "state": "merged", "merge_commit": "89058ccc00bfc578601965ea3b63309bf445635a", "checks": [{"name": "lean", "run": 42290102943, "conclusion": "in_progress"}, {"name": "build", "run": 42290103032, "conclusion": "success"}, {"name": "phase-iii-targeted", "run": 42290102926, "conclusion": "success"}]}
     ]
   }
 }

@@ -158,3 +158,11 @@ import PVNP.PhaseLockScope
 
 -- Phase X ranked-DAG construction: explicit register and tableau size bounds.
 import PVNP.CircuitCookLevin
+
+-- Original two-phase decoder, phase-energy readout and separator bounds.
+import PVNP.TwoPhaseDecoder
+import PVNP.PhasePenaltyMargin
+import PVNP.SeparatorPrice
+-- First-answer complexity with the two length/decider quantifier orders.
+import PVNP.FiniteHorizonSAT
+import PVNP.QuadraticHorizon
