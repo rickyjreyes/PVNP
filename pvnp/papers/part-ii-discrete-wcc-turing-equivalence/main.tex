@@ -850,7 +850,10 @@ halting time, since $T_M(n)\le L(n)$:
 \end{lemma}
 
 \begin{proof}
-The base case follows from the definition of $\mathrm{enc}_M$ at $t=0$. The step
+The base case follows from the definition of $\mathrm{enc}_M$ at $t=0$.
+Since the Turing head starts at cell $0$ and moves by one cell per step,
+$|h_t|\le t$. Thus $h_t\in\Lambda_n$ for $0\le t\le L(n)$, and an
+inductive transition at $t<L(n)$ stays inside the window. The step
 from $2t$ to $2t+1$ uses $U_{\mathrm{phase0}}$, which can only introduce a
 single directional mark at the unique head cell and flips all phases to $1$. The
 step from $2t+1$ to $2t+2$ uses $U_{\mathrm{phase1}}$, which ensures that any
@@ -910,7 +913,11 @@ The tape symbols are unchanged in this step. By definition of the Turing
 transition, the new Turing configuration is $(\gamma_{t+1}, h_{t+1}, q_{t+1})$
 with $\gamma_{t+1}$ and $(h_{t+1},q_{t+1})$ matching the updated symbol and
 head location/state. Thus $C_{2(t+1)}$ encodes $(\gamma_{t+1}, h_{t+1},
-q_{t+1})$ as claimed. This completes the induction.
+q_{t+1})$ as claimed. This completes the induction for
+$0\le t\le L(n)$. The equality of configurations restricted to
+$\Lambda_n$ continues through $t=L(n)+1$ by the same two-step local
+identity, but a head beyond the window is not counted as a head cell
+inside it.
 \end{proof}
 
 \begin{lemma}[Runtime and space overhead]
@@ -937,9 +944,12 @@ configuration appears at WCC time $2T_M(n)$ with phase $p=0$; the decoding
 predicate tests for the presence of $q_{\mathrm{acc}}$ and thus detects
 acceptance exactly when $M$ accepts.
 
-For the space bound, by hypothesis $M$ uses at most $L(n)$ nonblank tape cells
-on inputs of length $n$, so choosing $\Lambda_n = \{-L(n),\dots,L(n)\}$
-suffices. Since $L(n)$ is bounded by a polynomial in $n$, we have
+For the window bound, the head begins at $0$ and moves by at most
+one cell per step, hence $|h_t|\le t$ until the first halt.
+The choice $L(n)\ge T_M(n)+n$ therefore ensures that the simulated
+head remains inside $\Lambda_n=\{-L(n),\dots,L(n)\}$ through
+$t=T_M(n)$, including the empty input. Since $L(n)$ is bounded by
+a polynomial in $n$, we have
 $|\Lambda_n| = 2L(n)+1 \le \tilde{p}(n)$ for a polynomial $\tilde{p}$. Each
 update step applies the local rule $U$ independently at each cell, so a single
 global update can be carried out with work $O(|\Lambda_n|) =
