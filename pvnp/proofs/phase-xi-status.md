@@ -52,21 +52,23 @@ python3 pvnp/tools/lean_progress.py --markdown
 python3 pvnp/tools/lean_progress.py --json
 ```
 
-The script parses `pvnp/proofs/manuscript-lean-inventory.md` and enforces
-the frozen claim counts. It also reads the Phase X/XI principal theorem names
+The script parses `pvnp/proofs/manuscript-lean-inventory.md` and independently crosschecks each claim against
+the current manuscript coverage table (91 claims). It also reads the Phase X/XI principal theorem names
 from `lean/audit/AxiomAudit.lean`, with a specific check for the new theorem.
 
 | Manuscript | Exact | Restricted | Refuted | Open | Total |
 |---|---:|---:|---:|---:|---:|
-| Part I | 26 | 1 | 8 | 6 | 41 |
-| Part II | 23 | 1 | 3 | 1 | 28 |
+| Part I | 28 | 1 | 6 | 6 | 41 |
+| Part II | 26 | 1 | 0 | 1 | 28 |
 | Part III | 21 | 0 | 0 | 1 | 22 |
-| **Total** | **70** | **2** | **11** | **8** | **91** |
+| **Total** | **75** | **2** | **6** | **8** | **91** |
 
 An exact manuscript statement receives a 100% formalization bar only
 when verified on a green CI head. A refuted statement has a verified
 counterexample, **not** a completed proof of its original claim. Restricted
 and open theorems have no fabricated numeric completion estimate.
+
+The current amended-manuscript count is 75/91 exact. The original October 27 inventory was 70 Exact / 2 Restricted / 11 Refuted / 8 Open; the changes reflect corrected statements, not proofs of their original false forms.
 
 The 91-claim inventory is distinct from new Phase X/XI supporting theorems;
 this checkpoint does not change those counts.
