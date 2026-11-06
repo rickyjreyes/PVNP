@@ -2,7 +2,7 @@ name: PVNP Lean supporting theorems
 on:
   push:
     branches: [main, formal/wcc-locality-resource-audit-10-11-20261027, astra/complete-program-20261102]
-    paths: ['lean/**', '.github/workflows/lean.yml']
+    paths: ['lean/**', '.github/workflows/lean.yml', 'pvnp/tools/lean_progress.py', 'pvnp/proofs/manuscript-lean-inventory.md']
   pull_request:
   workflow_dispatch:
 permissions:
@@ -48,6 +48,10 @@ jobs:
         run: lake build PVNP.CrossingCapacity PVNP.CrossingTrace PVNP.CrossingSplice PVNP.CrossingDiagonal PVNP.CrossingHennie PVNP.CrossingSAT PVNP.CrossingSATSets
       - name: Check Phase IX target and no-go modules explicitly
         run: lake build PVNP.SATTarget PVNP.TseitinSAT PVNP.VerifierCrossing
+      - name: Check Phase X/XI circuit and lower-bound modules explicitly
+        run: lake build PVNP.BooleanNetwork PVNP.CircuitCNF PVNP.TMBooleanTableau PVNP.VerifierCircuits PVNP.SATProjection PVNP.CrossingSATMatrix PVNP.PhaseXIQuadratic
+      - name: Validate complete 91-claim progress inventory
+        run: python3 ../pvnp/tools/lean_progress.py --check
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt
