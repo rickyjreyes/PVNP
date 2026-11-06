@@ -126,3 +126,6 @@ import PVNP.VerifierCrossing
 import PVNP.TMBooleanTableau
 import PVNP.SATProjection
 import PVNP.CrossingSATMatrix
+
+-- CL-1, part 1: the Cook–Levin tableau formula (mathematical reduction to dense SAT).
+import PVNP.CookLevinTableau

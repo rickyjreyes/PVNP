@@ -468,3 +468,16 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.CrossingSATMatrix.quadratic_diagonal
 #print axioms PVNP.CrossingSATMatrix.quadratic_arbitrarily_large
 #print axioms PVNP.CrossingSATMatrix.matrix_promise_circuit
+
+-- CL-1, part 1: Cook–Levin tableau formula and the mathematical reduction NP_TM → SAT_dense.
+#print axioms PVNP.CookLevin.head_le
+#print axioms PVNP.CookLevin.tape_far
+#print axioms PVNP.CookLevin.Nrm.nrm_answer
+#print axioms PVNP.CookLevin.phi_bounded
+#print axioms PVNP.CookLevin.truth_step
+#print axioms PVNP.CookLevin.rows
+#print axioms PVNP.CookLevin.sound
+#print axioms PVNP.CookLevin.complete
+#print axioms PVNP.CookLevin.phi_sat_iff
+#print axioms PVNP.CookLevin.nrm_acc_iff
+#print axioms PVNP.CookLevin.cookLevin
