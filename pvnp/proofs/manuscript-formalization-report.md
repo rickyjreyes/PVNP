@@ -1,5 +1,36 @@
 # Faithful Lean formalization of the three PVNP manuscripts: report (5 November 2026)
 
+> **Current amended-manuscript status (6 November 2026): 77 Exact, 2 Restricted,
+> 4 Refuted, 8 Open (91 total).** I-12 is now a conditional compatibility theorem
+> in the restricted frozen model with charged polynomial-time encoders, not an
+> unconditional WCT physical barrier or proof of P != NP. I-20 now states the
+> explicit-state description-length obstruction already proved in Lean; a
+> separate short certificate need not encode or reconstruct the target state.
+> The full physical construction-versus-verification complexity question remains
+> open. See [repair note](part-i-physical-barrier-certificate-repair.md) and
+> [live inventory](manuscript-lean-inventory.md).
+
+> **Current amended-manuscript status (6 November 2026): 75 Exact, 2 Restricted,
+> 6 Refuted, 8 Open (91 total).** I-13 now states the proved quiescent
+> finite-support bound. I-10 is **re-scoped** to a conditional theorem about
+> observable common-successor mixing, with no assertion that curvature
+> collapse implies that premise or that it makes a trajectory language trivial.
+> The October 27 I-10/I-13 and II-7/II-8/II-17 refutations remain recorded
+> against their original statements. See
+> [I-10/I-13 repair](part-i-collapse-locality-repair.md) and
+> [live inventory](manuscript-lean-inventory.md).
+
+> **Historical snapshot; superseded for three Part II statements on 6 November 2026.**
+> The October 27 Part II manuscript contained three literal defects, II-7, II-8
+> and II-17. The amended manuscript now states exactly the existing Lean-proved
+> finite-window invariant, two-step correspondence, and empty-input-safe
+> polynomial-time definition. Its **current** inventory is **73 Exact, 2
+> Restricted, 8 Refuted, 8 Open**, with Part II **26/28 Exact**. The
+> pre-repair snapshot below (70 Exact, 11 Refuted) remains intentionally
+> unchanged as historical audit evidence. See
+> [the repair note](part-ii-quantifier-boundary-repair.md) and
+> [live inventory](manuscript-lean-inventory.md).
+
 The source of truth is the three manuscripts in `pvnp/papers/*/main.tex` (revised 27 October 2026),
 read in full. The claim-by-claim table, with Lean names and statuses, is
 `pvnp/proofs/manuscript-lean-inventory.md`. This report summarizes it.
@@ -249,24 +280,3 @@ prove the premise.
 
 `SATLowerBound` remains open, and `P_TM ≠ NP_TM` is not derived. No claim changes status: 70 Exact,
 11 Refuted, 2 Restricted, 8 Open. See `phase-ix-universal-lower-bound-status.md`.
-
-### Phase X addendum (6 November 2026)
-
-Phase X attacked `SATLowerBound` directly. It does not prove it.
-
-**Attempts that failed.** Each fails at a stated point; see `phase-x-circuit-route-status.md` §1.
-- Diagonalization inside NP.
-- Padding magnification.
-- Trajectory separator and curvature invariants.
-
-**What it proves** (kernel-checked):
-- **`P_TM ⊆ P/poly`** (`TMCircuit.P_TM_subset_Ppoly`). Tableau circuits of size
-  `(T+1)(2T+3)·c_M` are built from a cell-local rule derived from `TM.step`.
-- **Non-uniform Cook–Levin for `SAT_dense`** (`CircuitCookLevin.SAT_dense_mem_Ppoly_iff`).
-  - This includes the Cook–Levin embedding that Part I §11.1 cites without proof:
-    `mem_iff_verCirc`, i.e. `x ∈ L ⟺ ∃ w, C(x, w) = 1` with `C` of polynomial size.
-  - Consequently any `NP_TM` language without polynomial-size circuits gives `SATLowerBound` and
-    `P_TM ≠ NP_TM` (`satLowerBound_of_NP_not_Ppoly`).
-- **CL-1.** Its non-uniform part is closed; its uniform part remains open.
-
-No claim changes status: 70 Exact, 11 Refuted, 2 Restricted, 8 Open.

@@ -122,7 +122,39 @@ import PVNP.SATTarget
 import PVNP.TseitinSAT
 import PVNP.VerifierCrossing
 
--- Phase X: Boolean circuits, P_TM ⊆ Ppoly, and non-uniform Cook–Levin for SAT_dense.
-import PVNP.Circuits
-import PVNP.TMCircuit
+-- Phase X: first-answer Turing machine simulation by bounded-fan-in circuits.
+import PVNP.TMBooleanTableau
+import PVNP.SATProjection
+import PVNP.CrossingSATMatrix
+
+-- CL-1, part 1: the Cook–Levin tableau formula (mathematical reduction to dense SAT).
+import PVNP.CookLevinTableau
+
+-- CL-1, parts 2–3: the uniform Cook–Levin generator (a sweep program compiled to a single-tape
+-- TM), its composition with a SAT_dense decider, and SATLowerBound ↔ P_TM ≠ NP_TM.
+import PVNP.CookLevinKit
+import PVNP.CookLevinHorner
+import PVNP.CookLevinBits
+import PVNP.CookLevinMain
+import PVNP.CookLevinLabels
+import PVNP.CookLevinGen
+import PVNP.CookLevinDecide
+import PVNP.CookLevinUniform
+
+-- Part II, thm:conditional_np_safety (II-24): closure of P_TM under finite modification and the
+-- conditional NP-safety theorem under the manuscript's premises (i)–(iii).
+import PVNP.FiniteModification
+import PVNP.ConditionalNPSafety
+
+-- I-11: explicit diagonal obstruction to unrestricted physical encoders.
+import PVNP.PhysicalDiagonal
+
+-- Preserve prior Phase XI quadratic lower-bound and finite toroidal formalizations.
+import PVNP.PhaseXIQuadratic
+import PVNP.ToroidalDiagonal
+
+-- I-3: formula-independent phase locking is not a SAT criterion.
+import PVNP.PhaseLockScope
+
+-- Phase X ranked-DAG construction: explicit register and tableau size bounds.
 import PVNP.CircuitCookLevin

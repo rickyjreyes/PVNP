@@ -312,13 +312,3 @@ No manuscript claim changes status: **70 Exact, 11 Refuted, 2 Restricted, 8 Open
   complexity of an explicit function, FOCS 2016; J. Li, T. Yang, 3.1n − o(n) circuit lower bounds
   for explicit functions, STOC 2022.
 - Y. Liu, R. Pass, On one-way functions and Kolmogorov complexity, FOCS 2020.
-
-## Phase X note (6 November 2026)
-
-**Universality half of §2.5: now proved.** Every correct decider incurs circuit size
-`O(T²)` (`TMCircuit.P_TM_subset_Ppoly`). Moreover `SAT_dense` is complete for `NP_TM` under
-projections in the circuit model (`CircuitCookLevin.SAT_dense_mem_Ppoly_iff`).
-
-**Lower-bound half: still open.** It is a superpolynomial circuit lower bound for an NP language,
-which would imply `SATLowerBound` (`satLowerBound_of_NP_not_Ppoly`). See
-`phase-x-circuit-route-status.md`.

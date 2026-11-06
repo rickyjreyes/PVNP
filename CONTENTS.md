@@ -22,9 +22,8 @@ The PDFs in this repository are revised manuscripts and should not be conflated 
 
 - **Phase VI:** [Periodic-torus H² well-posedness and F-1 continuum flux](pvnp/proofs/phase-vi-torus-flux-status.md), in `TorusWellPosed.lean` and `TorusFlux.lean`; [merged PR #40](https://github.com/rickyjreyes/PVNP/pull/40).
 - **Phase VIII:** [Full crossing-sequence splicing and single-tape SAT lower bounds](pvnp/proofs/phase-viii-separation-status.md), in `CrossingHennie.lean`, `CrossingSAT.lean`, `CrossingSATSets.lean`; [merged PR #38](https://github.com/rickyjreyes/PVNP/pull/38).
-- **Phase X:** [Circuit route and non-uniform Cook–Levin](pvnp/proofs/phase-x-circuit-route-status.md), in `Circuits.lean`, `TMCircuit.lean`, `CircuitCookLevin.lean`. `SATLowerBound` is not proved.
 - **Phase IX:** [Exact target, invariant tests and no-go theorems](pvnp/proofs/phase-ix-universal-lower-bound-status.md), in `SATTarget.lean`, `TseitinSAT.lean`, `VerifierCrossing.lean`. `SATLowerBound` is not proved.
-- **Status:** All three PR #40 checks passed. Classical `P ≠ NP` remains open; manuscript inventory: 70 Exact, 2 Restricted, 11 Refuted, 8 Open.
+- **Status:** All three PR #40 checks passed. Classical `P ≠ NP` remains open; amended manuscript inventory: 77 Exact, 2 Restricted, 4 Refuted, 8 Open (historical 70 Exact / 11 Refuted and intermediate 73 Exact / 8 Refuted retained). I-10 is conditional on observable mixing; I-13 uses quiescent finite-support growth; I-12 is a charged-encoder conditional counterargument; I-20 separates explicit-state description length from a succinct certificate.
 
 ## Outstanding mathematics
 

@@ -1,4 +1,4 @@
-# Remaining obstructions and obligations (updated November 6, 2026; Phases VI, VIII, IX and X integrated)
+# Remaining obstructions and obligations (updated November 6, 2026; Phases VI, VIII and IX integrated)
 
 Each item gives the precise missing statement, what has already been proved around it, and why it
 is not closed. None of these items is assumed by any kernel-checked PVNP theorem. Each appears
@@ -63,17 +63,28 @@ No current claim needs CL-1:
   conjecture `conj:wcc_depth` is equivalent to `P ≠ NP`".
 
 Formalizing CL-1 needs a TM-composition library and a tableau encoding of TM runs into the dense CNF
-format. It is a large, self-contained project.
+format. It is a large, self-contained project and is not started.
 
-**CL-1, Phase X update (6 November 2026): the non-uniform part is CLOSED.**
-- `CircuitCookLevin.SAT_dense_mem_Ppoly_iff` proves `SAT_dense ∈ Ppoly ↔ NP_TM ⊆ Ppoly`. Every
-  `NP_TM` language reduces to `SAT_dense` by explicit projections of polynomial length:
-  - verifier tableau circuits (`TMCircuit.tableau`);
-  - the Tseitin transformation (`tseitin_sat_iff`);
-  - the dense encoding as a projection (`encDense_full`).
-- **Still open: the uniform part.** It needs a polynomial-time TM that computes the reduction, and
-  closure of `P_TM` under it. Only the uniform part would give `P_TM ≠ NP_TM → SATLowerBound` and
-  II-24. See `phase-x-circuit-route-status.md`.
+**CL-1 update (6 November 2026).** The tableau encoding is now formalized
+(`PVNP.CookLevinTableau`, see `cl1-uniform-cook-levin-status.md`). `CookLevin.cookLevin` proves,
+for every `L ∈ NP_TM`, an explicit polynomial-size instance `inst x` with
+`x ∈ L ↔ inst x ∈ SAT_dense`. This is the mathematical part of CL-1 only: it does not yet show
+that `x ↦ inst x` is computed by a Turing machine in polynomial time, nor that `P_TM` is closed
+under that map. Both items above therefore remain open.
+
+**CL-1 completed (6 November 2026, later addendum).** Both missing items are now proved, in the
+form the converse transfer needs (`cl1-uniform-cook-levin-status.md`). One fixed round-trip sweep
+program, `CookLevin.Gen.genCtrl d`, writes `inst x` within a polynomial number of round trips
+(`gen_run`). `decProg` then runs a polynomial-time decider of `SAT_dense` on that output, and
+`Prog.toTM` compiles the result into one single-tape machine with one polynomial time bound.
+Lean proves:
+- `NP_TM_subset_P_TM_of_SAT : SAT_dense ∈ P_TM → NP_TM ⊆ P_TM`;
+- `SAT_mem_P_TM_iff : SAT_dense ∈ P_TM ↔ P_TM = NP_TM`;
+- `satLowerBound_iff_P_ne_NP : SATLowerBound ↔ P_TM ≠ NP_TM`.
+
+The last theorem identifies the two statements; it proves neither. The Phase 7 decision above is
+unchanged: no earlier claim depended on CL-1. A general closure lemma for the transducer class
+`FP` is not stated.
 
 ## M1: two-way physical ⇄ TM simulation
 
@@ -147,18 +158,6 @@ implication is `CrossingSAT.SATLowerBound` (`SAT_dense ∉ P_TM`), which would g
   - *Curvature*: equivalent to the classical statement (`curvature_lower_bound_is_classical`).
 - **Precise missing implication: unchanged.** It is `SATLowerBound`, in any of its proved-equivalent
   forms. It is open. See `phase-ix-universal-lower-bound-status.md`.
-
-### M2, Phase X update (6 November 2026)
-
-- **Proved: every algorithm incurs circuit size.** `TMCircuit.P_TM_subset_Ppoly`: every
-  single-tape decider running in time `T` yields circuits of size `(T+1)(2T+3)·c_M`.
-- **Proved: the circuit route reaches the premise.** By
-  `CircuitCookLevin.satLowerBound_of_NP_not_Ppoly`, if any language in `NP_TM` requires
-  superpolynomial circuits, then `SATLowerBound`, and hence `P_TM ≠ NP_TM`.
-- **Open: the lower-bound half.** It requires a superpolynomial circuit lower bound for an NP
-  language. The best known general lower bounds for explicit functions are linear.
-- **Decisive premise: unchanged.** It is still `SATLowerBound`. See
-  `phase-x-circuit-route-status.md`.
 
 ## M3: the frozen PDE `i∂ₜψ = (Δ+κ)²ψ − β|ψ|²ψ + γ|ψ|⁴ψ`
 

@@ -91,11 +91,4 @@ This dated update supplements, and does not rewrite, the table above. Details an
   - crossing information (`VerifierCrossing`, `V_SAT ∈ P_TM`).
 - `SATLowerBound` is not proved. [Phase IX status](proofs/phase-ix-universal-lower-bound-status.md).
 
-**O7, Phase X:**
-- `P_TM ⊆ P/poly` (`TMCircuit.P_TM_subset_Ppoly`).
-- Non-uniform Cook–Levin for `SAT_dense` (`CircuitCookLevin.SAT_dense_mem_Ppoly_iff`).
-- So a superpolynomial circuit lower bound for any NP language would prove `SATLowerBound`
-  (`satLowerBound_of_NP_not_Ppoly`). That lower bound is open.
-- [Phase X status](proofs/phase-x-circuit-route-status.md).
-
 **O10:** All three exact-head PR #40 checks passed (`lean`, `phase-iii-targeted`, PDF `build`). The standard-axiom audit is part of the full Lean job. Manually dated status entries above should be read as historical checkpoints; [the formalization ledger](../lean/formalization.yaml) remains authoritative. The manuscript inventory remains 70 Exact, 2 Restricted, 11 Refuted, 8 Open.

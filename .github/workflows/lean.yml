@@ -48,8 +48,16 @@ jobs:
         run: lake build PVNP.CrossingCapacity PVNP.CrossingTrace PVNP.CrossingSplice PVNP.CrossingDiagonal PVNP.CrossingHennie PVNP.CrossingSAT PVNP.CrossingSATSets
       - name: Check Phase IX target and no-go modules explicitly
         run: lake build PVNP.SATTarget PVNP.TseitinSAT PVNP.VerifierCrossing
-      - name: Check Phase X circuit modules explicitly
-        run: lake build PVNP.Circuits PVNP.TMCircuit PVNP.CircuitCookLevin
+      - name: Check CL-1 Cook–Levin modules explicitly
+        run: lake build PVNP.CookLevinTableau PVNP.CookLevinKit PVNP.CookLevinHorner PVNP.CookLevinBits PVNP.CookLevinMain PVNP.CookLevinLabels PVNP.CookLevinGen PVNP.CookLevinDecide PVNP.CookLevinUniform
+      - name: Check Part II conditional NP-safety modules explicitly
+        run: lake build PVNP.FiniteModification PVNP.ConditionalNPSafety
+      - name: Check unrestricted physical diagonal countermodel explicitly
+        run: lake build PVNP.PhysicalDiagonal
+      - name: Check consolidated Phase XI and toroidal modules explicitly
+        run: lake build PVNP.PhaseXIQuadratic PVNP.ToroidalDiagonal
+      - name: Check I-3 phase-locking scope test explicitly
+        run: lake build PVNP.PhaseLockScope
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt

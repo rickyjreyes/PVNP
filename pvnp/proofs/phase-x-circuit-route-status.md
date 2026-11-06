@@ -3,6 +3,8 @@
 **Date:** 6 November 2026. **Base:** `main` at `6eb4634` (PR #42; Lean CI run 42151483811 passed).
 **Lean modules:** `Circuits.lean`, `TMCircuit.lean`, `CircuitCookLevin.lean`.
 
+**Historical scope.** This note records the alternative ranked-DAG formalization developed from PR #42. PR #43 independently established the circuit transfer on main. PR #53 subsequently verified uniform Cook–Levin, and PR #55 integrated the quadratic SAT corollary. Open-work descriptions below refer to the original Phase X snapshot.
+
 **Result.**
 - **Not proved.** `SATLowerBound` (`SAT_dense ∉ P_TM`) is not proved, and `P_TM ≠ NP_TM` is not
   derived. Classical P versus NP remains open.

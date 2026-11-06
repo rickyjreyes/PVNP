@@ -186,6 +186,8 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.PartISeparation.category_error_claim_implies_classical
 #print axioms PVNP.PartISeparation.high_K_not_poly_witness
 #print axioms PVNP.PartISeparation.trivial_partition_invariant
+#print axioms PVNP.PartISeparation.invariant_constant_of_common_successor
+#print axioms PVNP.PartISeparation.no_nontrivial_invariant_of_common_successor
 #print axioms PVNP.PartILocality.supp_step_subset
 #print axioms PVNP.PartILocality.local_growth_needs_quiescence
 #print axioms PVNP.PartILocality.support_poly_bound
@@ -449,6 +451,89 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.VerifierCrossing.vsat_time_lower_bound
 #print axioms PVNP.VerifierCrossing.vsat_time_lower_bound_sq
 #print axioms PVNP.VerifierCrossing.crossingInfo_not_superpolynomial
+
+#print axioms PVNP.TMBooleanTableau.circuit_first
+#print axioms PVNP.TMBooleanTableau.circuit_size
+#print axioms PVNP.TMBooleanTableau.P_TM_subset_PPoly
+#print axioms PVNP.CircuitCNF.circuit_good
+#print axioms PVNP.VerifierCircuits.closed_under_projections
+#print axioms PVNP.VerifierCircuits.verifier_family
+#print axioms PVNP.SATProjection.project_circuit
+#print axioms PVNP.SATProjection.NP_projects_to_SAT
+#print axioms PVNP.SATProjection.NP_subset_PPoly_of_SAT
+#print axioms PVNP.SATProjection.SAT_circuit_lower_iff
+#print axioms PVNP.SATProjection.SATLowerBound_of_NP_circuit_lower
+#print axioms PVNP.CrossingSATMatrix.instanceWord_mem
+#print axioms PVNP.CrossingSATMatrix.matrix_time
+#print axioms PVNP.CrossingSATMatrix.quadratic_diagonal
+#print axioms PVNP.CrossingSATMatrix.quadratic_arbitrarily_large
+#print axioms PVNP.CrossingSATMatrix.matrix_promise_circuit
+
+-- CL-1, part 1: Cook–Levin tableau formula and the mathematical reduction NP_TM → SAT_dense.
+#print axioms PVNP.CookLevin.head_le
+#print axioms PVNP.CookLevin.tape_far
+#print axioms PVNP.CookLevin.Nrm.nrm_answer
+#print axioms PVNP.CookLevin.phi_bounded
+#print axioms PVNP.CookLevin.truth_step
+#print axioms PVNP.CookLevin.rows
+#print axioms PVNP.CookLevin.sound
+#print axioms PVNP.CookLevin.complete
+#print axioms PVNP.CookLevin.phi_sat_iff
+#print axioms PVNP.CookLevin.nrm_acc_iff
+#print axioms PVNP.CookLevin.cookLevin
+
+-- CL-1, parts 2–3: the uniform generator, the generator-plus-decider program and the equivalence.
+#print axioms PVNP.CookLevin.Gen.HPar.horner_phase
+#print axioms PVNP.CookLevin.Gen.slotBits_eq
+#print axioms PVNP.CookLevin.Gen.inst_getElem
+#print axioms PVNP.CookLevin.Gen.TI.bit
+#print axioms PVNP.CookLevin.Gen.main_loop
+#print axioms PVNP.CookLevin.Gen.label_phase
+#print axioms PVNP.CookLevin.Gen.horner_hcoeffs
+#print axioms PVNP.CookLevin.Gen.gen_run
+#print axioms PVNP.CookLevin.Gen.dec_lift
+#print axioms PVNP.CookLevin.Gen.dec_conv
+#print axioms PVNP.CookLevin.Gen.dec_sim_loop
+#print axioms PVNP.CookLevin.Gen.dec_halts
+#print axioms PVNP.CookLevin.Gen.NP_TM_subset_P_TM_of_SAT
+#print axioms PVNP.CookLevin.Gen.SAT_mem_P_TM_iff
+#print axioms PVNP.CookLevin.Gen.satLowerBound_iff_P_ne_NP
+
+-- Part II, II-24: finite modification and conditional NP-safety.
+#print axioms PVNP.CookLevin.Gen.gsim_halts
+#print axioms PVNP.CookLevin.Gen.scan_short
+#print axioms PVNP.CookLevin.Gen.fm_first
+#print axioms PVNP.CookLevin.Gen.fm_long
+#print axioms PVNP.CookLevin.Gen.P_TM_of_eventually_eq
+#print axioms PVNP.PartIIManuscript.SAT_dense_npComplete
+#print axioms PVNP.PartIIManuscript.P_TM_of_wcc_eventually
+#print axioms PVNP.PartIIManuscript.conditional_np_safety_all
+#print axioms PVNP.PartIIManuscript.conditional_np_safety
+#print axioms PVNP.PartIIManuscript.no_np_complete_decider
+
+-- I-11 unrestricted-encoder diagonal scope countermodel.
+#print axioms PVNP.PhysicalAudit.firstAnswer_value_unique
+#print axioms PVNP.PhysicalAudit.tableFirstAccept_iff_mem
+#print axioms PVNP.PhysicalAudit.diagonal_on_code
+#print axioms PVNP.PhysicalAudit.diagonal_not_mem_P_TM
+#print axioms PVNP.PhysicalAudit.unrestricted_phys_ne_P_TM
+
+-- Consolidated Phase XI quadratic bound and finite toroidal consistency proof.
+#print axioms PVNP.PhaseXIQuadratic.sat_no_uniform_subquadratic
+#print axioms PVNP.ToroidalDiagonal.edge_chain_constant
+#print axioms PVNP.ToroidalDiagonal.odd_ring_no_state
+#print axioms PVNP.ToroidalDiagonal.even_ring_has_state
+#print axioms PVNP.ToroidalDiagonal.odd_ring_unsat
+#print axioms PVNP.ToroidalDiagonal.even_ring_sat
+#print axioms PVNP.ToroidalDiagonal.odd_encRing_not_SAT
+#print axioms PVNP.ToroidalDiagonal.even_encRing_mem_SAT
+#print axioms PVNP.ToroidalDiagonal.encRing_length
+
+-- I-3 phase-locking logical sufficiency test.
+#print axioms PVNP.PhaseLockScope.contradictory_unsat
+#print axioms PVNP.PhaseLockScope.all_phases_zero_exists
+#print axioms PVNP.PhaseLockScope.contradiction_phase_locked_but_not_logical
+#print axioms PVNP.PhaseLockScope.bare_phase_lock_not_sat
 
 -- Phase X: Boolean circuits and P_TM ⊆ Ppoly (tableau circuits for single-tape machines).
 #print axioms PVNP.Circuits.Circuit.val_eq

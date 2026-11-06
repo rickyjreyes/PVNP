@@ -36,12 +36,14 @@ manuscript's own quantifiers.
   conclusion. Under hypothesis (2) the accepted-target language is already in `P_TM`.
 * `universal_scope_counterexample`: the "universal scope" inference. "Every machine misses some
   solution" holds for a language in `P_TM`.
-* `PNP_SAT_physically_constant`: Section "Category error and physical barriers". If
-  `P_TM = NP_TM`, SAT is decided in the frozen physical model at constant cost with a
-  polynomial-time encoder. The claim that it "would require violating the curvature and energy
-  constraints" therefore implies `P_TM ≠ NP_TM`.
-* `high_K_not_poly_witness`: Conjecture "Dimensional-Lock Hypothesis". Its hypothesis (1),
-  `K(ψ*) > poly`, forbids ψ* from being a polynomial-size witness.
+* **Amended I-12**: `PNP_SAT_physically_constant` and
+  `category_error_claim_implies_classical` formally prove the conditional compatibility
+  result for the charged polynomial-time-encoder frozen model. They do NOT prove
+  `P_TM = NP_TM` or `P_TM ≠ NP_TM` unconditionally.
+* **Amended I-20**: `Kc_le` and `high_K_not_poly_witness` prove the literal-description
+  size obstruction. If `K_D(s) > q(n)+c`, the explicit state `s` cannot be a witness of
+  length at most `q(n)`. This does not constrain a *separate* short certificate `w` whose
+  verifier need not reconstruct `s`, or show a general algorithm lower bound.
 * `trivial_partition_invariant`: Proposition `prop:collapse-grammar` (1), as literally stated.
 -/
 
@@ -393,9 +395,10 @@ theorem universal_scope_counterexample :
     rw [this]
     exact univ_mem_P_TM
 
-/-- **Section "Category error and physical barriers".**  If `P_TM = NP_TM`, SAT is decided in the
-frozen physical model at constant mass, zero curvature energy and two final states, with a
-polynomial-time (charged) indicator encoder. -/
+/-- **Amended I-12 (conditional charged-encoder implementation).**
+If hypothetically `P_TM = NP_TM`, SAT is decided in the frozen physical model
+at constant field-evolution cost, using a polynomial-time *charged* indicator
+encoder. This does not prove that the encoder's own computation is constant cost. -/
 theorem PNP_SAT_physically_constant (κ β γ : ℝ) (h : P_TM = NP_TM) :
     SATV.SAT_dense ∈ PhysicalAudit.PhysConst κ β γ PhysicalAudit.polyEnc := by
   rw [PhysicalAudit.PhysConst_polyEnc_eq_P_TM, h]
@@ -417,9 +420,11 @@ theorem Kc_le (D : List Bool → Option (List Bool)) (c : ℕ)
   obtain ⟨d, hd, hl⟩ := hD s
   exact le_trans (Nat.sInf_le ⟨d, rfl, hd⟩) hl
 
-/-- **Conjecture "Dimensional-Lock Hypothesis (Physical Model)", hypothesis (1).**  For any
-description method that contains the literal description (overhead `c`),
-`K(ψ*) > q(n) + c` forces `|ψ*| > q(n)`: such a ψ* is not a polynomial-size witness. -/
+/-- **Amended I-20 (explicit-state witness-size obstruction).** For any
+description method with literal descriptions (overhead `c`),
+`K_D(s) > q(n) + c` forces `|s| > q(n)`. Hence `s` is not itself an
+explicit polynomial-size witness for that budget, though a distinct succinct
+certificate might exist. The original contradictory conjecture is withdrawn. -/
 theorem high_K_not_poly_witness (D : List Bool → Option (List Bool)) (c : ℕ)
     (hD : ∀ s, ∃ d, D d = some s ∧ d.length ≤ s.length + c) (q : Polynomial ℕ) (n : ℕ)
     (s : List Bool) (hK : q.eval n + c < Kc D s) : q.eval n < s.length := by
@@ -432,5 +437,43 @@ so (1) requires an unstated non-triviality condition on "metastable symbols". -/
 theorem trivial_partition_invariant {X : Type*} (F : X → X) :
     ∃ (S : Type) (_ : Fintype S) (σ : X → S), ∀ x, σ (F x) = σ x :=
   ⟨Unit, inferInstance, fun _ => (), fun _ => rfl⟩
+
+/-!
+## I-10 (amended): conditional obstruction to nontrivial invariant symbols
+
+A relation of *possible observed transitions* with a common one-step successor
+for every pair of configurations cannot preserve a nonconstant symbolic readout.
+No statement here deduces the common-successor property from high curvature,
+asserts that trajectory languages are trivial, or proves rule unidentifiability.
+The original one-block counterexample remains above.
+-/
+
+/-- The common-successor property of a possibly nondeterministic observable
+transition relation. It is a substantive hypothesis, not implied by the
+curvature threshold on a deterministic WCT flow. -/
+def CommonSuccessor {X : Type*} (R : X → X → Prop) : Prop :=
+  ∀ x y : X, ∃ z : X, R x z ∧ R y z
+
+/-- A symbol preserved along every allowed transition must be constant if all
+pairs of states share an allowed successor. -/
+theorem invariant_constant_of_common_successor {X S : Type*}
+    (R : X → X → Prop) (σ : X → S) (hCommon : CommonSuccessor R)
+    (hInv : ∀ x y : X, R x y → σ x = σ y) :
+    ∀ x y : X, σ x = σ y := by
+  intro x y
+  obtain ⟨z, hxz, hyz⟩ := hCommon x y
+  exact (hInv x z hxz).trans (hInv y z hyz).symm
+
+/-- **Corrected Part I proposition I-10.** No *nonconstant* partition is
+pathwise invariant under a relation with the common-successor property.
+The statement is stronger than finite alphabet because the target
+type S is unrestricted. -/
+theorem no_nontrivial_invariant_of_common_successor {X S : Type*}
+    (R : X → X → Prop) (σ : X → S) (hCommon : CommonSuccessor R)
+    (hNontrivial : ∃ x y : X, σ x ≠ σ y) :
+    ¬ ∀ x y : X, R x y → σ x = σ y := by
+  intro hInv
+  obtain ⟨x, y, hneq⟩ := hNontrivial
+  exact hneq (invariant_constant_of_common_successor R σ hCommon hInv x y)
 
 end PVNP.PartISeparation
