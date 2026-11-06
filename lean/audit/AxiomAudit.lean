@@ -468,3 +468,6 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.CrossingSATMatrix.quadratic_diagonal
 #print axioms PVNP.CrossingSATMatrix.quadratic_arbitrarily_large
 #print axioms PVNP.CrossingSATMatrix.matrix_promise_circuit
+
+-- Phase XI: no uniformly subquadratic correct dense-SAT single-tape decider.
+#print axioms PVNP.PhaseXIQuadratic.sat_no_uniform_subquadratic
