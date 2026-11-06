@@ -110,6 +110,58 @@ theorem original_step (M : MTM) (p : Polynomial ℕ)
   simp [UWCC.step, originalUniform, UWCC.offset,
     PartIITwoPhase.stepW, window, Pi.add_apply]
 
+/-- Repeated synchronous `UWCC` updates of the original construction agree
+with the author's `runW` on the complete one-dimensional lattice. This is
+conditional only on the explicit encoder/window FP witnesses used to build
+the uniform machine. -/
+theorem original_cfg (M : MTM) (p : Polynomial ℕ)
+    (hWindow : FP (originalWindowCode p)) (hEncoder : FP (originalInputCode M p))
+    (x : List Bool) (t : ℕ) :
+    (originalUniform M p hWindow hEncoder).cfg x t =
+      (fun i => runW M (p.eval x.length)
+        (encM M (p.eval x.length) x) t (i 0)) := by
+  let W : UWCC := originalUniform M p hWindow hEncoder
+  change W.cfg x t = _
+  induction t with
+  | zero =>
+      funext i
+      have hi : i = (fun _ => i 0) := by
+        funext j
+        fin_cases j
+        rfl
+      rw [hi]
+      change W.init x (fun _ => i 0) = encM M (p.eval x.length) x (i 0)
+      exact original_initial M p hWindow hEncoder x (i 0)
+  | succ t ih =>
+      have hs : W.cfg x (t + 1) = W.step x.length (W.cfg x t) := by
+        unfold UWCC.cfg
+        rw [Function.iterate_succ_apply']
+      rw [hs, ih]
+      funext i
+      have hi : i = (fun _ => i 0) := by
+        funext j
+        fin_cases j
+        rfl
+      rw [hi]
+      change (originalUniform M p hWindow hEncoder).step x.length
+        (fun j => runW M (p.eval x.length) (encM M (p.eval x.length) x) t (j 0))
+          (fun _ => i 0) =
+        runW M (p.eval x.length) (encM M (p.eval x.length) x) (t + 1) (i 0)
+      rw [original_step M p hWindow hEncoder]
+      rw [runW_succ]
+
+/-- The uniform machine's output stream is precisely the manuscript's
+original `outW`, not merely equal on special reachable accepting states. -/
+theorem original_output (M : MTM) (p : Polynomial ℕ)
+    (hWindow : FP (originalWindowCode p)) (hEncoder : FP (originalInputCode M p))
+    (x : List Bool) (t : ℕ) :
+    (originalUniform M p hWindow hEncoder).dec x.length
+      ((originalUniform M p hWindow hEncoder).cfg x t) =
+        outW M (p.eval x.length) x t := by
+  rw [original_cfg M p hWindow hEncoder x t]
+  exact original_decoder M p hWindow hEncoder x.length
+    (runW M (p.eval x.length) (encM M (p.eval x.length) x) t)
+
 /-- The exact width of the state code used by the original construction. -/
 theorem original_state_bits_length (M : MTM) (s : PartIITwoPhase.S M) :
     (stateBits M s).length = 3 + 2 * Fintype.card (PartIITwoPhase.S M) :=
