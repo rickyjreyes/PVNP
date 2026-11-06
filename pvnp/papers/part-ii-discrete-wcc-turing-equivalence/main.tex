@@ -624,9 +624,10 @@ Let $T_M(n)$ denote the worst-case number of transition steps that $M$ uses on
 inputs of length $n$. A language $L \subseteq \Sigma^*$ is in $P_{\mathrm{Turing}}$
 if there exists a machine $M$ and constants $c,k \ge 1$ such that
 \[
-T_M(n) \le c n^k
+T_M(n) \le c\,\max\{n,1\}^k
 \]
-for all $n$, and $M$ accepts $x$ if and only if $x \in L$.
+for every $n\ge 0$, and $M$ accepts $x$ if and only if $x \in L$.
+The factor $\max\{n,1\}$ includes the empty input without forcing $T_M(0)=0$.
 \end{definition}
 
 \subsection{Simulation of polynomial-time Turing machines by WCC}
@@ -797,8 +798,9 @@ Let $M$ be a deterministic Turing machine as above. Define $W_M$ to be the
 discrete WCC machine with:
 \begin{itemize}
   \item dimension $d = 1$,
-  \item index sets $\Lambda_n = \{-L(n),\dots,L(n)\}$ with $L(n)$ a fixed
-    polynomial upper bound on $M$'s tape usage on inputs of length $n$,
+  \item index sets $\Lambda_n = \{-L(n),\dots,L(n)\}$ with $L(n)$ a polynomially bounded function with $L(n)\ge T_M(n)+n$
+    (for example $L(n)=T_M(n)+n$), so the head remains in the
+    window through the first halting time,
   \item state set $S$ as in Definition~\ref{def:local_state} and radius $r = 1$,
     with neighbourhoods $N_1(i) = \{i-1,i,i+1\}$,
   \item local update rule $U : S^{\{-1,0,1\}} \to S$ as defined above,
@@ -831,8 +833,9 @@ simulation.
 
 \begin{lemma}[Simulation invariant]
 \label{lem:invariant}
-For the WCC machine $W_M$ on input $x \in \Sigma^n$, the following holds for all
-$t \ge 0$:
+For the WCC machine $W_M$ on input $x \in \Sigma^n$, the following holds for
+all integers $0\le t\le L(n)$. In particular, it holds until the first
+halting time, since $T_M(n)\le L(n)$:
 \begin{itemize}
   \item At every \emph{even} time $2t$, all cells have phase bit $p=0$ and there
     is a unique head cell $h_t \in \Lambda_n$ such that
@@ -867,8 +870,8 @@ We now establish configuration correspondence and runtime.
 \label{lem:one_step}
 Let $(\gamma_t, h_t, q_t)$ be the Turing configuration of $M$ after $t$ steps
 on input $x$, and let $C_{2t}$ be the configuration of $W_M$ after $2t$ update
-steps with initial condition $C_0 = \mathrm{enc}_M(x)$. Then, for all $t \ge 0$,
-the configuration $C_{2t}$ encodes $(\gamma_t, h_t, q_t)$ in the sense that:
+steps with initial condition $C_0 = \mathrm{enc}_M(x)$. Then, for all
+$0\le t\le L(n)$, the configuration $C_{2t}$ encodes $(\gamma_t, h_t, q_t)$ in the sense that:
 \begin{itemize}
   \item For all $i \in \Lambda_n$, the tape symbol in $C_{2t}(i)$ equals
     $\gamma_t(i)$.
@@ -877,14 +880,16 @@ the configuration $C_{2t}$ encodes $(\gamma_t, h_t, q_t)$ in the sense that:
     component.
   \item All cells have phase bit $p=0$.
 \end{itemize}
-Moreover, applying two further WCC update steps transforms $C_{2t}$ into
-$C_{2(t+1)}$ which encodes $(\gamma_{t+1}, h_{t+1}, q_{t+1})$.
+Moreover, for $0\le t<L(n)$, applying two further WCC update steps transforms $C_{2t}$ into
+$C_{2(t+1)}$ which encodes $(\gamma_{t+1}, h_{t+1}, q_{t+1})$. The same two-step
+equality of window-restricted configurations also holds at $t=L(n)$,
+without asserting that the head stays in the window at $t=L(n)+1$.
 \end{lemma}
 
 \begin{proof}
 The claim follows by induction on $t$. For $t=0$ the statement holds by
 construction of $\mathrm{enc}_M$ and the invariant of Lemma~\ref{lem:invariant}.
-Suppose the claim holds for some $t\ge 0$. In configuration $C_{2t}$ there is
+Suppose the claim holds for some $0\le t<L(n)$. In configuration $C_{2t}$ there is
 exactly one cell $h_t$ with head state $q_t$ at phase $p=0$, and the tape
 symbols agree with $\gamma_t(i)$ for all $i$.
 
@@ -948,11 +953,11 @@ TM $\Rightarrow$ WCC.
 \begin{theorem}[Simulation of polynomial-time Turing machines by WCC]
 \label{thm:tm_to_wcc}
 Let $L \subseteq \Sigma^*$ be a language decided by a deterministic Turing
-machine $M$ in time $T_M(n) \le c n^k$ for some constants $c,k \ge 1$. Then the
+machine $M$ in time $T_M(n) \le c\,\max\{n,1\}^k$ for some constants $c,k \ge 1$. Then the
 associated WCC machine $W_M$ defined in Definition~\ref{def:wm} decides $L$ in
 time
 \[
-T_{W_M}(n) = 2 T_M(n) \le 2 c n^k
+T_{W_M}(n) = 2 T_M(n) \le 2c\,\max\{n,1\}^k
 \]
 on inputs of length $n$. In particular,
 \[
@@ -963,7 +968,7 @@ P_{\mathrm{Turing}} \subseteq P_{\mathrm{WCC}}.
 \begin{proof}
 By Lemma~\ref{lem:runtime}, $W_M$ accepts exactly the inputs accepted by $M$ and
 does so in at most $2 T_M(n)$ global update steps on inputs of length $n$. The
-bound $T_M(n) \le c n^k$ implies $T_{W_M}(n) \le 2 c n^k$, so $W_M$ is a
+bound $T_M(n) \le c\,\max\{n,1\}^k$ implies $T_{W_M}(n) \le 2c\,\max\{n,1\}^k$, so $W_M$ is a
 polynomial-time WCC machine in the sense of Definition~\ref{def:pwcc}. Therefore
 $L \in P_{\mathrm{WCC}}$. Since $L$ was arbitrary in $P_{\mathrm{Turing}}$, we
 obtain $P_{\mathrm{Turing}} \subseteq P_{\mathrm{WCC}}$.
@@ -1902,8 +1907,9 @@ question $P^{\mathrm{disc}}_{\mathrm{WCC}}
 classical one; it is not resolved here.
 
 \paragraph{Formalization notes (repository addendum, 5 November 2026).}
-This addendum postdates the release of the paper. The statements
-above are left unchanged; the following corrections are kernel-checked.
+This addendum records defects in the original October 27 manuscript.
+The main text above now uses the corrected definitions and quantifier ranges;
+the original Lean counterexamples remain available for provenance.
 (i) Read literally, Definition~\ref{def:pturing} (``$T_M(n)\le cn^k$
 for all $n$'') forces $T_M(0)=0$, so it defines only $\{\emptyset,\Sigma^*\}$
 (\texttt{PVNP.PartIITuring.P\_Turing\_lit\_eq}). With the bound
@@ -1911,8 +1917,8 @@ $c\max(n,1)^k$ the class is $P$
 (\texttt{PVNP.PartIITuring.P\_Turing\_eq\_P\_TM}); the verifier class of
 Definition~\ref{def:npturing} is $NP$ as stated
 (\texttt{PVNP.PartIITuring.NP\_Turing\_eq\_NP\_TM}).
-(ii) Lemmas~\ref{lem:invariant} and~\ref{lem:one_step} hold for all
-$t\le L(n)$, hence for all $t\le T_M(n)$, which is the range used in
+(ii) The corrected Lemmas~\ref{lem:invariant} and~\ref{lem:one_step}
+hold for all $0\le t\le L(n)$, hence for all $t\le T_M(n)$, which is the range used in
 Lemma~\ref{lem:runtime}. ``For all $t\ge0$'' fails once the head leaves
 $\Lambda_n$ (\texttt{PVNP.PartIITwoPhase.invariant\_literal\_fails}).
 Lemma~\ref{lem:runtime} holds as stated, with first output at time exactly
