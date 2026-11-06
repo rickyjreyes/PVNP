@@ -121,3 +121,8 @@ import PVNP.TorusFlux
 import PVNP.SATTarget
 import PVNP.TseitinSAT
 import PVNP.VerifierCrossing
+
+-- Phase X: Boolean circuits, P_TM ⊆ Ppoly, and non-uniform Cook–Levin for SAT_dense.
+import PVNP.Circuits
+import PVNP.TMCircuit
+import PVNP.CircuitCookLevin

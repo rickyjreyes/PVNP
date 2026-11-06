@@ -22,6 +22,7 @@ This directory follows the pattern used by [rickyjreyes/math](https://github.com
 
 - [Phase VI, global H² torus flow and F-1 continuum flux](proofs/phase-vi-torus-flux-status.md): merged in [PR #40](https://github.com/rickyjreyes/PVNP/pull/40), all exact-head checks passed.
 - [Phase VIII, complete alternating-crossing splicing and near-quadratic single-tape SAT bound](proofs/phase-viii-separation-status.md): merged in [PR #38](https://github.com/rickyjreyes/PVNP/pull/38).
+- [Phase X, the circuit route](proofs/phase-x-circuit-route-status.md): `P_TM ⊆ P/poly` and non-uniform Cook–Levin (`SAT_dense ∈ P/poly ⟺ NP_TM ⊆ P/poly`). Any NP language without polynomial-size circuits would give `SATLowerBound`. That lower bound is open.
 - [Phase IX, exact target statement and tests of candidate invariants](proofs/phase-ix-universal-lower-bound-status.md): the target is proved equivalent to `SATLowerBound`; Tseitin/expander and crossing-information invariants are refuted as separation routes; `SATLowerBound` is not proved.
 - [Open proof obligations](proofs/remaining-obstructions.md) and [authoritative Lean status](../lean/formalization.yaml).
 

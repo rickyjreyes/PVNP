@@ -237,5 +237,14 @@ Counts:
     - the polynomial-time language `V_SAT` carries quadratic crossing information
       (`VerifierCrossing.crossingInfo_not_superpolynomial`).
   - I-16, I-31 and I-32 remain Open. Counts unchanged.
+* **Phase X (6 November 2026).**
+  - **Cook–Levin embedding.** Part I §11.1 cites it ("for any `L ∈ NP` there exists a
+    polynomial-size Boolean circuit `C(x,w)` with `x ∈ L ⟺ ∃ w : C(x,w) = 1`") and says the
+    manuscript does not supply it. It is now proved for the repository's machines in non-uniform
+    form (`CircuitCookLevin.mem_iff_verCirc`, `verCirc_size_le`). This is not a numbered claim.
+  - **Circuit route for I-16.** I-16 (`conj:wcc_depth` for `SAT_dense`) now follows from any
+    superpolynomial circuit lower bound for an `NP_TM` language
+    (`satLowerBound_of_NP_not_Ppoly`, `satLowerBound_iff_wccDepth`). I-16 remains Open.
+  - Counts unchanged.
 * **State-level routes.** Not repairable as stated. A language-level formulation (I-9, I-24,
   I-41) is required, and these reduce to the two items above.

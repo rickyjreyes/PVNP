@@ -249,3 +249,24 @@ prove the premise.
 
 `SATLowerBound` remains open, and `P_TM ≠ NP_TM` is not derived. No claim changes status: 70 Exact,
 11 Refuted, 2 Restricted, 8 Open. See `phase-ix-universal-lower-bound-status.md`.
+
+### Phase X addendum (6 November 2026)
+
+Phase X attacked `SATLowerBound` directly. It does not prove it.
+
+**Attempts that failed.** Each fails at a stated point; see `phase-x-circuit-route-status.md` §1.
+- Diagonalization inside NP.
+- Padding magnification.
+- Trajectory separator and curvature invariants.
+
+**What it proves** (kernel-checked):
+- **`P_TM ⊆ P/poly`** (`TMCircuit.P_TM_subset_Ppoly`). Tableau circuits of size
+  `(T+1)(2T+3)·c_M` are built from a cell-local rule derived from `TM.step`.
+- **Non-uniform Cook–Levin for `SAT_dense`** (`CircuitCookLevin.SAT_dense_mem_Ppoly_iff`).
+  - This includes the Cook–Levin embedding that Part I §11.1 cites without proof:
+    `mem_iff_verCirc`, i.e. `x ∈ L ⟺ ∃ w, C(x, w) = 1` with `C` of polynomial size.
+  - Consequently any `NP_TM` language without polynomial-size circuits gives `SATLowerBound` and
+    `P_TM ≠ NP_TM` (`satLowerBound_of_NP_not_Ppoly`).
+- **CL-1.** Its non-uniform part is closed; its uniform part remains open.
+
+No claim changes status: 70 Exact, 11 Refuted, 2 Restricted, 8 Open.
