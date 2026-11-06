@@ -23,7 +23,7 @@ The PDFs in this repository are revised manuscripts and should not be conflated 
 - **Phase VI:** [Periodic-torus H² well-posedness and F-1 continuum flux](pvnp/proofs/phase-vi-torus-flux-status.md), in `TorusWellPosed.lean` and `TorusFlux.lean`; [merged PR #40](https://github.com/rickyjreyes/PVNP/pull/40).
 - **Phase VIII:** [Full crossing-sequence splicing and single-tape SAT lower bounds](pvnp/proofs/phase-viii-separation-status.md), in `CrossingHennie.lean`, `CrossingSAT.lean`, `CrossingSATSets.lean`; [merged PR #38](https://github.com/rickyjreyes/PVNP/pull/38).
 - **Phase IX:** [Exact target, invariant tests and no-go theorems](pvnp/proofs/phase-ix-universal-lower-bound-status.md), in `SATTarget.lean`, `TseitinSAT.lean`, `VerifierCrossing.lean`. `SATLowerBound` is not proved.
-- **Status:** All three PR #40 checks passed. Classical `P ≠ NP` remains open; manuscript inventory: 70 Exact, 2 Restricted, 11 Refuted, 8 Open.
+- **Status:** All three PR #40 checks passed. Classical `P ≠ NP` remains open; amended manuscript inventory: 73 Exact, 2 Restricted, 8 Refuted, 8 Open (historical 70 Exact / 11 Refuted retained).
 
 ## Outstanding mathematics
 
