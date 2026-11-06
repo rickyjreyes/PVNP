@@ -8,7 +8,7 @@ Research manuscripts on discrete Wave Curvature Computation (WCC), classical com
 
 | Program | Kernel-checked result | Limit |
 |---|---|---|
-| **Phase VIII, PR [#38](https://github.com/rickyjreyes/PVNP/pull/38)** | `CrossingHennie.hennie` proves alternating crossing-sequence splicing for the ordinary single-tape TM. `CrossingSAT` and `CrossingSATSets` derive mixed-SAT acceptance and a near-quadratic time lower bound. | A **single-tape** lower bound of `Ω(N² / (log N · log |Λ|))`, not superpolynomial SAT hardness. |
+| **Phase VIII, PR [#38](https://github.com/rickyjreyes/PVNP/pull/38)** | `CrossingHennie.hennie` proves alternating crossing-sequence splicing for the ordinary single-tape TM. `CrossingSAT` and `CrossingSATSets` derive mixed-SAT acceptance and a near-quadratic time lower bound. | A **single-tape** lower bound of `Ω(N² / (log N · log \|Λ\|))`, not superpolynomial SAT hardness. |
 | **Phase VI, PR [#40](https://github.com/rickyjreyes/PVNP/pull/40)** | `PVNP.Torus.global_wellposed` and `PVNP.Torus.flux_inequality` / `curvature_time_bound` formalize global H² torus evolution and PDE-derived localized-mass flux. | Requires `L > 0`, `γ > 0`, specified solutions and detector regularity/bounds; not a computational resource separation. |
 | **Uniform discrete WCC** | Verified polynomial-time class equivalences `P_disc = P_TM` and `NP_disc = NP_TM`, plus finite-model variations. | Does not identify discrete computation with physically charged curvature computation. |
 
