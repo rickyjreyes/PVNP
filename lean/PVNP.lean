@@ -116,3 +116,8 @@ import PVNP.WCTLatticeGlobal
 -- Phase VI: periodic torus well-posedness and F-1 continuum flux.
 import PVNP.TorusWellPosed
 import PVNP.TorusFlux
+
+-- Phase IX: exact target statement and no-go theorems for candidate invariants.
+import PVNP.SATTarget
+import PVNP.TseitinSAT
+import PVNP.VerifierCrossing

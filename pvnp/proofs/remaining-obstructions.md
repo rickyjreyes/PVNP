@@ -1,4 +1,4 @@
-# Remaining obstructions and obligations (updated November 6, 2026; Phase VI and VIII integrated)
+# Remaining obstructions and obligations (updated November 6, 2026; Phases VI, VIII and IX integrated)
 
 Each item gives the precise missing statement, what has already been proved around it, and why it
 is not closed. None of these items is assumed by any kernel-checked PVNP theorem. Each appears
@@ -115,6 +115,28 @@ This is the ceiling of crossing-sequence counting: at most `N` bits cross a cut,
 most `N + 1` cuts. Both hard families are decidable in polynomial time. The precise missing
 implication is `CrossingSAT.SATLowerBound` (`SAT_dense ∉ P_TM`), which would give `P_TM ≠ NP_TM`
 (`P_ne_NP_of_satLowerBound`). It is open; see `phase-viii-separation-status.md`.
+
+### M2, Phase IX update (6 November 2026)
+
+- **The target is fixed exactly.** The per-input statement is: every correct `SAT_dense` decider
+  exceeds `C·|x|^k` first-answer steps on arbitrarily long inputs, for every `k` and every `C > 0`.
+  - `SATTarget.satLowerBound_iff_superpolynomial` and `satLowerBound_iff_superpolynomialReal`
+    prove it equivalent to `SATLowerBound`.
+  - `satLowerBound_iff_wccDepth` and `satLowerBound_iff_wccdDepth` prove it equivalent to Part I
+    `conj:wcc_depth` for `SAT_dense`.
+- **Candidate invariants tested.** Each fails one of the two required implications: (A) every
+  decider incurs it; (B) incurring it forces superpolynomial time.
+  - *Constraint dependencies and global consistency* (resolution cost, expansion): (A) fails.
+    Tseitin instances of `SAT_dense` are decided by component parity
+    (`TseitinSAT.tseitin_mem_SAT_dense_iff_comp`, `tseitin_connected_iff`), although resolution
+    needs `2^{Ω(m)}` on expanders (literature, not formalized).
+  - *Crossing information* ("many distinguishable states"): (B) fails. `V_SAT ∈ P_TM` carries
+    quadratic crossing information (`VerifierCrossing.crossingInfo_not_superpolynomial`).
+  - *Circuit size*: (A) holds by the standard tableau simulation, but (B) is open and strictly
+    stronger than the target (`SAT ∉ P/poly`).
+  - *Curvature*: equivalent to the classical statement (`curvature_lower_bound_is_classical`).
+- **Precise missing implication: unchanged.** It is `SATLowerBound`, in any of its proved-equivalent
+  forms. It is open. See `phase-ix-universal-lower-bound-status.md`.
 
 ## M3: the frozen PDE `i∂ₜψ = (Δ+κ)²ψ − β|ψ|²ψ + γ|ψ|⁴ψ`
 

@@ -172,3 +172,18 @@ It is **unproved**. Classical P versus NP remains unresolved.
 
 No manuscript claim changes status: **70 Exact, 11 Refuted, 2 Restricted, 8 Open**. The Phase VIII
 theorems are supporting results. They do not settle any of the open Part I claims.
+
+## Phase IX note (6 November 2026)
+
+Point 3 of §4 is now a kernel-checked theorem, in a stronger form. The polynomial-time
+verification language `V_SAT` carries crossing information `CrossingInfo V_SAT (13n+1) (2ⁿ) (6n+1)`,
+a constant fraction of the information-theoretic maximum
+(`VerifierCrossing.crossingInfo_not_superpolynomial`).
+
+- **Tight quadratic bound.** Every single-tape decider of `V_SAT` needs `Ω(N²/log|Λ|)` steps
+  (`vsat_time_lower_bound_sq`), and `satTM` decides it within `2(N+3)²`.
+- **Consequence for this method.** Crossing information alone cannot separate `SAT_dense` from
+  `P_TM`.
+- **The remaining theorem.** It is unchanged. It is now also stated in the per-input form and
+  proved equivalent to `SATLowerBound` (`SATTarget.satLowerBound_iff_superpolynomial`). See
+  `phase-ix-universal-lower-bound-status.md`.
