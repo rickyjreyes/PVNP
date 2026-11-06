@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="PVNP manuscript-to-Lean formalization dashboard: authoritative per-claim status, Phase X results, limitations, and verification provenance.">
+  <title>PVNP Lean Formalization Progress</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b1220;--panel:#121d2f;--panel2:#152338;--line:#2a3b50;--text:#ecf3ff;--muted:#a8b7ca;--good:#3bd39e;--warn:#e5ba5b;--bad:#f1777c;--accent:#84b8ff}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}
+    body{margin:0;background:radial-gradient(ellipse 120% 100% at 0% -15%,#173053 0%,var(--bg) 56%);color:var(--text);font:15px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+    .container{max-width:1160px;margin:auto;padding:36px 24px 70px}
+    .kicker{color:var(--good);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.14em}
+    h1{font-size:clamp(2rem,5vw,3.3rem);line-height:1.09;letter-spacing:-.04em;margin:12px 0 15px}
+    h2{font-size:clamp(1.28rem,3vw,1.7rem);letter-spacing:-.025em;margin:0 0 8px}
+    h3{font-size:1.03rem;margin:0 0 14px}
+    p{margin:8px 0 14px}.lead{color:var(--muted);max-width:800px;font-size:1.06rem}
+    nav{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:21px;margin-bottom:42px}
+    nav .mark{font-weight:800;letter-spacing:.1em}nav .links{display:flex;flex-wrap:wrap;gap:15px}
+    section{margin-top:38px}.section-description{color:var(--muted);margin:3px 0 17px}
+    .info-line{color:var(--muted);font-size:13px;display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center}
+    .metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:27px}
+    .metric{border:1px solid var(--line);background:var(--panel);padding:18px;border-radius:14px;min-width:0}
+    .metric-label{text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-size:11px;font-weight:700}
+    .metric-value{font-weight:750;font-variant-numeric:tabular-nums;font-size:clamp(24px,3vw,35px);letter-spacing:-.04em;line-height:1.35}
+    .metric-sub{font-size:12px;color:var(--muted)}.status-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px}
+    .status-strip .metric{padding:12px 15px;background:var(--panel2)}.status-strip .metric-value{font-size:24px}
+    .panel{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:21px}
+    .papers{display:grid;gap:17px}.paper-head{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;margin-bottom:7px}
+    .muted{color:var(--muted)}.progress{height:10px;border-radius:20px;overflow:hidden;background:#33445b}
+    .fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#2fae95,#70dcaa)}
+    .proof-row{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid var(--line)}
+    .proof-row:last-child{border:0}.proof-title{min-width:230px;flex:2;font-weight:550}
+    .proof-symbol{color:var(--muted);font-size:12px;flex:2;white-space:normal;overflow-wrap:anywhere}
+    .proof-done,.proof-open{font-size:12px;font-weight:700;flex:0 0 auto}.proof-done{color:var(--good)}.proof-open{color:var(--warn)}
+    .filters{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+    input,select{font:inherit;color:var(--text);background:var(--panel);border:1px solid #49607c;border-radius:9px;padding:10px 12px}
+    input{flex:1 1 300px;min-width:150px}select{flex:1 1 135px;max-width:220px}
+    .claim{border:1px solid var(--line);border-radius:10px;background:var(--panel);margin-bottom:7px}
+    .claim summary{display:flex;align-items:center;gap:12px;justify-content:space-between;cursor:pointer;padding:12px 15px;list-style:none}
+    .claim summary::-webkit-details-marker{display:none}.claim summary::after{content:"+";color:var(--muted);order:2;font-size:19px}
+    .claim[open] summary::after{content:"−"}
+    .claim-heading{display:flex;flex:1;gap:12px;align-items:baseline;min-width:0}
+    .claim-id{font-size:12px;white-space:nowrap;color:var(--accent)}
+    .claim-body{padding:0 16px 13px;color:var(--muted);font-size:13px;overflow-wrap:anywhere}
+    .claim-body p{margin:8px 0}.status{white-space:nowrap;font-size:11px;padding:3px 8px;border-radius:7px;font-weight:750;background:#2d3b50;color:var(--text)}
+    .status.exact{color:var(--good)}.status.refuted{color:var(--bad)}.status.restricted{color:var(--warn)}.status.open{color:var(--muted)}
+    .source{font-size:12px;color:var(--muted)}.note{border-left:3px solid #7187a4;padding:10px 15px;background:#17253b;border-radius:0 9px 9px 0}
+    .error{color:var(--bad);font-weight:700}.loaded{color:var(--good)}.thin{border:0;border-top:1px solid var(--line);margin:35px 0}
+    footer{margin-top:52px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:12px}
+    @media(max-width:750px){.container{padding:22px 14px 55px}.metrics{grid-template-columns:1fr}.status-strip{grid-template-columns:repeat(2,1fr)}.claim-heading{flex-direction:column;gap:3px}.proof-row{gap:6px}.proof-title{min-width:100%}.proof-symbol{flex:1}.panel{padding:14px}nav{margin-bottom:25px}}
+  </style>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+<main class="container">
+  <nav aria-label="Dashboard navigation">
+    <div class="mark">PVNP / LEAN</div>
+    <div class="links"><a href="#overview">Overview</a><a href="#phase-x">Phase X</a><a href="#claims-section">91 claims</a><a href="https://github.com/rickyjreyes/PVNP">Repository</a></div>
+  </nav>
+  <header id="overview">
+    <div class="kicker">Formal verification · Richard J. Reyes</div>
+    <h1>PVNP Lean Formalization Progress</h1>
+    <p class="lead">Exact claims, counterexamples, conditional results, and open obligations, separated rigorously. Manuscript percentages track formal agreement with current statements, not progress toward proving P ≠ NP.</p>
+    <div class="info-line">
+      <span id="load-state">Loading the authoritative manuscript inventory…</span>
+      <span>Current main SHA: <a id="commit-link" href="https://github.com/rickyjreyes/PVNP/commits/main"><code id="commit-sha">see GitHub</code></a></span>
+      <span>Inventory date: November 6, 2026</span>
+    </div>
+    <div class="metrics" id="metrics" aria-live="polite"></div>
+    <div class="status-strip" id="status-strip"></div>
+  </header>
+  <section aria-labelledby="part-title">
+    <h2 id="part-title">Progress by manuscript</h2>
+    <p class="section-description">The current amended statements are compared to their Lean proofs, individually.</p>
+    <div class="panel papers" id="parts"></div>
+  </section>
+  <section id="phase-x" aria-labelledby="phase-title">
+    <h2 id="phase-title">Phase X: kernel-checked supporting results</h2>
+    <p class="section-description">Eleven explicit theorem statements passed the PR #43 Lean workflow. A completed supporting lemma does not establish the final lower bound.</p>
+    <div class="panel" id="proofs"></div>
+    <h3 style="margin-top:26px">Major open obligations</h3>
+    <div class="panel" id="open-theorems"></div>
+    <p class="note">No numerical percentage is assigned to a conjecture that has not been proved. The decisive missing statement is <a href="https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/CrossingSAT.lean"><code>CrossingSAT.SATLowerBound</code></a>, asserting that no polynomial-time machine decides dense SAT.</p>
+  </section>
+  <section aria-labelledby="history-title">
+    <h2 id="history-title">Manuscript corrections and provenance</h2>
+    <div class="panel">
+      <p>Original historical inventory: <strong>70 Exact, 2 Restricted, 11 Refuted, 8 Open</strong>. The current amended-manuscript inventory is counted live from the claim rows. These are different snapshots, not seven newly discovered lower-bound proofs.</p>
+      <p>II-7, II-8 and II-17 have corrected finite-window and polynomial-time quantifiers. I-10, I-12, I-13 and I-20 have narrower or conditional replacement statements. Their original counterarguments remain retained in Lean and version history.</p>
+      <p>PRs <a href="https://github.com/rickyjreyes/PVNP/pull/43">#43</a>, <a href="https://github.com/rickyjreyes/PVNP/pull/45">#45</a>, <a href="https://github.com/rickyjreyes/PVNP/pull/46">#46</a>, and <a href="https://github.com/rickyjreyes/PVNP/pull/47">#47</a> passed their exact-head Lean and PDF checks. Toroidal diagonal-feedback <a href="https://github.com/rickyjreyes/PVNP/pull/49">PR #49</a>: <strong id="torus-state">check PR for current status</strong>. That is a supporting finite cyclic consistency experiment, not a manuscript-claim improvement or a SAT lower bound.</p>
+    </div>
+  </section>
+  <section id="claims-section" aria-labelledby="claims-title">
+    <h2 id="claims-title">All manuscript claims</h2>
+    <p class="section-description">Browse the source-of-truth inventory. The statement's exact assumptions and historical qualifications appear in the expanded row.</p>
+    <div class="filters">
+      <label for="claim-search" class="sr-only" style="position:absolute;clip:rect(0,0,0,0)">Search claims</label>
+      <input id="claim-search" type="search" placeholder="Search theorem, claim, or Lean symbol" aria-label="Search claims">
+      <select id="part-filter" aria-label="Filter by manuscript">
+        <option value="all">All manuscripts</option><option value="I">Part I</option><option value="II">Part II</option><option value="III">Part III</option>
+      </select>
+      <select id="status-filter" aria-label="Filter by status">
+        <option value="all">All statuses</option><option value="Exact">Exact</option><option value="Restricted">Restricted</option><option value="Refuted">Refuted</option><option value="Open">Open</option>
+      </select>
+    </div>
+    <p class="source"><span id="shown">Loading claims</span> · <a id="source-link" href="https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md">Source inventory</a></p>
+    <div id="claims" aria-live="polite"></div>
+  </section>
+  <footer>
+    Source: <a href="https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md">Manuscript-to-Lean inventory</a> and <a href="https://github.com/rickyjreyes/PVNP/blob/main/lean/formalization.yaml">formalization ledger</a>. Exact includes conditional implications whose premises may be open. Refuted means a counterexample is kernel-checked, not that the original theorem was proved.
+  </footer>
+</main>
+</body>
+</html>
