@@ -498,3 +498,15 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.CookLevin.Gen.NP_TM_subset_P_TM_of_SAT
 #print axioms PVNP.CookLevin.Gen.SAT_mem_P_TM_iff
 #print axioms PVNP.CookLevin.Gen.satLowerBound_iff_P_ne_NP
+
+-- Part II, II-24: finite modification and conditional NP-safety.
+#print axioms PVNP.CookLevin.Gen.gsim_halts
+#print axioms PVNP.CookLevin.Gen.scan_short
+#print axioms PVNP.CookLevin.Gen.fm_first
+#print axioms PVNP.CookLevin.Gen.fm_long
+#print axioms PVNP.CookLevin.Gen.P_TM_of_eventually_eq
+#print axioms PVNP.PartIIManuscript.SAT_dense_npComplete
+#print axioms PVNP.PartIIManuscript.P_TM_of_wcc_eventually
+#print axioms PVNP.PartIIManuscript.conditional_np_safety_all
+#print axioms PVNP.PartIIManuscript.conditional_np_safety
+#print axioms PVNP.PartIIManuscript.no_np_complete_decider

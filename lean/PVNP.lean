@@ -140,3 +140,8 @@ import PVNP.CookLevinLabels
 import PVNP.CookLevinGen
 import PVNP.CookLevinDecide
 import PVNP.CookLevinUniform
+
+-- Part II, thm:conditional_np_safety (II-24): closure of P_TM under finite modification and the
+-- conditional NP-safety theorem under the manuscript's premises (i)–(iii).
+import PVNP.FiniteModification
+import PVNP.ConditionalNPSafety
