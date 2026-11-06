@@ -453,3 +453,11 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TMBooleanTableau.circuit_first
 #print axioms PVNP.TMBooleanTableau.circuit_size
 #print axioms PVNP.TMBooleanTableau.P_TM_subset_PPoly
+#print axioms PVNP.CircuitCNF.circuit_good
+#print axioms PVNP.VerifierCircuits.closed_under_projections
+#print axioms PVNP.VerifierCircuits.verifier_family
+#print axioms PVNP.SATProjection.project_circuit
+#print axioms PVNP.SATProjection.NP_projects_to_SAT
+#print axioms PVNP.SATProjection.NP_subset_PPoly_of_SAT
+#print axioms PVNP.SATProjection.SAT_circuit_lower_iff
+#print axioms PVNP.SATProjection.SATLowerBound_of_NP_circuit_lower

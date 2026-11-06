@@ -124,3 +124,4 @@ import PVNP.VerifierCrossing
 
 -- Phase X: first-answer Turing machine simulation by bounded-fan-in circuits.
 import PVNP.TMBooleanTableau
+import PVNP.SATProjection
