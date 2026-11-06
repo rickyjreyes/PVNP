@@ -126,3 +126,6 @@ import PVNP.VerifierCrossing
 import PVNP.TMBooleanTableau
 import PVNP.SATProjection
 import PVNP.CrossingSATMatrix
+
+-- Phase XI: explicit o(N^2) lower-bound obstruction from the matrix family.
+import PVNP.PhaseXIQuadratic
