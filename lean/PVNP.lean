@@ -145,3 +145,13 @@ import PVNP.CookLevinUniform
 -- conditional NP-safety theorem under the manuscript's premises (i)–(iii).
 import PVNP.FiniteModification
 import PVNP.ConditionalNPSafety
+
+-- I-11: explicit diagonal obstruction to unrestricted physical encoders.
+import PVNP.PhysicalDiagonal
+
+-- Preserve prior Phase XI quadratic lower-bound and finite toroidal formalizations.
+import PVNP.PhaseXIQuadratic
+import PVNP.ToroidalDiagonal
+
+-- I-3: formula-independent phase locking is not a SAT criterion.
+import PVNP.PhaseLockScope

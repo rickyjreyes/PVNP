@@ -510,3 +510,27 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.PartIIManuscript.conditional_np_safety_all
 #print axioms PVNP.PartIIManuscript.conditional_np_safety
 #print axioms PVNP.PartIIManuscript.no_np_complete_decider
+
+-- I-11 unrestricted-encoder diagonal scope countermodel.
+#print axioms PVNP.PhysicalAudit.firstAnswer_value_unique
+#print axioms PVNP.PhysicalAudit.tableFirstAccept_iff_mem
+#print axioms PVNP.PhysicalAudit.diagonal_on_code
+#print axioms PVNP.PhysicalAudit.diagonal_not_mem_P_TM
+#print axioms PVNP.PhysicalAudit.unrestricted_phys_ne_P_TM
+
+-- Consolidated Phase XI quadratic bound and finite toroidal consistency proof.
+#print axioms PVNP.PhaseXIQuadratic.sat_no_uniform_subquadratic
+#print axioms PVNP.ToroidalDiagonal.edge_chain_constant
+#print axioms PVNP.ToroidalDiagonal.odd_ring_no_state
+#print axioms PVNP.ToroidalDiagonal.even_ring_has_state
+#print axioms PVNP.ToroidalDiagonal.odd_ring_unsat
+#print axioms PVNP.ToroidalDiagonal.even_ring_sat
+#print axioms PVNP.ToroidalDiagonal.odd_encRing_not_SAT
+#print axioms PVNP.ToroidalDiagonal.even_encRing_mem_SAT
+#print axioms PVNP.ToroidalDiagonal.encRing_length
+
+-- I-3 phase-locking logical sufficiency test.
+#print axioms PVNP.PhaseLockScope.contradictory_unsat
+#print axioms PVNP.PhaseLockScope.all_phases_zero_exists
+#print axioms PVNP.PhaseLockScope.contradiction_phase_locked_but_not_logical
+#print axioms PVNP.PhaseLockScope.bare_phase_lock_not_sat
