@@ -598,3 +598,5 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhaseUniform.originalInputCode_eq_encCfg
 #print axioms PVNP.TwoPhaseUniform.stateBits_flatMap_length
 #print axioms PVNP.TwoPhaseUniform.originalInputCode_length_le
+#print axioms PVNP.TwoPhaseUniform.originalWindowCode_polynomial_length
+#print axioms PVNP.TwoPhaseUniform.originalInputCode_polynomial_length
