@@ -481,3 +481,20 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.CookLevin.phi_sat_iff
 #print axioms PVNP.CookLevin.nrm_acc_iff
 #print axioms PVNP.CookLevin.cookLevin
+
+-- CL-1, parts 2–3: the uniform generator, the generator-plus-decider program and the equivalence.
+#print axioms PVNP.CookLevin.Gen.HPar.horner_phase
+#print axioms PVNP.CookLevin.Gen.slotBits_eq
+#print axioms PVNP.CookLevin.Gen.inst_getElem
+#print axioms PVNP.CookLevin.Gen.TI.bit
+#print axioms PVNP.CookLevin.Gen.main_loop
+#print axioms PVNP.CookLevin.Gen.label_phase
+#print axioms PVNP.CookLevin.Gen.horner_hcoeffs
+#print axioms PVNP.CookLevin.Gen.gen_run
+#print axioms PVNP.CookLevin.Gen.dec_lift
+#print axioms PVNP.CookLevin.Gen.dec_conv
+#print axioms PVNP.CookLevin.Gen.dec_sim_loop
+#print axioms PVNP.CookLevin.Gen.dec_halts
+#print axioms PVNP.CookLevin.Gen.NP_TM_subset_P_TM_of_SAT
+#print axioms PVNP.CookLevin.Gen.SAT_mem_P_TM_iff
+#print axioms PVNP.CookLevin.Gen.satLowerBound_iff_P_ne_NP

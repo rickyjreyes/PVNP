@@ -72,6 +72,20 @@ for every `L ∈ NP_TM`, an explicit polynomial-size instance `inst x` with
 that `x ↦ inst x` is computed by a Turing machine in polynomial time, nor that `P_TM` is closed
 under that map. Both items above therefore remain open.
 
+**CL-1 completed (6 November 2026, later addendum).** Both missing items are now proved, in the
+form the converse transfer needs (`cl1-uniform-cook-levin-status.md`). One fixed round-trip sweep
+program, `CookLevin.Gen.genCtrl d`, writes `inst x` within a polynomial number of round trips
+(`gen_run`). `decProg` then runs a polynomial-time decider of `SAT_dense` on that output, and
+`Prog.toTM` compiles the result into one single-tape machine with one polynomial time bound.
+Lean proves:
+- `NP_TM_subset_P_TM_of_SAT : SAT_dense ∈ P_TM → NP_TM ⊆ P_TM`;
+- `SAT_mem_P_TM_iff : SAT_dense ∈ P_TM ↔ P_TM = NP_TM`;
+- `satLowerBound_iff_P_ne_NP : SATLowerBound ↔ P_TM ≠ NP_TM`.
+
+The last theorem identifies the two statements; it proves neither. The Phase 7 decision above is
+unchanged: no earlier claim depended on CL-1. A general closure lemma for the transducer class
+`FP` is not stated.
+
 ## M1: two-way physical ⇄ TM simulation
 
 - *Proved:* without charged encoders or decoders the physical class is trivial
