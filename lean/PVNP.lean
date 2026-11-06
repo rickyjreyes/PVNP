@@ -126,3 +126,6 @@ import PVNP.VerifierCrossing
 import PVNP.TMBooleanTableau
 import PVNP.SATProjection
 import PVNP.CrossingSATMatrix
+
+-- Discrete toroidal diagonal-feedback experiment: exact CNF parity test.
+import PVNP.ToroidalDiagonal
