@@ -449,3 +449,7 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.VerifierCrossing.vsat_time_lower_bound
 #print axioms PVNP.VerifierCrossing.vsat_time_lower_bound_sq
 #print axioms PVNP.VerifierCrossing.crossingInfo_not_superpolynomial
+
+#print axioms PVNP.TMBooleanTableau.circuit_first
+#print axioms PVNP.TMBooleanTableau.circuit_size
+#print axioms PVNP.TMBooleanTableau.P_TM_subset_PPoly
