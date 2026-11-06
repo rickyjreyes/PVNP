@@ -14,6 +14,13 @@ import PVNP.PhaseObservability
 import PVNP.FixedMassNodal
 import PVNP.ExpandingDomain
 import PVNP.SplitSATCapacity
+import PVNP.CrossingCapacity
+import PVNP.CrossingTrace
+import PVNP.CrossingSplice
+import PVNP.CrossingDiagonal
+import PVNP.CrossingHennie
+import PVNP.CrossingSAT
+import PVNP.CrossingSATSets
 import PVNP.TMCellCompiler
 import PVNP.ReplayCost
 import PVNP.LocalityLowerBound
@@ -54,6 +61,7 @@ import PVNP.TMStackScan
 import PVNP.SATVerifier
 import PVNP.PartIIIHighFreq3D
 import PVNP.TransportCalculus
+import PVNP.ContinuumFlux
 import PVNP.ContinuumFluxBudget
 import PVNP.AnalogSplitSATCapacity
 import PVNP.R03_CurvatureComplexity
@@ -104,3 +112,7 @@ import PVNP.WCTMeshScaling
 import PVNP.DecoderUniformity
 
 import PVNP.WCTLatticeGlobal
+
+-- Phase VI: periodic torus well-posedness and F-1 continuum flux.
+import PVNP.TorusWellPosed
+import PVNP.TorusFlux
