@@ -99,6 +99,17 @@ theorem original_initial (M : MTM) (p : Polynomial ℕ)
   · simp [hi]
   · simp [hi, encM]
 
+/-- One update of the actual `UWCC` model agrees with the author's
+radius-one rule at every lattice site, not only on reachable configurations. -/
+theorem original_step (M : MTM) (p : Polynomial ℕ)
+    (hWindow : FP (originalWindowCode p)) (hEncoder : FP (originalInputCode M p))
+    (n : ℕ) (C : ℤ → PartIITwoPhase.S M) (i : ℤ) :
+    (originalUniform M p hWindow hEncoder).step n (fun j => C (j 0))
+        (fun _ => i) = stepW M (p.eval n) C i := by
+  classical
+  simp [UWCC.step, originalUniform, UWCC.offset,
+    PartIITwoPhase.stepW, window, Pi.add_apply]
+
 /-- The exact width of the state code used by the original construction. -/
 theorem original_state_bits_length (M : MTM) (s : PartIITwoPhase.S M) :
     (stateBits M s).length = 3 + 2 * Fintype.card (PartIITwoPhase.S M) :=
