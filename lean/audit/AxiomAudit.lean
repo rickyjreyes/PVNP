@@ -338,3 +338,81 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.PartIIUniform.NP_disc_subset_NP_TM
 #print axioms PVNP.PartIIUniform.NP_TM_subset_NP_disc
 #print axioms PVNP.PartIIUniform.NP_disc_eq_NP_TM
+
+-- Spatial F-1 identities on the periodic square.
+#print axioms PVNP.ContinuumFlux.I2_lap_symm
+#print axioms PVNP.ContinuumFlux.flux_static
+#print axioms PVNP.ContinuumFlux.flux_split
+#print axioms PVNP.ContinuumFlux.I2_bound
+#print axioms PVNP.ContinuumFlux.norm_Gd_le
+
+-- Part I: bounded crossing-record capacity and finite-control TM locality.
+#print axioms PVNP.CrossingCapacity.bounded_crossing_record_capacity
+#print axioms PVNP.CrossingCapacity.no_short_crossing_record
+#print axioms PVNP.CrossingCapacity.same_scanned_symbol_same_instruction
+#print axioms PVNP.CrossingCapacity.one_tape_head_speed
+#print axioms PVNP.CrossingCapacity.right_crossing_is_adjacent
+
+-- Phase VII: crossing events extracted from actual TM steps and local tape splicing.
+#print axioms PVNP.CrossingTrace.event_right
+#print axioms PVNP.CrossingTrace.event_left
+#print axioms PVNP.CrossingTrace.left_crossing_adjacent
+#print axioms PVNP.CrossingTrace.right_crossing_adjacent
+#print axioms PVNP.CrossingTrace.trace_length_le
+#print axioms PVNP.CrossingTrace.inputTrace_length_le
+#print axioms PVNP.CrossingTrace.actual_trace_split_sat_capacity
+#print axioms PVNP.CrossingSplice.update_mix_left
+#print axioms PVNP.CrossingSplice.update_mix_right
+#print axioms PVNP.CrossingSplice.next_splice_left
+#print axioms PVNP.CrossingSplice.next_splice_right
+#print axioms PVNP.CrossingSplice.run_splice_left
+#print axioms PVNP.CrossingSplice.answer_splice_left
+#print axioms PVNP.CrossingDiagonal.diagonal_trace_injective
+#print axioms PVNP.CrossingDiagonal.diagonal_trace_capacity
+#print axioms PVNP.CrossingSplice.run_splice_right
+#print axioms PVNP.CrossingSplice.answer_splice_right
+
+-- Phase VIII: complete crossing-sequence splicing theorem and the SAT application
+#print axioms PVNP.CrossingHennie.run_splice_side
+#print axioms PVNP.CrossingHennie.run_offSide_tape
+#print axioms PVNP.CrossingHennie.cross_of_event
+#print axioms PVNP.CrossingHennie.trace_cons_events
+#print axioms PVNP.CrossingHennie.splice_core
+#print axioms PVNP.CrossingHennie.init_append_mix
+#print axioms PVNP.CrossingHennie.hennie
+#print axioms PVNP.CrossingHennie.splice_mem
+#print axioms PVNP.CrossingSAT.splitFormula_sat_iff
+#print axioms PVNP.CrossingSAT.encSplit_mem_iff
+#print axioms PVNP.CrossingSAT.encSplit_layout
+#print axioms PVNP.CrossingSAT.length_encSplit
+#print axioms PVNP.CrossingSAT.diag_mixed
+#print axioms PVNP.CrossingSAT.dtrace_injective
+#print axioms PVNP.CrossingSAT.hmixed_of_halting
+#print axioms PVNP.CrossingSAT.diagonal_capacity_halting
+#print axioms PVNP.CrossingSAT.diagonal_capacity
+#print axioms PVNP.CrossingSAT.sum_trace_length_le
+#print axioms PVNP.CrossingSAT.sat_time_lower_bound
+#print axioms PVNP.CrossingSAT.sat_time_lower_bound_sq
+#print axioms PVNP.CrossingSAT.sat_not_linear_time
+#print axioms PVNP.CrossingSAT.satLowerBound_iff
+#print axioms PVNP.CrossingSAT.P_ne_NP_of_satLowerBound
+#print axioms PVNP.CrossingSATSets.fooling_time_bound
+#print axioms PVNP.CrossingSATSets.splice_nmem
+#print axioms PVNP.CrossingSATSets.setFormula_sat_iff
+#print axioms PVNP.CrossingSATSets.encSet_mem_iff
+#print axioms PVNP.CrossingSATSets.length_encSet
+#print axioms PVNP.CrossingSATSets.set_mixed
+#print axioms PVNP.CrossingSATSets.dtraceSet_injective
+#print axioms PVNP.CrossingSATSets.sat_time_lower_bound_sets
+#print axioms PVNP.CrossingSATSets.sat_time_lower_bound_near_sq
+
+-- Phase VI: periodic torus H2 and F-1 flux, checked in full import tree.
+#print axioms PVNP.Torus.global_wellposed
+#print axioms PVNP.Torus.conservation
+#print axioms PVNP.Torus.apriori
+#print axioms PVNP.Torus.continuous_dependence
+#print axioms PVNP.Torus.flux_identity
+#print axioms PVNP.Torus.flux_static
+#print axioms PVNP.Torus.flux_inequality
+#print axioms PVNP.Torus.curvature_time_bound
+#print axioms PVNP.Torus.flux_inequality_explicit
