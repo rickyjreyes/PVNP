@@ -162,6 +162,32 @@ theorem original_output (M : MTM) (p : Polynomial ℕ)
   exact original_decoder M p hWindow hEncoder x.length
     (runW M (p.eval x.length) (encM M (p.eval x.length) x) t)
 
+/-- Given the original encoder and window FP witnesses, the *actual* W_M
+constructed above decides exactly the source Turing language, with intrinsic
+first-answer latency at most two WCC rounds per TM step. The two writer FP
+hypotheses are not discharged by this theorem. -/
+theorem original_uniform_decides (M : MTM) (p : Polynomial ℕ)
+    (hWindow : FP (originalWindowCode p)) (hEncoder : FP (originalInputCode M p))
+    {Lang : Set (List Bool)} {c k : ℕ}
+    (hTime : ∀ x, M.HaltsWithin x (c * max x.length 1 ^ k))
+    (hCorrect : ∀ x, M.Accepts x ↔ x ∈ Lang)
+    (hRadius : ∀ n, c * max n 1 ^ k ≤ p.eval n)
+    (x : List Bool) :
+    PVNP.Discrete.DecidesAt
+      (fun t => (originalUniform M p hWindow hEncoder).dec x.length
+        ((originalUniform M p hWindow hEncoder).cfg x t))
+      (2 * (c * max x.length 1 ^ k)) x Lang := by
+  obtain ⟨T, hT, hf⟩ := hTime x
+  obtain ⟨hout, hbefore⟩ :=
+    runtime M (p.eval x.length) hf (hT.trans (hRadius x.length))
+  refine ⟨_, ⟨2 * T, by omega, ?_, ?_⟩, ?_⟩
+  · rw [original_output]
+    exact hout
+  · intro s hs
+    rw [original_output]
+    exact hbefore s hs
+  · rw [decide_eq_true_iff, ← hCorrect x, M.accepts_iff_of_firstHalt hf]
+
 /-- The exact width of the state code used by the original construction. -/
 theorem original_state_bits_length (M : MTM) (s : PartIITwoPhase.S M) :
     (stateBits M s).length = 3 + 2 * Fintype.card (PartIITwoPhase.S M) :=
