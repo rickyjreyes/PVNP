@@ -148,3 +148,7 @@ import PVNP.ConditionalNPSafety
 
 -- I-11: explicit diagonal obstruction to unrestricted physical encoders.
 import PVNP.PhysicalDiagonal
+
+-- Preserve prior Phase XI quadratic lower-bound and finite toroidal formalizations.
+import PVNP.PhaseXIQuadratic
+import PVNP.ToroidalDiagonal
