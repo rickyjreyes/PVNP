@@ -99,11 +99,11 @@ theorem run_splice_left (M : TM) (cut : ℤ) (c : M.Cfg)
           M.run_succ _ t
         _ = M.next {M.run c t with tape := mixTape cut (M.run c t).tape r} := by
           rw [hprev]
-        _ = {M.next (M.run c t) with tape :=
-               mixTape cut (M.next (M.run c t)).tape r} :=
+        _ = {M.next (M.run c t) with
+              tape := mixTape cut (M.next (M.run c t)).tape r} :=
           next_splice_left M cut (M.run c t) r (hside t (by omega))
-        _ = {M.run c (t + 1) with tape :=
-               mixTape cut (M.run c (t + 1)).tape r} := by
+        _ = {M.run c (t + 1) with
+              tape := mixTape cut (M.run c (t + 1)).tape r} := by
           rw [M.run_succ]
 
 /-- Identical output throughout an execution segment confined left. -/
@@ -140,11 +140,11 @@ theorem run_splice_right (M : TM) (cut : ℤ) (c : M.Cfg)
           M.run_succ _ t
         _ = M.next {M.run c t with tape := mixTape cut l (M.run c t).tape} := by
           rw [hprev]
-        _ = {M.next (M.run c t) with tape :=
-               mixTape cut l (M.next (M.run c t)).tape} :=
+        _ = {M.next (M.run c t) with
+              tape := mixTape cut l (M.next (M.run c t)).tape} :=
           next_splice_right M cut (M.run c t) l (hside t (by omega))
-        _ = {M.run c (t + 1) with tape :=
-               mixTape cut l (M.run c (t + 1)).tape} := by
+        _ = {M.run c (t + 1) with
+              tape := mixTape cut l (M.run c (t + 1)).tape} := by
           rw [M.run_succ]
 
 theorem answer_splice_right (M : TM) (cut : ℤ) (c : M.Cfg)
