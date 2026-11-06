@@ -517,3 +517,14 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.PhysicalAudit.diagonal_on_code
 #print axioms PVNP.PhysicalAudit.diagonal_not_mem_P_TM
 #print axioms PVNP.PhysicalAudit.unrestricted_phys_ne_P_TM
+
+-- Consolidated Phase XI quadratic bound and finite toroidal consistency proof.
+#print axioms PVNP.PhaseXIQuadratic.sat_no_uniform_subquadratic
+#print axioms PVNP.ToroidalDiagonal.edge_chain_constant
+#print axioms PVNP.ToroidalDiagonal.odd_ring_no_state
+#print axioms PVNP.ToroidalDiagonal.even_ring_has_state
+#print axioms PVNP.ToroidalDiagonal.odd_ring_unsat
+#print axioms PVNP.ToroidalDiagonal.even_ring_sat
+#print axioms PVNP.ToroidalDiagonal.odd_encRing_not_SAT
+#print axioms PVNP.ToroidalDiagonal.even_encRing_mem_SAT
+#print axioms PVNP.ToroidalDiagonal.encRing_length
