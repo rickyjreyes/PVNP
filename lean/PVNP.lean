@@ -145,3 +145,6 @@ import PVNP.CookLevinUniform
 -- conditional NP-safety theorem under the manuscript's premises (i)–(iii).
 import PVNP.FiniteModification
 import PVNP.ConditionalNPSafety
+
+-- I-11: explicit diagonal obstruction to unrestricted physical encoders.
+import PVNP.PhysicalDiagonal
