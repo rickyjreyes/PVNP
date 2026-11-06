@@ -1910,10 +1910,10 @@ classical one; it is not resolved here.
 This addendum records defects in the original October 27 manuscript.
 The main text above now uses the corrected definitions and quantifier ranges;
 the original Lean counterexamples remain available for provenance.
-(i) Read literally, Definition~\ref{def:pturing} (``$T_M(n)\le cn^k$
+(i) The original version of Definition~\ref{def:pturing} (``$T_M(n)\le cn^k$
 for all $n$'') forces $T_M(0)=0$, so it defines only $\{\emptyset,\Sigma^*\}$
-(\texttt{PVNP.PartIITuring.P\_Turing\_lit\_eq}). With the bound
-$c\max(n,1)^k$ the class is $P$
+(\texttt{PVNP.PartIITuring.P\_Turing\_lit\_eq}). The corrected
+definition above uses $c\max(n,1)^k$, for which the class is $P$
 (\texttt{PVNP.PartIITuring.P\_Turing\_eq\_P\_TM}); the verifier class of
 Definition~\ref{def:npturing} is $NP$ as stated
 (\texttt{PVNP.PartIITuring.NP\_Turing\_eq\_NP\_TM}).
