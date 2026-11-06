@@ -155,3 +155,6 @@ import PVNP.ToroidalDiagonal
 
 -- I-3: formula-independent phase locking is not a SAT criterion.
 import PVNP.PhaseLockScope
+
+-- Phase X ranked-DAG construction: explicit register and tableau size bounds.
+import PVNP.CircuitCookLevin

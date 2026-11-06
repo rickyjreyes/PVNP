@@ -534,3 +534,36 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.PhaseLockScope.all_phases_zero_exists
 #print axioms PVNP.PhaseLockScope.contradiction_phase_locked_but_not_logical
 #print axioms PVNP.PhaseLockScope.bare_phase_lock_not_sat
+
+-- Phase X: Boolean circuits and P_TM ⊆ Ppoly (tableau circuits for single-tape machines).
+#print axioms PVNP.Circuits.Circuit.val_eq
+#print axioms PVNP.Circuits.Circuit.val_embed
+#print axioms PVNP.Circuits.poly_eval_mono
+#print axioms PVNP.TMCircuit.content_next
+#print axioms PVNP.TMCircuit.abs_head_run
+#print axioms PVNP.TMCircuit.rule_congr_left
+#print axioms PVNP.TMCircuit.val_cell
+#print axioms PVNP.TMCircuit.tableau_eval
+#print axioms PVNP.TMCircuit.size_tableau
+#print axioms PVNP.TMCircuit.gate_eq_inp
+#print axioms PVNP.TMCircuit.firstAnswer_true_iff
+#print axioms PVNP.TMCircuit.P_TM_subset_Ppoly
+#print axioms PVNP.TMCircuit.satLowerBound_of_not_Ppoly
+#print axioms PVNP.TMCircuit.P_ne_NP_of_not_Ppoly
+-- Phase X: non-uniform Cook–Levin for SAT_dense (Tseitin transformation, projections).
+#print axioms PVNP.CircuitCookLevin.orComb_eval
+#print axioms PVNP.CircuitCookLevin.gateCl_sat
+#print axioms PVNP.CircuitCookLevin.tseitin_sat_iff
+#print axioms PVNP.CircuitCookLevin.tseitin_vars
+#print axioms PVNP.CircuitCookLevin.encDense_full
+#print axioms PVNP.CircuitCookLevin.projCirc_eval
+#print axioms PVNP.CircuitCookLevin.Ppoly_of_projection
+#print axioms PVNP.CircuitCookLevin.inputOf_vsrc
+#print axioms PVNP.CircuitCookLevin.verCirc_eval
+#print axioms PVNP.CircuitCookLevin.mem_iff_verCirc
+#print axioms PVNP.CircuitCookLevin.verCirc_size_le
+#print axioms PVNP.CircuitCookLevin.NP_TM_subset_Ppoly_of_SAT
+#print axioms PVNP.CircuitCookLevin.SAT_dense_mem_Ppoly_iff
+#print axioms PVNP.CircuitCookLevin.satLowerBound_of_NP_not_Ppoly
+#print axioms PVNP.CircuitCookLevin.P_ne_NP_of_NP_not_Ppoly
+#print axioms PVNP.CircuitCookLevin.satLowerBound_of_not_subset
