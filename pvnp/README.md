@@ -25,4 +25,4 @@ This directory follows the pattern used by [rickyjreyes/math](https://github.com
 - [Phase IX, exact target statement and tests of candidate invariants](proofs/phase-ix-universal-lower-bound-status.md): the target is proved equivalent to `SATLowerBound`; Tseitin/expander and crossing-information invariants are refuted as separation routes; `SATLowerBound` is not proved.
 - [Open proof obligations](proofs/remaining-obstructions.md) and [authoritative Lean status](../lean/formalization.yaml).
 
-**Classical P versus NP is still open.** The manuscript ledger remains 70 Exact, 2 Restricted, 11 Refuted, 8 Open. These counts describe manuscript formalization, not a percentage of a P versus NP proof.
+**Classical P versus NP is still open.** The manuscript ledger remains 73 Exact, 2 Restricted, 8 Refuted, 8 Open. These counts describe the amended manuscript, not a percentage of a P versus NP proof. The previous 70/91 Exact snapshot and three original Part II counterexamples are preserved for provenance.
