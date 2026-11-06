@@ -65,6 +65,13 @@ No current claim needs CL-1:
 Formalizing CL-1 needs a TM-composition library and a tableau encoding of TM runs into the dense CNF
 format. It is a large, self-contained project and is not started.
 
+**CL-1 update (6 November 2026).** The tableau encoding is now formalized
+(`PVNP.CookLevinTableau`, see `cl1-uniform-cook-levin-status.md`). `CookLevin.cookLevin` proves,
+for every `L ∈ NP_TM`, an explicit polynomial-size instance `inst x` with
+`x ∈ L ↔ inst x ∈ SAT_dense`. This is the mathematical part of CL-1 only: it does not yet show
+that `x ↦ inst x` is computed by a Turing machine in polynomial time, nor that `P_TM` is closed
+under that map. Both items above therefore remain open.
+
 ## M1: two-way physical ⇄ TM simulation
 
 - *Proved:* without charged encoders or decoders the physical class is trivial

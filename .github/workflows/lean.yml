@@ -48,6 +48,8 @@ jobs:
         run: lake build PVNP.CrossingCapacity PVNP.CrossingTrace PVNP.CrossingSplice PVNP.CrossingDiagonal PVNP.CrossingHennie PVNP.CrossingSAT PVNP.CrossingSATSets
       - name: Check Phase IX target and no-go modules explicitly
         run: lake build PVNP.SATTarget PVNP.TseitinSAT PVNP.VerifierCrossing
+      - name: Check CL-1 Cook–Levin modules explicitly
+        run: lake build PVNP.CookLevinTableau
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt
