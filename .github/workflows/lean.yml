@@ -56,6 +56,8 @@ jobs:
         run: lake build PVNP.PhysicalDiagonal
       - name: Check consolidated Phase XI and toroidal modules explicitly
         run: lake build PVNP.PhaseXIQuadratic PVNP.ToroidalDiagonal
+      - name: Check I-3 phase-locking scope test explicitly
+        run: lake build PVNP.PhaseLockScope
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt
