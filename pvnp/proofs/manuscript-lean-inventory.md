@@ -1,7 +1,7 @@
 # Manuscript-to-Lean inventory (Parts I–III), live checklist
 
 Started 5 November 2026. The source of truth is the three manuscripts in
-`pvnp/papers/*/main.tex` (revised 27 October 2026), read in full. Each mathematically
+`pvnp/papers/*/main.tex` (October 27 source, with Part II quantifier and empty-input corrections on November 6, 2026), read in full. Each mathematically
 substantive claim is listed with its source, the Lean declaration that matches it (if any), and
 its status. Pure definitions, purely empirical sections and research-direction remarks without
 mathematical content are not counted.
@@ -22,12 +22,13 @@ Lean paths are relative to `lean/`. "(new)" marks declarations added in this pas
 | Paper | Claims | Exact | Restricted | Refuted | Open |
 |---|---|---|---|---|---|
 | Part I | 41 | 26 | 1 | 8 | 6 |
-| Part II | 28 | 23 | 1 | 3 | 1 |
+| Part II | 28 | 26 | 1 | 0 | 1 |
 | Part III | 22 | 21 | 0 | 0 | 1 |
-| **Total** | **91** | **70** | **2** | **11** | **8** |
+| **Total** | **91** | **73** | **2** | **8** | **8** |
 
-* Exact verification coverage = Exact / Total = 70/91 ≈ 77% (63/91 before Milestone 5).
+* Exact verification coverage for the amended manuscripts = Exact / Total = 73/91 ≈ 80.2% (70/91 for the October 27 source before these three repairs).
 * Status conclusively determined by a proof or a counterexample (Exact + Refuted) = 81/91 ≈ 89%.
+* **Provenance:** The original October 27 manuscript inventory was 70 Exact, 2 Restricted, 11 Refuted, 8 Open. Claims II-7, II-8 and II-17 were false as written in that version. Their original Lean counterexamples remain in the repository. In the amended manuscript, their statements are restricted/corrected to match the already-proved Lean theorems; the historical count is not retroactively overwritten.
 * Milestone history:
   * Milestone 1 (PR #27): 44 Exact, 8 Refuted.
   * Milestone 2 (PR #28): adds I-8, I-22, I-23, II-4, II-5, II-18 to II-23, II-27, III-5, III-7
@@ -39,6 +40,7 @@ Lean paths are relative to `lean/`. "(new)" marks declarations added in this pas
     `P^disc ⊆ P_TM`, hence `P_disc_eq_P_TM`, and the uniform verifier class with
     `NP_disc_eq_NP_TM` (`PVNP.PartIIUniformEquiv`, simulator `PVNP.UniformSim*`). Upgrades
     I-38, I-39, II-11, II-12, II-13, II-15 and III-6 to Exact; I-11 and II-10 stay Restricted.
+  * Manuscript correction (6 November 2026): II-7, II-8 and II-17 now match the existing corrected Lean statements. No new separation result or Lean theorem is claimed.
 
 **What the "Exact" count does not mean.** It includes conditional propositions whose
 implications are verified while their premises remain open, for example
@@ -121,17 +123,17 @@ Counts:
 | II-4 | Thm. `thm:wave-symbol-isomorphism` | quantization compatibility ⇒ exact symbolic update; converse construction | `PartIIManuscript.wave_symbol_forward`, `wave_symbol_converse` (new) | Exact (abstract neighbourhood map; covers the background-extended lattice) |
 | II-5 | Remark `rem:wave-symbol-obstruction` | counterexample without compatibility | `PartIIManuscript.compatibility_necessary` (new) | Exact (the manuscript's Z = {−1, ½, 1}) |
 | II-6 | Prop. `prop:gandy-wcc` + Cor. | Gandy axioms | `WCC.step` definition | Exact (by construction) |
-| II-7 | Lemma `lem:invariant` | two-phase invariant, "for all t ≥ 0" | `PartIITwoPhase.invariant_even`, `invariant_odd`, `invariant_literal_fails` (new) | Refuted (quantifier range only: the head can leave Λ_n after halting; `rightMTM` with the manuscript's L(n) = T_M(n)+n has no head cell at time 2). Corrected statement for all t ≤ L(n), hence all t ≤ T_M(n), proved |
-| II-8 | Lemma `lem:one_step` | one TM step = two WCC steps; C_{2t} encodes the TM configuration "for all t ≥ 0" | `PartIITwoPhase.two_steps`, `one_step`, `one_step_of_inWin`, `one_step_literal_fails` (new) | Refuted (quantifier range only, same counterexample). Corrected statement for all t ≤ L(n)+1, and for every t while the head stays in Λ_n, proved |
+| II-7 | Lemma `lem:invariant` | two-phase invariant for 0 ≤ t ≤ L(n), including all t ≤ T_M(n) | `PartIITwoPhase.invariant_even`, `invariant_odd`; historical counterexample `invariant_literal_fails` | Exact (amended statement); original “all t ≥ 0” refuted by `rightMTM` when the head leaves Λ_n |
+| II-8 | Lemma `lem:one_step` | C_{2t} encodes the TM configuration for 0 ≤ t ≤ L(n); the two-step identity holds while the head stays in Λ_n | `PartIITwoPhase.two_steps`, `one_step`, `one_step_of_inWin`; historical counterexample `one_step_literal_fails` | Exact (amended statement); Lean also proves equality of restricted configurations through t ≤ L(n)+1, without head-in-window at the endpoint |
 | II-9 | Lemma `lem:runtime` | acceptance ⟺ q_acc; T_{W_M} = 2T_M; \|Λ_n\| = 2L(n)+1 | `PartIITwoPhase.runtime`, `runtime_accepts`, `card_window` (new) | Exact (first output of dec_M at time exactly 2T_M(x), when T_M(x) ≤ L(n)) |
-| II-10 | Thm. `thm:tm_to_wcc` | W_M decides L in time 2T_M ≤ 2cn^k; P_Turing ⊆ P_WCC | `PartIITwoPhase.tm_to_wcc_decides`, `PartIIUniform.P_Turing_subset_P_disc` (new), `TM.toWCC_decides`, `P_TM_subset_P_WCC` | Restricted. Both conclusions are verified: the decision-and-time statement for the author's W_M, and P_Turing ⊆ P^disc in the uniform model of `def:wcc_machine`, via the one-cell machine whose encoder computes the decision bit. Not formalized: that W_M itself is uniform, i.e. that enc_M, dec_M and Λ_n are computable in polynomial time |
+| II-10 | Thm. `thm:tm_to_wcc` | W_M decides L in time 2T_M ≤ 2c·max(n,1)^k; P_Turing ⊆ P_WCC | `PartIITwoPhase.tm_to_wcc_decides`, `PartIIUniform.P_Turing_subset_P_disc` (new), `TM.toWCC_decides`, `P_TM_subset_P_WCC` | Restricted. Both conclusions are verified: the decision-and-time statement for the author's W_M, and P_Turing ⊆ P^disc in the uniform model of `def:wcc_machine`, via the one-cell machine whose encoder computes the decision bit. Not formalized: that W_M itself is uniform, i.e. that enc_M, dec_M and Λ_n are computable in polynomial time |
 | II-11 | Thm. `thm:wcc_to_tm` | P_WCC ⊆ P_Turing | `PartIIUniform.wcc_to_tm`, `P_disc_subset_P_TM` (new); also `WCC.toTM_decides`, `WCCR.toTM_decides`, `WCCDSweep.toTM_decides` | Exact (uniform model, every d ≥ 1 and r ≥ 0: an explicit single-tape machine M_W, compiled from a sweep program, first answers within q_W(\|x\| + T_W(x) + 1) steps, lattice algorithm, encoder and decoder simulated and charged; P_Turing read with the corrected def:pturing, see II-17) |
-| II-12 | Cor. `cor:pwcc_equals_pturing` | P_WCC = P_Turing | `PartIIUniform.P_disc_eq_P_TM` (new), `PartIITuring.P_Turing_eq_P_TM` (corrected def:pturing) | Exact (uniform model of def:wcc_machine; with the literal def:pturing the right side is {∅, Σ*}, see II-17) |
+| II-12 | Cor. `cor:pwcc_equals_pturing` | P_WCC = P_Turing | `PartIIUniform.P_disc_eq_P_TM` (new), `PartIITuring.P_Turing_eq_P_TM` (corrected def:pturing) | Exact (uniform model of def:wcc_machine; the original, superseded def:pturing was degenerate, see II-17) |
 | II-13 | Thm. `thm:np_equiv` | NP_WCC = NP_Turing | `PartIIUniform.NP_disc_eq_NP_TM` (new), `PartIITuring.NP_Turing_eq_NP_TM` | Exact (verifier class `NP_disc` of def:wcc_verifier with binary alphabets: input word `pair x y`; \|Λ\| ≤ p(N) for \|y\| ≤ q(\|x\|), N = \|x\|+\|y\|; first decision within p(N) on every pair, the runtime scaling of def:tm_verifier; acceptance = first decision 1, the first-output convention of def:pwcc) |
 | II-14 | Lemma `lem:verifier-encoding` | preservation of verifier outcomes | `TM.toWCC_decides` on `pair x w` | Exact |
 | II-15 | Thm. `thm:uniform-discrete-bijection` | P, NP equalities | `PartIIUniform.P_disc_eq_P_TM`, `NP_disc_eq_NP_TM` (new) | Exact |
 | II-16 | Prop. `prop:conditional-classical-lift` | L ∈ NP^disc\P^disc ⇒ P≠NP | `p_vs_np_discrete_transfer` | Exact |
-| II-17 | Def. `def:pturing` (T_M(n) ≤ cn^k for all n, c,k ≥ 1) as the classical class P | the manuscript's P_Turing is P | `PartIITuring.P_Turing_lit_eq`, `P_Turing_lit_ne_P_TM`, `P_Turing_lit_ne_NP_Turing`, `P_Turing_eq_P_TM` (new) | Refuted (literal: n = 0 forces T_M(0) = 0, so P_Turing^lit = {∅, Σ*}; literally then P_Turing ≠ NP_Turing, a meaningless artefact). Corrected bound c·max(n,1)^k: P_Turing = P_TM proved, via explicit simulations in both directions (manuscript TM: total δ, moves L/R, q_acc/q_rej) |
+| II-17 | Def. `def:pturing` (T_M(n) ≤ c·max(n,1)^k for all n ≥ 0, c,k ≥ 1) | the amended manuscript's P_Turing is classical P | `PartIITuring.P_Turing_eq_P_TM`; historical counterexamples `P_Turing_lit_eq`, `P_Turing_lit_ne_P_TM`, `P_Turing_lit_ne_NP_Turing` | Exact (amended definition); original cn^k bound forced T_M(0)=0 and degenerated to {∅, Σ*}; the corrected equivalence is proved by explicit simulations |
 | II-18 | Lemma `lem:bandlimit` | k_eff ≤ C₁E_max/(ħc); conditional k_max bound | `PartIIManuscript.bandlimit_eff`, `bandlimit_sharp` (new) | Exact (physical identities as explicit hypotheses, as in the manuscript) |
 | II-19 | Lemma `lem:spatial_capacity` | N_lanes ≤ C₂Vk_max³ | `PartIIManuscript.spatial_capacity`, `spatial_capacity_energy` (new) | Exact (periodic cube of side ℓ, explicit C₂ = 27/(8π³); genuine lattice-point count) |
 | II-20 | Lemma `lem:lane_update_bound` | ≤ Tck_max/C₃ transitions per lane | `PartIIManuscript.lane_update_bound` (new) | Exact |
@@ -145,11 +147,9 @@ Counts:
 | II-28 | Defs. `def:tm_verifier`, `def:npturing` vs Lean `NP_TM` | the manuscript's verifier class is NP | `PartIITuring.NP_Turing_eq_NP_TM`, `MTM.guard` (new) | Exact (binary input and witness alphabets, pair format `pair`; time bound p(\|x\|+\|y\|) required only on well-formed pairs, as in the manuscript) |
 
 Counts:
-* Exact (23): II-1, 2, 3, 4, 5, 6, 9, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23, 25, 26, 27,
-  28.
+* Exact (26): II-1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 26, 27, 28.
 * Restricted (1): II-10.
-* Refuted (3): II-7, 8, 17. In each, only the literal quantifier or boundary case fails; the
-  corrected statement is proved.
+* Refuted (0) in the amended Part II manuscript. Historical refutations (3): II-7, II-8, II-17, retained with their original counterexamples.
 * Open (1): II-24.
 
 ### Status of the Part II correspondence
@@ -157,12 +157,12 @@ Counts:
 1. **Machine models.**
    * The manuscript's Turing machine (`def:tm`) is formalized as `PartIITuring.MTM`, and
      simulations in both directions connect it to the repository model.
-   * Its literal `def:pturing` is degenerate (II-17). With the boundary case corrected,
+   * Its original `def:pturing` was degenerate (II-17). With the now-amended boundary case,
      `P_Turing = P_TM` and `NP_Turing = NP_TM` (II-28).
 2. **The author's construction.** The two-phase simulation `W_M` (`def:local_state`, `def:wm`)
    is formalized as written: alphabet, phase rules in the manuscript's order, finite window
    with background, `enc_M` and `dec_M`. Lemmas `prop:local-tm`, `lem:one_step`,
-   `lem:invariant` and `lem:runtime` are proved, the first two on their correct range.
+   `lem:invariant` and `lem:runtime` are proved with the finite-window ranges now stated in the amended manuscript.
 3. **The uniform model** (`def:wcc_machine`) is formalized as `PartIIUniform.UWCC`.
    * Poly-time computable functions (`FP`) are those computed by the manuscript's own Turing
      machine.
