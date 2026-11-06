@@ -161,6 +161,8 @@ import PVNP.CircuitCookLevin
 
 -- Original two-phase decoder, phase-energy readout and separator bounds.
 import PVNP.TwoPhaseDecoder
+import PVNP.TwoPhaseUniform
+import PVNP.TwoPhaseRadius
 import PVNP.PhasePenaltyMargin
 import PVNP.SeparatorPrice
 -- First-answer complexity with the two length/decider quantifier orders.
