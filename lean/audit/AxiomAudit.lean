@@ -186,6 +186,8 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.PartISeparation.category_error_claim_implies_classical
 #print axioms PVNP.PartISeparation.high_K_not_poly_witness
 #print axioms PVNP.PartISeparation.trivial_partition_invariant
+#print axioms PVNP.PartISeparation.invariant_constant_of_common_successor
+#print axioms PVNP.PartISeparation.no_nontrivial_invariant_of_common_successor
 #print axioms PVNP.PartILocality.supp_step_subset
 #print axioms PVNP.PartILocality.local_growth_needs_quiescence
 #print axioms PVNP.PartILocality.support_poly_bound
