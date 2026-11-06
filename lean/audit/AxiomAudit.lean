@@ -594,6 +594,7 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhaseUniform.original_step
 #print axioms PVNP.TwoPhaseUniform.original_cfg
 #print axioms PVNP.TwoPhaseUniform.original_output
+#print axioms PVNP.TwoPhaseUniform.original_uniform_decides
 #print axioms PVNP.TwoPhaseUniform.original_state_bits_length
 #print axioms PVNP.TwoPhaseUniform.original_state_bits_injective
 #print axioms PVNP.TwoPhaseUniform.originalWindowCode_length
