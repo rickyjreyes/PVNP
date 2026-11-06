@@ -7,6 +7,8 @@ v4.23.0 with Mathlib v4.23.0 (`37df177`).
 declaration uses only `propext`, `Classical.choice` or `Quot.sound`. The full axiom audit covers
 **111 declarations**. Classical `P ≠ NP` is **not** claimed, and neither is any physical separation.
 
+**Post-report verification update (6 November 2026):** The November 2 tables and open-item descriptions below are historical snapshots, not the current status. **M3-T and F-1 are now CLOSED** for the specified torus model by `PVNP.Torus.global_wellposed`, `flux_identity`, `flux_inequality` and `curvature_time_bound` in [Phase VI PR #40](https://github.com/rickyjreyes/PVNP/pull/40), with all three PR-head CI checks passed. **Phase VIII** additionally proves the complete ordinary single-tape TM crossing-sequence splicing theorem and a near-quadratic SAT time lower bound in [PR #38](https://github.com/rickyjreyes/PVNP/pull/38). Classical `P ≠ NP`, M2 and lattice-to-continuum convergence M3-C remain open. The authoritative status is [`lean/formalization.yaml`](../../lean/formalization.yaml); see [Phase VI](phase-vi-torus-flux-status.md) and [Phase VIII](phase-viii-separation-status.md) scope notes. The manuscript claim ledger remains 70 Exact, 2 Restricted, 11 Refuted, 8 Open.
+
 ## Summary
 
 | Paper | Main theorem proved? | Lean verified? | Remaining gap | Publication readiness |

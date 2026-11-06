@@ -4,6 +4,18 @@
 
 Research manuscripts on discrete Wave Curvature Computation (WCC), classical complexity, and physical curvature-resource constraints. Organized after the [math manuscript repository](https://github.com/rickyjreyes/math): a navigable collection with **PDFs, LaTeX sources, scope notes, and a reproducible build workflow**, grouped under `pvnp/`.
 
+## Verified developments (November 2026)
+
+| Program | Kernel-checked result | Limit |
+|---|---|---|
+| **Phase VIII, PR [#38](https://github.com/rickyjreyes/PVNP/pull/38)** | `CrossingHennie.hennie` proves alternating crossing-sequence splicing for the ordinary single-tape TM. `CrossingSAT` and `CrossingSATSets` derive mixed-SAT acceptance and a near-quadratic time lower bound. | A **single-tape** lower bound of `Ω(N² / (log N · log \|Λ\|))`, not superpolynomial SAT hardness. |
+| **Phase VI, PR [#40](https://github.com/rickyjreyes/PVNP/pull/40)** | `PVNP.Torus.global_wellposed` and `PVNP.Torus.flux_inequality` / `curvature_time_bound` formalize global H² torus evolution and PDE-derived localized-mass flux. | Requires `L > 0`, `γ > 0`, specified solutions and detector regularity/bounds; not a computational resource separation. |
+| **Uniform discrete WCC** | Verified polynomial-time class equivalences `P_disc = P_TM` and `NP_disc = NP_TM`, plus finite-model variations. | Does not identify discrete computation with physically charged curvature computation. |
+
+**Proof status:** No proof of classical `P ≠ NP` or its opposite. The decisive statement `CrossingSAT.SATLowerBound` (`SAT_dense ∉ P_TM`) is unproved. The manuscript claim inventory remains **70 Exact, 2 Restricted, 11 Refuted, 8 Open**; “Exact” may describe a conditional implication whose premise is still open.
+
+**Reproducibility:** The integration PR #40 passed its exact-head `lean`, `phase-iii-targeted` and PDF `build` checks. To reproduce the Lean build and axiom audit, see [Lean verification](lean/README.md). [Phase VIII proof scope](pvnp/proofs/phase-viii-separation-status.md) · [Phase VI PDE scope](pvnp/proofs/phase-vi-torus-flux-status.md) · [Remaining obligations](pvnp/proofs/remaining-obstructions.md).
+
 ## Read the manuscripts
 
 | Manuscript | Compiled PDF | LaTeX source | Release |

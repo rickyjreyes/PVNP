@@ -1,32 +1,13 @@
-> **Current status (2026-11-05, authoritative):** see `formalization.yaml` → `current_status`.
-> Kernel-checked discrete results:
-> - `P_WCC = P_TM` and `NP_WCC = NP_TM` for the 1-D radius-one model;
-> - the same equalities for **every fixed radius `r ≥ 1`** (`PVNP.Discrete.P_WCCR_eq_P_TM`,
->   `NP_WCCR_eq_NP_TM`);
-> - **`P_WCCD d = P_TM` and `NPOf (P_WCCD d) = NP_TM` on `ℤ^(1+d)` for every `d`**
->   (`PVNP.Discrete.P_WCCD_eq_P_TM`, `NP_WCCD_eq_NP_TM`; D-1, closed 2026-11-05). The converse
->   direction is an explicit ordinary single-tape TM (`WCCDSweep.toTM`, compiled by
->   `Sweep.Prog.toTM`). Every head move is charged, and it decides within
->   `(128d+421)(n+2T(n)+3)^(2d+3)` steps (`WCCDSweep.toTM_decides`);
-> - `P ⊆ NP` and `SAT_dense ∈ NP_TM`;
-> - encoder and advice trivialization countermodels.
+> **Current verified status (November 6, 2026 UTC):** see [`formalization.yaml`](formalization.yaml) → `current_status` and the [axiom audit](audit/AxiomAudit.lean).
 >
-> Physical-model audit (`PVNP.PhysicalAudit`): unrestricted encoders and decoders trivialize the
-> model, and a physical SAT lower bound under polynomial-time encoders would imply `P_TM ≠ NP_TM`.
+> - **Phase VI (PR #40, merge `888296e`):** [`TorusWellPosed.lean`](PVNP/TorusWellPosed.lean) proves global H² well-posedness, mass/Hamiltonian conservation, an L-uniform a priori H² bound and continuous dependence on `T²_L`, assuming `L > 0`, `γ > 0`. [`TorusFlux.lean`](PVNP/TorusFlux.lean) derives the F-1 detector flux identity, flux inequality and curvature–time bound for the specified real sufficiently smooth detector. The full import tree and axiom audit passed on the PR head.
+> - **Phase VIII (PR #38, merge `5e8b678`):** [`CrossingHennie.lean`](PVNP/CrossingHennie.lean) establishes the complete alternating crossing-sequence splicing theorem from ordinary single-tape TM semantics. [`CrossingSAT.lean`](PVNP/CrossingSAT.lean) and [`CrossingSATSets.lean`](PVNP/CrossingSATSets.lean) prove the SAT encodings, mixed-input implications and restricted single-tape time lower bounds up to `Ω(N²/(log N · log|Λ|))`.
+> - **Discrete computation:** the kernel-checked polynomial-time equivalences `P_WCC = P_TM` and `NP_WCC = NP_TM` hold for the defined finite-state model; the corresponding equivalences for fixed radius and dimension, and the uniform discrete model, have their own exact semantics.
+> - **Open:** `CrossingSAT.SATLowerBound` (`SAT_dense ∉ P_TM`), the unrestricted classical P versus NP separation, a physical resource-preserving class bridge, and lattice-to-continuum convergence M3-C. Phase VI does not discharge any universal SAT computational lower bound.
 >
-> PDE results:
-> - the lattice WCT system (`PVNP.WCTLattice`), with exact conservation, uniform coercivity and a
->   **derived** flux inequality and transport bound;
-> - the L²-torus receiver packing, the sharp circle spectral gap, exact plane-wave solutions and the
->   Part III analytic results;
-> - external whole-plane well-posedness in `rickyjreyes/math@30a5ddc`, with definitions matched in
->   `bridge/MathBridge.lean`.
+> **Reproduce:** `cd lean && lake exe cache get && lake build PVNP && lake env lean audit/AxiomAudit.lean | tee out.txt && python3 audit/check_axioms.py audit/AxiomAudit.lean out.txt`.
 >
-> Remaining obligations are listed in `../pvnp/proofs/remaining-obstructions.md`. Older dated
-> sections below are kept for provenance; where they say a result is open, the current status
-> supersedes them. No classical P ≠ NP, physical class separation, or universal SAT lower bound is
-> claimed.
-
+> The chronological notes below preserve older, now-superseded partial statuses for research provenance; use this section and `formalization.yaml` for the current status. See the [Phase VI proof scope](../pvnp/proofs/phase-vi-torus-flux-status.md), [Phase VIII scope](../pvnp/proofs/phase-viii-separation-status.md) and [remaining obligations](../pvnp/proofs/remaining-obstructions.md).
 # PVNP Lean verification — extended formalization
 
 **Scope:** Exact finite Boolean semantics, deterministic local WCC dynamics, and finite Boolean-hypercube inequalities. This is a mechanized **consistent mathematical core**, not proof of the complete manuscripts or of P ≠ NP.
@@ -39,7 +20,7 @@ Run `cd lean && lake update && lake exe cache get && lake build`. CI rejects `so
 | II | [Core](PVNP/PartII.lean), [Extended](PVNP/PartIIExtended.lean) | Finite deterministic replay, radius-one local WCC machine with fixed rule and boundary state, locality, quantization step/trajectory compatibility under commuting semantics |
 | III | [Core](PVNP/PartIII.lean), [Extended](PVNP/PartIIIExtended.lean) | Zero symbolic Laplacian of distinct states, denominator counterexample, positive squared regularizer, witnesses, finite hypercube directional boundary counts and normalized influence ≤ n |
 
-**Open/unformalized obligations:** Uniform polynomial-time Turing equivalence with encoded runtime and machines; quantum field PDE existence, Sobolev estimates and stability; exact physical curvature-energy bounds; exponential locked-expander lower bounds against *all* algorithms; physically admissible NP witness existence; classical and physical P vs NP. These cannot be marked verified without valid theorems and missing hypotheses. No custom axioms stand in for those statements.
+**Historical scope note (superseded by the verified November 2026 status above):** Earlier open obligations included uniform Turing simulation and continuum torus PDE verification, both of which now have scoped Lean results. The unrestricted physical resource bridge, exponential all-algorithm SAT lower bound, and classical/physical P versus NP separation remain open. These cannot be marked verified without valid theorems and missing hypotheses. No custom axioms stand in for those statements.
 
 [Detailed proof status](formalization.yaml).
 
