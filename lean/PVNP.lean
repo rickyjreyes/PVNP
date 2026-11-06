@@ -112,3 +112,7 @@ import PVNP.WCTMeshScaling
 import PVNP.DecoderUniformity
 
 import PVNP.WCTLatticeGlobal
+
+-- Phase VI: periodic torus well-posedness and F-1 continuum flux.
+import PVNP.TorusWellPosed
+import PVNP.TorusFlux

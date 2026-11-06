@@ -405,3 +405,14 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.CrossingSATSets.dtraceSet_injective
 #print axioms PVNP.CrossingSATSets.sat_time_lower_bound_sets
 #print axioms PVNP.CrossingSATSets.sat_time_lower_bound_near_sq
+
+-- Phase VI: periodic torus H2 and F-1 flux, checked in full import tree.
+#print axioms PVNP.Torus.global_wellposed
+#print axioms PVNP.Torus.conservation
+#print axioms PVNP.Torus.apriori
+#print axioms PVNP.Torus.continuous_dependence
+#print axioms PVNP.Torus.flux_identity
+#print axioms PVNP.Torus.flux_static
+#print axioms PVNP.Torus.flux_inequality
+#print axioms PVNP.Torus.curvature_time_bound
+#print axioms PVNP.Torus.flux_inequality_explicit
