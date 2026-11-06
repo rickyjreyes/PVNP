@@ -3,13 +3,15 @@ import Mathlib
 /-!
 # Part I, §"Constructive Depth": `lem:local_growth` and `lem:clause_flip`
 
-**Lemma `lem:local_growth` (Part I).** "Let `W` have interaction radius `r`. Then
-`supp(C_{t+1}) ⊆ supp(C_t)^{+r}`. In particular
-`|supp(C_t)| ≤ |supp(C_0)| + O(r t |∂ supp(C_0)|)`."
+**Amended lemma `lem:local_growth` (Part I).** For a quiescent radius-`r`
+local rule on `ℤ^d` and finite initial support `A`:
+`supp(C_{t+1}) ⊆ supp(C_t)^{+r}` and
+`|supp(C_t)| ≤ |A| * (2*r*t+1)^d`.
 
-* `supp_step_subset`: the inclusion holds for every `r`-local rule that is **quiescent**
-  (an all-background neighbourhood stays background). The manuscript's proof uses this
-  implicitly.
+* `supp_step_subset`: the inclusion holds when the background is **quiescent**
+  (an all-background neighbourhood stays background).
+* The superseded manuscript asserted `|supp(C_t)| ≤ |supp(C_0)| + O(rt |∂supp(C_0)|)`.
+  This remains refuted for `d = 2`; the amended bound replaces it.
 * `local_growth_needs_quiescence`: without quiescence the inclusion is false (a constant rule).
 * `linear_growth_false_d2`: the "in particular" bound is **false in dimension 2** (Part I's
   lattices have `d = 2` or `3`). The quiescent radius-one OR rule from a single seed has support
