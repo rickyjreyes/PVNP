@@ -3,114 +3,211 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="PVNP manuscript-to-Lean formalization dashboard: authoritative per-claim status, Phase X results, limitations, and verification provenance.">
+  <meta name="description" content="Per-claim accounting of the PVNP manuscripts against kernel-checked Lean proofs: current and original statuses, conditional results, supporting theorems, open obligations and CI provenance.">
   <title>PVNP Lean Formalization Progress</title>
   <style>
-    :root{color-scheme:dark;--bg:#0b1220;--panel:#121d2f;--panel2:#152338;--line:#2a3b50;--text:#ecf3ff;--muted:#a8b7ca;--good:#3bd39e;--warn:#e5ba5b;--bad:#f1777c;--accent:#84b8ff}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}
-    body{margin:0;background:radial-gradient(ellipse 120% 100% at 0% -15%,#173053 0%,var(--bg) 56%);color:var(--text);font:15px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-    a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
-    .container{max-width:1160px;margin:auto;padding:36px 24px 70px}
-    .kicker{color:var(--good);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.14em}
-    h1{font-size:clamp(2rem,5vw,3.3rem);line-height:1.09;letter-spacing:-.04em;margin:12px 0 15px}
-    h2{font-size:clamp(1.28rem,3vw,1.7rem);letter-spacing:-.025em;margin:0 0 8px}
-    h3{font-size:1.03rem;margin:0 0 14px}
-    p{margin:8px 0 14px}.lead{color:var(--muted);max-width:800px;font-size:1.06rem}
-    nav{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:21px;margin-bottom:42px}
-    nav .mark{font-weight:800;letter-spacing:.1em}nav .links{display:flex;flex-wrap:wrap;gap:15px}
-    section{margin-top:38px}.section-description{color:var(--muted);margin:3px 0 17px}
-    .info-line{color:var(--muted);font-size:13px;display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center}
-    .metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:27px}
-    .metric{border:1px solid var(--line);background:var(--panel);padding:18px;border-radius:14px;min-width:0}
-    .metric-label{text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-size:11px;font-weight:700}
-    .metric-value{font-weight:750;font-variant-numeric:tabular-nums;font-size:clamp(24px,3vw,35px);letter-spacing:-.04em;line-height:1.35}
-    .metric-sub{font-size:12px;color:var(--muted)}.status-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px}
-    .status-strip .metric{padding:12px 15px;background:var(--panel2)}.status-strip .metric-value{font-size:24px}
-    .panel{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:21px}
-    .papers{display:grid;gap:17px}.paper-head{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;margin-bottom:7px}
-    .muted{color:var(--muted)}.progress{height:10px;border-radius:20px;overflow:hidden;background:#33445b}
-    .fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#2fae95,#70dcaa)}
-    .proof-row{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid var(--line)}
-    .proof-row:last-child{border:0}.proof-title{min-width:230px;flex:2;font-weight:550}
-    .proof-symbol{color:var(--muted);font-size:12px;flex:2;white-space:normal;overflow-wrap:anywhere}
-    .proof-done,.proof-open{font-size:12px;font-weight:700;flex:0 0 auto}.proof-done{color:var(--good)}.proof-open{color:var(--warn)}
-    .filters{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
-    input,select{font:inherit;color:var(--text);background:var(--panel);border:1px solid #49607c;border-radius:9px;padding:10px 12px}
-    input{flex:1 1 300px;min-width:150px}select{flex:1 1 135px;max-width:220px}
-    .claim{border:1px solid var(--line);border-radius:10px;background:var(--panel);margin-bottom:7px}
-    .claim summary{display:flex;align-items:center;gap:12px;justify-content:space-between;cursor:pointer;padding:12px 15px;list-style:none}
-    .claim summary::-webkit-details-marker{display:none}.claim summary::after{content:"+";color:var(--muted);order:2;font-size:19px}
-    .claim[open] summary::after{content:"−"}
-    .claim-heading{display:flex;flex:1;gap:12px;align-items:baseline;min-width:0}
-    .claim-id{font-size:12px;white-space:nowrap;color:var(--accent)}
-    .claim-body{padding:0 16px 13px;color:var(--muted);font-size:13px;overflow-wrap:anywhere}
-    .claim-body p{margin:8px 0}.status{white-space:nowrap;font-size:11px;padding:3px 8px;border-radius:7px;font-weight:750;background:#2d3b50;color:var(--text)}
-    .status.exact{color:var(--good)}.status.refuted{color:var(--bad)}.status.restricted{color:var(--warn)}.status.open{color:var(--muted)}
-    .source{font-size:12px;color:var(--muted)}.note{border-left:3px solid #7187a4;padding:10px 15px;background:#17253b;border-radius:0 9px 9px 0}
-    .error{color:var(--bad);font-weight:700}.loaded{color:var(--good)}.thin{border:0;border-top:1px solid var(--line);margin:35px 0}
-    footer{margin-top:52px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:12px}
-    @media(max-width:750px){.container{padding:22px 14px 55px}.metrics{grid-template-columns:1fr}.status-strip{grid-template-columns:repeat(2,1fr)}.claim-heading{flex-direction:column;gap:3px}.proof-row{gap:6px}.proof-title{min-width:100%}.proof-symbol{flex:1}.panel{padding:14px}nav{margin-bottom:25px}}
+    :root{
+      color-scheme:light;
+      --bg:#f6f7f9;--panel:#ffffff;--panel-2:#f0f3f7;--line:#d8dee7;--text:#17202b;--muted:#566173;
+      --accent:#1d5bb8;--good:#12704a;--warn:#8c5a00;--bad:#b0222b;--open:#566173;
+      --note-bg:#fff5dc;--note-line:#d9a23b;--bar:#2c8a66;--bar-bg:#e2e7ee;--code-bg:#edf0f4;--focus:#1d5bb8;
+    }
+    @media (prefers-color-scheme: dark){
+      :root:not([data-theme="light"]){
+        color-scheme:dark;
+        --bg:#0c131e;--panel:#121b29;--panel-2:#172233;--line:#2a394e;--text:#e7edf6;--muted:#a1aec0;
+        --accent:#8db7ff;--good:#55d0a3;--warn:#efbf62;--bad:#ff8b90;--open:#a1aec0;
+        --note-bg:#2a2313;--note-line:#8b6a25;--bar:#47bd8e;--bar-bg:#283649;--code-bg:#1a2536;--focus:#8db7ff;
+      }
+    }
+    :root[data-theme="dark"]{
+      color-scheme:dark;
+      --bg:#0c131e;--panel:#121b29;--panel-2:#172233;--line:#2a394e;--text:#e7edf6;--muted:#a1aec0;
+      --accent:#8db7ff;--good:#55d0a3;--warn:#efbf62;--bad:#ff8b90;--open:#a1aec0;
+      --note-bg:#2a2313;--note-line:#8b6a25;--bar:#47bd8e;--bar-bg:#283649;--code-bg:#1a2536;--focus:#8db7ff;
+    }
+    *{box-sizing:border-box}
+    html{-webkit-text-size-adjust:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+    a{color:var(--accent)}a:hover{text-decoration-thickness:2px}
+    :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+    code{font:13px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--code-bg);padding:1px 5px;border-radius:5px;overflow-wrap:anywhere}
+    .wrap{max-width:1120px;margin:0 auto;padding:32px 24px 64px}
+    nav{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:28px}
+    nav .mark{font-weight:800;letter-spacing:.08em;font-size:13px}
+    nav .links{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px}
+    .kicker{margin:0;color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+    h1{font-size:clamp(1.8rem,4.6vw,2.7rem);line-height:1.1;letter-spacing:-.02em;margin:8px 0 12px}
+    h2{font-size:clamp(1.25rem,3vw,1.55rem);margin:0 0 6px;letter-spacing:-.01em}
+    h3{font-size:1.02rem;margin:0 0 8px}
+    p{margin:8px 0}.lead{color:var(--muted);max-width:780px;font-size:1.03rem}
+    section{margin-top:40px}.desc{color:var(--muted);margin:2px 0 14px;max-width:820px}
+    .warning{border:1px solid var(--note-line);background:var(--note-bg);border-radius:12px;padding:12px 16px;margin:18px 0}
+    .warning strong{display:block;margin-bottom:2px}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+    .provenance{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px 22px;margin:16px 0 0;font-size:13px}
+    .provenance div{min-width:0}.provenance dt{color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+    .provenance dd{margin:2px 0 0;overflow-wrap:anywhere}
+    .toggle{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel);margin-top:22px}
+    .toggle button{font:inherit;font-size:14px;border:0;background:transparent;color:var(--text);padding:9px 14px;cursor:pointer}
+    .toggle button[aria-pressed="true"]{background:var(--accent);color:var(--bg);font-weight:650}
+    .view-note{color:var(--muted);font-size:13px;margin:8px 0 0;max-width:820px}
+    .metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+    .metric{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
+    .metric .label{color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+    .metric .value{font-size:clamp(1.6rem,3.4vw,2.1rem);font-weight:750;font-variant-numeric:tabular-nums;line-height:1.3}
+    .metric .sub{color:var(--muted);font-size:13px}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
+    .chip{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:999px;padding:6px 12px;cursor:pointer;font-variant-numeric:tabular-nums}
+    .chip[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);font-weight:650}
+    .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:baseline}
+    .dot.Exact{background:var(--good)}.dot.Restricted{background:var(--warn)}.dot.Refuted{background:var(--bad)}.dot.Open{background:var(--open)}
+    .reconcile{font-size:13px;margin:10px 0 0;color:var(--good)}.reconcile.bad{color:var(--bad);font-weight:700}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+    table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+    th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+    thead th{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:var(--panel-2)}
+    tbody th{font-weight:650}td code,th code{white-space:nowrap}
+    tr:last-child td{border-bottom:0}td.num,th.num{text-align:right;white-space:nowrap}
+    tfoot td{font-weight:700;background:var(--panel-2)}
+    .bar{display:block;height:8px;border-radius:6px;background:var(--bar-bg);overflow:hidden;min-width:80px;margin-top:5px}
+    .bar span{display:block;height:100%;background:var(--bar)}
+    .status{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:7px;background:var(--panel-2);white-space:nowrap}
+    .status.Exact{color:var(--good)}.status.Restricted{color:var(--warn)}.status.Refuted{color:var(--bad)}.status.Open{color:var(--open)}
+    .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+    .tag.cond{color:var(--warn);border-color:var(--note-line)}.tag.amend{color:var(--accent)}.tag.ok{color:var(--good)}.tag.wait{color:var(--warn)}.tag.bad{color:var(--bad)}
+    .rows{display:grid;gap:0}.row{padding:14px 0;border-bottom:1px solid var(--line);display:grid;gap:4px}.row:first-child{padding-top:0}.row:last-child{border-bottom:0;padding-bottom:0}
+    .row-head{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;justify-content:space-between}
+    .row-title{font-weight:650}.row .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;color:var(--muted)}
+    .central{border:1px solid var(--note-line);background:var(--note-bg);border-radius:10px;padding:12px}
+    .note{border-left:3px solid var(--note-line);padding:8px 12px;background:var(--note-bg);border-radius:0 8px 8px 0;font-size:14px}
+    .filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}
+    .filters input[type=search],.filters select{font:inherit;font-size:14px;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:8px 10px}
+    .filters input[type=search]{flex:1 1 260px;min-width:0}.filters select{flex:0 1 180px}
+    .filters label.check{font-size:14px;display:inline-flex;gap:6px;align-items:center;white-space:nowrap}
+    .claim{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-bottom:6px}
+    .claim summary{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;list-style:none}
+    .claim summary::-webkit-details-marker{display:none}
+    .claim .head{display:flex;gap:10px;align-items:baseline;min-width:0;flex:1}
+    .claim .id{font-weight:700;color:var(--accent);white-space:nowrap;font-size:13px}
+    .claim .title{min-width:0;overflow-wrap:anywhere}
+    .claim .badges{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+    .claim .body{padding:0 14px 12px;font-size:14px;display:grid;gap:8px;overflow-wrap:anywhere}
+    .claim .body h4{margin:6px 0 0;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+    .claim .body p{margin:0}
+    .orig{border:1px dashed var(--line);border-radius:8px;padding:10px;background:var(--panel-2)}
+    .muted{color:var(--muted)}.small{font-size:13px}.error{color:var(--bad);font-weight:700}.nowrap{white-space:nowrap}
+    footer{margin-top:48px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:13px}
+    footer dl{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;margin:8px 0}footer dt{font-weight:700;color:var(--text)}footer dd{margin:0}
+    @media (max-width:760px){.metrics{grid-template-columns:1fr}}
+    @media (max-width:640px){
+      .wrap{padding:20px 16px 48px}
+      .claim summary{flex-wrap:wrap}.claim .head{flex-direction:column;gap:2px}
+      th,td{padding:8px}footer dl{grid-template-columns:1fr}
+      #coverage th .muted{display:none}#coverage{font-size:13px}#coverage th,#coverage td{padding:8px 6px}#coverage .bar{min-width:44px}
+      #prs thead{display:none}
+      #prs tr{display:block;border-bottom:1px solid var(--line);padding:6px 0}#prs tr:last-child{border-bottom:0}
+      #prs th,#prs td{display:block;border:0;padding:4px 12px}
+      #prs td[data-label]::before{content:attr(data-label);display:block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+      #prs td.empty{display:none}
+    }
   </style>
+  <script src="./data.js" defer></script>
   <script src="./app.js" defer></script>
 </head>
 <body>
-<main class="container">
-  <nav aria-label="Dashboard navigation">
+<div class="wrap">
+  <nav aria-label="Sections">
     <div class="mark">PVNP / LEAN</div>
-    <div class="links"><a href="#overview">Overview</a><a href="#phase-x">Phase X</a><a href="#claims-section">91 claims</a><a href="https://github.com/rickyjreyes/PVNP">Repository</a></div>
+    <div class="links">
+      <a href="#coverage-section">Coverage</a><a href="#corrections">Corrections</a><a href="#phase-x">Phase X</a>
+      <a href="#pr-49">PR #49</a><a href="#open-section">Open</a><a href="#evidence">CI evidence</a><a href="#claims-section">Claims</a>
+    </div>
   </nav>
-  <header id="overview">
-    <div class="kicker">Formal verification · Richard J. Reyes</div>
+
+  <header>
+    <p class="kicker">Formal verification · Richard J. Reyes</p>
     <h1>PVNP Lean Formalization Progress</h1>
-    <p class="lead">Exact claims, counterexamples, conditional results, and open obligations, separated rigorously. Manuscript percentages track formal agreement with current statements, not progress toward proving P ≠ NP.</p>
-    <div class="info-line">
-      <span id="load-state">Loading the authoritative manuscript inventory…</span>
-      <span>Current main SHA: <a id="commit-link" href="https://github.com/rickyjreyes/PVNP/commits/main"><code id="commit-sha">see GitHub</code></a></span>
-      <span>Inventory date: November 6, 2026</span>
+    <p class="lead">Each manuscript claim is checked against a kernel-checked Lean statement. Exact proofs, restricted results, refutations, conditional implications and open obligations are counted separately.</p>
+    <div class="warning" role="note">
+      <strong>These percentages are not progress toward proving P ≠ NP.</strong>
+      They count manuscript statements whose exact form is kernel-checked in Lean. The central theorem,
+      <code>CrossingSAT.SATLowerBound</code> (no polynomial-time machine decides dense SAT), is unproved, and no percentage is assigned to it.
     </div>
+    <noscript><p class="error">This dashboard needs JavaScript to render <code>data.js</code>.</p></noscript>
+    <p id="load-error" class="error" hidden></p>
+    <dl class="provenance" id="provenance"></dl>
+    <div class="toggle" role="group" aria-label="Inventory view">
+      <button type="button" data-view="current" aria-pressed="true">Current amended statements</button>
+      <button type="button" data-view="historical" aria-pressed="false">Original statements (Oct 27)</button>
+    </div>
+    <p class="view-note" id="view-note"></p>
     <div class="metrics" id="metrics" aria-live="polite"></div>
-    <div class="status-strip" id="status-strip"></div>
+    <div class="chips" id="status-chips" aria-label="Status totals"></div>
+    <p class="reconcile" id="reconcile"></p>
   </header>
-  <section aria-labelledby="part-title">
-    <h2 id="part-title">Progress by manuscript</h2>
-    <p class="section-description">The current amended statements are compared to their Lean proofs, individually.</p>
-    <div class="panel papers" id="parts"></div>
+
+  <section id="coverage-section" aria-labelledby="coverage-title">
+    <h2 id="coverage-title">Coverage by manuscript</h2>
+    <p class="desc">Recomputed in the browser from the individual claim rows, then checked against the coverage table in the inventory.</p>
+    <div class="table-wrap"><table id="coverage"></table></div>
   </section>
-  <section id="phase-x" aria-labelledby="phase-title">
-    <h2 id="phase-title">Phase X: kernel-checked supporting results</h2>
-    <p class="section-description">Eleven explicit theorem statements passed the PR #43 Lean workflow. A completed supporting lemma does not establish the final lower bound.</p>
-    <div class="panel" id="proofs"></div>
-    <h3 style="margin-top:26px">Major open obligations</h3>
-    <div class="panel" id="open-theorems"></div>
-    <p class="note">No numerical percentage is assigned to a conjecture that has not been proved. The decisive missing statement is <a href="https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/CrossingSAT.lean"><code>CrossingSAT.SATLowerBound</code></a>, asserting that no polynomial-time machine decides dense SAT.</p>
+
+  <section id="corrections" aria-labelledby="corrections-title">
+    <h2 id="corrections-title">Manuscript corrections, not new lower bounds</h2>
+    <p class="desc">The rise from 70 to 77 Exact comes entirely from seven corrected manuscript statements. The original statements are still refuted, and their Lean counterexamples remain in the repository.</p>
+    <div class="panel" id="amendments"></div>
   </section>
-  <section aria-labelledby="history-title">
-    <h2 id="history-title">Manuscript corrections and provenance</h2>
-    <div class="panel">
-      <p>Original historical inventory: <strong>70 Exact, 2 Restricted, 11 Refuted, 8 Open</strong>. The current amended-manuscript inventory is counted live from the claim rows. These are different snapshots, not seven newly discovered lower-bound proofs.</p>
-      <p>II-7, II-8 and II-17 have corrected finite-window and polynomial-time quantifiers. I-10, I-12, I-13 and I-20 have narrower or conditional replacement statements. Their original counterarguments remain retained in Lean and version history.</p>
-      <p>PRs <a href="https://github.com/rickyjreyes/PVNP/pull/43">#43</a>, <a href="https://github.com/rickyjreyes/PVNP/pull/45">#45</a>, <a href="https://github.com/rickyjreyes/PVNP/pull/46">#46</a>, and <a href="https://github.com/rickyjreyes/PVNP/pull/47">#47</a> passed their exact-head Lean and PDF checks. Toroidal diagonal-feedback <a href="https://github.com/rickyjreyes/PVNP/pull/49">PR #49</a>: <strong id="torus-state">check PR for current status</strong>. That is a supporting finite cyclic consistency experiment, not a manuscript-claim improvement or a SAT lower bound.</p>
-    </div>
+
+  <section id="phase-x" aria-labelledby="phase-x-title">
+    <h2 id="phase-x-title">Phase X supporting results</h2>
+    <p class="desc">Kernel-checked theorems on main that are not manuscript claims. They do not change the 91-claim coverage, and none of them is a superpolynomial lower bound.</p>
+    <div class="panel rows" id="supporting"></div>
   </section>
+
+  <section id="pr-49" aria-labelledby="pending-title">
+    <h2 id="pending-title">Pending experiment: PR #49</h2>
+    <p class="desc">Verified on its pull-request head only. It is not on main and is not counted anywhere above.</p>
+    <div id="pending"></div>
+  </section>
+
+  <section id="open-section" aria-labelledby="open-title">
+    <h2 id="open-title">Open obligations</h2>
+    <p class="desc">Unproved statements. No completion percentage is assigned to an open conjecture.</p>
+    <div class="panel rows" id="open"></div>
+  </section>
+
+  <section id="evidence" aria-labelledby="evidence-title">
+    <h2 id="evidence-title">CI evidence</h2>
+    <p class="desc" id="evidence-desc">Exact-head GitHub Actions results for the pull requests behind the figures on this page.</p>
+    <div class="table-wrap"><table id="prs"></table></div>
+  </section>
+
   <section id="claims-section" aria-labelledby="claims-title">
     <h2 id="claims-title">All manuscript claims</h2>
-    <p class="section-description">Browse the source-of-truth inventory. The statement's exact assumptions and historical qualifications appear in the expanded row.</p>
+    <p class="desc">Expand a claim for its Lean declarations, status details, conditional premises and original statement. Filters apply to the selected view.</p>
     <div class="filters">
-      <label for="claim-search" class="sr-only" style="position:absolute;clip:rect(0,0,0,0)">Search claims</label>
-      <input id="claim-search" type="search" placeholder="Search theorem, claim, or Lean symbol" aria-label="Search claims">
-      <select id="part-filter" aria-label="Filter by manuscript">
-        <option value="all">All manuscripts</option><option value="I">Part I</option><option value="II">Part II</option><option value="III">Part III</option>
+      <input id="search" type="search" placeholder="Search ID, statement or Lean name" aria-label="Search claims">
+      <select id="part" aria-label="Manuscript">
+        <option value="all">All parts</option><option value="I">Part I</option><option value="II">Part II</option><option value="III">Part III</option>
       </select>
-      <select id="status-filter" aria-label="Filter by status">
-        <option value="all">All statuses</option><option value="Exact">Exact</option><option value="Restricted">Restricted</option><option value="Refuted">Refuted</option><option value="Open">Open</option>
-      </select>
+      <label class="check"><input type="checkbox" id="only-conditional"> Conditional only</label>
+      <label class="check"><input type="checkbox" id="only-amended"> Amended only</label>
     </div>
-    <p class="source"><span id="shown">Loading claims</span> · <a id="source-link" href="https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md">Source inventory</a></p>
-    <div id="claims" aria-live="polite"></div>
+    <div class="chips" id="filter-chips" role="group" aria-label="Filter by status"></div>
+    <p class="small muted" id="shown" aria-live="polite"></p>
+    <div id="claims"></div>
   </section>
+
   <footer>
-    Source: <a href="https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md">Manuscript-to-Lean inventory</a> and <a href="https://github.com/rickyjreyes/PVNP/blob/main/lean/formalization.yaml">formalization ledger</a>. Exact includes conditional implications whose premises may be open. Refuted means a counterexample is kernel-checked, not that the original theorem was proved.
+    <dl>
+      <dt>Exact</dt><dd>The claim, with its own hypotheses and quantifiers, is a kernel-checked Lean theorem. For an implication, only the implication is verified, not its premises.</dd>
+      <dt>Restricted</dt><dd>Lean proves the statement for a narrower model or encoding than the manuscript states.</dd>
+      <dt>Refuted</dt><dd>The claim as stated is false, and a Lean counterexample satisfies its own hypotheses.</dd>
+      <dt>Open</dt><dd>A conjecture or hypothesis stated as such, or a claim that is not well posed or not yet formalized.</dd>
+    </dl>
+    <p>Data: <code>pvnp/dashboard/data.js</code>, generated by <code>node pvnp/dashboard/build.js</code> from the <a id="inventory-link" href="https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md">manuscript-to-Lean inventory</a>, <code>pvnp/dashboard/results.json</code> and the Lean sources. CI rejects a stale <code>data.js</code>.</p>
   </footer>
-</main>
+</div>
 </body>
 </html>
