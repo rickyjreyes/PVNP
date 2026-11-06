@@ -1,21 +1,31 @@
 # CL-1: Cook–Levin for dense SAT — status (6 November 2026)
 
 CL-1 is the statement that every language in `NP_TM` reduces to `SATV.SAT_dense` by a
-polynomial-time many-one reduction computed by a Turing machine. With closure of `P_TM` under such
-reductions it gives the converse transfer `P_TM ≠ NP_TM → CrossingSAT.SATLowerBound`, so that
-`SATLowerBound` would be *equivalent* to classical `P_TM ≠ NP_TM`. It is also the missing premise
-of Part II claim II-24.
+polynomial-time reduction computed by a Turing machine, and that polynomial-time decidability is
+preserved along it. It gives the converse transfer `P_TM ≠ NP_TM → CrossingSAT.SATLowerBound`, so
+`SATLowerBound` becomes *equivalent* to classical `P_TM ≠ NP_TM`. It is also one of the two
+premises Part II claim II-24 was missing.
 
-## Part 1 (kernel-checked): the tableau reduction
+**Status: complete and kernel-checked.** All modules below build with only `propext`,
+`Classical.choice` and `Quot.sound` (axiom audit), with no `sorry`, `admit` or `native_decide`.
 
-Module: `lean/PVNP/CookLevinTableau.lean`. Axioms: `propext`, `Classical.choice`, `Quot.sound`.
+| Theorem | Statement |
+|---|---|
+| `CookLevin.Gen.NP_TM_subset_P_TM_of_SAT` | `SAT_dense ∈ P_TM → NP_TM ⊆ P_TM` |
+| `CookLevin.Gen.SAT_mem_P_TM_iff` | `SAT_dense ∈ P_TM ↔ P_TM = NP_TM` |
+| `CookLevin.Gen.satLowerBound_iff_P_ne_NP` | `CrossingSAT.SATLowerBound ↔ P_TM ≠ NP_TM` |
+
+The last theorem *identifies* the two statements. It proves neither: `SATLowerBound` and
+`P_TM ≠ NP_TM` both remain open.
+
+## Part 1: the tableau reduction (`PVNP.CookLevinTableau`, PR #52)
 
 * **Verifier normalization** (`Nrm.nrm`, `Nrm.nrm_answer`). A verifier `V` becomes a machine with
   fresh, injective, non-blank input symbols that halts at its first answer. If `V` decides `VL`
-  within `P`, the normalized machine shows the answer `[y ∈ VL]` at every time `T ≥ P(|y|)`.
+  within `P`, the normalized machine shows `[y ∈ VL]` at every time `T ≥ P(|y|)`.
 * **Tableau formula** (`phi M x Q T`). The space-time diagram of the radius-one automaton
   `M.toWCC` on the window `[−T−1, T+1]`, rows `0…T`. Group `k = t·W + c` (`W = 2T+3`) has one
-  variable per cell symbol and one acceptance-chain variable. Each group contributes one clause per
+  variable per cell symbol and one acceptance-chain variable, and contributes one clause per
   template:
   * at-least-one and at-most-one symbol;
   * one window clause per symbol triple;
@@ -23,32 +33,49 @@ Module: `lean/PVNP/CookLevinTableau.lean`. Axioms: `propext`, `Classical.choice`
   * two witness clauses;
   * the acceptance chain.
 
-  A template that does not apply contributes a tautology. Every clause mentions only groups
-  `k−1, k, k+1, k+W`.
-* **`phi_sat_iff`**. If `2|x| + 1 + Q ≤ T` and the input symbols are injective and non-blank,
-  `phi M x Q T` is satisfiable iff `M` accepts some `pair x w` with `|w| ≤ Q` at time `T`. The
-  proof decodes the witness from the initial row and shows, by induction on time, that every row
-  of a satisfying assignment is the true diagram (`rows`, using `TM.toWCC_step_encode`). The
-  converse assignment is read off the true diagram (`complete`).
-* **`cookLevin`**. For every `L ∈ NP_TM` there are a machine `M` and polynomials `q`, `t` such
-  that `x ∈ L ↔ inst x ∈ SAT_dense`, with
-  `inst x = encDense (numVars M T) (phi M x q(|x|) T)` and `T = t(|x|)`.
-  The instance has `3·numVars·|phi|` bits, which is polynomial in `|x|`.
+  Every clause mentions only groups `k−1, k, k+1, k+W`.
+* **`phi_sat_iff`.** When `2|x| + 1 + Q ≤ T`, `phi M x Q T` is satisfiable iff `M` accepts some
+  `pair x w` with `|w| ≤ Q` at time `T`.
+* **`cookLevin`.** For every `L ∈ NP_TM` there are `M`, `q`, `t` with
+  `x ∈ L ↔ inst x ∈ SAT_dense`, where `inst x = encDense (numVars M T) (phi M x q(|x|) T)` and
+  `T = t(|x|)`.
 
-## What part 1 does not prove
+## Part 2: the uniform generator
 
-`cookLevin` defines the instance mathematically. It does **not** show that `x ↦ inst x` is
-computed by a Turing machine in polynomial time. A non-uniform family of instances already
-existed (`SATProjection.NP_projects_to_SAT`), so uniformity is the whole remaining content of
-CL-1.
+The map `x ↦ inst x` is computed by one fixed round-trip sweep program, `genCtrl d`, which
+`Sweep.Prog.toTM` compiles into an ordinary single-tape Turing machine. The program carries
+finitely many marker tracks, a column label and an output bit per cell.
 
-## Remaining parts
+| Module | Content |
+|---|---|
+| `PVNP.CookLevinKit` | Generic round trips: `grow`, `shift`, `first`, `clear`, `setM`, `setCl`, `setOut`, reads. Each has a cellwise effect lemma and frame lemmas. Sequential composition `seq`. |
+| `PVNP.CookLevinHorner` | `HPar.horner_phase`: writes `horner cs n` unary marks on a track, using only its own tracks, within `|cs| · stepBound` trips. |
+| `PVNP.CookLevinBits` | Bit locality. `slotBits_eq` and `inst_getElem` show that every bit of `inst x` is a function of the template, the group class `kcOf k`, the relative position `relOf k k'` and the slot. |
+| `PVNP.CookLevinMain` | The main write loop `mainCtrl` and its invariant `TI`. `main_loop` writes all of `inst x` on the `out` track within `mainBound M T` trips. |
+| `PVNP.CookLevinLabels` | `labCtrl` writes the column labels `labOf x Q T c` of the window, region by region. `label_phase` establishes `TI` within `8T + 21` trips. |
+| `PVNP.CookLevinGen` | `genCtrl d = grow ; Horner(t+1) ; Horner(q) ; labels ; main loop`. `gen_run` proves that it writes `inst x` within `genBound d |x|` trips. `horner_hcoeffs` gives the coefficient lists of the polynomials. |
 
-* **Part 2.** A machine that computes `inst x` in time polynomial in `|x|`. It will be built as a
-  sweep program compiled by `Sweep.Prog.toTM`, using unary polynomial evaluation, a ruler of
-  groups, and a block writer driven by the local template structure of `phi`.
-* **Part 3.** Composition with a polynomial-time decider for `SAT_dense`, giving
-  `SAT_dense ∈ P_TM → NP_TM ⊆ P_TM`. Hence `SATLowerBound ↔ P_TM ≠ NP_TM`, and the conditional
-  NP-safety theorem II-24.
+`genBound d n` is a polynomial expression in `n`. `CookLevinUniform.pG_eval` gives the
+polynomial explicitly.
 
-None of these parts bears on whether `SATLowerBound` itself holds. That remains open.
+## Part 3: composition with a decider
+
+| Module | Content |
+|---|---|
+| `PVNP.CookLevinDecide` | `decProg G S` pairs each generator cell with a folded tape cell of a manuscript machine `S` (`MTM`). It runs `G` (`dec_lift`), copies the `out` track onto `S`'s tape as its input with the head on cell `0` (`dec_conv`), and simulates `S` one step per trip via `simTrip_spec` (`dec_sim_loop`). `dec_halts` bounds the total cost. |
+| `PVNP.CookLevinUniform` | Instantiates `S` with a polynomial-time decider of `SAT_dense` (`P_TM_subset_P_Turing`) and builds one polynomial `pFin` bounding the compiled machine's time. Proves the three theorems above. |
+
+The decider for `L` is the single machine `Prog.toTM (decProg (genCtrl d) S)`, with the single
+polynomial time bound `pFin d c e`. The construction is uniform. It is not the non-uniform
+circuit projection `SATProjection.NP_projects_to_SAT`.
+
+## Scope
+
+* The reduction is computed in the round-trip sweep model and compiled to a single-tape machine
+  with exact step counts (`Prog.toTM_firstAnswer`). The repository's transducer class `FP`
+  (`MTM.ComputesIn`, output in the `Shows` format) is not used: there is no theorem that
+  `x ↦ inst x ∈ FP` in that output convention. No current statement needs one.
+* Closure is proved in the form the equivalence needs: composition with any polynomial-time
+  decider of `SAT_dense`. A general lemma "`P_TM` is closed under `FP` reductions" is not stated.
+* The 91-claim inventory is unchanged. II-24 still also needs closure of `P_TM` under finite
+  modification.

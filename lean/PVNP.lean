@@ -129,3 +129,14 @@ import PVNP.CrossingSATMatrix
 
 -- CL-1, part 1: the Cook–Levin tableau formula (mathematical reduction to dense SAT).
 import PVNP.CookLevinTableau
+
+-- CL-1, parts 2–3: the uniform Cook–Levin generator (a sweep program compiled to a single-tape
+-- TM), its composition with a SAT_dense decider, and SATLowerBound ↔ P_TM ≠ NP_TM.
+import PVNP.CookLevinKit
+import PVNP.CookLevinHorner
+import PVNP.CookLevinBits
+import PVNP.CookLevinMain
+import PVNP.CookLevinLabels
+import PVNP.CookLevinGen
+import PVNP.CookLevinDecide
+import PVNP.CookLevinUniform
