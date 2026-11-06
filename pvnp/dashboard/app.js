@@ -160,7 +160,7 @@
     byId("amendments").replaceChildren(
       el("p", null, `Original snapshot: ${d.historical.table.counts.Exact} Exact, ${d.historical.table.counts.Restricted} Restricted, ${d.historical.table.counts.Refuted} Refuted, ${d.historical.table.counts.Open} Open. `,
         `Current: ${d.inventory.table.counts.Exact} Exact, ${d.inventory.table.counts.Restricted} Restricted, ${d.inventory.table.counts.Refuted} Refuted, ${d.inventory.table.counts.Open} Open. `,
-        `The ${amended.length} claims below changed status because their manuscript statements were corrected. Lean proves the corrected forms; the original forms stay refuted. Newly established mathematics is listed separately under Phase X and does not enter these counts.`),
+        `The ${amended.length} claims below changed status because their manuscript statements were corrected. Lean proves the corrected forms; the original forms stay refuted. PR #54 also proved the original conditional statement II-24. Its classical separation premise remains open.`),
       el("div", { class: "rows" }, amended.map(c => el("div", { class: "row" },
         el("div", { class: "row-head" },
           el("span", { class: "row-title" }, `${c.id} · `, inline(c.title)),
@@ -180,7 +180,7 @@
         el("div", { class: "row-head" }, el("span", { class: "row-title" }, s.title), el("span", { class: "tag ok" }, "Kernel-checked")),
         el("p", { class: "small" }, s.statement),
         el("div", { class: "meta" }, link(s.url, el("code", null, s.decl)),
-          link(v.url, el("span", { class: "tag ok" }, `main ${short(v.sha)} ✓`)),
+          d.lean.matches_verified ? link(v.url, el("span", { class: "tag ok" }, `main ${short(v.sha)} ✓`)) : null,
           link(lean.url, el("span", { class: "tag ok" }, `PR #${s.pr} exact-head lean ✓`)),
           s.audited && el("span", { class: "tag ok", title: "Listed in lean/audit/AxiomAudit.lean; only propext, Classical.choice and Quot.sound are allowed" }, "axiom audit")));
     });
@@ -189,30 +189,6 @@
       ...rows);
   }
 
-  function renderPending(d) {
-    byId("pending").replaceChildren(...d.pending.map(p => {
-      const pr = d.verification.prs.find(x => x.number === p.pr);
-      const lean = pr.checks.filter(c => c.name !== "build");
-      const build = pr.checks.find(c => c.name === "build");
-      return el("div", { class: "panel" },
-        el("div", { class: "row-head" }, el("h3", null, p.title),
-          el("span", { class: "meta" }, el("span", { class: "tag wait" }, `${pr.state === "draft" ? "Draft" : "Open"} · not merged`),
-            ...lean.map(checkTag), build && checkTag(build))),
-        el("p", { class: "small" }, "Kernel-checked on the pull-request head ", link(pr.head_url, el("code", null, short(pr.head))),
-          ` by the full Lean build and axiom audit. Not on main. Recorded ${when(d.verification.checked_at)}.`,
-          build && build.conclusion !== "success" ? " The PDF build is unrelated to the Lean check." : ""),
-        el("div", { class: "rows", style: "margin-top:10px" }, p.parts.map(part => el("div", { class: "row" },
-          el("span", { class: "row-title" }, part.title),
-          el("p", { class: "small" }, part.statement),
-          el("div", { class: "meta" }, part.decls.map(x => link(x.url, el("code", null, x.name))))))),
-        el("p", { class: "small muted" }, (() => {
-          const all = p.parts.flatMap(part => part.decls);
-          return `${all.filter(x => x.audited).length} of these ${all.length} declarations are listed in the axiom audit on the PR head.`;
-        })()),
-        el("p", { class: "note" }, el("strong", null, "Scope. "), p.limitation),
-        el("p", { class: "small" }, link(pr.url, `PR #${p.pr}`), " · ", link(p.url, "ToroidalDiagonal.lean at the PR head"), " · ", link(p.doc_url, "design note")));
-    }));
-  }
 
   function renderOpen(d) {
     byId("open").replaceChildren(...d.open.map(o => el("div", { class: "row" + (o.central ? " central" : "") },
@@ -316,7 +292,7 @@
       return;
     }
     const state = { view: "current", status: "all", part: "all", search: "", onlyConditional: false, onlyAmended: false };
-    renderProvenance(d); renderAmendments(d); renderSupporting(d); renderPending(d); renderOpen(d); renderEvidence(d);
+    renderProvenance(d); renderAmendments(d); renderSupporting(d);  renderOpen(d); renderEvidence(d);
     for (const b of document.querySelectorAll("[data-view]"))
       b.addEventListener("click", () => { state.view = b.dataset.view; update(d, state); });
     byId("search").addEventListener("input", e => { state.search = e.target.value; renderClaims(d, state); });

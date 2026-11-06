@@ -196,9 +196,10 @@ function generate(overrides = {}) {
   /* Amendments: the status changes between the snapshots must be exactly the registered amendments. */
   const histById = new Map(historical.claims.map(c => [c.id, c]));
   const changed = current.claims.filter(c => histById.get(c.id).status !== c.status).map(c => c.id).sort();
-  const registered = reg.amendments.map(a => a.id).sort();
+  const registered = [...reg.amendments, ...reg.formalizations].map(a => a.id).sort();
   if (JSON.stringify(changed) !== JSON.stringify(registered))
     fail(`status changes since the historical snapshot (${changed.join(", ")}) differ from registered amendments (${registered.join(", ")})`);
+  const proofById = new Map(reg.formalizations.map(f => [f.id, f]));
   const amendById = new Map(reg.amendments.map(a => [a.id, a]));
 
   /* Conditional annotations. */
@@ -238,6 +239,14 @@ function generate(overrides = {}) {
       ...curRefs.get(c.id), source: `${repo}/blob/main/${reg.inventory_path}?plain=1#L${invLine(invText, c.id)}`
     };
     if (condKind.has(c.id)) out.conditional = condKind.get(c.id);
+    if (proofById.has(c.id)) {
+      const proof = proofById.get(c.id);
+      const theorem = exact(proof.decl, c.id);
+      if (h.status !== proof.from || c.status !== "Exact" || h.claim !== c.claim ||
+          !audited.has(theorem.full) || !Object.values(out.refs).flat().some(r => r.name === proof.decl))
+        fail(`${c.id}: formalization must preserve the statement and link its audited theorem`);
+      out.formalized = { pr: proof.pr, decl: proof.decl, from: proof.from };
+    }
     if (amendById.has(c.id)) {
       const a = amendById.get(c.id);
       for (const cx of a.counterexamples) {

@@ -1,21 +1,19 @@
-# PVNP remaining original claims: implementation and proof-status ledger
+# Remaining original manuscript claims
 
-**Scope:** All ten referenced manuscript claims after the verified merge of PR #54.
-This note makes no modifications to the official 91-claim status counts; those are
-controlled by the manuscript inventory and the dashboard's registered amendments.
+The historical 91-row inventory and its original counterexamples are preserved. The conditional theorem II-24 is now Exact in the current inventory.
 
-| Claim | Existing verified result or new work | What remains before the original claim is settled |
+| Claim | Checked result | Remaining obligation |
 |---|---|---|
-| II-10 | `PartIITwoPhase.tm_to_wcc_decides` proves step/time agreement; `PartIIUniform.P_Turing_subset_P_disc` gives an alternative uniform machine | Construct and prove polynomial-time transducers for the original `W_M` encoder, decoder, and `Λ_n` under the manuscript's exact encoding |
-| I-11 | `P_disc_eq_P_TM` exact in uniform discrete model; **new** `PhysicalDiagonal.unrestricted_phys_ne_P_TM` proves failure of unrestricted constant-field physical equality | Identify charged physical model, stable output margins, certified PDE numerical simulation and resource accounting; no assertion of equality without the bridge |
-| I-16 | Cook–Levin formalized; `SATLowerBound ↔ P_TM ≠ NP_TM`; recovered `PhaseXIQuadratic.sat_no_uniform_subquadratic` | An unconditional superpolynomial SAT lower bound for all deterministic deciders; quadratic is insufficient |
-| I-31 | `PartISeparation.conditional_product_lower_bound` proves a product consequence from assumed interface/cost bounds | Derive a uniform separator-price lower bound for the actual, charged physical trajectory class |
-| I-32 | `TseitinSAT.tseitin_mem_SAT_dense_iff_comp` demonstrates the polynomial parity bypass | Prove an algorithm-independent lower bound on a genuine hard family that survives algebraic simplification and alternate representations |
-| I-2 | `PartISeparation.conditional_symbolic_separation` holds under an unproved nonconstructibility premise | Construct a specified WCT wavefield with polynomial-resource verification and prove it cannot be built under the same charged rails |
-| I-3 | `PartIPsiSat.psi_sat_completeness` proves **SAT iff input-dependent `Elogic=0`**; new `PhaseLockScope.bare_phase_lock_not_sat` disproves formula-independent phase-zero characterization | Freeze physical gradient/amplitude limits and clause-aware encoding before asserting the analytic iff |
-| I-37 | Recovered `ToroidalDiagonal.odd_encRing_not_SAT`, `even_encRing_mem_SAT` for a finite ring | Define the physical toroidal locking witness, prove nontrivial geometric realizability for every satisfying assignment, and soundness of the converse |
-| III-22 | A qualitative remark that no equivalence with retrocausality is asserted | No formally stated iff or mathematical theorem to prove; should be classified as a remark, not silently given an Exact status |
-| II-24 | **Already merged, PR #54:** `PartIIManuscript.conditional_np_safety` and `conditional_np_safety_all` | The theorem is Exact as an implication **conditional** on the stated rails and `P_Turing ≠ NP_Turing`; those premises remain unproved |
+| II-10 | `TwoPhaseDecoder.decM_fp` gives the original window decoder on all configurations. `PartIITwoPhase.tm_to_wcc_decides` gives two updates per TM step. | The original encoder and lattice writer as bit-output MTMs. |
+| I-11 | `PhysicalAudit.unrestricted_phys_ne_P_TM` supplies an explicit diagonal language for uncharged encoders. Uniform discrete WCC equals classical P. | A fixed physical representation and a stable polynomial-cost simulation of its continuum decisions. |
+| I-16 | `CrossingSATMatrix.quadratic_every_budget` gives quadratic first-answer time on a rejected word at every sufficiently large budget. `FiniteHorizon.fast_through_horizon` tests the reversed machine/length quantifiers. | For each fixed correct decider and each polynomial, arbitrarily long words exceeding that polynomial. |
+| I-31 | `SeparatorPrice.mesh_price` charges measured faces with a common positive jump. `contrast_of_readout` obtains the jump from a Lipschitz readout and a threshold gap. | Establish those constants on the actual physical trajectories at every input length, or derive an alternative coercive estimate. |
+| I-32 | `SeparatorPrice.binary_cut_price` bounds graph curvature above and below by the oriented cut on a bounded-degree two-level rail. Tseitin consistency admits a parity bypass. | Exhibit an encoding and prove every admissible decider incurs the requisite separator cost. |
+| I-2 | `PartISeparation.conditional_symbolic_separation` checks the template. | Derive nonconstructibility and a decision-language obstruction from independently charged dynamics. |
+| I-3 | `PartIPsiSat.roundPhase_satisfies` certifies an explicit assignment from energy below 1/8. Its strict threshold is sharp for this tie rule. | A formula-dependent trajectory and proof that the proposed phase/amplitude observation attains a sound readout. |
+| I-37 | `ToroidalDiagonal.even_encRing_mem_SAT` and `odd_encRing_not_SAT` decide both seam signs of the finite ring. | A faithful physical lock for arbitrary inputs with completeness and soundness. |
+| II-24 | `PartIIManuscript.conditional_np_safety_all` proves the original implication on every NP-complete language; the existential version uses dense SAT. | The physical resource, counting, and classical separation premises remain explicit. |
+| III-22 | Section 8 presents the arrow-of-time passage as an interpretive remark. | The passage supplies no quantified proposition to check. |
 
 ## Explicit classification rules
 
@@ -39,5 +37,4 @@ PR #55 imports and independently audits these four additions:
 3. `PVNP.ToroidalDiagonal` (preserved from the finite-ring experiment).
 4. `PVNP.PhaseLockScope` (new clause-independent phase-locking scope test).
 
-Exact-head GitHub CI, axiom audit and merge are required before describing
-these declarations as fully integrated into `main`.
+The four modules entered main with PR #55 at `89058ccc`.

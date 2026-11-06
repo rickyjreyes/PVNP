@@ -567,3 +567,20 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.CircuitCookLevin.satLowerBound_of_NP_not_Ppoly
 #print axioms PVNP.CircuitCookLevin.P_ne_NP_of_NP_not_Ppoly
 #print axioms PVNP.CircuitCookLevin.satLowerBound_of_not_subset
+
+-- Phase XI original decoder and quantitative Part I results.
+#print axioms PVNP.TwoPhaseDecoder.reader_outputs
+#print axioms PVNP.TwoPhaseDecoder.stateBits_injective
+#print axioms PVNP.TwoPhaseDecoder.stateBits_length
+#print axioms PVNP.TwoPhaseDecoder.decM_outputs
+#print axioms PVNP.TwoPhaseDecoder.decM_fp
+#print axioms PVNP.PartIPsiSat.failed_clause_margin
+#print axioms PVNP.PartIPsiSat.roundPhase_satisfies
+#print axioms PVNP.PartIPsiSat.eventually_satisfies_of_energy_tendsto
+#print axioms PVNP.PartIPsiSat.rounding_threshold_attained
+#print axioms PVNP.SeparatorPrice.mesh_price
+#print axioms PVNP.SeparatorPrice.contrast_of_readout
+#print axioms PVNP.SeparatorPrice.binary_cut_price
+#print axioms PVNP.FiniteHorizon.fast_through_horizon
+#print axioms PVNP.FiniteHorizon.no_common_hard_horizon
+#print axioms PVNP.CrossingSATMatrix.quadratic_every_budget

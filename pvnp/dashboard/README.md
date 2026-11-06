@@ -52,8 +52,7 @@ directory or to the inventory.
   `verification.main` (commit, `git rev-parse <commit>:lean`, run ID, completion time). Add the
   result to `supporting` with its PR and exact-head checks, then regenerate. A supporting
   result never changes the 91-claim coverage.
-* **PR #49.** If it is merged, move its entry from `pending` to `supporting`, and record its main
-  verification. If it is closed, remove the entry.
+* A proof of the same manuscript statement goes in `formalizations` with its audited declaration and previous status. The finite toroidal module from PR #49 was integrated in #55.
 
 Declaration links are pinned to the verified commit only while `lean/` is identical to it.
 Otherwise they point to `main`, and the page warns that newer Lean code is not yet recorded as
