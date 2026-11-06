@@ -510,3 +510,10 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.PartIIManuscript.conditional_np_safety_all
 #print axioms PVNP.PartIIManuscript.conditional_np_safety
 #print axioms PVNP.PartIIManuscript.no_np_complete_decider
+
+-- I-11 unrestricted-encoder diagonal scope countermodel.
+#print axioms PVNP.PhysicalAudit.firstAnswer_value_unique
+#print axioms PVNP.PhysicalAudit.tableFirstAccept_iff_mem
+#print axioms PVNP.PhysicalAudit.diagonal_on_code
+#print axioms PVNP.PhysicalAudit.diagonal_not_mem_P_TM
+#print axioms PVNP.PhysicalAudit.unrestricted_phys_ne_P_TM
