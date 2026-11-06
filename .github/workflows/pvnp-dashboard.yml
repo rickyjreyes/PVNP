@@ -1,0 +1,31 @@
+name: PVNP formalization dashboard consistency
+
+on:
+  pull_request:
+    paths:
+      - 'pvnp/dashboard/**'
+      - 'pvnp/proofs/manuscript-lean-inventory.md'
+      - '.github/workflows/pvnp-dashboard.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'pvnp/dashboard/**'
+      - 'pvnp/proofs/manuscript-lean-inventory.md'
+      - '.github/workflows/pvnp-dashboard.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dashboard:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check dashboard parser syntax
+        run: node --check pvnp/dashboard/app.js
+      - name: Validate authoritative inventory and per-claim statuses
+        run: node pvnp/dashboard/check.js
