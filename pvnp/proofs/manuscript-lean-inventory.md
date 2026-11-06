@@ -1,7 +1,7 @@
 # Manuscript-to-Lean inventory (Parts I–III), live checklist
 
 Started 5 November 2026. The source of truth is the three manuscripts in
-`pvnp/papers/*/main.tex` (October 27 source, with Part II quantifier and empty-input corrections on November 6, 2026), read in full. Each mathematically
+`pvnp/papers/*/main.tex` (October 27 source, with Part I I-10/I-13 and Part II II-7/II-8/II-17 corrections on November 6, 2026), read in full. Each mathematically
 substantive claim is listed with its source, the Lean declaration that matches it (if any), and
 its status. Pure definitions, purely empirical sections and research-direction remarks without
 mathematical content are not counted.
@@ -21,14 +21,15 @@ Lean paths are relative to `lean/`. "(new)" marks declarations added in this pas
 
 | Paper | Claims | Exact | Restricted | Refuted | Open |
 |---|---|---|---|---|---|
-| Part I | 41 | 26 | 1 | 8 | 6 |
+| Part I | 41 | 28 | 1 | 6 | 6 |
 | Part II | 28 | 26 | 1 | 0 | 1 |
 | Part III | 22 | 21 | 0 | 0 | 1 |
-| **Total** | **91** | **73** | **2** | **8** | **8** |
+| **Total** | **91** | **75** | **2** | **6** | **8** |
 
-* Exact verification coverage for the amended manuscripts = Exact / Total = 73/91 ≈ 80.2% (70/91 for the October 27 source before these three repairs).
+* Exact verification coverage for the amended manuscripts = Exact / Total = 75/91 ≈ 82.4% (73/91 after the earlier Part II corrections; 70/91 in the October 27 original).
 * Status conclusively determined by a proof or a counterexample (Exact + Refuted) = 81/91 ≈ 89%.
 * **Provenance:** The original October 27 manuscript inventory was 70 Exact, 2 Restricted, 11 Refuted, 8 Open. Claims II-7, II-8 and II-17 were false as written in that version. Their original Lean counterexamples remain in the repository. In the amended manuscript, their statements are restricted/corrected to match the already-proved Lean theorems; the historical count is not retroactively overwritten.
+* **I-10/I-13 scope:** I-10 is now a new *conditional* obstruction to exact nonconstant symbolic readouts under an explicit common-successor transition-relation hypothesis. Curvature collapse is **not** proved to imply this hypothesis. The original language triviality and unique-rule non-identifiability assertions are no longer claimed as theorems. I-13 now states the quiescent finite-support bound already proved in Lean. All original counterexamples are preserved.
 * Milestone history:
   * Milestone 1 (PR #27): 44 Exact, 8 Refuted.
   * Milestone 2 (PR #28): adds I-8, I-22, I-23, II-4, II-5, II-18 to II-23, II-27, III-5, III-7
@@ -40,7 +41,8 @@ Lean paths are relative to `lean/`. "(new)" marks declarations added in this pas
     `P^disc ⊆ P_TM`, hence `P_disc_eq_P_TM`, and the uniform verifier class with
     `NP_disc_eq_NP_TM` (`PVNP.PartIIUniformEquiv`, simulator `PVNP.UniformSim*`). Upgrades
     I-38, I-39, II-11, II-12, II-13, II-15 and III-6 to Exact; I-11 and II-10 stay Restricted.
-  * Manuscript correction (6 November 2026): II-7, II-8 and II-17 now match the existing corrected Lean statements. No new separation result or Lean theorem is claimed.
+  * Manuscript correction (6 November 2026): II-7, II-8 and II-17 now match the existing corrected Lean statements.
+  * Part I correction (6 November 2026): I-10 is re-scoped to a conditional common-successor theorem with a new Lean proof; I-13 now matches the existing quiescent finite-support bound. Neither proves WCT-induced mixing nor complexity-class separation.
 
 **What the "Exact" count does not mean.** It includes conditional propositions whose
 implications are verified while their premises remain open, for example
@@ -60,10 +62,10 @@ classical `P ≠ NP`.
 | I-7 | Remark WIN-03 | E_logic=0 ⇏ δ(E_geom+λE_logic)=0 | `PartIPsiSat.zero_penalty_not_stationary` (new) | Exact |
 | I-8 | Prop. WIN-04 `lem:dim-lock` | Gaussian on ℝ⁴ has finite ‖∇ψ‖² and ‖Θ_ε‖² | `PartIDimLock.win04_gaussian`, `laplacian_ψ` (new) | Exact (Mathlib's Laplacian; Δψ = (4‖x‖²−8)e^{−‖x‖²} proved; integrability of ψ, ‖∇ψ‖², Θ_ε² for every ε > 0, α ≥ 0) |
 | I-9 | Prop. WIN-05 `thm:pwcc-neq-npwcc` | verifier + every decider exceeds a rail i.o. ⇒ P^phys≠NP^phys | `PartISeparation.win05` (new) | Exact |
-| I-10 | Prop. `prop:collapse-grammar` | (1) no finite invariant partition; (2) L(ψ)∈{∅,Σ*}; (3) rule unrecoverable | `PartISeparation.trivial_partition_invariant` (new) | Refuted ((1) as literally stated; (2),(3) undefined) |
+| I-10 | Prop. `prop:collapse-grammar` (amended) | Under common-successor mixing of an observable transition relation, no nonconstant symbolic readout is invariant on every allowed transition | `PartISeparation.invariant_constant_of_common_successor`, `no_nontrivial_invariant_of_common_successor`; original `trivial_partition_invariant` preserved | Exact (conditional on an **unproved** observable mixing hypothesis). Original curvature ⇒ collapse, language triviality, and rule non-identifiability are not derived or counted as verified |
 | I-11 | Remark `rem:infinite-compute` | within the rail, P_WCC = P_Turing | `P_WCC_eq_P_TM`; `PartIIUniform.P_disc_eq_P_TM` (new) | Restricted (the discrete equality is kernel-checked, also for the uniform model; that the PWCC rail induces such a machine is a physical premise, unproved by Part I's own `rem:physical-bridge`) |
 | I-12 | §6.4 "even if P=NP, any SAT algorithm would violate the rails" | physical barrier claim | `PartISeparation.PNP_SAT_physically_constant`, `category_error_claim_implies_classical` (new) | Refuted under P=NP in the frozen model with charged poly-time encoders; the claim implies `P_TM ≠ NP_TM` |
-| I-13 | Lemma `lem:local_growth` | supp(C_{t+1}) ⊆ supp(C_t)^{+r}; \|supp C_t\| ≤ \|supp C_0\| + O(rt\|∂supp C_0\|) | `PartILocality.supp_step_subset`, `local_growth_needs_quiescence`, `linear_growth_false_d2`, `support_poly_bound` (new) | Refuted (needs quiescence; linear bound false for d=2); corrected (2rt+1)^d bound proved |
+| I-13 | Lemma `lem:local_growth` (amended) | Quiescent radius-r local updates, finite initial support: supp(C_t) ⊆ supp(C_0)^{+rt} and |supp C_t| ≤ |supp C_0|(2rt+1)^d | `PartILocality.supp_step_subset`, `supp_iterate_subset`, `support_poly_bound`; original `local_growth_needs_quiescence`, `linear_growth_false_d2` preserved | Exact (amended assumptions and dimension-dependent bound); locality alone does not imply superpolynomial time |
 | I-14 | Lemma `lem:clause_flip` | local signature change needs local activity; k ≤ Tb | `PartILocality.clause_flip_local`, `clause_flip_rounds`, `clause_flip_ceil` (new) | Exact |
 | I-15 | Remark after `lem:clause_flip` | locality alone gives no T ≥ k | `PartILocality.parallel_flips` (new) | Exact |
 | I-16 | Conj. `conj:wcc_depth` | every uniform discrete WCC decider of 3-SAT is superpolynomial i.o. | `PartISeparation.WCCDepth` (statement) | Open (≡ 3-SAT ∉ P) |
@@ -94,10 +96,10 @@ classical `P ≠ NP`.
 | I-41 | Prop. `thm:curv-bdd-sep` + remark | conditional physical separation; fixed-n impossibility | `PartISeparation.curv_bdd_sep`, `fixed_n_impossible` (new) | Exact |
 
 Counts:
-* Exact (26): I-1, 4, 5, 6, 7, 8, 9, 14, 15, 17, 18, 19, 21, 22, 23, 24, 29, 30, 33, 34, 35, 36,
+* Exact (28): I-1, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 17, 18, 19, 21, 22, 23, 24, 29, 30, 33, 34, 35, 36,
   38, 39, 40, 41.
 * Restricted (1): I-11.
-* Refuted (8): I-10, 12, 13, 20, 25, 26, 27, 28.
+* Refuted (6): I-12, 20, 25, 26, 27, 28. Original I-10 and I-13 counterexamples are retained against their superseded statements.
 * Open (6): I-2, 3, 16, 31, 32, 37.
 
 ### Status of the Part I separation argument

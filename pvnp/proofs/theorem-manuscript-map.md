@@ -16,8 +16,8 @@ statement differs from the manuscript.
 | **OPEN** | Neither proved nor refuted. |
 
 All Lean names are relative to `lean/PVNP/`. "Audit" means the name is listed in
-`lean/audit/AxiomAudit.lean`: 111 declarations, each using only `propext`, `Classical.choice` or
-`Quot.sound`.
+`lean/audit/AxiomAudit.lean`, checked against the repository's allowed
+`propext`, `Classical.choice`, and `Quot.sound` axiom policy.
 
 ## Part III — *Physical complexity reassessment* (`pvnp/papers/part-iii-physical-complexity-reassessment`)
 
@@ -71,9 +71,9 @@ All Lean names are relative to `lean/PVNP/`. "Audit" means the name is listed in
 | Thm. `thm:psi-sat-completeness` | `SATV.encDense_mem_SAT_iff`, `R03.unsatisfied_clause_has_penalty` | dense encoding | finite | **PROVED-R** | penalty-functional form |
 | Prop. `lem:dim-lock` (WIN-04) | — | — | `d = 4` | **ANALYTIC** | — |
 | Prop. `thm:pwcc-neq-npwcc` (WIN-05) | `Discrete.p_vs_np_discrete_transfer`, `PhysicalAudit.physical_SAT_lower_bound_is_classical` | — | — | **COND** | proved to be at least as hard as P vs NP |
-| Prop. `prop:collapse-grammar` | — | — | — | **ANALYTIC** | — |
+| Prop. `prop:collapse-grammar` (amended) | `PartISeparation.no_nontrivial_invariant_of_common_successor`, `invariant_constant_of_common_successor`; original `trivial_partition_invariant` | shared one-step successor for all state pairs; readout nonconstant | arbitrary observable state set and transition relation | **COND** (implication kernel formalized) | does not prove curvature implies mixing, language triviality, or rule non-identifiability |
 | Hyp. `hyp:dimensional-lock` | refuted variants: `DecisionVsEncoding.promoted_bound_false`, `PartIIIAnalytic.zero_cost_counterexample` | — | — | **OPEN** (as stated); **REFUTED** (packing form) | — |
-| Lemma `lem:local_growth` | `MultiStageCausality.multistage_required_causal_coverage` | none | 1-D, radius `r` | **PROVED** | — |
+| Lemma `lem:local_growth` (amended) | `PartILocality.supp_step_subset`, `supp_iterate_subset`, `support_poly_bound`; counterexamples `linear_growth_false_d2`, `local_growth_needs_quiescence` | quiescent background and finite initial support | `ℤ^d`, any finite d and radius r | **PROVED** | support grows within the radius-rt cone; volume bound `|A|(2rt+1)^d`, not linear in t for d > 1 |
 | Lemma `lem:clause_flip` | — | — | — | **ANALYTIC** | — |
 | Conj. `conj:wcc_depth` | `Discrete.lower_bound_transfer`, `SATV.SAT_dense_mem_NP_TM` | — | discrete | **OPEN** | the conjecture implies `P ≠ NP`; it is equivalent to `P ≠ NP` given Cook–Levin (CL-1) |
 | Prop. `prop:internal_sep_conditional` | `Discrete.p_vs_np_discrete_transfer` | conjecture `conj:wcc_depth` | discrete | **COND** | — |

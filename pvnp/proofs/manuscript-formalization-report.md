@@ -1,5 +1,15 @@
 # Faithful Lean formalization of the three PVNP manuscripts: report (5 November 2026)
 
+> **Current amended-manuscript status (6 November 2026): 75 Exact, 2 Restricted,
+> 6 Refuted, 8 Open (91 total).** I-13 now states the proved quiescent
+> finite-support bound. I-10 is **re-scoped** to a conditional theorem about
+> observable common-successor mixing, with no assertion that curvature
+> collapse implies that premise or that it makes a trajectory language trivial.
+> The October 27 I-10/I-13 and II-7/II-8/II-17 refutations remain recorded
+> against their original statements. See
+> [I-10/I-13 repair](part-i-collapse-locality-repair.md) and
+> [live inventory](manuscript-lean-inventory.md).
+
 > **Historical snapshot; superseded for three Part II statements on 6 November 2026.**
 > The October 27 Part II manuscript contained three literal defects, II-7, II-8
 > and II-17. The amended manuscript now states exactly the existing Lean-proved

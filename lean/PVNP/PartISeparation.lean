@@ -433,4 +433,42 @@ theorem trivial_partition_invariant {X : Type*} (F : X → X) :
     ∃ (S : Type) (_ : Fintype S) (σ : X → S), ∀ x, σ (F x) = σ x :=
   ⟨Unit, inferInstance, fun _ => (), fun _ => rfl⟩
 
+/-!
+## I-10 (amended): conditional obstruction to nontrivial invariant symbols
+
+A relation of *possible observed transitions* with a common one-step successor
+for every pair of configurations cannot preserve a nonconstant symbolic readout.
+No statement here deduces the common-successor property from high curvature,
+asserts that trajectory languages are trivial, or proves rule unidentifiability.
+The original one-block counterexample remains above.
+-/
+
+/-- The common-successor property of a possibly nondeterministic observable
+transition relation. It is a substantive hypothesis, not implied by the
+curvature threshold on a deterministic WCT flow. -/
+def CommonSuccessor {X : Type*} (R : X → X → Prop) : Prop :=
+  ∀ x y : X, ∃ z : X, R x z ∧ R y z
+
+/-- A symbol preserved along every allowed transition must be constant if all
+pairs of states share an allowed successor. -/
+theorem invariant_constant_of_common_successor {X S : Type*}
+    (R : X → X → Prop) (σ : X → S) (hCommon : CommonSuccessor R)
+    (hInv : ∀ x y : X, R x y → σ x = σ y) :
+    ∀ x y : X, σ x = σ y := by
+  intro x y
+  obtain ⟨z, hxz, hyz⟩ := hCommon x y
+  exact (hInv x z hxz).trans (hInv y z hyz).symm
+
+/-- **Corrected Part I proposition I-10.** No *nonconstant* partition is
+pathwise invariant under a relation with the common-successor property.
+The statement is stronger than finite alphabet because the target
+type S is unrestricted. -/
+theorem no_nontrivial_invariant_of_common_successor {X S : Type*}
+    (R : X → X → Prop) (σ : X → S) (hCommon : CommonSuccessor R)
+    (hNontrivial : ∃ x y : X, σ x ≠ σ y) :
+    ¬ ∀ x y : X, R x y → σ x = σ y := by
+  intro hInv
+  obtain ⟨x, y, hneq⟩ := hNontrivial
+  exact hneq (invariant_constant_of_common_successor R σ hCommon hInv x y)
+
 end PVNP.PartISeparation

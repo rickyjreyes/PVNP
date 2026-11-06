@@ -881,11 +881,13 @@ the classes differ.
 
 \section{Curvature collapse and loss of grammatical structure}
 
-In this subsection we formalize the heuristic statement that
-when the WCT curvature rails are violated, the distinction between
-computational states collapses and the induced language model
-degenerates to noise. In particular, the existence of a nontrivial
-computational rule requires a curvature-regular regime.
+This subsection separates a high-curvature condition from a distinct,
+testable mixing hypothesis on observable transitions. Exceeding a
+curvature rail alone does not imply the loss of a finite symbolic
+partition, language triviality, or inability to infer the underlying
+dynamics. The conditional obstruction below applies only when a
+specified observational transition relation satisfies an explicit
+common-successor property.
 
 Recall that for a configuration $\psi$ we write $C_\Theta(\psi)$ for the
 global curvature budget (for example $C_\Theta \sim E_{\mathrm{grad}} + E_{\mathrm{fb}}$)
@@ -913,9 +915,9 @@ let $\overline{C}_\Theta(\psi)$ be its average curvature budget per site.
     \overline{C}_\Theta(\psi) \ge C_{\mathrm{coll}}
   \]
   for some threshold $C_{\mathrm{coll}} \gg C_{\mathrm{reg}}$ above the
-  quantum classical crossover bound and outside all WCC rails. In this
-  regime curvature feedback and entropy dominate and no metastable
-  state partition is stable under evolution.
+  quantum classical crossover bound and outside all WCC rails. The threshold
+  defines a high-curvature regime but does not itself assert symbolic
+  mixing, non-identifiability, or any language-class property.
 \end{itemize}
 \end{definition}
 
@@ -940,62 +942,66 @@ Thus in the curvature-regular regime the pair $(\psi,U)$ determines a
 nontrivial language $L(\psi)$ lying somewhere in Chomsky's hierarchy
 (for example regular, context free, or recursively enumerable).
 
-When curvature rails are violated the situation changes qualitatively.
+To test an additional obstruction to symbolic computation beyond curvature thresholds, we consider a separately specified transition relation on observations.
 
-\begin{proposition}[Curvature collapse destroys grammatical structure]
+\begin{proposition}[Common-successor obstruction to invariant symbolic partitions]
 \label{prop:collapse-grammar}
-Let $(\psi_t)_{t \ge 0}$ be a WCT evolution driven by a curvature feedback
-operator $\Theta[\psi]$ and suppose there exists $t_\ast$ such that
-$\psi_{t_\ast}$ is curvature-collapsed in the sense of
-Definition~\ref{def:curvature-regimes}. Assume moreover that beyond
-$t_\ast$ the evolution remains outside all WCC rails.
-
-Then the following hold.
-
-\begin{enumerate}
-  \item There is no finite partition of the state space into metastable
-  symbols $S$ that is invariant under the evolution for $t \ge t_\ast$.
-  Any such partition experiences state mixing on a time scale that is
-  short relative to the curvature drift.
-
-  \item Consequently, there is no nontrivial induced grammar
-  $\mathcal{G}_\psi$ and the associated language $L(\psi)$ degenerates to
-  one of the following trivial cases:
-  \[
-     L(\psi) \in \{\emptyset,\ \Sigma^\ast\},
-  \]
-  up to sets of measure zero in the space of trajectories. In
-  particular, the Chomsky hierarchy of nontrivial language classes
-  ceases to describe the dynamics.
-
-  \item No amount of post hoc classical computation on the resulting
-  noise-dominated trajectories can recover a unique symbolic rule
-  $U$ that is compatible with a curvature-regular WCC model. The
-  information required to distinguish such a rule has been erased
-  by curvature collapse.
-\end{enumerate}
+Let $X$ be a nonempty set of observable, coarse-grained configurations in
+a specified regime (which may, but need not, be curvature-collapsed).
+Let $R\subseteq X\times X$ be the relation of \emph{possible one-step
+observable transitions}. Assume the explicit common-successor property
+\[
+  \forall x,y\in X\;\exists z\in X:
+      (x,z)\in R\quad\text{and}\quad(y,z)\in R.
+\]
+Then there is no nonconstant map $\sigma:X\to S$, for any finite alphabet
+$S$, that is invariant along every allowed transition:
+\[
+  (x,y)\in R\;\Longrightarrow\;\sigma(x)=\sigma(y).
+\]
+Here \emph{nonconstant} means that there exist $x,y\in X$ with
+$\sigma(x)\ne\sigma(y)$; the one-block partition is explicitly excluded.
 \end{proposition}
 
-\begin{remark}[Curvature, infinite compute, and rule identifiability]
-\label{rem:infinite-compute}
-Proposition~\ref{prop:collapse-grammar} formalizes the heuristic
-statement that \emph{computation is a low curvature phenomenon}.
-Within the PWCC rail the induced WCC machine has a well defined local
-rule and its polynomial time class coincides with the classical class
-$P_{\mathrm{Turing}}$:
+\begin{proof}
+Suppose an invariant map $\sigma$ is given. For any $x,y\in X$,
+choose $z$ by the common-successor hypothesis. Invariance along the
+two allowed transitions gives
 \[
-   P_{\mathrm{WCC}} = P_{\mathrm{Turing}}.
+  \sigma(x)=\sigma(z)=\sigma(y).
 \]
-Outside the rails, when $\overline{C}_\Theta(\psi)$ enters the
-curvature-collapsed regime, state distinctions are destroyed and the
-evolution becomes effectively noise.
+Thus $\sigma$ is constant, contradicting nonconstancy. This argument
+does not depend on finiteness of $S$; it holds for any codomain.
+The Lean counterpart is
+\texttt{PVNP.PartISeparation.no\_nontrivial\_invariant\_of\_common\_successor}.
+\end{proof}
 
-In this sense, even an ideal observer with unbounded classical compute
-cannot reconstruct a unique underlying rule from the collapsed
-trajectories, because the geometric substrate that carried the rule
-(curvature, chirality, and confinement) no longer exists. The limit of
-``unit cost, infinite compute'' does not restore the rule once the WCT
-curvature structure has been broken.
+\begin{remark}[Scope of the collapse and identifiability claims]
+\label{rem:infinite-compute}
+The proposition is a conditional result about \emph{exact pathwise
+invariance} under a relation of possible transitions. The
+common-successor property must be established separately for the
+specific coarse-graining, observational noise, and evolution model.
+The numerical curvature condition
+$\overline C_\Theta(\psi)\ge C_{\mathrm{coll}}$ does not by itself
+establish that property. In particular, a deterministic, invertible
+WCT flow cannot be silently replaced by an irreducibly mixing noisy
+transition relation.
+
+The original stronger assertions, that a trajectory language must
+equal $\emptyset$ or $\Sigma^\ast$ and that no observer with unbounded
+computation can reconstruct a unique rule $U$, do \emph{not} follow
+from the common-successor condition or the curvature threshold.
+Language triviality requires a specified word encoder and a theorem
+about its language; non-identifiability requires a specified observation
+channel and two observationally indistinguishable candidate rules.
+These statements remain open, not corollaries of
+Proposition~\ref{prop:collapse-grammar}.
+
+The already formalized equality
+$P_{\mathrm{WCC}}^{\mathrm{disc}}=P_{\mathrm{Turing}}$
+concerns the charged uniform \emph{discrete} model and does not
+identify it with the unconstrained physical WCT evolution.
 \end{remark}
 
 
@@ -1376,32 +1382,58 @@ C_0 \to C_1 \to \cdots \to C_T = C^*
 \]
 reachable under the local rule $U$ has length $T \ge D$.
 
-\begin{lemma}[Locality bound on support growth]
+\begin{lemma}[Quiescent finite-support propagation bound]
 \label{lem:local_growth}
-Let $W$ have interaction radius $r$. Then for all $t \ge 0$,
+Let $d\ge1$ and let $U$ be a radius-$r$ local update on
+configurations $C:\mathbb Z^d\to S$, with $r\ge0$ and a distinguished
+background symbol $s_0\in S$. Assume \emph{quiescence}: if every symbol
+in the radius-$r$ neighbourhood of $i$ equals $s_0$, then
+$(UC)(i)=s_0$. Suppose the initial support
+$A=\mathrm{supp}_{s_0}(C_0)$ is finite and $C_t=U^t C_0$.
+Then for every $t\ge0$,
 \[
-\mathrm{supp}(C_{t+1}) \subseteq \mathrm{supp}(C_t)^{+r},
+ \mathrm{supp}_{s_0}(C_{t+1})
+ \subseteq \bigl(\mathrm{supp}_{s_0}(C_t)\bigr)^{+r},
+ \qquad
+ \mathrm{supp}_{s_0}(C_t)\subseteq A^{+rt}.
 \]
-where $X^{+r}$ is the $r$–neighbourhood thickening of $X$. In particular,
+For the $\ell^\infty$ neighbourhood on $\mathbb Z^d$,
 \[
-|\mathrm{supp}(C_{t})|
-\;\le\;
-|\mathrm{supp}(C_0)| + O\bigl(r t \, |\partial \mathrm{supp}(C_0)|\bigr).
+ \boxed{\;
+  |\mathrm{supp}_{s_0}(C_t)|
+  \le |A|\,(2rt+1)^d.
+ \;}
 \]
+This is a bound on the \emph{volume} of active support; the radius
+of its causal light cone grows linearly in $t$.
 \end{lemma}
 
 \begin{proof}
-The local rule $U$ at site $i$ depends only on $C_t$ restricted to $N_r(i)$.
-If all cells in $N_r(i)$ are in the background state $s_0$, then $C_{t+1}(i)$
-must remain in $s_0$ as well. Thus new non–background symbols can only
-appear within the $r$–thickening of the previous support. This implies the
-stated inclusion and the linear light–cone bound on support growth.
+Quiescence implies that a cell can become non-background only if
+some cell within radius $r$ was non-background in the preceding
+configuration. This gives the one-step inclusion. Inductively,
+repeated neighbourhood thickening is contained in
+$A^{+rt}$, since the $\ell^\infty$ radii add.
+For every initial active cell $i\in A$, its radius-$rt$ box has
+$(2rt+1)^d$ lattice sites. The union of these boxes covers
+$\mathrm{supp}_{s_0}(C_t)$; summing their cardinalities gives
+the asserted inequality. The corresponding Lean theorems are
+\texttt{PVNP.PartILocality.supp\_step\_subset},
+\texttt{PVNP.PartILocality.supp\_iterate\_subset}, and
+\texttt{PVNP.PartILocality.support\_poly\_bound}.
 \end{proof}
 
-Lemma~\ref{lem:local_growth} formalizes the intuitive fact that WCC
-machines have a \emph{linear light cone}: local information can propagate at
-most $O(r)$ cells per global update, and the region of nontrivial activity can
-grow at most linearly in $t$ from any finite seed.
+The light-cone \emph{radius} is linear, but the size of the active
+region can grow on the order of $t^d$. In dimension $d=2$, a
+quiescent radius-one OR rule starting from one active cell produces
+the square $[-t,t]^2$ of $(2t+1)^2$ active cells, contradicting
+the original linear-in-$t$ volume estimate. This counterexample
+remains formalized as
+\texttt{PVNP.PartILocality.linear\_growth\_false\_d2}.
+Without quiescence, even the one-step support inclusion fails
+(\texttt{PVNP.PartILocality.local\_growth\_needs\_quiescence}).
+Neither locality nor the corrected bound implies a superpolynomial
+decision-time lower bound.
 
 \subsection{Clause–Structured Certificates and Linear Depth}
 
