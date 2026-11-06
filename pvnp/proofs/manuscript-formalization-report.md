@@ -205,3 +205,22 @@ here.**
   manuscript's own Turing model with the corrected bound) show only that the discrete WCC
   question is *exactly* the classical one.
 * The entire chain is not verified, because its decisive premise is the open problem itself.
+
+### Phase VIII addendum (6 November 2026)
+
+The crossing-sequence route of Part I is now formalized for the ordinary single-tape
+`PVNP.Discrete.TM` (`CrossingHennie`, `CrossingSAT`, `CrossingSATSets`).
+
+- **Splicing.** The complete multi-segment splicing theorem is proved: `CrossingHennie.hennie`.
+- **SAT mixed acceptance.** It is derived for an explicit, spatially separated `SAT_dense` encoding:
+  `CrossingSAT.diag_mixed` and `hmixed_of_halting`.
+- **Time lower bounds.** The resulting single-tape bounds go up to
+  `T(N) = Ω(N²/(log N · log|Λ|))`: `CrossingSATSets.sat_time_lower_bound_near_sq`.
+
+These are fixed-polynomial bounds, and they are the ceiling of crossing-sequence counting. The
+decisive premise is unchanged. It is now stated as `CrossingSAT.SATLowerBound`
+(`SAT_dense ∉ P_TM`), with the proved transfer `P_ne_NP_of_satLowerBound`, and it remains open.
+
+No claim changes status: 70 Exact, 11 Refuted, 2 Restricted, 8 Open. See
+`phase-viii-separation-status.md`.
+

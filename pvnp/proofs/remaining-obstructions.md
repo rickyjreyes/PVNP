@@ -102,6 +102,20 @@ format. It is a large, self-contained project and is not started.
   change `δ_n` with `δ_n⁴/(Γ_n⁴ T_n³)` superpolynomial. Neither is known, and by the obstruction above
   either would imply `P ≠ NP` once the encoder is polynomial time.
 
+### M2, Phase VIII update (6 November 2026)
+
+The crossing-sequence route is now fully formalized for the ordinary single-tape `Discrete.TM`.
+
+- `CrossingHennie` proves the complete splicing theorem.
+- `CrossingSAT` and `CrossingSATSets` derive SAT mixed acceptance and the time lower bounds
+  `T(N) = Ω(N^{3/2}/log|Λ|)` (split family) and `T(N) = Ω(N²/(log N · log|Λ|))` (set family).
+- `sat_not_linear_time` rules out linear-time single-tape SAT deciders.
+
+This is the ceiling of crossing-sequence counting: at most `N` bits cross a cut, and there are at
+most `N + 1` cuts. Both hard families are decidable in polynomial time. The precise missing
+implication is `CrossingSAT.SATLowerBound` (`SAT_dense ∉ P_TM`), which would give `P_TM ≠ NP_TM`
+(`P_ne_NP_of_satLowerBound`). It is open; see `phase-viii-separation-status.md`.
+
 ## M3: the frozen PDE `i∂ₜψ = (Δ+κ)²ψ − β|ψ|²ψ + γ|ψ|⁴ψ`
 
 | Item | Status |

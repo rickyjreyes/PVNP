@@ -18,6 +18,9 @@ import PVNP.CrossingCapacity
 import PVNP.CrossingTrace
 import PVNP.CrossingSplice
 import PVNP.CrossingDiagonal
+import PVNP.CrossingHennie
+import PVNP.CrossingSAT
+import PVNP.CrossingSATSets
 import PVNP.TMCellCompiler
 import PVNP.ReplayCost
 import PVNP.LocalityLowerBound

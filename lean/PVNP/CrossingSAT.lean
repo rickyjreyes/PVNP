@@ -35,7 +35,8 @@ SAT decider that halts when it answers, making `diagonal_trace_capacity` uncondi
 With `g = n` this is `T(N) = Ω(N^{3/2} / log |Λ|)` along `N = 9n²` (`sat_time_lower_bound_sq`),
 and in particular no single-tape machine decides `SAT_dense` in linear time
 (`sat_not_linear_time`).  These are **fixed-polynomial** lower bounds for the single-tape model;
-they do not show `SAT_dense ∉ P_TM` (see `pvnp/proofs/phase-viii-separation-status.md`).
+they do not show `SAT_dense ∉ P_TM` (see `pvnp/proofs/phase-viii-separation-status.md`;
+the strongest bound of the method is in `PVNP.CrossingSATSets`).
 -/
 
 namespace PVNP.CrossingSAT
@@ -548,5 +549,27 @@ theorem sat_not_linear_time {M : TM} {T : ℕ → ℕ} (hM : M.Decides SAT_dense
   rw [hdiv] at h
   refine ⟨9 * n * n, ?_⟩
   nlinarith
+
+/-! ### The remaining theorem -/
+
+/-- **The open statement** to which the separation reduces: no ordinary single-tape machine
+decides the CNF-SAT language `SAT_dense` within a polynomial time bound.  It is *not* proved in
+this repository; the theorems above give only fixed-polynomial single-tape bounds. -/
+def SATLowerBound : Prop := SAT_dense ∉ P_TM
+
+/-- `SATLowerBound` unfolds to: for every machine and every polynomial, the machine does not
+decide `SAT_dense` within that polynomial. -/
+theorem satLowerBound_iff :
+    SATLowerBound ↔ ∀ (M : TM) (p : Polynomial ℕ), ¬ M.Decides SAT_dense (fun n => p.eval n) := by
+  unfold SATLowerBound P_TM
+  simp only [Set.mem_setOf_eq, not_exists]
+
+/-- **Classical transfer**: the remaining lower bound would give `P_TM ≠ NP_TM`, because
+`SAT_dense ∈ NP_TM` is proved (`SATV.SAT_dense_mem_NP_TM`). -/
+theorem P_ne_NP_of_satLowerBound (h : SATLowerBound) : P_TM ≠ NP_TM := by
+  intro heq
+  apply h
+  rw [heq]
+  exact SAT_dense_mem_NP_TM
 
 end PVNP.CrossingSAT

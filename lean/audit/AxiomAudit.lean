@@ -371,3 +371,37 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.CrossingDiagonal.diagonal_trace_capacity
 #print axioms PVNP.CrossingSplice.run_splice_right
 #print axioms PVNP.CrossingSplice.answer_splice_right
+
+-- Phase VIII: complete crossing-sequence splicing theorem and the SAT application
+#print axioms PVNP.CrossingHennie.run_splice_side
+#print axioms PVNP.CrossingHennie.run_offSide_tape
+#print axioms PVNP.CrossingHennie.cross_of_event
+#print axioms PVNP.CrossingHennie.trace_cons_events
+#print axioms PVNP.CrossingHennie.splice_core
+#print axioms PVNP.CrossingHennie.init_append_mix
+#print axioms PVNP.CrossingHennie.hennie
+#print axioms PVNP.CrossingHennie.splice_mem
+#print axioms PVNP.CrossingSAT.splitFormula_sat_iff
+#print axioms PVNP.CrossingSAT.encSplit_mem_iff
+#print axioms PVNP.CrossingSAT.encSplit_layout
+#print axioms PVNP.CrossingSAT.length_encSplit
+#print axioms PVNP.CrossingSAT.diag_mixed
+#print axioms PVNP.CrossingSAT.dtrace_injective
+#print axioms PVNP.CrossingSAT.hmixed_of_halting
+#print axioms PVNP.CrossingSAT.diagonal_capacity_halting
+#print axioms PVNP.CrossingSAT.diagonal_capacity
+#print axioms PVNP.CrossingSAT.sum_trace_length_le
+#print axioms PVNP.CrossingSAT.sat_time_lower_bound
+#print axioms PVNP.CrossingSAT.sat_time_lower_bound_sq
+#print axioms PVNP.CrossingSAT.sat_not_linear_time
+#print axioms PVNP.CrossingSAT.satLowerBound_iff
+#print axioms PVNP.CrossingSAT.P_ne_NP_of_satLowerBound
+#print axioms PVNP.CrossingSATSets.fooling_time_bound
+#print axioms PVNP.CrossingSATSets.splice_nmem
+#print axioms PVNP.CrossingSATSets.setFormula_sat_iff
+#print axioms PVNP.CrossingSATSets.encSet_mem_iff
+#print axioms PVNP.CrossingSATSets.length_encSet
+#print axioms PVNP.CrossingSATSets.set_mixed
+#print axioms PVNP.CrossingSATSets.dtraceSet_injective
+#print axioms PVNP.CrossingSATSets.sat_time_lower_bound_sets
+#print axioms PVNP.CrossingSATSets.sat_time_lower_bound_near_sq
