@@ -175,4 +175,38 @@ theorem originalInputCode_length_le (M : MTM) (p : Polynomial ℕ)
   rw [hlen]
   exact Nat.mul_le_mul_right _ hcells
 
+/-- A polynomial certificate for the exact number of bits in the original
+lattice's unary-prefix-plus-bitmap description. -/
+noncomputable def originalWindowLengthPoly (p : Polynomial ℕ) : Polynomial ℕ :=
+  3 * p + 5
+
+theorem originalWindowCode_polynomial_length (p : Polynomial ℕ) (x : List Bool) :
+    (originalWindowCode p x).length =
+      (originalWindowLengthPoly p).eval x.length := by
+  rw [originalWindowCode_length]
+  simp [originalWindowLengthPoly, Polynomial.eval_add, Polynomial.eval_mul,
+    Polynomial.eval_ofNat]
+  omega
+
+/-- A polynomial certificate for the total *output length* of the author's
+canonical encoder. This does not discharge the `MTM.ComputesIn` runtime
+obligation; that requires a concrete finite-control writer. -/
+noncomputable def originalEncoderLengthPoly (M : MTM) (p : Polynomial ℕ) :
+    Polynomial ℕ :=
+  (2 * p + 3) * Polynomial.C (3 + 2 * Fintype.card (PartIITwoPhase.S M))
+
+theorem originalInputCode_polynomial_length (M : MTM) (p : Polynomial ℕ)
+    (x : List Bool) :
+    (originalInputCode M p x).length ≤
+      (originalEncoderLengthPoly M p).eval x.length := by
+  calc
+    (originalInputCode M p x).length
+      ≤ (2 * (p.eval x.length + 1) + 1) *
+          (3 + 2 * Fintype.card (PartIITwoPhase.S M)) :=
+            originalInputCode_length_le M p x
+    _ = (originalEncoderLengthPoly M p).eval x.length := by
+      simp [originalEncoderLengthPoly, Polynomial.eval_mul,
+        Polynomial.eval_add, Polynomial.eval_C, Polynomial.eval_ofNat]
+      omega
+
 end PVNP.TwoPhaseUniform
