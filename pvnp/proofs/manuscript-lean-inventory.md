@@ -223,5 +223,10 @@ Counts:
 
   Even with both, `physical_SAT_lower_bound_is_classical` shows that a physical SAT lower bound
   under poly-time encoders already implies `P_TM ≠ NP_TM`.
+* **Crossing-sequence route (Phase VIII, 6 November 2026).** Formalized completely for single-tape
+  machines: `CrossingHennie.hennie`, `CrossingSAT.diag_mixed`,
+  `CrossingSATSets.sat_time_lower_bound_near_sq`. It yields only fixed-polynomial bounds, at most
+  `Ω(N²/(log N · log|Λ|))`, which is the ceiling of the method. The missing lemma is
+  `CrossingSAT.SATLowerBound` (`SAT_dense ∉ P_TM`). Counts unchanged.
 * **State-level routes.** Not repairable as stated. A language-level formulation (I-9, I-24,
   I-41) is required, and these reduce to the two items above.

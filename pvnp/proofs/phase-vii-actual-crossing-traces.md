@@ -31,3 +31,18 @@ A fixed-machine cut-record count generally yields only a linear lower bound in t
 ## Gate
 
 Kernel-check both modules through the PVNP import tree, run the axiom audit, and merge only when all exact-head required CI jobs succeed.
+
+## Update, 6 November 2026 (Phase VIII)
+
+The "remaining mathematical work" above is now done for this machine model; see
+`phase-viii-separation-status.md`.
+
+- `CrossingHennie.splice_core` and `hennie` prove the full multi-segment splicing theorem.
+- `CrossingSAT.hmixed_of_halting` and `dtrace_injective` derive the diagonal mixed-acceptance
+  premise.
+- `CrossingSAT` and `CrossingSATSets` extract quantified single-tape time lower bounds, up to
+  `Ω(N²/(log N · log|Λ|))`.
+
+These remain fixed-polynomial bounds. `SAT_dense ∉ P_TM` is still open. The build defects that made
+this module fail on `main` after PR #36 are repaired in PR #37.
+

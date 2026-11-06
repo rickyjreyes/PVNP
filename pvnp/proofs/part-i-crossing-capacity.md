@@ -66,3 +66,20 @@ Any stronger claim requires an independent, all-algorithm theorem.
 No change to the 70/91 manuscript Exact count is justified by this
 supporting module. The original Part I `conj:wcc_depth`,
 `lem:separator-price`, and `prop:locked-expander-full` remain open.
+
+## Update, 6 November 2026 (Phase VIII)
+
+The splicing condition is no longer an assumption for the actual machine.
+
+- `CrossingHennie.hennie` proves it from the transition table, for crossing traces up to the first
+  answer.
+- `CrossingSAT.hmixed_of_halting` instantiates it for the padded split 3-CNF encoding of `SAT_dense`.
+
+The resulting bounds are in `phase-viii-separation-status.md`.
+
+- They are linear per cut, and summed over cuts reach `Ω(N^{3/2}/log|Λ|)` for this family.
+- They reach `Ω(N²/(log N · log|Λ|))` for the set family.
+
+They are fixed-polynomial single-tape bounds, and the ceiling of the method. The 70/91 ledger is
+unchanged.
+
