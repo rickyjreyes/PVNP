@@ -4,6 +4,8 @@
 
 Research manuscripts on discrete Wave Curvature Computation (WCC), classical complexity, and physical curvature-resource constraints. Organized after the [math manuscript repository](https://github.com/rickyjreyes/math): a navigable collection with **PDFs, LaTeX sources, scope notes, and a reproducible build workflow**, grouped under `pvnp/`.
 
+**[PDF-to-Lean reconciliation and release audit](pvnp/proofs/pdf-lean-reconciliation-20261107.md):** identifies the corrected original statements, all nine Restricted/Open obligations, stale legacy PDFs, and the verification gates that remain before public release.
+
 ## Primary publication: one consolidated technical volume
 
 **[Wave-Constrained Computation: Formal Equivalence, Physical Resource Bounds, and the P versus NP Problem](pvnp/preprints/consolidated-wave-computation/README.md)**
