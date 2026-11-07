@@ -4,6 +4,8 @@
 
 The [one-volume LaTeX master](papers/consolidated-wave-computation/main.tex) introduces publication provenance, verified results, restricted statements and open mathematical claims. It binds the three historically released manuscripts without asserting new original-publication dates. The independent supplement is an appendix rather than a fourth original proof-program paper.
 
+[**Source-to-Lean publication reconciliation**](proofs/pdf-lean-reconciliation-20261107.md) documents every material manuscript correction, preserved refutation, original-machine uniformity gap and current build limitation.
+
 ### Historical sources and identifiers
 
 | Original study | Historical release | Maintained LaTeX |
