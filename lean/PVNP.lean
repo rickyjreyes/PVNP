@@ -168,3 +168,6 @@ import PVNP.SeparatorPrice
 -- First-answer complexity with the two length/decider quantifier orders.
 import PVNP.FiniteHorizonSAT
 import PVNP.QuadraticHorizon
+
+-- Phase XIII: uniform unsatisfiable logical-energy gap and certified readout.
+import PVNP.PhasePenaltyGap
