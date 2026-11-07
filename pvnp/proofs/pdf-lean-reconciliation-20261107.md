@@ -69,6 +69,11 @@ The three 2025 historical publication identifiers remain:
 
 They are **not** three new November 2026 papers. The independent supplement is an appendix and does not enlarge the original 91-claim inventory.
 
+
+## One-command independent verification
+
+Run `bash scripts/run_release_verification.sh --all` in a full-history checkout with pinned Lean/Mathlib, LaTeX, Python and Node installed. The script saves complete PDF, Lean, axiom-audit and dashboard logs under ignored `.release-verification/` and fails on any required error. `--pdf-only`, `--lean-only` and `--dashboard-only` isolate blockers. It will **not** mark unexecuted gates successful. The PDF build generates temporary individually rebuilt Part I and II PDFs for review, while only the combined PDF is the publication artifact. These are not newly published independent papers.
+
 ## Verification checklist
 
 1. Compile every historical revised LaTeX manuscript using the pinned PDF workflow and verify no LaTeX errors.
