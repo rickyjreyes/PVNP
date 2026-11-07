@@ -1897,42 +1897,26 @@ in the ideal discrete WCC model. We seek $\psi^* \in C_n$ such that:
         (i.e.\ $\psi^* \notin \mathbf{P}_{\mathrm{WCC}}^{\infty}$).
 \end{itemize}
 
-Such states would establish an internal model-relative separation
-\[
-\mathbf{P}_{\mathrm{WCC}}^{\infty} \subsetneq
-\mathbf{NP}_{\mathrm{WCC}}^{\infty}
-\]
-in the ideal WCC model.
+Unreachability of these target states does \emph{not}
+establish a decision-language complexity-class separation.
+The invalid inference is withdrawn in the following remark.
 
 \subsection{Conditional Curvature Separation Statement (Ideal WCC)}
 
-\begin{proposition}[Model-Relative Separation in Ideal WCC (Conditional)]
-Assume there exists a family $\{\psi^*_n\} \subset C_n$ such that:
-\begin{enumerate}
-  \item Each $\psi^*_n$ satisfies the polynomial-time local verifier  
-        (i.e.\ $\psi^*_n \in \mathbf{NP}_{\mathrm{WCC}}^{\infty}$); and
-  \item No curvature-regulated symbolic evolution of depth $T(n)=O(n^k)$ reaches
-        $\psi^*_n$ from $\psi_0$ for any fixed $k$  
-        (i.e.\ $\psi^*_n \notin \mathbf{P}_{\mathrm{WCC}}^{\infty}$).
-\end{enumerate}
-Then
-\[
-\mathbf{P}_{\mathrm{WCC}}^{\infty} \neq \mathbf{NP}_{\mathrm{WCC}}^{\infty}.
-\]
-
-If, in addition, one can prove that the binary encodings of
-Section~\ref{sec:model-theoretic} satisfy
-\[
-\mathbf{P}_{\mathrm{WCC}}^{\infty} = \mathbf{P},
-\qquad
-\mathbf{NP}_{\mathrm{WCC}}^{\infty} = \mathbf{NP},
-\]
-then the classical separation $P \neq NP$ follows as a corollary.
-\end{proposition}
+\begin{remark}[Withdrawn state-to-language separation step, I-25]
+The original proposition inferred
+$\mathbf P_{\mathrm{WCC}}^\infty\ne\mathbf{NP}_{\mathrm{WCC}}^\infty$
+from a family of individually verifiable but unreachable target
+states.  This is invalid without a \emph{language-level}
+all-decider lower bound.  The Lean theorem
+\texttt{PartISeparation.state\_separation\_not\_language\_separation}
+exhibits an unreachable verifiable state even when the
+decision-language classes coincide.  No separation is proved.
+\end{remark}
 
 \paragraph{Discussion.}
-The proposition itself is tautological: (i) + (ii) directly imply a separation
-in the ideal WCC model. The real work is in:
+The historical state-level proposition is invalid. The
+remaining \emph{language-level} obligations are:
 \begin{enumerate}
   \item constructing or characterizing such families $\{\psi^*_n\}$ (dimensional lock and curvature-complexity lower bounds), and  
   \item proving the equivalence between ideal WCC computation and Turing computation
@@ -2005,21 +1989,25 @@ These observations are consistent with, but do not yet prove, the existence of c
 
 \subsection{A Conditional Model-Theoretic Separation Statement}
 
-\begin{proposition}[Formal Model-Theoretic Separation in WCT (Conditional)]
-Assume:
-\begin{enumerate}
-  \item There exists a family \(\{\psi^*_L\}\) of WCT-encodable wavefields such that for each NP-complete language \(L\),
-        the map \(x \mapsto \psi^*_L(x)\) realizes a polynomial-time Cook–Levin style reduction
-        and \(\psi^*_L(x)\) is verifiable by a local WCT predicate in polynomial resources; and
-  \item For at least one such NP-complete \(L\), the corresponding family \(\{\psi^*_L(x)\}\) lies in
-        \(\mathbf{NP}_{\mathrm{WCT}} \setminus \mathbf{P}_{\mathrm{WCT}}\).
-\end{enumerate}
-Then \(\mathbf{P}_{\mathrm{WCT}} \neq \mathbf{NP}_{\mathrm{WCT}}\). If, in addition, one can show that
-\(\mathbf{P}_{\mathrm{WCT}} = \mathbf{P}\) and \(\mathbf{NP}_{\mathrm{WCT}} = \mathbf{NP}\) under a binary encoding of WCT states and transitions,
-this would imply the classical separation \( \mathbf{P} \neq \mathbf{NP} \).
-\end{proposition}
+\begin{remark}[Withdrawn model-theoretic target-state separation, I-26]
+The historical inference from a locally verifiable but
+nonconstructible wavefield to
+$\mathbf P_{\mathrm{WCT}}\ne\mathbf{NP}_{\mathrm{WCT}}$
+lacks the necessary uniform input-language and
+decision-procedure quantifiers.  It is refuted by
+\texttt{PartISeparation.state\_separation\_not\_language\_separation}.
+A correctly conditional classical implication would require
+a \emph{proved} uniform decision-language separation and
+a resource-preserving identification of the physical and
+classical models.  Neither is established here.
+\end{remark}
 
-Thus, the WCT framework provides a \emph{conditional route} to \( \mathbf{P} \neq \mathbf{NP} \): the missing pieces are (i) a rigorous construction of NP-complete encodings as curvature-locked states, (ii) a proof of non-constructibility within WCT evolution (the dimensional lock conjecture), and (iii) a clean equivalence between WCT complexity classes and their Turing counterparts.
+The corrected program requires an input-uniform
+physical encoding of a decision language, a polynomial
+verifier, an all-decider complexity lower bound for the
+\emph{same} language, and an independently proved
+cost-preserving physical-to-Turing bridge.  A target-state
+nonconstructibility statement does not replace the lower bound.
 
 \paragraph{Connection to classical complexity theory.}
 If these steps can be completed, the resulting separation would mirror, in geometric form, the phenomena captured abstractly by the Time Hierarchy Theorem: deeper “curvature traversals’’ (longer evolution depth) would be provably required to construct certain verifiable configurations, beyond any fixed polynomial bound. At present, this connection should be viewed as an analogy and a research direction, not as an established theorem.
