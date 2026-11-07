@@ -4,6 +4,14 @@
 
 Research manuscripts on discrete Wave Curvature Computation (WCC), classical complexity, and physical curvature-resource constraints. Organized after the [math manuscript repository](https://github.com/rickyjreyes/math): a navigable collection with **PDFs, LaTeX sources, scope notes, and a reproducible build workflow**, grouped under `pvnp/`.
 
+## Primary publication: one consolidated technical volume
+
+**[Wave-Constrained Computation: Formal Equivalence, Physical Resource Bounds, and the P versus NP Problem](pvnp/preprints/consolidated-wave-computation/README.md)**
+
+The primary release is **one consolidated PDF**. It binds the revised Part I, Part II and Part III manuscripts, plus a separately identified fixed-mass nodal-coercivity appendix, under one editorial overview and historical publication record. The [consolidated LaTeX source](pvnp/papers/consolidated-wave-computation/main.tex) and [one-PDF build workflow](.github/workflows/pdfs.yml) are authoritative for this edition.
+
+The previous studies remain cited by their original Zenodo identifiers and retain their [archival LaTeX sources](pvnp/papers/). Consolidation does **not** represent new publication dates for the original manuscripts. The new primary PDF is available only once the build has actually succeeded; [CI runner issue #59](https://github.com/rickyjreyes/PVNP/issues/59) currently blocks some workflows. Classical P versus NP remains unsolved.
+
 ## Verified developments (November 2026)
 
 | Program | Kernel-checked result | Limit |
@@ -15,19 +23,21 @@ Research manuscripts on discrete Wave Curvature Computation (WCC), classical com
 
 **[Lean Formalization Dashboard](pvnp/dashboard/index.html)**: all 91 manuscript claims in current (amended) and original (October 27) views, conditional Exact claims marked, the 11 Phase X supporting theorems, the PR #49 experiment (verified on its PR head only), open obligations and exact-head CI evidence. Open `pvnp/dashboard/index.html` in a browser from a clone; no server or network access is needed. Its data are generated from the inventory, its git history and the Lean sources (`node pvnp/dashboard/build.js`), and CI rejects stale data (`node pvnp/dashboard/check.js`). See [the dashboard README](pvnp/dashboard/README.md).
 
-**Proof status:** No proof of classical `P ≠ NP` or its opposite. The decisive statement `CrossingSAT.SATLowerBound` (`SAT_dense ∉ P_TM`) is unproved. The manuscript claim inventory remains **77 Exact, 2 Restricted, 4 Refuted, 8 Open**; “Exact” may describe a conditional implication whose premise is still open. Part II's three corrected claims match existing Lean proofs. Part I's I-13 now matches the proved quiescent support bound; I-10 is re-scoped to a **conditional** common-successor mixing theorem with a new Lean declaration. Neither establishes physical mixing or a SAT lower bound. I-12 now records the conditional P=NP compatibility counterargument for charged encoders; I-20 separates explicit-state description complexity from succinct certificate verification. All original counterexamples and open lower-bound premises are retained.
+**Proof status:** No proof of classical `P ≠ NP` or its opposite. The decisive statement `CrossingSAT.SATLowerBound` (`SAT_dense ∉ P_TM`) is unproved. The manuscript claim inventory remains **78 Exact, 2 Restricted, 4 Refuted, 7 Open**; “Exact” may describe a conditional implication whose premise is still open. Part II's three corrected claims match existing Lean proofs. Part I's I-13 now matches the proved quiescent support bound; I-10 is re-scoped to a **conditional** common-successor mixing theorem with a new Lean declaration. Neither establishes physical mixing or a SAT lower bound. I-12 now records the conditional P=NP compatibility counterargument for charged encoders; I-20 separates explicit-state description complexity from succinct certificate verification. All original counterexamples and open lower-bound premises are retained.
 
 **Reproducibility:** The integration PR #40 passed its exact-head `lean`, `phase-iii-targeted` and PDF `build` checks. To reproduce the Lean build and axiom audit, see [Lean verification](lean/README.md). [Phase IX target and invariant tests](pvnp/proofs/phase-ix-universal-lower-bound-status.md) · [Phase VIII proof scope](pvnp/proofs/phase-viii-separation-status.md) · [Phase VI PDE scope](pvnp/proofs/phase-vi-torus-flux-status.md) · [Remaining obligations](pvnp/proofs/remaining-obstructions.md).
 
-## Read the manuscripts
+## Manuscript publication and archives
 
-| Manuscript | Compiled PDF | LaTeX source | Release |
-|---|---|---|---|
-| **Part I — P vs NP in Curvature-Bounded Wave Computation** | [PDF](pvnp/preprints/part-i-curvature-bounded-wave-computation/paper.pdf) | [LaTeX](pvnp/papers/part-i-curvature-bounded-wave-computation/main.tex) | May 7, 2025 (original); revised October 27, 2026 |
-| **Part II — Discrete Wave-Constrained Computation and Classical Complexity** | [PDF](pvnp/preprints/part-ii-discrete-wcc-turing-equivalence/paper.pdf) | [LaTeX](pvnp/papers/part-ii-discrete-wcc-turing-equivalence/main.tex) | November 26, 2025 (original); revised October 27, 2026 |
-| **Part III — Physical Complexity: A Critical Reassessment** | [PDF](pvnp/preprints/part-iii-physical-complexity-reassessment/paper.pdf) | [LaTeX](pvnp/papers/part-iii-physical-complexity-reassessment/main.tex) | December 1, 2025 (original); revised October 27, 2026 |
+| Release | Primary link | Source and provenance |
+|---|---|---|
+| **Consolidated PVNP technical volume** | [One PDF and publication notes](pvnp/preprints/consolidated-wave-computation/README.md) | [LaTeX master](pvnp/papers/consolidated-wave-computation/main.tex) |
+| **Part I** (original 2025 release) | [Zenodo DOI](https://doi.org/10.5281/zenodo.17743607) | [Archival LaTeX](pvnp/papers/part-i-curvature-bounded-wave-computation/main.tex) |
+| **Part II** (original 2025 release) | [Zenodo DOI](https://doi.org/10.5281/zenodo.17732642) | [Archival LaTeX](pvnp/papers/part-ii-discrete-wcc-turing-equivalence/main.tex) |
+| **Part III** (original 2025 release) | [Zenodo DOI](https://doi.org/10.5281/zenodo.17783074) | [Archival LaTeX](pvnp/papers/part-iii-physical-complexity-reassessment/main.tex) |
+| Independent supplement | [Archive source](pvnp/papers/supplement-fixed-mass-nodal-coercivity/main.tex) | Included as an appendix, not counted as a separate new primary paper |
 
-[**Detailed manuscript map**](CONTENTS.md) · [**PVNP collection**](pvnp/README.md) · [**PDF build workflow**](.github/workflows/pdfs.yml)
+[Detailed historical manuscript map](CONTENTS.md) · [Complete formalization ledger](pvnp/proofs/manuscript-lean-inventory.md)
 
 ## Full research goal
 
@@ -43,11 +53,11 @@ The original manuscripts, independent supplements, negative results, and Lean ch
 - **Part III** revisits ten issues (`WIN-12`–`WIN-21`) with corrected statements, counterexamples, and explicitly conditional physical conclusions.
 - [**Lean formalization**](lean/README.md) provides kernel-checkable supporting results for all three papers; it does not prove the still-open WCC separations.
 
-## Build PDFs
+## Build the one-PDF release
 
-Run `bash scripts/build_pdfs.sh` in a LaTeX environment with the required packages (including `physics`, `tcolorbox`, `tikz`, and `authblk`). The [GitHub Actions workflow](.github/workflows/pdfs.yml) builds all three PDFs and publishes `pvnp/preprints/*/paper.pdf` to the default branch when repository Actions and write permissions permit.
+Run `bash scripts/build_pdfs.sh` with the required LaTeX packages. The build compiles the three source manuscripts and supplement into **temporary archive PDFs** and then generates only `pvnp/preprints/consolidated-wave-computation/paper.pdf` as the primary output. On a successful `main` build, GitHub Actions commits this consolidated PDF and retires four redundant tracked PDF artifacts. The original LaTeX sources and Zenodo publication records are preserved.
 
-**Research status:** Not independently peer-reviewed. Git commit dates are revision records and should not be represented as historical first-publication dates.
+**Verification is a separate gate:** the PDF build does not establish the validity of new Lean declarations. Recent Phase XII and XIII changes await a successful full Lean kernel check due to the runner issue.
 
 ## Latest quantitative scaling audit
 
