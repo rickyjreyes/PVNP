@@ -2086,40 +2086,16 @@ We work with the model-relative classes
 $\mathbf{P}_{\mathrm{WCT}}$ and $\mathbf{NP}_{\mathrm{WCT}}$
 introduced earlier.
 
-\begin{proposition}[Conditional Turing Reduction Template]
-Assume:
-\begin{enumerate}
-  \item \textbf{Simulation of WCT by Turing machines.}
-        The curvature-regulated evolution of Section~\ref{sec:model-theoretic}
-        can be simulated by a deterministic Turing machine $M_{\mathrm{WCT}}$
-        with at most polynomial overhead in the tape length, for the encodings above.
-  \item \textbf{Verifier embedding.}
-        The acceptance predicate $\mathrm{Accept}(\psi)$ is computable in time
-        $\mathrm{poly}(n)$ on the Turing encoding, so any family of targets
-        $\{\psi^*_n\}$ accepted by this predicate defines a language
-        $L\subseteq\{0,1\}^\ast$ in $\mathbf{NP}$.
-  \item \textbf{Nonconstructible but verifiable targets (WCT model).}
-        There exists a family of encodable WCT targets $\{\psi^*_n\}$ such that:
-        \begin{itemize}
-          \item each $\psi^*_n$ is verifiable by the local curvature/entropy test
-                in polynomial WCT resources (so $\psi^*_n\in \mathbf{NP}_{\mathrm{WCT}}$),
-          \item but no deterministic polynomial-time WCT evolution from a trivial
-                initial configuration $\psi_0$ reaches $\psi^*_n$
-                (so $\psi^*_n\notin \mathbf{P}_{\mathrm{WCT}}$).
-        \end{itemize}
-\end{enumerate}
-Then:
-\begin{itemize}
-  \item within the WCT model one obtains a separation
-        $\mathbf{P}_{\mathrm{WCT}} \neq \mathbf{NP}_{\mathrm{WCT}}$; and
-  \item if, in addition, one could prove that the identifications
-        $\mathbf{P}_{\mathrm{WCT}}=\mathbf{P}$ and
-        $\mathbf{NP}_{\mathrm{WCT}}=\mathbf{NP}$ hold (a \emph{compatibility hypothesis}
-        between WCT and classical computation), then the corresponding language
-        $L$ would lie in $\mathbf{NP}\setminus\mathbf{P}$ and hence imply
-        $\mathbf{P}\neq\mathbf{NP}$.
-\end{itemize}
-\end{proposition}
+\begin{remark}[Withdrawn target-state reduction template, I-27]
+Polynomial-time verification of an explicitly supplied
+wavefield, together with nonreachability of a prescribed
+target, does not exhibit a decision language in
+$\mathbf{NP}\setminus\mathbf P$.
+Lean's \texttt{PartISeparation.accepted\_language\_not\_in\_NP\_diff\_P}
+refutes this inference.  The correct open task is an
+all-decider complexity lower bound for a fixed,
+uniformly encoded \emph{decision language}.
+\end{remark}
 
 The substantive content lies in assumption~(3): establishing such a family
 $\{\psi^*_n\}$ is precisely the nonconstructibility problem discussed earlier
