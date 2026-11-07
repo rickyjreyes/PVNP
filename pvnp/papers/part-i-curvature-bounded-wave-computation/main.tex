@@ -133,110 +133,93 @@ This revision records explicit mathematical counterexamples and precise
 remaining obligations under tags \texttt{WIN-01}--\texttt{WIN-08}.
 \end{abstract}
 
-\section*{November 2026 reconciliation with Lean}
-\addcontentsline{toc}{section}{November 2026 reconciliation with Lean}
-The amended 91-claim inventory classifies Part I as 30 Exact,
-one Restricted, four Refuted, and six Open claims.
-Exact includes proved \emph{conditional implications};
-it does not establish their premises.  Four historical
-state-to-language separation inferences (I-25 through I-28)
-are \emph{withdrawn} below because Lean gives counterexamples
-to the transition from an unreachable target state to
-a language outside $\mathbf P$.
+\section*{Current Lean formalization status (7 November 2026)}
+\addcontentsline{toc}{section}{Current Lean formalization status}
+\label{sec:current-lean-status}
+The amended Part I manuscript has 41 inventory claims:
+30 Exact under their stated hypotheses, one Restricted,
+four Refuted, and six Open.  Exact includes
+\emph{proved conditional implications} and does
+not certify their antecedents or a solution to
+classical $\mathbf P$ versus $\mathbf{NP}$.
+The four false state-to-language inferences
+(I-25 through I-28) have been explicitly withdrawn
+in the revised sections below.  Their Lean
+counterexamples remain in the historical audit.
+The Restricted item I-11 concerns the missing
+resource-preserving \emph{physical} WCC bridge;
+the Open claims I-2, I-3, I-16, I-31, I-32
+and I-37 require additional independent theorems.
 
-The discrete equalities for P and NP hold in the charged,
-uniform finite-state WCC model, not automatically for
-physically realized WCT PDE computation.  The original
-two-phase WCC machine still needs complete uniform
-polynomial-time lattice and encoder writers.  The
-repository proves classical Cook--Levin transformations
-and restricted quadratic-type single-tape SAT lower
-bounds; the universal superpolynomial SAT bound remains
-open.  Logical energy below $1/8$ is a sound
-formula-dependent SAT certificate, but no efficient
-physical phase-field preparation is established.
+\paragraph{Exact discrete model and scope.}
+The repository formalizes
+$P_{\mathrm{WCC}}^{\mathrm{disc}}=P_{\mathrm{TM}}$
+and $NP_{\mathrm{WCC}}^{\mathrm{disc}}=NP_{\mathrm{TM}}$
+for its explicitly defined finite-state models,
+including the uniform version that charges
+lattice generation, input encoding and readout
+(\texttt{PartIIUniform.P\_disc\_eq\_P\_TM},
+\texttt{PartIIUniform.NP\_disc\_eq\_NP\_TM}).
+The older fixed-radius, origin-marked
+one-dimensional models and higher-dimensional
+sweep simulations have separate verified
+equivalences in \texttt{PVNP.Discrete}.
+The original two-phase machine $W_M$ still
+needs proofs that its \emph{complete original}
+lattice and input-state writers run in
+polynomial single-tape time (Part II II-10).
+Generic class equivalence does not complete
+that particular construction.
 
-Recent Phase XII and XIII Lean declarations were merged
-while GitHub Actions jobs failed before executing the
-kernel build and axiom audit.  They need independent
-verification before being counted as newly certified
-Lean results.
+\paragraph{What the SAT and curvature results establish.}
+The $\psi$-SAT logical penalty
+characterizes Boolean satisfiability under
+the stipulated field representation.
+A logical-energy value strictly below $1/8$
+supplies a formula-dependent SAT certificate;
+it does not construct the phase field or
+prove convergence of a physical PDE.
+The classical discrete Cook--Levin reduction
+and the restricted crossing-sequence
+single-tape SAT lower bounds are supporting
+formal results, but do not yield
+$\mathrm{SAT}_{\mathrm{dense}}\notin P_{\mathrm{TM}}$.
+The uniform separator-price, physical
+expander hardness and construction
+lower-bound premises remain Open.
+Exact finite symbol counts and stable sign
+encoding likewise do not yield decision
+lower bounds when decoder cost is unconstrained.
 
+\paragraph{Physical and numerical boundary.}
+The repository has scoped analytic and
+Lean results for frozen cubic--quintic
+field equations, including a separate
+$H^2$ periodic-torus well-posedness
+formalization in Phase VI, stated under
+its fixed equation and parameter hypotheses.
+The particular preparation, precision,
+detector and evolution cost required for
+a universal physical SAT lower bound
+have not been established.  Finite-grid
+numerical overlap observations are
+empirical and cannot be generalized
+to all polynomial-time deciders.
 
-\paragraph{Formal verification status (November 2, 2026).}
-The frozen one-dimensional, radius-one, finite-alphabet symbolic WCC model
-has kernel-checked theorems for
-$P_{\mathrm{WCC}}^{\mathrm{disc}}=P_{\mathrm{TM}}$ and
-$NP_{\mathrm{WCC}}^{\mathrm{disc}}=NP_{\mathrm{TM}}$ in
-\texttt{PVNP.Discrete}. These are theorems for that model, not
-physical curvature-preserving implementations. A fixed,
-language-independent sign encoding of $2^n$ possible inputs in $n$ real
-coordinates has squared amplitude mass $n$ and is stable under per-coordinate
-noise of absolute value less than one. An unrestricted output decoder
-can then apply any predicate. Thus storage capacity, encoding efficiency
-and label count alone cannot prove a decision-time lower bound; decoder
-computability, runtime, precision and uniformity must also be charged.
-The discrete equalities are also kernel-checked for every fixed radius
-$r\ge1$ in dimension one (\texttt{PVNP.Discrete.P\_WCCR\_eq\_P\_TM}); on
-$\mathbb{Z}^{1+d}$ only $P_{\mathrm{TM}}\subseteq P_{\mathrm{WCC}}$ is
-(\texttt{PVNP.Discrete.P\_TM\_subset\_P\_WCCD}). For exact solutions of the
-frozen WCT PDE, unrestricted encoders or decoders decide every language at
-constant physical cost, and with polynomial-time encoders any physical lower
-bound for SAT would already prove $P_{\mathrm{TM}}\ne NP_{\mathrm{TM}}$
-(\texttt{PVNP.PhysicalAudit.physical\_SAT\_lower\_bound\_is\_classical}); a
-physical route therefore cannot be easier than the classical problem.
-The readout flux inequality behind the curvature--time bound is derived in
-Lean only for the lattice discretization
-(\texttt{PVNP.WCTLattice.lattice\_flux\_inequality}); global well-posedness is
-kernel-checked externally only on $\mathbb{R}^2$ (\texttt{rickyjreyes/math},
-\texttt{ReyesMath.Sobolev.global\_wellposed}), not on the tori of the physical
-model. The all-algorithm physical curvature lower bound and any physical or
-classical $P$ versus $NP$ separation remain unproved.
-
-
-\paragraph{Manuscript-faithful Lean status (5 November 2026, repository addendum).}
-This addendum postdates the original release and preserves the manuscript
-statements above for provenance. The all-dimensional fixed-radius-one
-symbolic WCC equivalences are now kernel-checked for every fixed $d$:
-\texttt{PVNP.Discrete.P\_WCCD\_eq\_P\_TM} and
-\texttt{PVNP.Discrete.NP\_WCCD\_eq\_NP\_TM}. The distinct uniform
-finite-lattice model with polynomial-time encoders, lattice-generation
-and decoders has the verified inclusion
-$P_{\mathrm{TM}}\subseteq P_{\mathrm{WCC}}^{\mathrm{disc}}$
-(\texttt{PVNP.PartIIUniform.P\_TM\_subset\_P\_disc});
-its reverse inclusion is not yet proved. The author's real-phase
-$\psi$-SAT zero-penalty theorem and its verifier are formalized
-(\texttt{PVNP.PartIPsiSat}); all principal separation implications
-are formalized with their assumptions
-(\texttt{PVNP.PartISeparation}). The discrete-depth conjecture
-\texttt{conj:wcc\_depth} is kernel-checked as a statement
-\emph{equivalent} to exclusion from classical polynomial time
-(\texttt{PVNP.PartISeparation.WCCDepth\_iff\_not\_P\_TM}),
-not established as a new lower bound. The universal interface-price
-and expander-growth hypotheses remain open. Lean counterexamples also
-show that certain state-level nonconstructibility claims do not imply
-language-level separation. Consequently, these formalizations do not
-prove a physical or classical $P$ versus $NP$ separation. See the
-dated claim-by-claim inventory in
-\texttt{pvnp/proofs/manuscript-lean-inventory.md}.
-
-\paragraph{Uniform discrete equivalence (5 November 2026, later repository addendum).}
-This addendum supersedes the sentence above stating that the reverse
-inclusion for the uniform finite-lattice model is not yet proved. For the
-uniform discrete WCC machine of Section~\ref{sec:discrete-equivalence}
-(any dimension $d\ge1$, any fixed radius $r\ge0$, polynomial-time lattice
-generation, encoding and readout, all charged) both theorems of that section
-are now kernel-checked:
-\texttt{PVNP.PartIIUniform.P\_disc\_eq\_P\_TM} for
-Theorem~\ref{thm:P-equivalence} and
-\texttt{PVNP.PartIIUniform.NP\_disc\_eq\_NP\_TM} for
-Theorem~\ref{thm:NP-equivalence}. The simulating machine is an ordinary
-single-tape Turing machine compiled from an explicit sweep program
-(\texttt{PVNP.PartIIUniform.wcc\_to\_tm}). These are discrete
-model-equivalence results only. They establish no physical equality and no
-separation.
-
-
+\paragraph{Verification provenance.}
+The old October and early-November
+partial-status assertions are preserved
+in the version history and claim ledger,
+but are not current statements.
+Some Phase XII and XIII sources were
+merged while hosted Actions jobs
+failed \emph{before executing any steps}.
+A fresh exact-head full Lean kernel
+build and standard-axiom audit are
+required before newly added declarations
+are described as independently verified.
+A successful PDF build is separate
+from this mathematical check.
 
 \section{Introduction}
 The $\mathbf{P}$ vs.\ $\mathbf{NP}$ problem asks whether every computational problem
