@@ -2097,12 +2097,11 @@ all-decider complexity lower bound for a fixed,
 uniformly encoded \emph{decision language}.
 \end{remark}
 
-The substantive content lies in assumption~(3): establishing such a family
-$\{\psi^*_n\}$ is precisely the nonconstructibility problem discussed earlier
-(e.g.\ via dimensional lock and curvature-complexity barriers).
-The proposition itself is purely conditional: it specifies how a WCT-level
-separation, if proved and if compatible with standard encodings, would map
-to the usual $P$ vs.\ $NP$ consequence.
+The missing substantive statement is a uniform
+\emph{language-level} lower bound, not difficulty
+constructing one selected target state.  A corrected
+transfer would separately require a fully charged
+physical-to-discrete class identification.
 
 \subsection{Conclusion}
 
@@ -2271,9 +2270,12 @@ implemented strictly as a rational-arithmetic circuit over the binary encoding o
 \(\psi\).  Its intended role is analogous to that of \(C(x,w)\): to accept exactly those
 encodings corresponding to satisfying assignments for instances of \(L\).
 
-At present, this connection is conceptual. We outline a pathway by which Cook--Levin
-tableau encodings can be transplanted into WCT-style symbolic update rules and verifiers,
-but we do not yet supply a complete Cook--Levin–style formal reduction.
+The classical \emph{discrete} Cook--Levin tableau reduction is
+formalized separately in this repository, including the
+\texttt{CookLevinTableau} and \texttt{CookLevinUniform}
+modules.  A corresponding uniformly charged reduction
+into a specified \emph{physical WCT PDE} has not been
+proved and remains a separate open objective.
 
 \subsection{Universal Scope of Polynomial-Time Turing Machines}
 
@@ -2333,10 +2335,11 @@ The target complexity class of the verifier
 \[
 A(q)=1 \iff \mathrm{Overlap}(q,q^*) > \tau \wedge \sigma(q) \le \sigma_{\text{crit}}
 \]
-is expected to be \(\text{NC}^1\), since all arithmetic operations—inner products,
-entropy sums, comparators, prefix additions—can be realized in logarithmic depth
-with polynomial size.  A complete, rigorous circuit-class placement is left as
-open technical work.
+has no established uniform $\mathrm{NC}^1$
+placement without explicit precision, logarithm
+approximation, arithmetic depth and threshold-margin
+assumptions.  The existing Lean CNF-verifier theorem
+is not a low-depth entropy/readout circuit theorem.
     
 
 % =========================================================
@@ -2985,6 +2988,15 @@ each fixed-width clause takes polynomial time in the input length.
 For explicit $(F,a)$, simply scan the clauses. No enumeration of
 candidate assignments occurs.
 \end{proof}
+\paragraph{Lean scope of I-40.}
+The formal theorem \texttt{SATV.V\_SAT\_mem\_P\_TM}
+covers the explicit formula-and-assignment verification
+language.  The uniformly generated $F_n$ variant
+requires the separately stated polynomial-time
+generator assumption and a composition argument;
+that additional composition is not independently
+kernel-checked here.
+
 The originally proposed language $L^\star$ therefore cannot be
 used to demonstrate a classical $NP\setminus P$ language. A
 physical curvature lower bound for a highly constrained encoding
