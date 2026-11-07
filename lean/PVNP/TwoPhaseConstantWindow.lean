@@ -21,7 +21,7 @@ No general II-10 claim is discharged by this special case.
 namespace PVNP.TwoPhaseConstantWindow
 
 open PVNP.PartIITuring PVNP.PartIIUniform
-open PVNP.TwoPhaseUniform
+open PVNP.TwoPhaseUniform PVNP.TwoPhaseWindowWord
 
 /-- Six transitions overwrite cells 0..4 with the canonical word and
 write the required blank at cell 5.  The seventh control state is halting.
@@ -69,7 +69,7 @@ the literal word above when the radius polynomial is zero. -/
 theorem originalWindowCode_zero (x : List Bool) :
     originalWindowCode (0 : Polynomial ℕ) x =
       [true, false, false, true, false] := by
-  simp [originalWindowCode_eq_windowWord, TwoPhaseWindowWord.windowWord]
+  simp [originalWindowCode_eq_windowWord, windowWord]
 
 /-- An explicit `FP` certificate for the original lattice writer at
 the zero polynomial, with actual six-step single-tape transitions. -/
