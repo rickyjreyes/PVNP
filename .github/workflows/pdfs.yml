@@ -6,6 +6,7 @@ on:
       - 'pvnp/papers/**'
       - 'scripts/build_pdfs.sh'
       - 'scripts/verify_pdfs.py'
+      - 'scripts/check_manuscript_alignment.py'
       - '.github/workflows/pdfs.yml'
   pull_request:
   workflow_dispatch:
@@ -21,6 +22,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
+      - name: Check manuscript claim scope against the 91-claim inventory
+        run: python3 scripts/check_manuscript_alignment.py
       - name: Install LaTeX
         run: |
           sudo apt-get update -qq
