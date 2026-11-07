@@ -1,4 +1,4 @@
-name: Build and publish PVNP PDFs
+name: Build consolidated PVNP technical volume
 on:
   push:
     branches: [main]
@@ -24,26 +24,26 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-science texlive-fonts-recommended lmodern poppler-utils
-      - name: Build trilogy and independent supplement
+      - name: Build one volume from the four archival sources
         run: bash scripts/build_pdfs.sh
-      - name: Verify compiled PDFs
+      - name: Verify only the consolidated release PDF
         run: |
-          test -s pvnp/preprints/part-i-curvature-bounded-wave-computation/paper.pdf
-          test -s pvnp/preprints/part-ii-discrete-wcc-turing-equivalence/paper.pdf
-          test -s pvnp/preprints/part-iii-physical-complexity-reassessment/paper.pdf
-          test -s pvnp/preprints/supplement-fixed-mass-nodal-coercivity/paper.pdf
-          pdfinfo pvnp/preprints/part-i-curvature-bounded-wave-computation/paper.pdf | grep Pages
-          pdfinfo pvnp/preprints/part-ii-discrete-wcc-turing-equivalence/paper.pdf | grep Pages
-          pdfinfo pvnp/preprints/part-iii-physical-complexity-reassessment/paper.pdf | grep Pages
-          pdfinfo pvnp/preprints/supplement-fixed-mass-nodal-coercivity/paper.pdf | grep Pages
-      - name: Commit compiled PDFs
+          test -s pvnp/preprints/consolidated-wave-computation/paper.pdf
+          pdfinfo pvnp/preprints/consolidated-wave-computation/paper.pdf
+          pdfinfo pvnp/preprints/consolidated-wave-computation/paper.pdf | awk '/^Pages:/ {if ($2 < 20) exit 1}'
+      - name: Commit one compiled PDF and retire duplicate tracked archive PDFs
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -f pvnp/preprints/*/paper.pdf
+          git add -f pvnp/preprints/consolidated-wave-computation/paper.pdf
+          git rm -f --ignore-unmatch \
+            pvnp/preprints/part-i-curvature-bounded-wave-computation/paper.pdf \
+            pvnp/preprints/part-ii-discrete-wcc-turing-equivalence/paper.pdf \
+            pvnp/preprints/part-iii-physical-complexity-reassessment/paper.pdf \
+            pvnp/preprints/supplement-fixed-mass-nodal-coercivity/paper.pdf
           if ! git diff --cached --quiet; then
-            git commit -m 'build: publish revised PVNP PDFs [skip ci]'
+            git commit -m 'build: publish one consolidated PVNP volume [skip ci]'
             for attempt in 1 2 3 4 5; do
               git fetch origin main
               git rebase origin/main || { git rebase --abort; exit 1; }
