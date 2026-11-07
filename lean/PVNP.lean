@@ -177,3 +177,6 @@ import PVNP.TwoPhaseWindowShape
 
 -- Phase XIV: full canonical one-dimensional W_M window output word.
 import PVNP.TwoPhaseWindowWord
+
+-- Phase XIV: an actual finite-state zero-radius MTM lattice FP witness.
+import PVNP.TwoPhaseConstantWindow
