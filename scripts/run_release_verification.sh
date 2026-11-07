@@ -13,6 +13,7 @@ esac
 RUN_DIR="${PVNP_RELEASE_VERIFY_DIR:-$ROOT/.release-verification}"
 mkdir -p "$RUN_DIR"
 echo "Verification output: $RUN_DIR"
+python3 "$ROOT/scripts/check_manuscript_alignment.py"
 
 if [[ "$MODE" == --all || "$MODE" == --pdf-only ]]; then
   for exe in pdflatex pdfinfo pdftotext python3; do
