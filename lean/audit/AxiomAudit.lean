@@ -606,3 +606,9 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 
 -- Reuse the verified finite-control Horner program to write unary W_M radius.
 #print axioms PVNP.CookLevin.Gen.twoPhase_unary_radius
+
+-- Phase XIII logical-energy certification theorems.
+#print axioms PVNP.PartIPsiSat.unsat_logical_energy_gap
+#print axioms PVNP.PartIPsiSat.sat_iff_exists_energy_lt_eighth
+#print axioms PVNP.PartIPsiSat.noisy_energy_readout_certifies_sat
+#print axioms PVNP.PartIPsiSat.unsat_rejects_low_energy_certificate
