@@ -22,6 +22,8 @@ The three original works retain their own historical release dates, DOIs, LaTeX 
 
 The original repository PDFs were generated from revised LaTeX, not necessarily identical to the original Zenodo uploads. They are archived compilation assets, and the build now outputs one primary PDF. Git history preserves original versions.
 
+[**7 November 2026 source-to-Lean release audit**](pvnp/proofs/pdf-lean-reconciliation-20261107.md): original claim corrections, exact scope of physical and discrete proofs, PDF rebuild status, and verification requirements.
+
 ## Formalization boundary
 
 The amended 91-claim inventory currently records **78 Exact, 2 Restricted, 4 Refuted, 7 Open**. An Exact conditional implication does not prove its unverified premises. Neither classical P versus NP nor physical WCC separation is proved. Recent Phase XII/XIII integration awaits full kernel CI, and a PDF build cannot replace Lean verification.
