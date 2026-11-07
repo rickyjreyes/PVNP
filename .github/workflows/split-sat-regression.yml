@@ -4,11 +4,15 @@ on:
     paths:
       - 'pvnp/tests/test_split_three_sat.py'
       - 'pvnp/tests/test_astra_discrete.py'
+      - 'pvnp/tests/test_two_phase_reference.py'
+      - 'pvnp/two_phase_reference.py'
       - '.github/workflows/split-sat-regression.yml'
   pull_request:
     paths:
       - 'pvnp/tests/test_split_three_sat.py'
       - 'pvnp/tests/test_astra_discrete.py'
+      - 'pvnp/tests/test_two_phase_reference.py'
+      - 'pvnp/two_phase_reference.py'
       - '.github/workflows/split-sat-regression.yml'
 jobs:
   semantic-test:
@@ -22,3 +26,6 @@ jobs:
         run: python -m unittest discover -s pvnp/tests -p 'test_split_three_sat.py'
       - name: ASTRA executable cross-checks of Lean constructions (not proofs)
         run: python -m unittest discover -s pvnp/tests -p 'test_astra_discrete.py'
+
+      - name: Original two-phase W_M canonical-writer reference checks
+        run: python -m unittest discover -s pvnp/tests -p 'test_two_phase_reference.py'
