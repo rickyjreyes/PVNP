@@ -960,28 +960,59 @@ Definition~\ref{def:pwcc}.
 We can now state the main equivalence theorem for the simulation direction
 TM $\Rightarrow$ WCC.
 
-\begin{theorem}[Simulation of polynomial-time Turing machines by WCC]
+\begin{theorem}[Original two-phase simulation: exact dynamics, conditional uniformity]
 \label{thm:tm_to_wcc}
-Let $L \subseteq \Sigma^*$ be a language decided by a deterministic Turing
-machine $M$ in time $T_M(n) \le c\,\max\{n,1\}^k$ for some constants $c,k \ge 1$. Then the
-associated WCC machine $W_M$ defined in Definition~\ref{def:wm} decides $L$ in
-time
+Let a deterministic Turing machine $M$ decide a language $L$
+with first-halt time $T_M(x)$ bounded by
+$c\max\{|x|,1\}^k$, and let the original
+two-phase WCC window contain all head positions through that
+time.  The original local update rule and decoder have
+the first-answer equality
 \[
-T_{W_M}(n) = 2 T_M(n) \le 2c\,\max\{n,1\}^k
+T_{W_M}(x)=2T_M(x)
 \]
-on inputs of length $n$. In particular,
+for its \emph{intrinsic global-update time}, and agree with the
+Turing answer.  If, additionally, the
+\emph{original} canonical lattice writer
+$\operatorname{originalWindowCode}(p)$ and complete
+configuration encoder
+$\operatorname{originalInputCode}(M,p)$ are both
+polynomial-time computable under the manuscript's
+single-tape output convention, then this concrete
+$W_M$ meets the uniform discrete WCC preparation
+requirements and defines a polynomial-time WCC decider.
+
+Without those two writer hypotheses, the dynamical
+simulation alone does \emph{not} prove uniformity
+of this particular construction.  Independently, the
+uniform class inclusion
 \[
-P_{\mathrm{Turing}} \subseteq P_{\mathrm{WCC}}.
+P_{\mathrm{Turing}}\subseteq
+P_{\mathrm{WCC}}^{\mathrm{disc}}
 \]
+is proved using a different, fully charged
+one-cell encoder construction.
 \end{theorem}
 
 \begin{proof}
-By Lemma~\ref{lem:runtime}, $W_M$ accepts exactly the inputs accepted by $M$ and
-does so in at most $2 T_M(n)$ global update steps on inputs of length $n$. The
-bound $T_M(n) \le c\,\max\{n,1\}^k$ implies $T_{W_M}(n) \le 2c\,\max\{n,1\}^k$, so $W_M$ is a
-polynomial-time WCC machine in the sense of Definition~\ref{def:pwcc}. Therefore
-$L \in P_{\mathrm{WCC}}$. Since $L$ was arbitrary in $P_{\mathrm{Turing}}$, we
-obtain $P_{\mathrm{Turing}} \subseteq P_{\mathrm{WCC}}$.
+The first-answer identity and its head-window
+hypotheses follow from Lemma~\ref{lem:runtime}
+and the two-phase invariant, formalized by
+\texttt{PartIITwoPhase.runtime} and
+\texttt{PartIITwoPhase.tm\_to\_wcc\_decides}.
+The original decoder is polynomial-time
+(\texttt{TwoPhaseDecoder.decM\_fp}).
+The remaining writer hypotheses would exactly
+supply the lattice and encoder \texttt{FP}
+fields in the uniform WCC definition, and
+hence give the conditional claim for this $W_M$.
+
+The independent unconditional class inclusion
+uses the \texttt{PartIIUniform.oneCell} construction
+and \texttt{PartIIUniform.P\_TM\_subset\_P\_disc},
+whose encoder runs the original Turing decider,
+charges that work, and writes the decision bit.
+These two different proofs must not be conflated.
 \end{proof}
 
 \subsection{Simulation of WCC by Turing machines}
