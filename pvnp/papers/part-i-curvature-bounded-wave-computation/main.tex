@@ -2298,14 +2298,17 @@ all of which lie in \(\text{AC}^0 \cup \text{NC}^1\).
 Any machine \(M\) that constructs \(\psi^*_L\) must therefore do so through a sequence of
 polynomial-time symbolic steps beginning from a trivial tape configuration \(\psi_0\).
 
-If one could show that for \emph{every} such \(M\) there exists some NP instance with
-solution \(\psi^*_L \in \mathbf{NP}\) such that
-\[
-M(\psi_0, n) \neq \psi^*_L \quad\text{for all}\quad n^k\text{-bounded runs},
-\]
-then this would imply \(\psi^*_L \notin \mathbf{P}\) and hence \( \mathbf{P} \neq \mathbf{NP} \).
-WCT is proposed only as a geometric guide toward constructing such families;
-no such claim is made here.
+\paragraph{Withdrawn universal-scope inference, I-28.}
+The statement that each prescribed constructor misses some
+target configuration does not imply that the associated
+decision language lies outside $\mathbf P$.  Lean's
+\texttt{PartISeparation.universal\_scope\_counterexample}
+refutes this inference even for a language in $\mathbf P$.
+A valid classical separation would instead need one
+uniformly encoded decision language and an asymptotic
+lower bound against \emph{every} correct polynomial-time
+decider for that language.  State production and
+language decision must not be conflated.
 
 \subsection{Conditional Summary of the Cook--Levin Embedding}
 
