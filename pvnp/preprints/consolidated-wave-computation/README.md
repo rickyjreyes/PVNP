@@ -12,6 +12,8 @@ This is the **primary repository release artifact**, compiled from the three his
 - [Claim-by-claim Lean formalization inventory](../../proofs/manuscript-lean-inventory.md)
 - [Original Zenodo publication identifiers](../../../CONTENTS.md#publication-identifiers)
 
+[**Manuscript-to-Lean source reconciliation**](../../proofs/pdf-lean-reconciliation-20261107.md) details the withdrawn Part I state-to-language theorems, restricted original two-phase construction, and current verification blockers.
+
 ## Publication scope
 
 This **bound technical volume is not a proof of classical P != NP**. The existing formalized results include uniform discrete WCC complexity-class equivalences, restricted lower bounds for particular machine models, and conditional physical-resource estimates. The original uniform two-phase lattice/encoder cost proof, continuum physical equivalence, and universal SAT lower bound remain unresolved.
