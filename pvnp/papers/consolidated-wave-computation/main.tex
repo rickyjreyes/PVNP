@@ -4,6 +4,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb,booktabs,array,enumitem}
 \usepackage{pdfpages}
+\usepackage{xcolor}
 \usepackage[colorlinks=true,linkcolor=blue!55!black,urlcolor=blue!55!black]{hyperref}
 \usepackage{microtype}
 \setlength{\parindent}{0pt}
@@ -71,6 +72,40 @@ Auxiliary nodal estimate & Fixed-domain analytical result; its finite two-site a
 \end{center}
 
 \textbf{Build caveat.} Some newly merged Phase XII and XIII Lean declarations entered the repository while GitHub-hosted checks failed before their first job step. This volume does not certify those declarations as independently kernel-checked until a complete Lean build and axiom audit succeeds. A PDF compilation is not evidence of a successful Lean verification.
+
+\subsection{Corrections to the historical separation program}
+Part I's original claims I-25 through I-28 inferred a
+decision-language separation from the nonconstructibility
+of individual target states or failure of a designated
+constructor.  Those inferences are refuted and are
+explicitly withdrawn in the revised Part I text.
+The requisite missing lower bound instead quantifies
+over every correct uniform \emph{decision algorithm}
+for one fixed language.  Part II's II-10 concerns
+the original two-phase $W_M$; its intrinsic runtime
+is proved, but the full canonical lattice and
+input-code transducers have not yet been shown
+polynomial time in the original single-tape model.
+The independent class inclusion uses a different,
+fully charged one-cell construction.
+The Part III discussion distinguishes proven finite
+and algebraic estimates from continuum PDE and
+physical-measurement conditions that are not
+all kernel-formalized.
+
+\subsection{Publication and verification gates}
+The separate historical standalone PDFs are prior
+compilations and may predate the latest revised
+LaTeX.  The release must rebuild all four source
+documents and bind them into this single volume.
+The exact-head Lean build and axiom audit
+are separate from PDF compilation.  The last
+successful older formalization baseline does not
+certify newer modules merged while GitHub Actions
+runner allocation was failing.  Until both the
+current full PDF and the current full Lean checks
+are reproducible, this is an updated source
+manuscript, not a fully verified final release.
 
 \section{Reproduction and source maintenance}
 The authoritative historical LaTeX sources remain under the four original manuscript directories in the repository. The single-release build first compiles them into temporary PDFs, binds them behind this overview, and installs only one primary consolidated PDF. Run \texttt{bash scripts/build\_pdfs.sh} to regenerate it. For the Lean formalization, use the pinned toolchain and run \texttt{lake build PVNP} followed by the standard axiom audit from within the \texttt{lean} directory.
