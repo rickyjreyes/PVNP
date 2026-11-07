@@ -20,6 +20,9 @@ This **bound technical volume is not a proof of classical P != NP**. The existin
 
 The original 2025 release identifiers retain their historical dates. Inclusion in the current 2026 bound volume does not represent three new papers or erase the source history. The independent supplement is included as an appendix, not counted as an original Part I-III claim.
 
+
+**Independent release gate:** from the repository root run `bash scripts/run_release_verification.sh --all`. It retains locally rebuilt Part I and II review PDFs, exact source hashes and full logs without committing redundant PDF publications.
+
 ## One-PDF release policy
 
 The three legacy PDFs and supplement PDF are historical compilation artifacts, **not four current primary releases**. The new workflow builds them only temporarily, compiles the single consolidated PDF, and (after a successful main build) removes the redundant PDF binaries from the current branch. Their LaTeX sources remain maintained and the old compiled versions remain accessible through Git history and historical Zenodo records.
