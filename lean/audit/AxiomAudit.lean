@@ -612,3 +612,8 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.PartIPsiSat.sat_iff_exists_energy_lt_eighth
 #print axioms PVNP.PartIPsiSat.noisy_energy_readout_certifies_sat
 #print axioms PVNP.PartIPsiSat.unsat_rejects_low_energy_certificate
+
+-- Phase XIII original W_M lattice-window bit shape.
+#print axioms PVNP.TwoPhaseWindowShape.site_one_coordinate
+#print axioms PVNP.TwoPhaseWindowShape.original_window_membership_iff
+#print axioms PVNP.TwoPhaseWindowShape.original_window_bit
