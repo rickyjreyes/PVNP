@@ -17,39 +17,6 @@ mathematical content are not counted.
 
 Lean paths are relative to `lean/`. "(new)" marks declarations added in this pass.
 
-## Source-to-theorem reconciliation (7 November 2026)
-
-**Current release sources:** The revised Part I, II and III LaTeX files are
-bound by the consolidated technical volume. This table continues tracking
-the same **91 historical mathematical claims**, not the number of PDFs.
-
-- **I-25 through I-28 (Refuted):** The revised Part I source explicitly
-  withdraws all four state-to-language inference arguments. Their Lean
-  counterexamples remain authoritative negative results.
-- **II-10 (Restricted):** The Part II theorem now distinguishes exact
-  intrinsic two-phase simulation from the missing polynomial-time
-  original window and initial-configuration writers. The separate
-  uniform one-cell class inclusion does not complete the original W_M.
-- **I-40 (Exact only for explicit formula/assignment verification):**
-  The uniformly generated formula-family extension is stated as a
-  mathematical composition under an extra generator hypothesis,
-  rather than as an independently kernel-certified theorem.
-- **III-22 (Open):** The arrow-of-time remark is interpretive and not
-  an unproved classical complexity theorem.
-- **Recent kernel evidence:** Some Phase XII and XIII modules were merged
-  despite GitHub Actions failing before all job steps. Their inclusion
-  in source files is not a successful full Lean build or axiom audit.
-- **PDF evidence:** The previously compiled Part I and II standalone
-  PDFs predate the revised manuscript sources. The consolidated PDF
-  requires a complete compilation from the newest revised LaTeX;
-  a front-matter smoke test is not a publication build.
-
-The totals remain **78 Exact / 2 Restricted / 4 Refuted / 7 Open** for
-the amended claim statements. Exact includes conditional theorem
-implications whose premises may remain open. A publication-ready
-verified release requires an independently successful full Lean
-build and axiom audit, as well as complete PDF compilation.
-
 ## Coverage table
 
 | Paper | Claims | Exact | Restricted | Refuted | Open |
