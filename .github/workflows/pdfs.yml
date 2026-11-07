@@ -5,6 +5,7 @@ on:
     paths:
       - 'pvnp/papers/**'
       - 'scripts/build_pdfs.sh'
+      - 'scripts/verify_pdfs.py'
       - '.github/workflows/pdfs.yml'
   pull_request:
   workflow_dispatch:
@@ -24,13 +25,23 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-science texlive-fonts-recommended lmodern poppler-utils
-      - name: Build one volume from the four archival sources
+      - name: Rebuild every revised manuscript and the one-PDF release
+        env:
+          PVNP_PDF_REVIEW_DIR: ${{ runner.temp }}/pvnp-pdf-review
         run: bash scripts/build_pdfs.sh
-      - name: Verify only the consolidated release PDF
+      - name: Verify the actual latest Part I and II PDF text and all bound sources
         run: |
-          test -s pvnp/preprints/consolidated-wave-computation/paper.pdf
-          pdfinfo pvnp/preprints/consolidated-wave-computation/paper.pdf
-          pdfinfo pvnp/preprints/consolidated-wave-computation/paper.pdf | awk '/^Pages:/ {if ($2 < 20) exit 1}'
+          python3 scripts/verify_pdfs.py \
+            "${{ runner.temp }}/pvnp-pdf-review/pdfs" \
+            pvnp/preprints/consolidated-wave-computation/paper.pdf
+      - name: Retain compiled manuscripts and LaTeX logs for independent review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pvnp-pdf-source-verification
+          path: ${{ runner.temp }}/pvnp-pdf-review/
+          if-no-files-found: warn
+          retention-days: 14
       - name: Commit one compiled PDF and retire duplicate tracked archive PDFs
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
