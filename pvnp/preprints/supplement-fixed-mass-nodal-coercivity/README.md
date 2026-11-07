@@ -1,6 +1,11 @@
 # Independent supplement — fixed-mass nodal coercivity
 
-[LaTeX source](../../papers/supplement-fixed-mass-nodal-coercivity/main.tex) · [Compiled PDF](paper.pdf) · [Lean proof](../../../lean/PVNP/FixedMassNodal.lean)
+> **Publication status:** Historical manuscript/supplement. The [consolidated PVNP volume](../consolidated-wave-computation/README.md) is the one current release. The separate PDF may be retired from the current tree after a successful consolidated build; this source and its original historical record are retained.
+
+
+[LaTeX source](../../papers/supplement-fixed-mass-nodal-coercivity/main.tex) · [Primary consolidated PDF](../consolidated-wave-computation/paper.pdf) · [Lean proof](../../../lean/PVNP/FixedMassNodal.lean)
+
+This note is preserved as an appendix in the [single consolidated PVNP volume](../consolidated-wave-computation/README.md). Its source and earlier compiled history are retained.
 
 This is an **independent auxiliary research continuation**, not an amendment to the author's original P versus NP proof or the three PVNP manuscripts.
 
