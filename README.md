@@ -55,6 +55,9 @@ The original manuscripts, independent supplements, negative results, and Lean ch
 - **Part III** revisits ten issues (`WIN-12`–`WIN-21`) with corrected statements, counterexamples, and explicitly conditional physical conclusions.
 - [**Lean formalization**](lean/README.md) provides kernel-checkable supporting results for all three papers; it does not prove the still-open WCC separations.
 
+
+**Reproduce all release checks locally:** `bash scripts/run_release_verification.sh --all` runs the corrected four-source PDF build, checks rendered Part I/II corrections, builds the complete Lean import tree, checks standard axioms, and validates the dashboard. Require a successful run before publication. The individual source PDFs are retained only under ignored `.release-verification/` for review; a single consolidated PDF is the publication output.
+
 ## Build the one-PDF release
 
 Run `bash scripts/build_pdfs.sh` with the required LaTeX packages. The build compiles the three source manuscripts and supplement into **temporary archive PDFs** and then generates only `pvnp/preprints/consolidated-wave-computation/paper.pdf` as the primary output. On a successful `main` build, GitHub Actions commits this consolidated PDF and retires four redundant tracked PDF artifacts. The original LaTeX sources and Zenodo publication records are preserved.
