@@ -171,3 +171,6 @@ import PVNP.QuadraticHorizon
 
 -- Phase XIII: uniform unsatisfiable logical-energy gap and certified readout.
 import PVNP.PhasePenaltyGap
+
+-- Phase XIII: exact one-dimensional canonical W_M lattice bitmap.
+import PVNP.TwoPhaseWindowShape
