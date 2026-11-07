@@ -66,7 +66,7 @@ def main() -> int:
                 "conditional uniformity", "Turing"],
         ),
         "part-iii.pdf": (
-            4, ["Physical", "Reconciliation with the amended Lean inventory"],
+            4, ["Physical", "Current Lean formalization status"],
         ),
         "supplement.pdf": (
             2, ["Fixed-Mass", "coercivity", "two-site"],
