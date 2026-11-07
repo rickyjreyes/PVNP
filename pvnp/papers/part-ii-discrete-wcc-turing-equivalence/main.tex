@@ -1934,12 +1934,12 @@ zero by a fixed one-cell reader
 (\texttt{PVNP.Discrete.unrestricted\_encoder\_trivializes\_WCC}), and a
 single length-indexed advice bit decides every length-determined language
 (\texttt{PVNP.Discrete.advice\_bit\_trivializes}). An encoder that is
-merely polynomial-time computable may itself compute the decision bit, so
-for the encoder class of Definition~\ref{def:wcc_machine} the equality
-$P^{\mathrm{disc}}_{\mathrm{WCC}}=P_{\mathrm{Turing}}$ also holds for this
-trivial reason; the non-trivial content of
-Theorem~\ref{thm:uniform-discrete-bijection} is the simulation for the
-\emph{fixed} origin-marked encoding
+polynomial-time computable may itself compute the decision bit.
+This observation alone proves the inclusion
+$P_{\mathrm{Turing}}\subseteq P^{\mathrm{disc}}_{\mathrm{WCC}}$.
+The reverse inclusion requires a separate uniform simulation
+(the later-verified \texttt{PartIIUniform.wcc\_to\_tm});
+the fixed origin-marked encoding is an additional distinct case
 (\texttt{PVNP.Discrete.P\_WCC\_enc\_id}). The formal transfer theorems
 \texttt{PVNP.Discrete.p\_vs\_np\_discrete\_transfer} and
 \texttt{PVNP.Discrete.p\_vs\_np\_radius\_transfer} show that the discrete
@@ -2016,6 +2016,41 @@ The verifier class of Definition~\ref{def:wcc_verifier} is formalized with:
 Theorem~\ref{thm:tm_to_wcc} for the author's own $W_M$ still lacks a proof
 that $W_M$ is uniform.
 
+
+\paragraph{Manuscript-to-Lean reconciliation (November 2026).}
+The revised Part II inventory has 28 mathematical claims:
+27 Exact and one Restricted (II-10).
+The general uniform discrete equalities for $P$ and $NP$
+are established with charged lattice generation, input
+encoding and output decoding; their Lean declarations are
+\texttt{PartIIUniform.P\_disc\_eq\_P\_TM} and
+\texttt{PartIIUniform.NP\_disc\_eq\_NP\_TM}.
+They do not complete the \emph{original} $W_M$
+construction: II-10 still needs a concrete polynomial-time
+output Turing machine for the entire canonical window
+description and for every serialized initial configuration.
+PR~\#56 adds a proof of the canonical original decoder,
+finite-mesh separator estimates, and quadratic-type
+single-tape SAT lower bounds; PR~\#57 adds
+the two-phase uniformity bridge with the still-open
+encoder/writer premises; PR~\#58 adds a precise
+window bitmap and logical-energy certificate.
+The recent Phase XII--XIII Lean declarations were
+integrated without successful exact-head GitHub Actions
+execution because runner jobs failed before building.
+They should not be described as independently
+kernel-verified until the full Lean import tree and
+standard-axiom audit run successfully.
+
+\paragraph{Physical model qualification.}
+The conditionally derived spacetime-lane and
+energy-capacity estimates constrain the stated
+physical lane model and do not universally bound
+all admissible SAT deciders.  Theorem~\ref{thm:tm_to_wcc}
+now separates exact internal two-phase runtime from
+its open preparation costs.  The standard Cook--Levin
+reduction and single-tape crossing bounds do not
+establish $\mathrm{SAT}_{\mathrm{dense}}\notin P$.
 
 \section{Conclusion}
 
