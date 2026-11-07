@@ -21,14 +21,15 @@ the MTM polynomial-time output transducer; that obligation remains open.
 
 namespace PVNP.TwoPhaseWindowShape
 
-open PVNP.PartIIUniform PVNP.TwoPhaseDecoder
+open PVNP.PartIIUniform PVNP.PartIITwoPhase PVNP.TwoPhaseDecoder
 
 /-- In one dimension the jth coordinate of a radius-(L+1) box is j-(L+1)
 whenever the index is inside the box. -/
 theorem site_one_coordinate (L j : ℕ)
     (hj : j < 2 * (L + 1) + 1) :
     site 1 (L + 1) j 0 = (j : ℤ) - (L + 1 : ℕ) := by
-  simp [site, side, Nat.mod_eq_of_lt hj]
+  have hlt : j < side (L + 1) := by simpa [side] using hj
+  simp [site, Nat.mod_eq_of_lt hlt]
 
 /-- The original W_M active window occupies exactly the interior bitmap
 positions, excluding the first and last bounding-box cells. -/
