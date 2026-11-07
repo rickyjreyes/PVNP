@@ -1,0 +1,107 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array,enumitem}
+\usepackage{pdfpages}
+\usepackage[colorlinks=true,linkcolor=blue!55!black,urlcolor=blue!55!black]{hyperref}
+\usepackage{microtype}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.35em}
+\hypersetup{pdftitle={Wave-Constrained Computation: Formal Equivalence, Physical Resource Bounds, and the P versus NP Problem},pdfauthor={Richard J. Reyes},pdfsubject={Consolidated PVNP technical volume}}
+\title{\bfseries Wave-Constrained Computation\\[0.4em]\large Formal Equivalence, Physical Resource Bounds,\\and the P versus NP Problem\\[0.8em]\normalsize Consolidated Technical Volume}
+\author{Richard J. Reyes}
+\date{Consolidated edition: November 2026\\\small Original studies released in 2025}
+\begin{document}
+\maketitle
+\begin{abstract}
+This technical volume binds the three Wave-Constrained Computation (WCC) manuscripts and an independent fixed-mass nodal-coercivity supplement into one navigable PDF. The earlier revised documents are reproduced in full as source-preserving parts. This introduction distinguishes exact uniform discrete WCC results, charged physical wave realizations, restricted lower bounds, and unresolved universal separation claims. Neither classical P versus NP nor physical WCC separation is proved by this collection.
+\end{abstract}
+\tableofcontents
+\clearpage
+
+\section{Purpose and publication provenance}
+This is a consolidated edition of earlier research, not four additional newly authored papers. The historical titles, mathematical qualifications, original citations, and internal references are preserved in the bound originals. A later corrected theorem takes precedence over a broader historical informal formulation.
+
+\begin{center}\small
+\begin{tabular}{@{}p{0.13\linewidth}p{0.50\linewidth}p{0.29\linewidth}@{}}\toprule
+Part & Original work & Historical publication\\\midrule
+I & Curvature-bounded wave computation, May 7, 2025 & \href{https://doi.org/10.5281/zenodo.17743607}{Zenodo 17743607}\\
+II & Discrete WCC and Turing equivalence, November 26, 2025 & \href{https://doi.org/10.5281/zenodo.17732642}{Zenodo 17732642}\\
+III & Physical complexity reassessment, December 1, 2025 & \href{https://doi.org/10.5281/zenodo.17783074}{Zenodo 17783074}\\
+Appendix & Fixed-mass nodal coercivity, October 2026 & Independent auxiliary note\\
+\bottomrule
+\end{tabular}
+\end{center}
+These original-release dates are not reset by the 2026 LaTeX revisions or this compilation. The DOI links identify historical records, not a newly assigned consolidated-volume DOI.
+
+\section{Results and scope}
+\subsection{Uniform discrete computation}
+With finite alphabets and local update rules, polynomial-time constructible lattices, and charged uniform encoders and decoders, the discrete model has the formally established class equivalences
+\[
+\mathbf P_{\mathrm{WCC}}^{\mathrm{disc}}=\mathbf P_{\mathrm{TM}},
+\qquad
+\mathbf{NP}_{\mathrm{WCC}}^{\mathrm{disc}}=\mathbf{NP}_{\mathrm{TM}}.
+\]
+The original two-phase machine \(W_M\) has a distinct open uniformity obligation: its complete original initial encoder and lattice writer must be certified polynomial-time transducers. The generic discrete class equivalence does not by itself discharge that obligation.
+
+\subsection{Physical realization and mathematical lower bounds}
+The continuum WCT resource model additionally requires uniform field preparation, precision, stable readout, and full accounting of energy and computational cost. The discrete equivalences do not prove that a concrete nonlinear PDE realizes them with polynomial overhead. Finite-domain coercivity, phase readout, and separator estimates have explicit assumptions that need not be input-size uniform.
+
+The repository includes uniform Cook--Levin reductions and a characterization of the target dense-SAT lower bound. Restricted one-tape crossing-sequence arguments yield quadratic-type lower bounds. They do not show that every deterministic SAT algorithm requires superpolynomial time. In particular,
+\[
+\mathrm{SAT}_{\mathrm{dense}}\notin\mathbf P_{\mathrm{TM}}
+\]
+remains an open conjectural target. The physical all-decider separator and expander claims also remain open.
+
+\section{Maintained formalization ledger and verification}
+The amended 91-claim ledger records 78 Exact, 2 Restricted, 4 Refuted, and 7 Open claims. The Exact category includes proved conditional implications whose premises are not established; it does not mean classical P is unequal to NP. See the continuously maintained \href{https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md}{manuscript formalization inventory} and \href{https://github.com/rickyjreyes/PVNP/tree/main/lean}{Lean source tree}.
+
+\begin{center}\small
+\begin{tabular}{@{}p{0.33\linewidth}p{0.58\linewidth}@{}}\toprule
+Topic & Established limit\\\midrule
+Uniform discrete WCC & Proved classical P and NP class equivalences within the formal discrete model.\\
+Original two-phase \(W_M\) & Exact decoder and simulation support; full original polynomial-time writer obligations remain restricted.\\
+Dense SAT & Uniform Cook--Levin and restricted quadratic single-tape lower bounds; universal superpolynomial target open.\\
+Physical WCC & Charged, robust, uniform physical-to-discrete resource bridge missing.\\
+Curvature interfaces & Restricted finite mesh and graph estimates; universal separator and expander hardness open.\\
+Phase readout & Logical-energy SAT certification does not imply efficient physical convergence or preparation.\\
+Auxiliary nodal estimate & Fixed-domain analytical result; its finite two-site algebra is formalized, not the full continuum theorem.\\
+\bottomrule\end{tabular}
+\end{center}
+
+\textbf{Build caveat.} Some newly merged Phase XII and XIII Lean declarations entered the repository while GitHub-hosted checks failed before their first job step. This volume does not certify those declarations as independently kernel-checked until a complete Lean build and axiom audit succeeds. A PDF compilation is not evidence of a successful Lean verification.
+
+\section{Reproduction and source maintenance}
+The authoritative historical LaTeX sources remain under the four original manuscript directories in the repository. The single-release build first compiles them into temporary PDFs, binds them behind this overview, and installs only one primary consolidated PDF. Run \texttt{bash scripts/build\_pdfs.sh} to regenerate it. For the Lean formalization, use the pinned toolchain and run \texttt{lake build PVNP} followed by the standard axiom audit from within the \texttt{lean} directory.
+
+The reproduced parts retain their own title pages, internal pagination, bibliographies, and reference numbering, to preserve provenance and avoid silently rewriting earlier published work. They constitute one \emph{bound research volume}, not yet an editorially merged single-paper text.
+
+\clearpage
+\phantomsection\addcontentsline{toc}{section}{Part I: Curvature-bounded wave computation}
+\section*{Part I: Curvature-Bounded Wave Computation}
+\emph{Original research May 7, 2025. Revised source reproduced in full.}
+\clearpage
+\includepdf[pages=-,pagecommand={},scale=0.97]{archive/part-i.pdf}
+
+\clearpage
+\phantomsection\addcontentsline{toc}{section}{Part II: Discrete WCC and Turing equivalence}
+\section*{Part II: Discrete WCC and Turing Equivalence}
+\emph{Original research November 26, 2025. Revised source reproduced in full.}
+\clearpage
+\includepdf[pages=-,pagecommand={},scale=0.97]{archive/part-ii.pdf}
+
+\clearpage
+\phantomsection\addcontentsline{toc}{section}{Part III: Physical complexity reassessment}
+\section*{Part III: Physical Complexity Reassessment}
+\emph{Original research December 1, 2025. Revised source reproduced in full.}
+\clearpage
+\includepdf[pages=-,pagecommand={},scale=0.97]{archive/part-iii.pdf}
+
+\clearpage
+\phantomsection\addcontentsline{toc}{section}{Auxiliary appendix: Fixed-mass nodal coercivity}
+\section*{Auxiliary Appendix: Fixed-Mass Nodal Coercivity}
+\emph{Independent auxiliary note, not one of the original 91 manuscript claims.}
+\clearpage
+\includepdf[pages=-,pagecommand={},scale=0.97]{archive/supplement.pdf}
+\end{document}
