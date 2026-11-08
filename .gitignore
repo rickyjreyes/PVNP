@@ -6,3 +6,6 @@
 .DS_Store
 __pycache__/
 *.pyc
+
+# Ephemeral PDF/Lean release validation artifacts, never committed
+.release-verification/

@@ -1,6 +1,9 @@
 # Part III — Classical Complexity and Curvature-Bounded Physical Computation: A Critical Reassessment
 
-[Compiled PDF](paper.pdf) · [LaTeX source](../../papers/part-iii-physical-complexity-reassessment/main.tex) · [Manuscript map](../../../CONTENTS.md)
+> **Publication status:** Historical manuscript/supplement. The [consolidated PVNP volume](../consolidated-wave-computation/README.md) is the one current release. The separate PDF may be retired from the current tree after a successful consolidated build; this source and its original historical record are retained.
+
+
+[Primary consolidated PDF](../consolidated-wave-computation/paper.pdf) · [LaTeX source](../../papers/part-iii-physical-complexity-reassessment/main.tex) · [Manuscript map](../../../CONTENTS.md)
 
 **Author:** Richard J. Reyes  
 **Original title:** *The Classical P vs NP Problem Is Mathematically and Physically Ill-Posed*.  

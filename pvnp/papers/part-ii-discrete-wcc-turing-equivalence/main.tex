@@ -23,6 +23,7 @@
 \usetikzlibrary{arrows.meta, positioning}
 
 % Hyperlinks
+\usepackage{xurl}
 \usepackage{hyperref}
 
 % Optional: define styling once
@@ -118,40 +119,17 @@ capacity estimates are conditional on their specific dynamical hypotheses.
 
 \end{abstract}
 
-\paragraph{Kernel verification and model boundary (November 2, 2026).}
-The theorems \texttt{PVNP.Discrete.P\_WCC\_eq\_P\_TM} and
-\texttt{PVNP.Discrete.NP\_WCC\_eq\_NP\_TM} are checked for the
-one-dimensional radius-one finite quiescent model, and
-\texttt{PVNP.Discrete.P\_WCCR\_eq\_P\_TM} and
-\texttt{PVNP.Discrete.NP\_WCCR\_eq\_NP\_TM} extend them to \emph{every
-fixed radius} $r\ge1$ in dimension one. For lattices
-$\mathbb{Z}^{1+d}$ only the inclusion
-$P_{\mathrm{TM}}\subseteq P^{(1+d)}_{\mathrm{WCC}}$ is kernel-checked
-(\texttt{PVNP.Discrete.P\_TM\_subset\_P\_WCCD}); the converse inclusion
-for $d\ge1$ rests on the proof sketch of Theorem~\ref{thm:wcc_to_tm} and
-is not formally verified. Physically realized variants must not be
-identified with any of these statements without additional
-constructions and uniform simulation bounds. In particular,
-a language-independent polynomial-cost encoder does not make an
-arbitrary receiver decoder efficient: a fixed noisy sign encoding with
-$n$ coordinates and squared mass $n$ supports an unrestricted decoder
-for any predicate. Decoder complexity must be included explicitly in
-every transfer of an encoding capacity bound into a language-decision claim.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\paragraph{Verification and model boundary.}
+The verified discrete results and the historical changes
+to their scopes are collected in the single current
+formalization-status section,
+Section~\ref{sec:current-lean-status}.
+The uniform finite-state class results concern charged
+encoding, decoding and lattice generation; they do not
+prove polynomial-resource realization by a chosen
+nonlinear PDE.  Encoding and decoding costs are
+indispensable: unrestricted receivers can make
+capacity statements computationally vacuous.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 0.x — Resource Model Summary
@@ -960,28 +938,59 @@ Definition~\ref{def:pwcc}.
 We can now state the main equivalence theorem for the simulation direction
 TM $\Rightarrow$ WCC.
 
-\begin{theorem}[Simulation of polynomial-time Turing machines by WCC]
+\begin{theorem}[Original two-phase simulation: exact dynamics, conditional uniformity]
 \label{thm:tm_to_wcc}
-Let $L \subseteq \Sigma^*$ be a language decided by a deterministic Turing
-machine $M$ in time $T_M(n) \le c\,\max\{n,1\}^k$ for some constants $c,k \ge 1$. Then the
-associated WCC machine $W_M$ defined in Definition~\ref{def:wm} decides $L$ in
-time
+Let a deterministic Turing machine $M$ decide a language $L$
+with first-halt time $T_M(x)$ bounded by
+$c\max\{|x|,1\}^k$, and let the original
+two-phase WCC window contain all head positions through that
+time.  The original local update rule and decoder have
+the first-answer equality
 \[
-T_{W_M}(n) = 2 T_M(n) \le 2c\,\max\{n,1\}^k
+T_{W_M}(x)=2T_M(x)
 \]
-on inputs of length $n$. In particular,
+for its \emph{intrinsic global-update time}, and agree with the
+Turing answer.  If, additionally, the
+\emph{original} canonical lattice writer
+$\operatorname{originalWindowCode}(p)$ and complete
+configuration encoder
+$\operatorname{originalInputCode}(M,p)$ are both
+polynomial-time computable under the manuscript's
+single-tape output convention, then this concrete
+$W_M$ meets the uniform discrete WCC preparation
+requirements and defines a polynomial-time WCC decider.
+
+Without those two writer hypotheses, the dynamical
+simulation alone does \emph{not} prove uniformity
+of this particular construction.  Independently, the
+uniform class inclusion
 \[
-P_{\mathrm{Turing}} \subseteq P_{\mathrm{WCC}}.
+P_{\mathrm{Turing}}\subseteq
+P_{\mathrm{WCC}}^{\mathrm{disc}}
 \]
+is proved using a different, fully charged
+one-cell encoder construction.
 \end{theorem}
 
 \begin{proof}
-By Lemma~\ref{lem:runtime}, $W_M$ accepts exactly the inputs accepted by $M$ and
-does so in at most $2 T_M(n)$ global update steps on inputs of length $n$. The
-bound $T_M(n) \le c\,\max\{n,1\}^k$ implies $T_{W_M}(n) \le 2c\,\max\{n,1\}^k$, so $W_M$ is a
-polynomial-time WCC machine in the sense of Definition~\ref{def:pwcc}. Therefore
-$L \in P_{\mathrm{WCC}}$. Since $L$ was arbitrary in $P_{\mathrm{Turing}}$, we
-obtain $P_{\mathrm{Turing}} \subseteq P_{\mathrm{WCC}}$.
+The first-answer identity and its head-window
+hypotheses follow from Lemma~\ref{lem:runtime}
+and the two-phase invariant, formalized by
+\nolinkurl{PartIITwoPhase.runtime} and
+\nolinkurl{PartIITwoPhase.tm_to_wcc_decides}.
+The original decoder is polynomial-time
+(\nolinkurl{TwoPhaseDecoder.decM_fp}).
+The remaining writer hypotheses would exactly
+supply the lattice and encoder \texttt{FP}
+fields in the uniform WCC definition, and
+hence give the conditional claim for this $W_M$.
+
+The independent unconditional class inclusion
+uses the \texttt{PartIIUniform.oneCell} construction
+and \nolinkurl{PartIIUniform.P_TM_subset_P_disc},
+whose encoder runs the original Turing decider,
+charges that work, and writes the decision bit.
+These two different proofs must not be conflated.
 \end{proof}
 
 \subsection{Simulation of WCC by Turing machines}
@@ -1068,7 +1077,7 @@ inclusion $P_{\mathrm{WCC}}\subseteq P_{\mathrm{Turing}}$ in dimension
 $d\ge2$ was supported by the proof sketch of Theorem~\ref{thm:wcc_to_tm}
 only. A later repository verification (5 November 2026) kernel-checks it
 for every dimension by an explicit single-tape machine
-(\texttt{PVNP.Discrete.P\_WCCD\_eq\_P\_TM}); see the formal verification
+(\nolinkurl{PVNP.Discrete.P_WCCD_eq_P_TM}); see the formal verification
 status paragraph below. For the polynomial-time encoder class
 of Definition~\ref{def:wcc_machine}, the inclusion
 $P_{\mathrm{Turing}}\subseteq P_{\mathrm{WCC}}$ also follows trivially,
@@ -1856,135 +1865,125 @@ verifier classes, with polynomial preservation of all relevant costs.
 No such physical-to-discrete resource equivalence or classical
 separation is established here.
 
-\paragraph{Formal verification status (November 2026).}
-For the one-dimensional, radius-one, finite-alphabet, quiescent
-discrete model, both simulation directions and the class equalities of
-Theorem~\ref{thm:uniform-discrete-bijection} are kernel-checked in the
-accompanying Lean project (\texttt{PVNP.Discrete.P\_WCC\_eq\_P\_TM},
-\texttt{PVNP.Discrete.NP\_WCC\_eq\_NP\_TM}). The Lean Turing-to-WCC
-simulation runs in real time (overhead factor one); the WCC-to-Turing
-simulation is an explicit single-tape machine using alternating shifted
-sweeps, with at most $1+(T(n)+1)(n+2T(n)+5)$ steps. For \emph{every fixed radius} $r\ge1$
-(still in dimension one, with the same origin-marked encoding) the
-equalities are kernel-checked as
-\texttt{PVNP.Discrete.P\_WCCR\_eq\_P\_TM} and
-\texttt{PVNP.Discrete.NP\_WCCR\_eq\_NP\_TM}: the simulating machine
-\texttt{WCCR.toTM} keeps the last $2r$ tape symbols in its control state,
-shifts the simulated frame by $r$ per sweep, and uses at most
-$1+(T(n)+1)(n+2r(T(n)+1)+2r+1)$ steps
-(\texttt{WCCR.toTM\_decides}); radius-one machines embed with identical
-runs (\texttt{WCC.toR\_decides}). For lattices $\mathbb{Z}^{1+d}$ with the
-Moore neighbourhood, an exact axis embedding
-(\texttt{WCC.toD\_run}) gives the kernel-checked inclusion
-$P_{\mathrm{TM}}\subseteq P^{(1+d)}_{\mathrm{WCC}}$
-(\texttt{PVNP.Discrete.P\_TM\_subset\_P\_WCCD}). The converse inclusion
-for $d\ge1$ is the classical polynomial simulation of a multidimensional
-automaton sketched in Theorem~\ref{thm:wcc_to_tm}. It was not formalized
-at the original release of this paper. A later repository verification
-(5 November 2026, postdating that release) kernel-checks it:
-\texttt{PVNP.Discrete.P\_WCCD\_eq\_P\_TM} and
-\texttt{PVNP.Discrete.NP\_WCCD\_eq\_NP\_TM} hold for every $d$. The
-simulating machine \texttt{WCCDSweep.toTM} is an ordinary single-tape
-Turing machine with a finite alphabet, compiled from an explicit
-round-trip sweep program with exact step accounting. It stores the
-configuration as a cyclic array of length $M^{d+1}+1$ with
-$M=n+2G+3$. In each round it rotates the neighbourhood tracks by
-$\pm M^k$ using one-cell marker moves, and it restarts with horizons
-$G=0,1,2,\dots$. It decides within
-$(128d+421)\,(n+2T(n)+3)^{2d+3}$ steps
-(\texttt{WCCDSweep.toTM\_decides}). These are discrete model-equivalence
-results only. The radius-$0$ case of
-Definition~\ref{def:wcc_machine} has no communication between cells and
-is excluded from the formal statements.
+\subsection{Current formalization status (7 November 2026)}
+\label{sec:current-lean-status}
+The revised Part II inventory contains 28 statements:
+27 Exact under their amended hypotheses and
+one Restricted, namely the uniformity of the author's
+original two-phase machine $W_M$ (II-10).
+An exact conditional implication does not establish
+its open antecedents.  The statement below supersedes
+the manuscript's earlier dated kernel-status addenda.
 
-Encoders and decoders must be fixed and charged. With an unrestricted
-encoder, every language, including undecidable ones, is decided in time
-zero by a fixed one-cell reader
-(\texttt{PVNP.Discrete.unrestricted\_encoder\_trivializes\_WCC}), and a
-single length-indexed advice bit decides every length-determined language
-(\texttt{PVNP.Discrete.advice\_bit\_trivializes}). An encoder that is
-merely polynomial-time computable may itself compute the decision bit, so
-for the encoder class of Definition~\ref{def:wcc_machine} the equality
-$P^{\mathrm{disc}}_{\mathrm{WCC}}=P_{\mathrm{Turing}}$ also holds for this
-trivial reason; the non-trivial content of
-Theorem~\ref{thm:uniform-discrete-bijection} is the simulation for the
-\emph{fixed} origin-marked encoding
-(\texttt{PVNP.Discrete.P\_WCC\_enc\_id}). The formal transfer theorems
-\texttt{PVNP.Discrete.p\_vs\_np\_discrete\_transfer} and
-\texttt{PVNP.Discrete.p\_vs\_np\_radius\_transfer} show that the discrete
-question $P^{\mathrm{disc}}_{\mathrm{WCC}}
-\stackrel{?}{=} NP^{\mathrm{disc}}_{\mathrm{WCC}}$ is exactly the
-classical one; it is not resolved here.
+\paragraph{Discrete computational model.}
+For the one-dimensional, radius-one finite-state
+quiescent model, the exact classical equalities
+are formalized as
+\nolinkurl{PVNP.Discrete.P_WCC_eq_P_TM} and
+\nolinkurl{PVNP.Discrete.NP_WCC_eq_NP_TM}.
+For every fixed radius $r\ge1$, they are formalized
+by \texttt{P\_WCCR\_eq\_P\_TM} and
+\texttt{NP\_WCCR\_eq\_NP\_TM}.
+In arbitrary dimension, the full finite-state
+equivalences are established by
+\texttt{P\_WCCD\_eq\_P\_TM} and
+\texttt{NP\_WCCD\_eq\_NP\_TM} for every $d$.
+The concrete single-tape sweep interpreter
+\texttt{WCCDSweep.toTM} accounts for all tape
+motion and has an explicit polynomial bound
+$(128d+421)(n+2T(n)+3)^{2d+3}$ for its stated
+input dimensions and first-decision conventions.
+The radius-zero case requires separate treatment
+because no intercell communication occurs.
 
-\paragraph{Formalization notes (repository addendum, 5 November 2026).}
-This addendum records defects in the original October 27 manuscript.
-The main text above now uses the corrected definitions and quantifier ranges;
-the original Lean counterexamples remain available for provenance.
-(i) The original version of Definition~\ref{def:pturing} (``$T_M(n)\le cn^k$
-for all $n$'') forces $T_M(0)=0$, so it defines only $\{\emptyset,\Sigma^*\}$
-(\texttt{PVNP.PartIITuring.P\_Turing\_lit\_eq}). The corrected
-definition above uses $c\max(n,1)^k$, for which the class is $P$
-(\texttt{PVNP.PartIITuring.P\_Turing\_eq\_P\_TM}); the verifier class of
-Definition~\ref{def:npturing} is $NP$ as stated
-(\texttt{PVNP.PartIITuring.NP\_Turing\_eq\_NP\_TM}).
-(ii) The corrected Lemmas~\ref{lem:invariant} and~\ref{lem:one_step}
-hold for all $0\le t\le L(n)$, hence for all $t\le T_M(n)$, which is the range used in
-Lemma~\ref{lem:runtime}. ``For all $t\ge0$'' fails once the head leaves
-$\Lambda_n$ (\texttt{PVNP.PartIITwoPhase.invariant\_literal\_fails}).
-Lemma~\ref{lem:runtime} holds as stated, with first output at time exactly
-$2T_M(x)$ (\texttt{PVNP.PartIITwoPhase.runtime}).
-(iii) For the uniform model of Definition~\ref{def:wcc_machine}, the
-remark that the encoder may compute the decision bit gives the inclusion
-$P_{\mathrm{Turing}}\subseteq P^{\mathrm{disc}}_{\mathrm{WCC}}$ only
-(\texttt{PVNP.PartIIUniform.P\_TM\_subset\_P\_disc}). The reverse
-inclusion for that model requires the simulation of
-Theorem~\ref{thm:wcc_to_tm}, which is not yet kernel-checked for
-general radius and lattice with polynomial-time encoders and decoders.
+\paragraph{Charged uniform model and class equivalence.}
+For the manuscript's uniform box/lattice model,
+including polynomial-time preparation, lattice
+generation and output decoding, Lean states
+\nolinkurl{PartIIUniform.P_disc_eq_P_TM}
+and \nolinkurl{PartIIUniform.NP_disc_eq_NP_TM}.
+The forward inclusion uses a fully charged
+one-cell reader whose polynomial-time encoder
+may run the original Turing decider.
+That observation does \emph{not} establish the
+reverse inclusion.  The separate proof
+\nolinkurl{PartIIUniform.wcc_to_tm}
+simulates the charged lattice, encoder, rounds
+and decoder with an ordinary single-tape
+machine.  Thus the generic equalities are
+statements about a specified finite-state
+model, not the existence of a physical wave
+implementation of the same resource costs.
 
-\paragraph{Uniform readout for the original two-phase construction.}
-For $R=L(n)+1$, enumerate the active sites of $[-L(n),L(n)]$ in
-the canonical order. Use a fixed state code beginning with the tag $1$,
-then the two flags for an ordinary head in $q_{\rm acc}$ and $q_{\rm rej}$.
-Append a one-hot state identity, encoding each identity bit $b$ as $0b$.
-This code is injective and has width $w=3+2|S|$.
-The decoder skips the unary $n$ and its delimiter, accumulates both flags
-over the entire configuration, and returns to the input origin. An
-accepting flag takes precedence over a rejecting flag; if both are absent
-it writes the empty word. On input of length $m$ the first halt occurs
-after $2m+4$ transitions, including writing the blank output terminator.
-Since $m\le n+1+(2L(n)+3)w$, every fixed polynomial window clock
-has a polynomial decoder in $n$. The theorem
-\texttt{PVNP.TwoPhaseDecoder.decM\_fp} applies to every canonical
-configuration, including multiple-head configurations.
+\paragraph{The author's original two-phase machine, II-10.}
+The actual alphabet, two-phase local rules,
+bounded-window invariant and first-answer
+time $T_{W_M}(x)=2T_M(x)$ are formalized as
+\nolinkurl{PartIITwoPhase.two_steps},
+\texttt{invariant\_even}, \texttt{invariant\_odd}
+and \texttt{runtime}, subject to the explicitly
+stated head-in-window range.
+The real canonical decoder is a
+polynomial-time transducer
+(\nolinkurl{TwoPhaseDecoder.decM_fp}),
+with accept taking precedence over reject
+in the declared output encoding.
+The original \emph{complete} polynomial-radius
+window bitmap writer and the full initial
+configuration state serializer still require
+Lean proofs as polynomial-time single-tape
+output machines.  The Phase XIII reference
+writers and exact bitmap statements supply
+supporting constructions, not these missing
+uniform \texttt{FP} witnesses.  Consequently
+the original construction remains Restricted.
 
-\paragraph{Uniform-model completion (repository addendum, 5 November 2026).}
-This later addendum supersedes the last sentence of item~(iii) above.
-For the uniform model of Definition~\ref{def:wcc_machine}, the simulation of
-Theorem~\ref{thm:wcc_to_tm} is kernel-checked
-(\texttt{PVNP.PartIIUniform.wcc\_to\_tm}). For every machine $W$ there are
-an ordinary single-tape Turing machine $M_W$ and a polynomial $q_W$ with the
-following property: if the decoder first outputs a decision $b$ at time
-$T_W(x)$, then $M_W$ first answers $b$ within $q_W(|x|+T_W(x)+1)$ steps.
-$M_W$ runs the lattice algorithm, the encoder and the decoder of $W$ as
-simulated Turing machines, all charged. It computes each synchronous update
-on the flattened box by cyclic rotations by
-$\delta_v=\sum_k(v_k-r)(2R+1)^k$.
-Consequently, for this model the following are kernel-checked:
-Corollary~\ref{cor:pwcc_equals_pturing} (with the bound $c\max(n,1)^k$ of
-item~(i)), Theorem~\ref{thm:np_equiv} and
-Theorem~\ref{thm:uniform-discrete-bijection}
-(\texttt{PVNP.PartIIUniform.P\_disc\_eq\_P\_TM},
-\texttt{PVNP.PartIIUniform.NP\_disc\_eq\_NP\_TM}).
-The verifier class of Definition~\ref{def:wcc_verifier} is formalized with:
-\begin{itemize}
-  \item binary alphabets, the input word encoding the pair $(x,y)$;
-  \item the first-decision acceptance convention of Definition~\ref{def:pwcc};
-  \item the runtime bound $p(N)$ on every pair, as for Turing verifiers
-    (Definition~\ref{def:tm_verifier}).
-\end{itemize}
-Theorem~\ref{thm:tm_to_wcc} for the author's own $W_M$ still lacks a proof
-that $W_M$ is uniform.
+\paragraph{Historical corrections retained in the audit.}
+The original all-time two-phase invariant and
+one-step lemma were false once the head left
+the finite window; the current statements use
+the proven head-in-window time range.
+The original $c n^k$ universal runtime
+bound forced $T_M(0)=0$; its corrected form
+uses $c\max(n,1)^k$ so the class is ordinary
+$\mathbf P$.  The Lean counterexamples to
+the superseded definitions remain available
+as \nolinkurl{invariant_literal_fails},
+\nolinkurl{one_step_literal_fails}, and
+\texttt{P\_Turing\_lit\_eq}.
+This historical provenance is preserved
+in the claim inventory, rather than
+repeated as contradictory current status.
 
+\paragraph{New supporting SAT and physical results.}
+The formal Cook--Levin reduction and exact
+dense-SAT target equivalences are results for
+the classical discrete model.  Restricted
+single-tape crossing bounds, including
+near-quadratic estimates, do not prove
+an unrestricted superpolynomial SAT lower bound.
+The conditional spatial-bandwidth and event
+capacity estimates require the spectral and
+independent-lane assumptions stated in
+Theorems~\ref{thm:spacetime_capacity}
+and~\ref{prop:phys_step_ceiling}.
+A charged uniform physical-to-discrete
+realization and an all-decider physical
+curvature barrier are still unproved.
+
+\paragraph{Kernel verification and release boundary.}
+Some Phase XII and XIII declarations were merged
+while hosted CI jobs failed \emph{before their
+first step}.  The latest full Lean kernel build
+and standard-axiom audit must be repeated
+successfully on the current commit before
+these additions can be called independently
+kernel verified.  PDF compilation does
+not certify Lean proofs.  For dated
+historical statements and the full
+91-claim status, see the maintained
+manuscript inventory and the independent
+source-to-Lean publication reconciliation.
 
 \section{Conclusion}
 

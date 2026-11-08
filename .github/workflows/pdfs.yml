@@ -1,10 +1,12 @@
-name: Build and publish PVNP PDFs
+name: Build consolidated PVNP technical volume
 on:
   push:
     branches: [main]
     paths:
       - 'pvnp/papers/**'
       - 'scripts/build_pdfs.sh'
+      - 'scripts/verify_pdfs.py'
+      - 'scripts/check_manuscript_alignment.py'
       - '.github/workflows/pdfs.yml'
   pull_request:
   workflow_dispatch:
@@ -20,30 +22,42 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
+      - name: Check manuscript claim scope against the 91-claim inventory
+        run: python3 scripts/check_manuscript_alignment.py
       - name: Install LaTeX
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-science texlive-fonts-recommended lmodern poppler-utils
-      - name: Build trilogy and independent supplement
+      - name: Rebuild every revised manuscript and the one-PDF release
+        env:
+          PVNP_PDF_REVIEW_DIR: ${{ runner.temp }}/pvnp-pdf-review
         run: bash scripts/build_pdfs.sh
-      - name: Verify compiled PDFs
+      - name: Verify the actual latest Part I and II PDF text and all bound sources
         run: |
-          test -s pvnp/preprints/part-i-curvature-bounded-wave-computation/paper.pdf
-          test -s pvnp/preprints/part-ii-discrete-wcc-turing-equivalence/paper.pdf
-          test -s pvnp/preprints/part-iii-physical-complexity-reassessment/paper.pdf
-          test -s pvnp/preprints/supplement-fixed-mass-nodal-coercivity/paper.pdf
-          pdfinfo pvnp/preprints/part-i-curvature-bounded-wave-computation/paper.pdf | grep Pages
-          pdfinfo pvnp/preprints/part-ii-discrete-wcc-turing-equivalence/paper.pdf | grep Pages
-          pdfinfo pvnp/preprints/part-iii-physical-complexity-reassessment/paper.pdf | grep Pages
-          pdfinfo pvnp/preprints/supplement-fixed-mass-nodal-coercivity/paper.pdf | grep Pages
-      - name: Commit compiled PDFs
+          python3 scripts/verify_pdfs.py \
+            "${{ runner.temp }}/pvnp-pdf-review/pdfs" \
+            pvnp/preprints/consolidated-wave-computation/paper.pdf
+      - name: Retain compiled manuscripts and LaTeX logs for independent review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pvnp-pdf-source-verification
+          path: ${{ runner.temp }}/pvnp-pdf-review/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Commit one compiled PDF and retire duplicate tracked archive PDFs
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -f pvnp/preprints/*/paper.pdf
+          git add -f pvnp/preprints/consolidated-wave-computation/paper.pdf
+          git rm -f --ignore-unmatch \
+            pvnp/preprints/part-i-curvature-bounded-wave-computation/paper.pdf \
+            pvnp/preprints/part-ii-discrete-wcc-turing-equivalence/paper.pdf \
+            pvnp/preprints/part-iii-physical-complexity-reassessment/paper.pdf \
+            pvnp/preprints/supplement-fixed-mass-nodal-coercivity/paper.pdf
           if ! git diff --cached --quiet; then
-            git commit -m 'build: publish revised PVNP PDFs [skip ci]'
+            git commit -m 'build: publish one consolidated PVNP volume [skip ci]'
             for attempt in 1 2 3 4 5; do
               git fetch origin main
               git rebase origin/main || { git rebase --abort; exit 1; }

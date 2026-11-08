@@ -46,7 +46,6 @@ obligations for a possible restricted-model separation. No unconditional
 separation of classical $P$ and $NP$, nor a proved separation of the
 curvature-bounded physical classes, is claimed here.
 \end{abstract}
-
 \paragraph{New decoder-uniformity obstruction (November 2, 2026).}
 A fixed, language-independent sign map encodes every $n$-bit string into
 $n$ real amplitudes $\pm1$, with squared mass $n$, and the sign receiver
@@ -411,6 +410,19 @@ classical $P$ versus $NP$. No ``if and only if ECT'' criterion is proved
 or assumed here.
 \end{remark}
 
+\paragraph{Updated scope of current computational results.}
+The repository contains a uniform Cook--Levin
+reduction and restricted quadratic-type single-tape
+SAT lower bounds.  Neither a superpolynomial lower
+bound for every correct SAT decider nor a
+uniform physical-to-Turing simulation under the
+specified WCT resource constraints has been proved.
+Formula-dependent phase-energy certificates do
+not provide efficient physical preparation of the
+required field.  The newer results therefore do
+not overturn the conditional physical conclusions
+of this reassessment.
+
 \section{Conclusion: What Is Established and What Remains Open}
 \label{sec:conclusion}
 The corrected statements are: (i) under explicit uniformity, discrete WCC
@@ -430,79 +442,111 @@ physical decider, not only against a particular geometric search protocol.
 Classical $P$ versus $NP$ remains mathematically well posed and unresolved
 by these constructions.
 
-\paragraph{Formal verification status (November 2026).}
-Lemma~\ref{lem:h2bound} and Theorem~\ref{thm:capacity} are
-kernel-checked as Lebesgue-integral inequalities on an arbitrary
-measure space; Proposition~\ref{prop:zero_cost} is checked with the
-genuine Laplacian; Proposition~\ref{prop:highfreq} is checked on the
-periodic cube with the stated constants; Lemma~\ref{lem:boundary_variation},
-Theorem~\ref{thm:influence} and Corollary~\ref{cor:var} are checked
-exactly. In the discrete model the Lean theorem
-\texttt{PVNP.Discrete.P\_TM\_eq\_curvature\_rail} shows that polynomial
-curvature rails exclude no polynomial-time language, and
-\texttt{PVNP.Discrete.curvature\_not\_representation\_invariant} shows
-that the curvature functional, unlike running time, depends on the
-chosen representation. For the discrete classes,
-Theorem~\ref{thm:p-in-np} holds without its closure premise
-(\texttt{PVNP.Discrete.P\_TM\_subset\_NP\_TM} and
-\texttt{PVNP.Discrete.P\_WCC\_subset\_NP\_WCC}, via an explicit
-pair-parsing verifier machine). Proposition~\ref{prop:assignment-P} is
-kernel-checked for a dense CNF encoding by an explicit verifier machine
-(\texttt{PVNP.Discrete.SATV.V\_SAT\_mem\_P\_TM}), which also gives
-CNF-SAT $\in NP$ in both discrete models
-(\texttt{PVNP.Discrete.SATV.SAT\_dense\_mem\_NP\_TM}).
-Theorem~\ref{thm:disc-equiv} is kernel-checked in dimension one for every
-fixed radius $r\ge1$ (\texttt{PVNP.Discrete.P\_WCCR\_eq\_P\_TM},
-\texttt{PVNP.Discrete.NP\_WCCR\_eq\_NP\_TM}); on $\mathbb{Z}^{1+d}$ only the
-inclusion of $P_{\mathrm{TM}}$ is (\texttt{PVNP.Discrete.P\_TM\_subset\_P\_WCCD}).
+\subsection{Current Lean formalization status (7 November 2026)}
+\label{sec:current-lean-status}
+The revised Part III inventory contains 22 entries:
+21 Exact under their explicit hypotheses and one
+Open interpretive remark (III-22), concerning the
+arrow of time.  Exact includes \emph{conditional}
+analytic results whose physical assumptions
+are not independent Lean theorems.
+This unified register supersedes
+the separate dated verification addenda.
 
-\emph{Encoders and decoders.} For the exact constant-amplitude solutions of the
-frozen PDE (\texttt{PVNP.WCTPlaneWave.plane\_wave\_solves}), an unrestricted
-encoder decides every language at constant mass, zero curvature energy and two
-final states (\texttt{PVNP.PhysicalAudit.unrestricted\_encoder\_trivializes});
-so does an unrestricted decoder after a fixed injective encoder
-(\texttt{unrestricted\_decoder\_trivializes}). With polynomial-time indicator
-encoders the constant-cost physical class is exactly $P_{\mathrm{TM}}$
-(\texttt{PhysConst\_polyEnc\_eq\_P\_TM}), and a physical lower bound for SAT over
-any encoder class containing them would prove $P_{\mathrm{TM}}\ne NP_{\mathrm{TM}}$
-(\texttt{physical\_SAT\_lower\_bound\_is\_classical}). A universal physical SAT
-lower bound is therefore at least as hard as the classical problem.
+\paragraph{Analytical and finite mathematical results.}
+The denominator counterexample, the zero
+symbolic-curvature example, the
+H$^2$-to-curvature comparison
+(Lemma~\ref{lem:h2bound}), conditional
+storage and channel-capacity estimates
+(Theorem~\ref{thm:capacity}), and the
+high-frequency periodic-cube example
+(Proposition~\ref{prop:highfreq}) have
+matching scoped Lean results.
+The Boolean-hypercube influence bounds
+and the supplied CNF-assignment
+verifier are also formalized.  The
+supplied assignment test lies in
+polynomial time and is not a
+candidate separation language.
 
-\emph{The flux inequality.} The transport theorem
-$\int_0^T\|\Delta\psi\|_2^2\,dt\ge\delta^4/(\Gamma^4T^3)$ is kernel-checked from
-the instantaneous flux inequality $|J'(t)|\le\Gamma\sqrt{D(t)}$
-(\texttt{PVNP.TransportCalculus.curvature\_time\_lower\_bound}); for the continuum
-PDE the flux inequality itself is derived only analytically (integration by
-parts, \texttt{pvnp/proofs/wct-pde-transport-bound.md}) and remains a premise of
-the Lean theorem. For the method-of-lines discretization on the discrete torus
-$\mathbb{Z}/N\mathbb{Z}$ it is \emph{derived} in Lean: mass and Hamiltonian are
-exactly conserved (\texttt{PVNP.WCTLattice.mass\_conserved},
-\texttt{ham\_conserved}), $\|Az\|^2\le H+\tfrac{3\beta^2}{16\gamma}M$ uniformly in
-$N$ (\texttt{bandpass\_le\_ham}), $J'=2\operatorname{Im}\langle[A,w]z,Az\rangle$
-(\texttt{hasDerivAt\_flux}), and $|J'(t)|\le\Gamma\sqrt{\|Az(t)\|}$ with an explicit
-$\Gamma$ fixed by the initial data (\texttt{lattice\_flux\_inequality}), giving
-the lattice curvature--time bound (\texttt{lattice\_curvature\_time\_bound}).
+\paragraph{Discrete computational equivalence.}
+The finite-state, fixed-radius discrete
+models have explicit Turing simulations,
+including all-dimensional sweep models
+with charged costs.
+The actual uniform lattice model,
+including polynomial-time lattice
+generation, encoding and readout,
+has exact theorems
+\texttt{PartIIUniform.P\_disc\_eq\_P\_TM}
+and \texttt{PartIIUniform.NP\_disc\_eq\_NP\_TM}.
+Neither theorem establishes
+a polynomial-resource physical
+realization by the curvature PDE.
+The original two-phase construction's
+specific uniform writers remain
+Restricted in Part II (II-10).
 
-\emph{Well-posedness.} Global $H^2(\mathbb{R}^2)$ well-posedness, continuous
-dependence and conservation for the same equation are kernel-checked in the
-external library \texttt{rickyjreyes/math} (commit \texttt{30a5ddc},
-\texttt{ReyesMath.Sobolev.global\_wellposed}, \texttt{continuous\_dependence},
-\texttt{conservation}); the bridge \texttt{lean/bridge/MathBridge.lean} proves that
-its operator $(\Delta+k^2)^2$, nonlinearity and energy density coincide with
-the definitions used here ($\kappa=k^2$). These results are on the whole plane;
-the periodic and expanding-torus geometry of the physical model is not covered,
-and no uniform-in-$L$ Poincar\'e constant exists there
-(\texttt{PVNP.SpectralGap.no\_uniform\_poincare}, sharp constant $(2\pi/L)^2$).
-Conditional statements remain conditional.
+\paragraph{Field transport and well-posedness.}
+The transport lower bound is verified
+in Lean \emph{from} the declared
+instantaneous flux inequality; that
+implication does not by itself
+derive the flux inequality for every
+continuum solution.
+For the stated finite torus
+method-of-lines system, Lean derives
+mass and Hamiltonian conservation
+and a finite-dimensional flux
+inequality with explicit assumptions
+(\texttt{PVNP.WCTLattice}).
+For a specified frozen cubic--quintic
+PDE, Phase VI supplies scoped
+$H^2$ periodic-torus well-posedness
+and real-detector flux results
+(\texttt{PVNP.Torus}).
+Those results do not establish
+a universal device-size-independent
+physical computation rail.
+The independent fixed-mass nodal
+supplement has an exact finite
+two-node Lean analogue and a
+separate \emph{analytic} continuum
+compactness proof, not a
+kernel-formalized continuum theorem.
 
-\paragraph{Uniform discrete equivalence (repository addendum, 5 November 2026).}
-This addendum postdates the release. Theorem~\ref{thm:disc-equiv} is now
-kernel-checked for the uniform finite-state, fixed-radius model with
-polynomial-time lattice generation, encoding and decoding, in every
-dimension and for every radius
-(\texttt{PVNP.PartIIUniform.P\_disc\_eq\_P\_TM},
-\texttt{PVNP.PartIIUniform.NP\_disc\_eq\_NP\_TM}). As stated above, this
-discrete equality supplies no physical equality.
+\paragraph{Open physical and complexity boundaries.}
+Unrestricted encoders or decoders
+trivialize physical decision models.
+The measured physical preparation,
+bandwidth, energy, spatial
+precision, and readout costs
+must be specified and charged.
+Neither the finite curvature
+inequalities nor the restricted
+quadratic single-tape SAT lower
+bounds imply a universal
+superpolynomial SAT decision bound.
+The all-algorithm separator and
+locked-expander bounds remain
+unproved.  Classical and physical
+P versus NP remain unresolved.
+
+\paragraph{Verification and publication provenance.}
+Some Phase XII--XIII modules were
+merged after GitHub Actions jobs
+failed before their first step;
+newer source code is not a
+freshly passed kernel and axiom
+audit.  The exact-head Lean checks
+must succeed before a release
+may call those declarations
+independently verified.
+Older statuses remain in Git
+history and the 91-claim ledger.
+Recompiled PDFs are needed
+after the latest source amendments.
 
 \clearpage
 \appendix
