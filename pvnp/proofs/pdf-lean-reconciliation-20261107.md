@@ -3,7 +3,7 @@
 **Date:** 7 November 2026  
 **Scope:** The three revised historical manuscripts, the independent fixed-mass nodal note, the consolidated PVNP release source, and the 91-claim Lean ledger.  
 **Source baseline:** Main commit 4b1b29242baec200fcafa02ec3cae2f29820b15b.  
-**Publication PR:** #61. **Separate unmerged proof PR:** #60.
+**Publication PR:** #61. **Phase XIV proof PR #60:** merged into `main` at `0dc9e5b` on 8 November 2026, with exact-head Lean kernel verification still pending.
 
 ## What was changed in the revised manuscripts
 
@@ -54,7 +54,7 @@ The four refuted source claims remain in the **historical audit**, although the 
 - A formula-dependent logical-energy certificate below 1/8 proves a SAT witness criterion, not fast physical phase preparation or WCT PDE convergence.
 - Fixed-mass nodal coercivity is proved analytically on a fixed torus with explicit restrictions. Its exact finite two-node analogue is in Lean; the full continuum compactness and detector proof are not in Lean.
 - Phase XII and XIII additions were merged into main despite GitHub Actions jobs failing **before checkout and all job steps**. They require fresh full Lean compilation and standard-axiom auditing before being called independently kernel verified.
-- Phase XIV PR #60 remains separate and unmerged; it must not be counted as a completed original lattice FP theorem.
+- Phase XIV PR #60 was squash-merged into `main` at `0dc9e5b`. It establishes an explicit **constant-radius** original lattice MTM writer and complete output-word identity at source level, but has not passed the Lean kernel and axiom audit because GitHub Actions jobs still fail before execution. The general polynomial-radius `FP (originalWindowCode p)` and original input-code `FP` remain unproved; II-10 stays Restricted.
 
 ## PDF chronology and release
 
