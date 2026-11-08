@@ -617,3 +617,15 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhaseWindowShape.site_one_coordinate
 #print axioms PVNP.TwoPhaseWindowShape.original_window_membership_iff
 #print axioms PVNP.TwoPhaseWindowShape.original_window_bit
+
+-- Phase XIV complete window word equivalence and length checks.
+#print axioms PVNP.TwoPhaseWindowWord.bitmap_eq_interior
+#print axioms PVNP.TwoPhaseWindowWord.windowWord_eq_latCode
+#print axioms PVNP.TwoPhaseWindowWord.originalWindowCode_eq_windowWord
+#print axioms PVNP.TwoPhaseWindowWord.windowWord_length
+#print axioms PVNP.TwoPhaseWindowWord.originalWindowCode_length_from_word
+
+-- Phase XIV, original W_M zero-radius explicit MTM writer.
+#print axioms PVNP.TwoPhaseConstantWindow.zeroWindowMTM_outputs
+#print axioms PVNP.TwoPhaseConstantWindow.originalWindowCode_zero
+#print axioms PVNP.TwoPhaseConstantWindow.zeroWindowCode_fp

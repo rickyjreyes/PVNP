@@ -62,6 +62,10 @@ jobs:
         run: lake build PVNP.PhasePenaltyGap
       - name: Check original two-phase W_M canonical window shape
         run: lake build PVNP.TwoPhaseWindowShape
+      - name: Check complete original W_M lattice word theorem
+        run: lake build PVNP.TwoPhaseWindowWord
+      - name: Kernel check original zero-radius lattice FP witness
+        run: lake build PVNP.TwoPhaseConstantWindow
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt
