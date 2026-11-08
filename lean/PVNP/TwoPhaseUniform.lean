@@ -58,7 +58,7 @@ noncomputable def originalUniform (M : MTM) (p : Polynomial ℕ)
     have hk : k = (0 : Fin 1) := Subsingleton.elim _ _
     subst k
     change |i 0| + (1 : ℤ) ≤ ((p.eval n + 1 : ℕ) : ℤ)
-    have hb : |i 0| ≤ (p.eval n : ℤ) := abs_le.mpr hi
+    have hb : |i 0| ≤ ((p.eval n : ℕ) : ℤ) := abs_le.mpr hi
     omega
   enc := fun x i => encM M (p.eval x.length) x (i 0)
   dec := fun n C => decM M (p.eval n) (fun i => C (fun _ => i))
@@ -81,7 +81,7 @@ accept-before-reject priority on arbitrary configurations. -/
 theorem original_decoder (M : MTM) (p : Polynomial ℕ)
     (hWindow : FP (originalWindowCode p)) (hEncoder : FP (originalInputCode M p))
     (n : ℕ) (C : ℤ → PartIITwoPhase.S M) :
-    (originalUniform M p hWindow hEncoder).dec n (fun i => C (i 0)) =
+    (originalUniform M p hWindow hEncoder).dec n (fun i => C (i (0 : Fin 1))) =
       decM M (p.eval n) C := by
   rfl
 
@@ -104,11 +104,12 @@ radius-one rule at every lattice site, not only on reachable configurations. -/
 theorem original_step (M : MTM) (p : Polynomial ℕ)
     (hWindow : FP (originalWindowCode p)) (hEncoder : FP (originalInputCode M p))
     (n : ℕ) (C : ℤ → PartIITwoPhase.S M) (i : ℤ) :
-    (originalUniform M p hWindow hEncoder).step n (fun j => C (j 0))
+    (originalUniform M p hWindow hEncoder).step n (fun j => C (j (0 : Fin 1)))
         (fun _ => i) = stepW M (p.eval n) C i := by
   classical
-  simp [UWCC.step, originalUniform, UWCC.offset,
-    PartIITwoPhase.stepW, window, Pi.add_apply]
+  have hwin : (fun _ : Fin 1 => i) ∈ window (p.eval n) ↔ InWin (p.eval n) i := Iff.rfl
+  simp [UWCC.step, originalUniform, UWCC.offset, PartIITwoPhase.stepW,
+    hwin, Pi.add_apply, sub_eq_add_neg]
 
 /-- Repeated synchronous `UWCC` updates of the original construction agree
 with the author's `runW` on the complete one-dimensional lattice. This is
@@ -119,34 +120,34 @@ theorem original_cfg (M : MTM) (p : Polynomial ℕ)
     (x : List Bool) (t : ℕ) :
     (originalUniform M p hWindow hEncoder).cfg x t =
       (fun i => runW M (p.eval x.length)
-        (encM M (p.eval x.length) x) t (i 0)) := by
+        (encM M (p.eval x.length) x) t (i (0 : Fin 1))) := by
   let W : UWCC := originalUniform M p hWindow hEncoder
   change W.cfg x t = _
   induction t with
   | zero =>
       funext i
-      have hi : i = (fun _ => i 0) := by
+      have hi : i = (fun _ => i (0 : Fin 1)) := by
         funext j
         fin_cases j
         rfl
       rw [hi]
-      change W.init x (fun _ => i 0) = encM M (p.eval x.length) x (i 0)
-      exact original_initial M p hWindow hEncoder x (i 0)
+      change W.init x (fun _ => i (0 : Fin 1)) = encM M (p.eval x.length) x (i (0 : Fin 1))
+      exact original_initial M p hWindow hEncoder x (i (0 : Fin 1))
   | succ t ih =>
       have hs : W.cfg x (t + 1) = W.step x.length (W.cfg x t) := by
         unfold UWCC.cfg
         rw [Function.iterate_succ_apply']
       rw [hs, ih]
       funext i
-      have hi : i = (fun _ => i 0) := by
+      have hi : i = (fun _ => i (0 : Fin 1)) := by
         funext j
         fin_cases j
         rfl
       rw [hi]
       change (originalUniform M p hWindow hEncoder).step x.length
-        (fun j => runW M (p.eval x.length) (encM M (p.eval x.length) x) t (j 0))
-          (fun _ => i 0) =
-        runW M (p.eval x.length) (encM M (p.eval x.length) x) (t + 1) (i 0)
+        (fun j => runW M (p.eval x.length) (encM M (p.eval x.length) x) t (j (0 : Fin 1)))
+          (fun _ => i (0 : Fin 1)) =
+        runW M (p.eval x.length) (encM M (p.eval x.length) x) (t + 1) (i (0 : Fin 1))
       rw [original_step M p hWindow hEncoder]
       rw [runW_succ]
 
@@ -180,12 +181,10 @@ theorem original_uniform_decides (M : MTM) (p : Polynomial ℕ)
   obtain ⟨T, hT, hf⟩ := hTime x
   obtain ⟨hout, hbefore⟩ :=
     runtime M (p.eval x.length) hf (hT.trans (hRadius x.length))
-  refine ⟨_, ⟨2 * T, by omega, ?_, ?_⟩, ?_⟩
-  · rw [original_output]
-    exact hout
+  refine ⟨decide ((M.run (M.init x) T).q = M.qacc), ⟨2 * T, by omega, ?_, ?_⟩, ?_⟩
+  · exact (original_output M p hWindow hEncoder x (2 * T)).trans hout
   · intro s hs
-    rw [original_output]
-    exact hbefore s hs
+    exact (original_output M p hWindow hEncoder x s).trans (hbefore s hs)
   · rw [decide_eq_true_iff, ← hCorrect x, M.accepts_iff_of_firstHalt hf]
 
 /-- The exact width of the state code used by the original construction. -/
@@ -204,6 +203,7 @@ theorem originalWindowCode_length (p : Polynomial ℕ) (x : List Bool) :
     (originalWindowCode p x).length =
       (p.eval x.length + 1) + 1 + (2 * (p.eval x.length + 1) + 1) := by
   simp [originalWindowCode, latCode, boxIdx, side]
+  omega
 
 /-- The original input code is the canonical code of the manuscript's
 initial Turing configuration, not an independently chosen encoder. -/
@@ -224,8 +224,7 @@ theorem stateBits_flatMap_length (M : MTM)
   induction l with
   | nil => simp
   | cons s l ih =>
-      simp [ih, stateBits_length, Nat.succ_mul, Nat.add_comm, Nat.add_left_comm,
-        Nat.add_assoc]
+      simp [ih, stateBits_length, Nat.succ_mul, Nat.add_comm, Nat.add_assoc]
 
 /-- The output length of the original canonical encoder is bounded by
 the box size times the fixed state-code width. This is a *length* theorem,
@@ -284,7 +283,7 @@ theorem originalInputCode_polynomial_length (M : MTM) (p : Polynomial ℕ)
             originalInputCode_length_le M p x
     _ = (originalEncoderLengthPoly M p).eval x.length := by
       simp [originalEncoderLengthPoly, Polynomial.eval_mul,
-        Polynomial.eval_add, Polynomial.eval_C, Polynomial.eval_ofNat]
+        Polynomial.eval_add, Polynomial.eval_ofNat]
       omega
 
 end PVNP.TwoPhaseUniform
