@@ -13,6 +13,7 @@ from __future__ import annotations
 import re
 import subprocess
 import sys
+import unicodedata
 from pathlib import Path
 
 
@@ -50,6 +51,35 @@ def check(pdf: Path, minimum_pages: int, fragments: list[str]) -> int:
     return count
 
 
+def page_texts(pdf: Path) -> list[str]:
+    # Page embedding changes glyph coordinates. Compare text in stream order.
+    raw = command("pdftotext", "-raw", str(pdf), "-")
+    texts = raw.split("\f")
+    if texts[-1].strip():
+        raise AssertionError(f"{pdf}: incomplete page text extraction")
+    return ["".join(unicodedata.normalize("NFKC", t).split()) for t in texts[:-1]]
+
+
+def verify_bound_pages(final: Path, parts: list[Path]) -> None:
+    volume = page_texts(final)
+    cursor = 0
+    for pdf in parts:
+        content = page_texts(pdf)
+        starts = [i for i in range(cursor, len(volume)) if volume[i] == content[0]]
+        if len(starts) != 1:
+            raise AssertionError(f"{pdf.name}: expected one matching title page, found {starts}")
+        start = starts[0]
+        if cursor and start != cursor + 1:
+            raise AssertionError(f"{pdf.name}: expected one divider page before manuscript")
+        for page, standalone in enumerate(content):
+            if start + page >= len(volume) or volume[start + page] != standalone:
+                raise AssertionError(f"{pdf.name}: embedded page {page + 1} differs from standalone PDF")
+        cursor = start + len(content)
+        print(f"PASS: {pdf.name} matches volume pages {start + 1}–{cursor} in order")
+    if cursor != len(volume):
+        raise AssertionError("Unexpected trailing pages after supplement")
+
+
 def main() -> int:
     if len(sys.argv) != 3:
         print("Usage: verify_pdfs.py REVIEW_PDFS_DIR CONSOLIDATED_PDF", file=sys.stderr)
@@ -79,6 +109,7 @@ def main() -> int:
          "Part I", "Part II", "Part III",
          "I-16", "II-10", "III-22", "Withdrawn"],
     )
+    verify_bound_pages(final, [root / name for name in tests])
     if (root / "consolidated.pdf").is_file():
         from hashlib import sha256
         if sha256((root / "consolidated.pdf").read_bytes()).digest() != sha256(final.read_bytes()).digest():

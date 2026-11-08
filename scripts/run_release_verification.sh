@@ -12,6 +12,7 @@ esac
 
 RUN_DIR="${PVNP_RELEASE_VERIFY_DIR:-$ROOT/.release-verification}"
 mkdir -p "$RUN_DIR"
+RUN_DIR="$(cd "$RUN_DIR" && pwd)"
 echo "Verification output: $RUN_DIR"
 python3 "$ROOT/scripts/check_manuscript_alignment.py"
 
@@ -20,7 +21,8 @@ if [[ "$MODE" == --all || "$MODE" == --pdf-only ]]; then
     command -v "$exe" >/dev/null || { echo "Required executable missing: $exe" >&2; exit 1; }
   done
   PVNP_PDF_REVIEW_DIR="$RUN_DIR/pdf" bash "$ROOT/scripts/build_pdfs.sh"
-  python3 "$ROOT/scripts/verify_pdfs.py" "$RUN_DIR/pdf/pdfs"     "$ROOT/pvnp/preprints/consolidated-wave-computation/paper.pdf"     | tee "$RUN_DIR/pdf-validation.txt"
+  python3 "$ROOT/scripts/verify_pdfs.py" "$RUN_DIR/pdf/pdfs"  \
+    "$ROOT/pvnp/preprints/consolidated-wave-computation/paper.pdf" | tee "$RUN_DIR/pdf-validation.txt"
 fi
 
 if [[ "$MODE" == --all || "$MODE" == --lean-only ]]; then
@@ -36,7 +38,8 @@ if [[ "$MODE" == --all || "$MODE" == --lean-only ]]; then
     fi
     lake build PVNP 2>&1 | tee "$RUN_DIR/lean-build.txt"
     lake env lean audit/AxiomAudit.lean 2>&1 | tee "$RUN_DIR/axiom-audit.txt"
-    python3 audit/check_axioms.py audit/AxiomAudit.lean "$RUN_DIR/axiom-audit.txt"       | tee "$RUN_DIR/axiom-audit-check.txt"
+    python3 audit/check_axioms.py audit/AxiomAudit.lean "$RUN_DIR/axiom-audit.txt" \
+      | tee "$RUN_DIR/axiom-audit-check.txt"
   )
 fi
 

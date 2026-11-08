@@ -23,6 +23,7 @@
 \usetikzlibrary{arrows.meta, positioning}
 
 % Hyperlinks
+\usepackage{xurl}
 \usepackage{hyperref}
 
 % Optional: define styling once
@@ -975,10 +976,10 @@ one-cell encoder construction.
 The first-answer identity and its head-window
 hypotheses follow from Lemma~\ref{lem:runtime}
 and the two-phase invariant, formalized by
-\texttt{PartIITwoPhase.runtime} and
-\texttt{PartIITwoPhase.tm\_to\_wcc\_decides}.
+\nolinkurl{PartIITwoPhase.runtime} and
+\nolinkurl{PartIITwoPhase.tm_to_wcc_decides}.
 The original decoder is polynomial-time
-(\texttt{TwoPhaseDecoder.decM\_fp}).
+(\nolinkurl{TwoPhaseDecoder.decM_fp}).
 The remaining writer hypotheses would exactly
 supply the lattice and encoder \texttt{FP}
 fields in the uniform WCC definition, and
@@ -986,7 +987,7 @@ hence give the conditional claim for this $W_M$.
 
 The independent unconditional class inclusion
 uses the \texttt{PartIIUniform.oneCell} construction
-and \texttt{PartIIUniform.P\_TM\_subset\_P\_disc},
+and \nolinkurl{PartIIUniform.P_TM_subset_P_disc},
 whose encoder runs the original Turing decider,
 charges that work, and writes the decision bit.
 These two different proofs must not be conflated.
@@ -1076,7 +1077,7 @@ inclusion $P_{\mathrm{WCC}}\subseteq P_{\mathrm{Turing}}$ in dimension
 $d\ge2$ was supported by the proof sketch of Theorem~\ref{thm:wcc_to_tm}
 only. A later repository verification (5 November 2026) kernel-checks it
 for every dimension by an explicit single-tape machine
-(\texttt{PVNP.Discrete.P\_WCCD\_eq\_P\_TM}); see the formal verification
+(\nolinkurl{PVNP.Discrete.P_WCCD_eq_P_TM}); see the formal verification
 status paragraph below. For the polynomial-time encoder class
 of Definition~\ref{def:wcc_machine}, the inclusion
 $P_{\mathrm{Turing}}\subseteq P_{\mathrm{WCC}}$ also follows trivially,
@@ -1878,8 +1879,8 @@ the manuscript's earlier dated kernel-status addenda.
 For the one-dimensional, radius-one finite-state
 quiescent model, the exact classical equalities
 are formalized as
-\texttt{PVNP.Discrete.P\_WCC\_eq\_P\_TM} and
-\texttt{PVNP.Discrete.NP\_WCC\_eq\_NP\_TM}.
+\nolinkurl{PVNP.Discrete.P_WCC_eq_P_TM} and
+\nolinkurl{PVNP.Discrete.NP_WCC_eq_NP_TM}.
 For every fixed radius $r\ge1$, they are formalized
 by \texttt{P\_WCCR\_eq\_P\_TM} and
 \texttt{NP\_WCCR\_eq\_NP\_TM}.
@@ -1899,14 +1900,14 @@ because no intercell communication occurs.
 For the manuscript's uniform box/lattice model,
 including polynomial-time preparation, lattice
 generation and output decoding, Lean states
-\texttt{PartIIUniform.P\_disc\_eq\_P\_TM}
-and \texttt{PartIIUniform.NP\_disc\_eq\_NP\_TM}.
+\nolinkurl{PartIIUniform.P_disc_eq_P_TM}
+and \nolinkurl{PartIIUniform.NP_disc_eq_NP_TM}.
 The forward inclusion uses a fully charged
 one-cell reader whose polynomial-time encoder
 may run the original Turing decider.
 That observation does \emph{not} establish the
 reverse inclusion.  The separate proof
-\texttt{PartIIUniform.wcc\_to\_tm}
+\nolinkurl{PartIIUniform.wcc_to_tm}
 simulates the charged lattice, encoder, rounds
 and decoder with an ordinary single-tape
 machine.  Thus the generic equalities are
@@ -1918,13 +1919,13 @@ implementation of the same resource costs.
 The actual alphabet, two-phase local rules,
 bounded-window invariant and first-answer
 time $T_{W_M}(x)=2T_M(x)$ are formalized as
-\texttt{PartIITwoPhase.two\_steps},
+\nolinkurl{PartIITwoPhase.two_steps},
 \texttt{invariant\_even}, \texttt{invariant\_odd}
 and \texttt{runtime}, subject to the explicitly
 stated head-in-window range.
 The real canonical decoder is a
 polynomial-time transducer
-(\texttt{TwoPhaseDecoder.decM\_fp}),
+(\nolinkurl{TwoPhaseDecoder.decM_fp}),
 with accept taking precedence over reject
 in the declared output encoding.
 The original \emph{complete} polynomial-radius
@@ -1947,8 +1948,8 @@ bound forced $T_M(0)=0$; its corrected form
 uses $c\max(n,1)^k$ so the class is ordinary
 $\mathbf P$.  The Lean counterexamples to
 the superseded definitions remain available
-as \texttt{invariant\_literal\_fails},
-\texttt{one\_step\_literal\_fails}, and
+as \nolinkurl{invariant_literal_fails},
+\nolinkurl{one_step_literal_fails}, and
 \texttt{P\_Turing\_lit\_eq}.
 This historical provenance is preserved
 in the claim inventory, rather than

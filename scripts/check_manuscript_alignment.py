@@ -37,6 +37,14 @@ def main() -> None:
     for number in (25, 26, 27, 28):
         must(re.search(r"Withdrawn[^\n]*I-" + str(number) + r"\b", p1) is not None,
              f"I-{number} historical inference not explicitly withdrawn")
+    for kind, title in (("proposition", "Curvature-Confinement Complexity Schema in Physical WCC"),
+                        ("theorem", "Conditional Symbolic Separation in Physical WCC")):
+        start = p1.index(r"\begin{" + kind + "}[" + title + "]")
+        end = p1.index(r"\end{" + kind + "}", start)
+        block = p1[start:end]
+        must(r"P_{\rm st}" in block and r"NP_{\rm st}" in block
+             and r"\mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}}" not in block,
+             f"{title}: expected the state-level Lean conclusion")
     for disallowed in (
         r"\\begin\{proposition\}\[Model-Relative Separation in Ideal WCC",
         r"\\begin\{proposition\}\[Formal Model-Theoretic Separation in WCT",
@@ -55,6 +63,8 @@ def main() -> None:
     must("Current Lean formalization status (7 November 2026)" in p3,
          "Missing current Part III status section")
     for p, name in ((p1, "I"), (p2, "II"), (p3, "III")):
+        must(len(re.findall(r"\\(?:sub)?section\*?\{Current (?:Lean )?formalization status", p)) == 1,
+             f"Part {name} must have exactly one current formalization-status section")
         must("Formal verification status (November 2, 2026)" not in p,
              f"Part {name} still has a superseded 2 Nov verification status")
         must("Uniform-model completion (repository addendum" not in p,

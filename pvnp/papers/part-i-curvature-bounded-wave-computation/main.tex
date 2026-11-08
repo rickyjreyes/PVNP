@@ -1,5 +1,7 @@
 \documentclass[12pt]{article}
-\usepackage{authblk}
+\usepackage{authblk,pgfplots,tabularx}
+\pgfplotsset{compat=1.18}
+\usepackage{xurl}
 \usepackage{hyperref}
 % Packages for math
 \usepackage{amsthm, amssymb,amsfonts}
@@ -158,8 +160,8 @@ and $NP_{\mathrm{WCC}}^{\mathrm{disc}}=NP_{\mathrm{TM}}$
 for its explicitly defined finite-state models,
 including the uniform version that charges
 lattice generation, input encoding and readout
-(\texttt{PartIIUniform.P\_disc\_eq\_P\_TM},
-\texttt{PartIIUniform.NP\_disc\_eq\_NP\_TM}).
+(\nolinkurl{PartIIUniform.P_disc_eq_P_TM},
+\nolinkurl{PartIIUniform.NP_disc_eq_NP_TM}).
 The older fixed-radius, origin-marked
 one-dimensional models and higher-dimensional
 sweep simulations have separate verified
@@ -390,38 +392,24 @@ verification $\mathcal{V}$ remains available.
 
 \subsection{Model-Internal Complexity Schema}
 
-To isolate the logical shape of the desired separation, we introduce an
-abstract complexity functional $\mathcal{C}(\psi)$ on WCC states and state
-the following \emph{schema}.
+Fix a state-construction model. Write $P_{\rm st}$ for states a polynomial-time
+machine produces and $NP_{\rm st}$ for states the verification predicate
+accepts. In Lean these sets are \texttt{ConstructionModel.Pst} and
+\nolinkurl{ConstructionModel.NPst}.
 
 \begin{proposition}[Curvature-Confinement Complexity Schema in Physical WCC]
-Let $\psi^*$ be a curvature-locked solution of a confined resonance field
-evolved from a trivial initial state within the rail-constrained WCC model.
-Suppose that:
-\begin{enumerate}
-  \item The symbolic configuration space $\mathcal{S}$ representing $\psi^*$
-        satisfies
-        $\mathcal{C}(\psi^*) > T(n)$ for every polynomial-time achievable
-        bound $T(n)$ on $\mathcal{C}(\cdot)$ over all
-        $\mathcal{O}(n^k)$-time WCC machines obeying WCT rails, and
-  \item There exists a polynomial-time WCC verification procedure
-        $\mathcal{V}$ that confirms curvature-coherent symbolic structure of
-        $\psi^*$ (e.g.\ via local curvature and phase-lock checks).
-\end{enumerate}
-Then $\psi^*$ lies in
-$\mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}} \setminus
- \mathbf{P}_{\mathrm{WCC}}^{\mathrm{phys}}$,
-and hence
-$\mathbf{P}_{\mathrm{WCC}}^{\mathrm{phys}} \neq
- \mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}}$
-\emph{inside the physical WCC model}.
+Let $C$ be a real-valued functional and $\psi^*$ a verifiable state.
+Suppose that for each polynomial-time constructor $M$ there is a number
+$B_M<C(\psi^*)$ such that $C(\phi)\le B_M$ for every state $\phi$ that
+$M$ produces. Then $\psi^*\in NP_{\rm st}\setminus P_{\rm st}$.
 \end{proposition}
-
-This proposition is logically tautological once (1)--(2) are established; the
-substantive content of the curvature-confinement program is to \emph{exhibit}
-a family of states $\psi^*$ and a rigorously defined functional
-$\mathcal{C}(\psi)$ for which (1) holds, e.g.\ via dimensional-lock and
-curvature-scaling lemmas (Section~\ref{sec:dim-lock}).
+\begin{proof}
+If $M$ produced $\psi^*$, its bound would give
+$C(\psi^*)\le B_M<C(\psi^*)$. Verifiability gives membership in
+$NP_{\rm st}$. This proves the state-set conclusion of
+\nolinkurl{PartISeparation.complexity_schema}. Deriving the cost premise
+from the physical dynamics remains open.
+\end{proof}
 
 \subsection{$\psi$-SAT Encoding Scheme (WCC Rail)}
 
@@ -433,16 +421,10 @@ kernel:
 \end{equation}
 with a prescribed WCC encoding from symbolic clauses to localized modes.
 
-Under resonance evolution in the WCC rail, clauses are satisfied if
-corresponding phase regions lock in coherence:
-\[
-\text{SAT-satisfied} \iff \exists x_i : \nabla \phi(x_i) \to 0
-\text{ and } |\psi(x_i)|^2 \to \text{local max}.
-\]
-This encoding transforms logical satisfiability into symbolic phase
-confinement and serves as a Cook--Levin style reduction into a WCC verifier,
-without yet claiming full NP-completeness of the $\psi$-SAT construction.
-
+The proposed physical lock tests whether local phase gradients decay and
+intensity reaches a local maximum. Its equivalence to SAT remains open (I-3).
+The formula-dependent logical penalty in Section~\ref{sec:psi-sat-corrected}
+has a proved witness criterion.
 
 % ============================
 % Complexity Class Definitions
@@ -461,9 +443,9 @@ $\mathcal{O}(|x|^k)$ steps.
 $\mathbf{NP}$ is the class of decision problems for which a proposed solution
 (certificate) can be verified in polynomial time by a deterministic Turing
 machine. Formally, $L \in \mathbf{NP}$ if there exists a polynomial-time
-verifier $V(x, w)$ such that
+verifier $V(x, w)$ and polynomial $q$ such that
 \[
-x \in L \iff \exists w : V(x, w) = 1.
+x \in L \iff \exists w : |w|\le q(|x|)\ \land\ V(x, w) = 1.
 \]
 \end{definition}
 
@@ -499,47 +481,15 @@ are discussed only as conditional corollaries.
 \label{sec:model-separation}
 
 \begin{conjecture}[Symbolic Separation Program in Physical WCC]
-We conjecture that there exist coherent, verifiable wavefields
-$\psi^* \in \mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}}$ that cannot be
-constructed by any deterministic polynomial-time WCC machine obeying WCT
-rails. Equivalently, there should exist
-\[
-\psi^* \in
-\mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}} \setminus
-\mathbf{P}_{\mathrm{WCC}}^{\mathrm{phys}},
-\]
-which would entail the internal separation
-$\mathbf{P}_{\mathrm{WCC}}^{\mathrm{phys}} \neq
- \mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}}$
-within the rail-constrained WCC model. We refer to this as the
-\emph{model-internal separation conjecture}.
+Under one fixed preparation, verification and resource model, there exists
+a coherent target state in $NP_{\rm st}\setminus P_{\rm st}$.
 \end{conjecture}
-
-\paragraph{Heuristic Rationale (Model Level).}
-At a high level, the WCC program proceeds as follows. We construct a
-WCC-level verifier $A(q) \in \mathrm{NC}^1$ for curvature-locked
-configurations, encode SAT clauses into symbolic curvature-locked constraints,
-and aim to establish that:
-\begin{itemize}
-    \item Some wavefields $\psi^*$ satisfy $A(q^*) = 1$
-          (i.e., they are verifiable by a polynomial-time WCC process);
-    \item No deterministic polynomial-time WCC machine can construct $\psi^*$
-          from a trivial initial state $\psi_0$ under the curvature-regulated
-          symbolic update rules while remaining within WCT rails, due to
-          curvature/entropy barriers such as dimensional lock.
-\end{itemize}
-If such non-constructible but verifiable states can be rigorously exhibited,
-this would yield
-$\psi^* \in \mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}} \setminus
-             \mathbf{P}_{\mathrm{WCC}}^{\mathrm{phys}}$
-and hence
-$\mathbf{P}_{\mathrm{WCC}}^{\mathrm{phys}} \ne
- \mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}}$
-at the model level. Turning this heuristic into a complete proof requires
-formalizing and proving the relevant curvature-scaling and dimensional-lock
-lemmas (Section~\ref{sec:dim-lock}); these barriers are isolated below as
-explicit conjectures and open problems rather than assumed as settled facts.
-
+The proposed encoding associates SAT constraints with curvature-locked
+fields. This conjecture requires a verifiable target and a bound against
+every permitted polynomial-time constructor of that target.
+Decision hardness requires one fixed input language and a worst-case bound
+for every correct decider, including those that bypass the target.
+Section~\ref{sec:dim-lock} discusses the proposed geometric obstruction.
 
 \subsection{$\psi$-SAT Encoding and Symbolic Map}
 
@@ -563,66 +513,23 @@ wavefunctions:
 \[
 \psi(x) = \sum_{i}\psi_i(x).
 \]
-Logical satisfiability is then tied to curvature-locked coherence through a
-phase-locking condition:
-\[
-\text{SAT-satisfied} \iff \exists x_i : \nabla\phi(x_i) \rightarrow 0,
-\quad |\psi(x_i)|^2 \rightarrow \max.
-\]
-This encoding provides a direct $\psi$-based analog to the Cook--Levin
-construction, reducing SAT instances into symbolic curvature-locked wave
-states within the WCC framework, again without claiming a completed,
-classical NP-completeness proof for $\psi$-SAT at this stage.
-
+The phase-gradient and local-intensity test proposed here is an open
+physical readout criterion. The uniform Cook--Levin reduction applies
+to the discrete symbolic language.
 
 \subsection{Model-Internal Symbolic Separation}
 
 \begin{theorem}[Conditional Symbolic Separation in Physical WCC]
-Let \(\psi^*\) be a curvature-locked wavefield constructed from a symbolic
-SAT instance via the WCC encoding described above. Suppose that:
-\begin{enumerate}
-    \item The verification operator satisfies
-          \(V_{\mathrm{WCC}}(\psi^*) \in \mathrm{NC}^1\), and hence
-          verifies $\psi^*$ in polynomial time on a rail-constrained WCC
-          machine, i.e.\
-          $\psi^* \in \mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}}$.
-    \item No deterministic polynomial-time WCC machine
-          $M_{\mathrm{WCC}}^{\mathrm{phys}} \in
-           \mathbf{P}_{\mathrm{WCC}}^{\mathrm{phys}}$
-          can construct \(\psi^*\) from an initial trivial state
-          \(\psi_0\) while respecting WCT curvature/energy rails.
-\end{enumerate}
-Then
-\[
-\psi^* \in
-\mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}} \setminus
-\mathbf{P}_{\mathrm{WCC}}^{\mathrm{phys}},
-\quad \text{and therefore} \quad
-\mathbf{P}_{\mathrm{WCC}}^{\mathrm{phys}} \neq
-\mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}}
-\]
-within the physical WCC model.
+Fix the preceding state-construction model. If its verification predicate
+accepts $\psi^*$ and every polynomial-time constructor fails to produce
+$\psi^*$, then $\psi^*\in NP_{\rm st}\setminus P_{\rm st}$ and
+$P_{\rm st}\ne NP_{\rm st}$.
 \end{theorem}
-
-\textbf{Proof Sketch.}
-Assume for contradiction that
-$\psi^* \in \mathbf{P}_{\mathrm{WCC}}^{\mathrm{phys}}$. Then by definition
-there is a polynomial-time rail-constrained WCC machine that constructs
-$\psi^*$ from $\psi_0$ under curvature-regulated symbolic evolution.
-Hypothesis~(2) rules this out by asserting non-constructibility in
-polynomial WCC time under the same rails. Thus
-$\psi^* \notin \mathbf{P}_{\mathrm{WCC}}^{\mathrm{phys}}$
-while remaining verifiable in
-$\mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}}$ by (1), so
-$\psi^* \in
- \mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}} \setminus
- \mathbf{P}_{\mathrm{WCC}}^{\mathrm{phys}}$
-and the separation follows. The substantive content is entirely in
-hypothesis~(2): making this theorem nontrivial requires proving such a
-non-constructibility statement (for example via dimensional-lock and
-curvature-scaling lemmas), which is exactly the open geometric barrier
-isolated in Section~\ref{sec:dim-lock}.
-
+\begin{proof}
+Verification puts $\psi^*$ in $NP_{\rm st}$. Membership in $P_{\rm st}$
+would supply a polynomial-time constructor producing $\psi^*$, contrary to
+the second hypothesis. The two sets therefore differ on $\psi^*$.
+\end{proof}
 
 \subsection{Symbolic Turing Abstraction and Conditional Classical Corollary}
 
@@ -638,25 +545,17 @@ deterministic Turing machine using local symbolic gates that implement the
 curvature-regulated transition rules, defining classes
 $\mathbf{P}_{\mathrm{WCC}}^{\infty}, \mathbf{NP}_{\mathrm{WCC}}^{\infty}$.
 
-\textit{Verifier:} The WCC verifier is compiled into a Boolean circuit in
-$\mathrm{NC}^1$ and simulated by a polynomial-time Turing machine, showing
-that WCC-verifiable states in the ideal model correspond to languages in
-$\mathbf{NP}$ under this abstraction.
-
+\textit{Verifier:} A polynomial-time predicate on uniformly encoded pairs
+$(x,w)$, with a polynomial bound on $|w|$, defines an NP language by
+existential quantification over witnesses. Physical overlap and entropy
+tests additionally require precision and margin estimates.
 
 \subsection{Formal Completion (Cook--Levin Consistency and Conjectural Bridge)}
 
-Within the WCC framework we therefore have:
-\begin{itemize}
-  \item At the \emph{physical} level,
-        all WCC-encoded NP-type languages we consider reduce to symbolic
-        WCT-verifier circuits on rail-constrained photonic devices, and
-        the key non-reachability statements are \emph{postulated} via the
-        dimensional-lock hypothesis (curvature-based nonconstructibility).
-  \item At the \emph{ideal} discrete level, one may conjecture a
-        Turing-equivalent model where ideal WCC machines and classical
-        Turing machines simulate each other with polynomial overhead.
-\end{itemize}
+The defined finite discrete model admits the two polynomial-overhead
+simulations proved in Part II. Extending the classification to a continuum
+PDE requires a uniform resource-preserving simulation of preparation,
+evolution and readout.
 
 \noindent
 \textbf{Conditional Classical Corollary.}
@@ -676,12 +575,7 @@ $\mathbf{P}_{\mathrm{WCC}}^{\infty} \neq
 established by strengthening the geometric barrier program to the ideal
 model, would then imply the classical separation $\mathbf{P} \neq \mathbf{NP}$.
 
-The present work \emph{does not} claim either the internal separation in the
-ideal model or the TM$\leftrightarrow\mathrm{WCC}^{\infty}$ simulation
-equivalence as proved. Instead, it isolates the rail-constrained WCC
-separation as a conjectural program in the physical model and identifies
-ideal TM$\leftrightarrow\mathrm{WCC}^{\infty}$ simulation as an explicit
-bridge hypothesis and target for future work.
+For the defined discrete language classes the simulations are proved. The decision lower bound and the continuum correspondence remain open.
 
 
 
@@ -836,8 +730,7 @@ assignment is therefore an open problem here.
 For a specified admissible representation class, let
 \[
 \dim_{\mathrm{eff}}(\psi):=\min\{k\in\mathbb N:
-\psi\text{ admits the prescribed curvature-regular encoding in }
-\mathbb Z^k\},
+\psi\text{ has the prescribed regular encoding in }\mathbb Z^k\},
 \]
 when the set is nonempty. Any dimension-dependent obstruction must
 also specify the encoding and ambient function spaces.
@@ -998,7 +891,7 @@ two allowed transitions gives
 Thus $\sigma$ is constant, contradicting nonconstancy. This argument
 does not depend on finiteness of $S$; it holds for any codomain.
 The Lean counterpart is
-\texttt{PVNP.PartISeparation.no\_nontrivial\_invariant\_of\_common\_successor}.
+\nolinkurl{PVNP.PartISeparation.no_nontrivial_invariant_of_common_successor}.
 \end{proof}
 
 \begin{remark}[Scope of the collapse and identifiability claims]
@@ -1212,7 +1105,7 @@ or one specified trajectory does not supply such a universal claim.
 
 For a precise model test, consider the frozen constant-field WCT
 submodel formalized in
-\texttt{PVNP.PhysicalAudit.PhysConst}. It has two distinguishable
+\nolinkurl{PVNP.PhysicalAudit.PhysConst}. It has two distinguishable
 readout states, bounded amplitude, and constant physical evolution
 cost. The input-to-amplitude encoder must belong to the charged
 class \texttt{polyEnc}, consisting of indicator encoders of
@@ -1246,9 +1139,9 @@ cost. This proves the conditional membership. If the purported
 universal barrier excluded membership under the same hypothetical
 equality, the two claims would contradict each other. The
 formalizations are
-\texttt{PVNP.PartISeparation.PNP\_SAT\_physically\_constant}
+\nolinkurl{PVNP.PartISeparation.PNP_SAT_physically_constant}
 and
-\texttt{PVNP.PartISeparation.category\_error\_claim\_implies\_classical}.
+\nolinkurl{PVNP.PartISeparation.category_error_claim_implies_classical}.
 \end{proof}
 
 \begin{remark}[Scope and remaining physical obligation]
@@ -1279,11 +1172,13 @@ problem is represented by a target coherent wave state \( \psi^* \), and an
 algorithm corresponds to evolving from a trivial initial state \( \psi_0 \)
 under the Lagrangian dynamics:
 \begin{equation}
-\mathcal{L}_{\text{WCT}} = |\partial_\mu \psi|^2
-+ \kappa \left( \frac{\Box \psi}{\psi + \epsilon e^{-\alpha|\psi|^2}} \right)^2
-+ \theta \left( \frac{\nabla^2 \psi}{\psi + \epsilon e^{-\alpha|\psi|^2}} \right)^2
+\begin{aligned}
+\mathcal{L}_{\text{WCT}} &= |\partial_\mu \psi|^2
++ \kappa \left( \frac{\Box \psi}{\psi + \epsilon e^{-\alpha|\psi|^2}} \right)^2 \\
+&\quad + \theta \left( \frac{\nabla^2 \psi}{\psi + \epsilon e^{-\alpha|\psi|^2}} \right)^2
 + \gamma \left( \frac{\Box \psi}{\psi + \epsilon e^{-\alpha|\psi|^2}} \right)
         \left( \frac{\nabla^2 \psi}{\psi + \epsilon e^{-\alpha|\psi|^2}} \right).
+\end{aligned}
 \end{equation}
 
 Within this model it is natural to introduce WCT/WCC-specific analogs of classical
@@ -1309,9 +1204,10 @@ evolving from a trivial random initial state toward a fixed coherent standing-wa
 solution \( \psi^* \). The evolution followed the curvature–entropy Lagrangian
 above with parameters
 \[
-\alpha = 1.5, \quad \theta = 0.0026, \quad \gamma = 10^{-120}, \quad
-\epsilon = 10^{-6}, \quad \delta = 10^{-8}, \quad dt = 2 \times 10^{-4}, \quad
-\text{steps} = 5000.
+\begin{gathered}
+\alpha=1.5,\quad \theta=0.0026,\quad \gamma=10^{-120},\quad \epsilon=10^{-6},\\
+\delta=10^{-8},\quad dt=2\times10^{-4},\quad \text{steps}=5000.
+\end{gathered}
 \]
 The final overlap with the target state is measured as
 \begin{equation}
@@ -1336,36 +1232,26 @@ For one representative experiment, the final average overlaps were:
 
 \begin{figure}[h]
   \centering
-  \IfFileExists{pvnp_combined.png}{%
-    \includegraphics[width=0.65\textwidth]{pvnp_combined.png}%
-  }{\fbox{\parbox{0.60\textwidth}{\centering\small
-     Original figure not supplied with the LaTeX source.\\
-     Reported values are preserved in the table above.}}}
-  \caption{Final overlap vs.\ grid size \(n\). In this particular WCT rail and parameter choice, the evolution fails to approach the known coherent state \( \psi^* \) as \(n\) grows, despite using the same number of time steps.}
+\begin{tikzpicture}
+    \begin{axis}[width=0.8\linewidth,height=4.6cm,xmin=25,xmax=103,
+      ymin=-0.015,ymax=0.09,xtick={32,64,96},ytick={0,0.02,0.04,0.06,0.08},
+      xlabel={Grid size $n$},ylabel={Average final overlap},
+      scaled y ticks=false,grid=major,grid style={gray!20}]
+      \addplot[only marks,mark=*,mark size=2.2pt]
+        coordinates {(32,0.077637) (64,0.012087) (96,-0.006049)};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{The three tabulated final overlaps after 5000 steps. Each point
+  represents one reported grid size.}
+
 \end{figure}
 
 \subsection{Heuristic Observation: Hard-to-Reach Verifiable States in WCT}
 
-In this numerical setting we observe the following pattern:
-
-\begin{itemize}
-  \item The target state \( \psi^* \) is fixed and easily checked by a local entropy–curvature verifier, so it behaves like a member of \( \mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}} \).
-  \item For increasing grid size \(n\), the same bounded WCT evolution fails to reach high overlap with \( \psi^* \); the evolution appears to \emph{avoid} this verifiable target state under any fixed polynomial-time budget in the physical model.
-\end{itemize}
-
-This behaviour is naturally interpreted as:
-\[
-\text{``in these experiments, } \psi^* \text{ behaves like an element of } 
-\mathbf{NP}_{\mathrm{WCC}}^{\mathrm{phys}} \setminus \mathbf{P}_{\mathrm{WCC}}^{\mathrm{phys}}
-\text{ for the tested scales.''}
-\]
-
-We emphasize that this is an \emph{empirical} and \emph{model-dependent}
-observation, not a theorem. It is consistent with the conjecture that there
-exist verifiable but non-constructible configurations in the physical WCT model,
-but it does not by itself establish any formal separation between classical
-\( \mathbf{P} \) and \( \mathbf{NP} \), nor does it prove any of the
-model-relative conjectures stated above.
+For the three stated grid sizes, the recorded final overlaps decrease
+across runs with the same step budget. These values measure one
+target-preparation procedure. A bound applying to arbitrary SAT
+decision procedures requires a separate argument.
 
 \subsection{Interpretation}
 
@@ -1472,9 +1358,9 @@ For every initial active cell $i\in A$, its radius-$rt$ box has
 $(2rt+1)^d$ lattice sites. The union of these boxes covers
 $\mathrm{supp}_{s_0}(C_t)$; summing their cardinalities gives
 the asserted inequality. The corresponding Lean theorems are
-\texttt{PVNP.PartILocality.supp\_step\_subset},
-\texttt{PVNP.PartILocality.supp\_iterate\_subset}, and
-\texttt{PVNP.PartILocality.support\_poly\_bound}.
+\nolinkurl{PVNP.PartILocality.supp_step_subset},
+\nolinkurl{PVNP.PartILocality.supp_iterate_subset}, and
+\nolinkurl{PVNP.PartILocality.support_poly_bound}.
 \end{proof}
 
 The light-cone \emph{radius} is linear, but the size of the active
@@ -1483,9 +1369,9 @@ quiescent radius-one OR rule starting from one active cell produces
 the square $[-t,t]^2$ of $(2t+1)^2$ active cells, contradicting
 the original linear-in-$t$ volume estimate. This counterexample
 remains formalized as
-\texttt{PVNP.PartILocality.linear\_growth\_false\_d2}.
+\nolinkurl{PVNP.PartILocality.linear_growth_false_d2}.
 Without quiescence, even the one-step support inclusion fails
-(\texttt{PVNP.PartILocality.local\_growth\_needs\_quiescence}).
+(\nolinkurl{PVNP.PartILocality.local_growth_needs_quiescence}).
 Neither locality nor the corrected bound implies a superpolynomial
 decision-time lower bound.
 
@@ -1632,8 +1518,8 @@ The literal description $d_s$ is a candidate in the minimization
 defining $K_D(s)$, hence $K_D(s)\le |d_s|\le |s|+c$.
 Combining this with the assumed strict inequality gives the result.
 The corresponding Lean theorems are
-\texttt{PVNP.PartISeparation.Kc\_le} and
-\texttt{PVNP.PartISeparation.high\_K\_not\_poly\_witness}.
+\nolinkurl{PVNP.PartISeparation.Kc_le} and
+\nolinkurl{PVNP.PartISeparation.high_K_not_poly_witness}.
 The latter uses the polynomial bound with a fixed overhead $c$.
 \end{proof}
 
@@ -1826,7 +1712,7 @@ This allows an NP-style verification / P-style construction analogy:
 
 \begin{table}[h]
 \centering
-\begin{tabular}{|c|c|}
+\begin{tabular}{|p{0.28\linewidth}|p{0.63\linewidth}|}
 \hline
 \textbf{Complexity Concept} & \textbf{WCT Interpretation} \\ \hline
 Input string $x$              & Initial configuration $\psi_0$ \\ \hline
@@ -1892,7 +1778,7 @@ $\mathbf P_{\mathrm{WCC}}^\infty\ne\mathbf{NP}_{\mathrm{WCC}}^\infty$
 from a family of individually verifiable but unreachable target
 states.  This is invalid without a \emph{language-level}
 all-decider lower bound.  The Lean theorem
-\texttt{PartISeparation.state\_separation\_not\_language\_separation}
+\nolinkurl{PartISeparation.state_separation_not_language_separation}
 exhibits an unreachable verifiable state even when the
 decision-language classes coincide.  No separation is proved.
 \end{remark}
@@ -1963,12 +1849,9 @@ for all \(x\) would realize a Cook–Levin style reduction into the WCT framewor
 
 \subsection{Constructibility Barrier under WCT Dynamics}
 
-Preliminary analytic arguments and the numerical evidence of Section~\ref{sec:numerical-pvnp} suggest that, for increasing \(n\),
-\begin{itemize}
-  \item WCT evolution from \( \psi_0 \) may fail to reach certain \( \psi^*_L \) within any fixed polynomial time budget \(T = \mathcal{O}(n^k)\);
-  \item The overlap \( \mathrm{Overlap}(\psi_T, \psi^*_L) \) can decay with \(n\), even for instances known to be satisfiable.
-\end{itemize}
-These observations are consistent with, but do not yet prove, the existence of configurations in \( \mathbf{NP}_{\mathrm{WCT}} \setminus \mathbf{P}_{\mathrm{WCT}} \).
+The numerical examples measure overlap with the specified target
+(Section~\ref{sec:numerical-pvnp}). A correct decider can use an
+alternative representation. A lower bound for every such decider remains open.
 
 \subsection{A Conditional Model-Theoretic Separation Statement}
 
@@ -1978,7 +1861,7 @@ nonconstructible wavefield to
 $\mathbf P_{\mathrm{WCT}}\ne\mathbf{NP}_{\mathrm{WCT}}$
 lacks the necessary uniform input-language and
 decision-procedure quantifiers.  It is refuted by
-\texttt{PartISeparation.state\_separation\_not\_language\_separation}.
+\nolinkurl{PartISeparation.state_separation_not_language_separation}.
 A correctly conditional classical implication would require
 a \emph{proved} uniform decision-language separation and
 a resource-preserving identification of the physical and
@@ -2074,7 +1957,7 @@ Polynomial-time verification of an explicitly supplied
 wavefield, together with nonreachability of a prescribed
 target, does not exhibit a decision language in
 $\mathbf{NP}\setminus\mathbf P$.
-Lean's \texttt{PartISeparation.accepted\_language\_not\_in\_NP\_diff\_P}
+Lean's \nolinkurl{PartISeparation.accepted_language_not_in_NP_diff_P}
 refutes this inference.  The correct open task is an
 all-decider complexity lower bound for a fixed,
 uniformly encoded \emph{decision language}.
@@ -2088,42 +1971,16 @@ physical-to-discrete class identification.
 
 \subsection{Conclusion}
 
-The encoding of WCT into a binary Turing-machine formalism shows that:
-
-\begin{itemize}
-  \item Curvature-regulated wave evolution can be represented within standard discrete computation;
-  \item Any eventual WCT-level separation between verifiability and constructibility
-        (i.e.\ $\mathbf{NP}_{\mathrm{WCT}} \setminus \mathbf{P}_{\mathrm{WCT}}$)
-        can, in principle, be interpreted in classical Turing terms under additional
-        compatibility hypotheses.
-\end{itemize}
-
-In particular, if one could construct a configuration family \( \{\psi^*_n\} \)
-that is verifiable in polynomial time but \emph{provably} not constructible in
-polynomial time by any such machine (so that the associated language
-$L\in\mathbf{NP}\setminus\mathbf{P}$), then by the standard complexity-theoretic implication
-\[
-\exists\, L \in \mathbf{NP}\setminus \mathbf{P} \quad \Rightarrow \quad \mathbf{P} \neq \mathbf{NP},
-\]
-one would obtain a classical separation.
-This manuscript does \emph{not} claim that such a configuration family has been
-fully established; instead, it develops the formal apparatus and model-relative
-barriers needed to state that goal precisely.
+The finite-precision update and readout can be used in a classical
+simulation once their uniform error and cost bounds are proved.
 
 \begin{tcolorbox}[highlight theorem]
-\textbf{Classical implication (recalled).}
-If there exists a decision problem (or configuration family) in \( \mathbf{NP} \setminus \mathbf{P} \), then
-\[
-\boxed{\mathbf{P} \neq \mathbf{NP}}.
-\]
+For one fixed binary language $L$, a polynomial-time verifier with polynomial
+witness length proves $L\in\mathbf{NP}$. If every correct deterministic
+decider for $L$ exceeds every polynomial time bound on arbitrarily long
+inputs, then $L\notin\mathbf P$, and consequently $\mathbf P\ne\mathbf{NP}$.
+The second premise remains open for dense SAT.
 
-The WCT framework aims to realize such an example by constructing a verifiable configuration family
-\( \{\psi^*_n\} \) that satisfies an NC\textsuperscript{1}-implementable symbolic verifier, and for which one can
-\emph{prove}, inside the model, that no deterministic Turing machine (or equivalently, no WCT evolution
-under the chosen encoding) can construct \( \psi^*_n \) in polynomial time, for all $n$.
-At present, this is a \emph{research program}: the nonconstructibility part is formulated as a
-conjectural barrier rather than a completed proof, and all links to classical $P$ vs.\ $NP$ are
-presented as explicitly conditional templates.
 \end{tcolorbox}
 
 
@@ -2278,7 +2135,8 @@ predicate \(A\) (overlap and entropy test) computed using only:
     \item comparator circuits,
     \item and lookup-based logarithms,
 \end{itemize}
-all of which lie in \(\text{AC}^0 \cup \text{NC}^1\).  
+A uniform depth bound for this circuit depends on the precision, table size
+and approximation margins specified below.  
 
 Any machine \(M\) that constructs \(\psi^*_L\) must therefore do so through a sequence of
 polynomial-time symbolic steps beginning from a trivial tape configuration \(\psi_0\).
@@ -2287,7 +2145,7 @@ polynomial-time symbolic steps beginning from a trivial tape configuration \(\ps
 The statement that each prescribed constructor misses some
 target configuration does not imply that the associated
 decision language lies outside $\mathbf P$.  Lean's
-\texttt{PartISeparation.universal\_scope\_counterexample}
+\nolinkurl{PartISeparation.universal_scope_counterexample}
 refutes this inference even for a language in $\mathbf P$.
 A valid classical separation would instead need one
 uniformly encoded decision language and an asymptotic
@@ -2305,9 +2163,9 @@ The intended theoretical path is:
   \item Identify (via curvature/entropy arguments) families of states that are
         verifiable by these circuits but conjecturally not constructible by any
         polynomial-time Turing machine;
-  \item Translate this constructive obstruction into a classical
-        \( \mathbf{NP} \setminus \mathbf{P} \) separation, \emph{if and only if}
-        the PWCC/Turing correspondence is proved exact.
+  \item Establish a superpolynomial decision-time bound for one such
+        language against every correct deterministic decider. A physical
+        bound also requires a resource-preserving transfer.
 \end{itemize}
 
 In this paper we establish only the structure of this roadmap, not the final
@@ -2410,7 +2268,7 @@ The symbolic WCT/PWCC framework:
   \item operates entirely within discrete Turing computation once the encoding is fixed;
   \item admits verifiers plausibly contained in low-depth circuit classes (\(\text{NC}^1\));
   \item offers a geometric mechanism (dimensional lock / entropy barrier) suggesting the
-        existence of configurations in \(\mathbf{NP}_{\mathrm{WCT}} \setminus \mathbf{P}_{\mathrm{WCT}}\).
+        existence of a verifiable state beyond the reach of polynomial-time constructors.
 \end{itemize}
 
 \begin{tcolorbox}[colback=gray!5!white, colframe=black, title=Natural-Proof Barrier Positioning]
@@ -2442,7 +2300,7 @@ articulate the intended positioning.
   \item \textbf{SAT/WCT Encoding:} Give a formal encoding of 3-SAT into wave configurations \(\psi^*\) accepted by \(A\).
   \item \textbf{Constructibility Barrier:} Establish a Kolmogorov/entropy-based lower bound showing some \(\psi^*\) cannot be constructed in polynomial time.
   \item \textbf{Generalization to All Poly-Time Machines:} Lift the barrier from a specific algorithm to all \( M_i \in \mathbf{P} \).
-  \item \textbf{Hierarchy/Separation Step:} Translate the constructibility barrier into a time-hierarchy–style separation \(\mathbf{NP} \setminus \mathbf{P}\).
+  \item \textbf{Hierarchy/Separation Step:} Prove a superpolynomial lower bound against all correct deterministic deciders of one fixed NP language.
 \end{itemize}
 
 This roadmap is intended as a research program rather than a completed proof. If each step can be made precise and rigorously established, the standard implication \( \mathbf{P} \neq \mathbf{NP} \) would follow in the usual way.
@@ -2532,9 +2390,8 @@ witness for an efficiently describable \emph{language} must be shown,
 not inferred from the complexity of an individual prescribed state.
 Generic time-hierarchy theorems do not imply $P\ne NP$.
 
-\begin{landscape}
 \section{Complexity Class Comparison Table in WCT}
-\addcontentsline{toc}{section}{Appendix G: Complexity Class Comparison Table in WCT}
+
 
 Wave Confinement Theory (WCT) provides a physically motivated dynamical model in which 
 computation proceeds through curvature-regulated, locally updated wavefield evolution.
@@ -2544,9 +2401,9 @@ their WCT interpretations.
 
 \begin{table}[H]
 \centering
-\renewcommand{\arraystretch}{1.35}
-\setlength{\tabcolsep}{12pt}
-\begin{tabular}{|p{4cm}|p{5.5cm}|p{7.5cm}|}
+\small\renewcommand{\arraystretch}{1.12}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|p{0.17\linewidth}|X|X|}
 \hline
 \textbf{Classical Complexity Class} 
 & \textbf{Definition} 
@@ -2556,25 +2413,25 @@ their WCT interpretations.
 & Languages decidable in polynomial time by a deterministic Turing machine 
 & States reachable from the trivial field $\psi_0$ via $T = \mathrm{poly}(n)$ 
 curvature-regulated update steps in the PWCC/WCT model 
-(i.e.\ $\mathbf{P}_{\mathrm{WCT}}$) \\ \hline
+(i.e.\ $P_{\rm st}$) \\ \hline
 
 \textbf{NP} 
 & Languages whose certificates are verifiable in polynomial time 
 & Coherent target states $\psi^*$ verifiable by a log-depth symbolic predicate 
 (e.g.\ an $\mathsf{NC}^1$ overlap–entropy check), corresponding to 
-$\mathbf{NP}_{\mathrm{WCT}}$ \\ \hline
+$NP_{\rm st}$ \\ \hline
 
 \textbf{NP} \boldmath$\setminus$ \textbf{P} 
 & NP-verifiable languages not in P (if any; existence unproved) 
 & Conjectural curvature-locked states $\psi^*$ that satisfy a verifier but 
 may be \emph{not reachable} from $\psi_0$ in $\mathrm{poly}(n)$ PWCC evolution 
-(i.e.\ $\psi^* \in \mathbf{NP}_{\mathrm{WCT}} \setminus \mathbf{P}_{\mathrm{WCT}}$) \\ \hline
+(i.e.\ $\psi^* \in NP_{\rm st} \setminus P_{\rm st}$) \\ \hline
 
 \textbf{EXP} 
-& Languages requiring exponential time to solve in the classical model 
+& Languages decidable deterministically in time $2^{\mathrm{poly}(n)}$ 
 & Target states whose symbolic constructive depth under PWCC dynamics grows as 
 $\Omega(2^n)$ (exponential-length curvature paths in configuration space) \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Heuristic correspondence between classical complexity classes and 
 wave-confinement computation in the PWCC/WCT model.  
 These identifications are \emph{model-relative} and are not claimed to imply any 
@@ -2583,14 +2440,11 @@ Turing framework.}
 \end{table}
 
 \noindent
-This table summarizes the conceptual mapping used throughout the paper:
-PWCC models polynomial-time WCT evolution, while $\mathbf{NP}_{\mathrm{WCT}}$ captures
-states verifiable by low-depth symbolic predicates derived from curvature–entropy checks.
-A strict separation $\mathbf{P}_{\mathrm{WCT}} \subsetneq \mathbf{NP}_{\mathrm{WCT}}$
-would be a \emph{WCT-model-level} result only, unless an additional equivalence to
-classical Turing classes is rigorously established.
+The state sets $P_{\rm st}$ and $NP_{\rm st}$ refer to reachability and
+verification. The language classes in the first column classify input
+decision problems. Their comparison requires quantification over deciders.
 
-\end{landscape}
+
 
 
 
@@ -2660,7 +2514,7 @@ pointwise infimum over machines of first-answer times has a linear
 upper bound even on decidable languages with large uniform time
 complexity. A physical cost including machine preparation requires
 separate accounting. The checked statements are
-\texttt{quadratic\_every\_budget} and \texttt{fast\_through\_horizon}.
+\nolinkurl{quadratic_every_budget} and \nolinkurl{fast_through_horizon}.
 
 \subsection{Interface and expander hypotheses}
 \begin{hypothesis}[Uniform interface price]
@@ -2972,7 +2826,7 @@ For explicit $(F,a)$, simply scan the clauses. No enumeration of
 candidate assignments occurs.
 \end{proof}
 \paragraph{Lean scope of I-40.}
-The formal theorem \texttt{SATV.V\_SAT\_mem\_P\_TM}
+The formal theorem \nolinkurl{SATV.V_SAT_mem_P_TM}
 covers the explicit formula-and-assignment verification
 language.  The uniformly generated $F_n$ variant
 requires the separately stated polynomial-time
