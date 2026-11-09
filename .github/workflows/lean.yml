@@ -66,6 +66,8 @@ jobs:
         run: lake build PVNP.TwoPhaseWindowWord
       - name: Kernel check original zero-radius lattice FP witness
         run: lake build PVNP.TwoPhaseConstantWindow
+      - name: Kernel check Phase XV new mathematics explicitly
+        run: lake build PVNP.ContinuumSeparator PVNP.PhaseEnergyTrap PVNP.ToroidalSampling
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt
