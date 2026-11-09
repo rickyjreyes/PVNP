@@ -629,3 +629,19 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhaseConstantWindow.zeroWindowMTM_outputs
 #print axioms PVNP.TwoPhaseConstantWindow.originalWindowCode_zero
 #print axioms PVNP.TwoPhaseConstantWindow.zeroWindowCode_fp
+
+-- Phase XV: supporting results only; exact original I-3, I-31 and I-37 remain Open.
+-- These audit lines require the new modules to be compiled by the Lean kernel;
+-- successful source inspection or a PR merge does not certify them.
+#print axioms PVNP.ContinuumSeparator.chord
+#print axioms PVNP.ContinuumSeparator.interface_price
+#print axioms PVNP.ContinuumSeparator.ramp_below
+#print axioms PVNP.PhaseEnergyTrap.sat
+#print axioms PVNP.PhaseEnergyTrap.energy
+#print axioms PVNP.PhaseEnergyTrap.corner
+#print axioms PVNP.PhaseEnergyTrap.lower
+#print axioms PVNP.PhaseEnergyTrap.escape
+#print axioms PVNP.ToroidalSampling.winding
+#print axioms PVNP.ToroidalSampling.smooth
+#print axioms PVNP.ToroidalSampling.interpolate
+#print axioms PVNP.ToroidalSampling.sat_iff_sampled_zero
