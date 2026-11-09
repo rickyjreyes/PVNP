@@ -30,6 +30,9 @@ def main() -> None:
         release.parent.mkdir(parents=True)
         write(root / 'scripts/run_release_verification.sh', SCRIPT.read_text(encoding='utf8'), True)
         write(root / 'scripts/check_manuscript_alignment.py', 'print("Manuscript scope PASS")\n')
+        # Avoid recursion: the fixture copy of the release script invokes a stub,
+        # while this outer test verifies the actual gate's control flow.
+        write(root / 'scripts/test_release_staging.py', 'print("Hermetic fixture stub PASS")\n')
         write(root / 'scripts/verify_pdfs.py', '''import os, pathlib, sys
 assert pathlib.Path(sys.argv[2]).read_bytes() == b'NEW-VALIDATED-PDF'
 assert os.environ.get('FAIL_PDF_VERIFY') != '1'
