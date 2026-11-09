@@ -180,3 +180,8 @@ import PVNP.TwoPhaseWindowWord
 
 -- Phase XIV: an actual finite-state zero-radius MTM lattice FP witness.
 import PVNP.TwoPhaseConstantWindow
+
+-- Phase XV exploratory supporting theorems, independently audited before promotion.
+import PVNP.ContinuumSeparator
+import PVNP.PhaseEnergyTrap
+import PVNP.ToroidalSampling
