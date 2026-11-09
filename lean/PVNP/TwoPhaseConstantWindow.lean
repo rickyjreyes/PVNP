@@ -49,27 +49,60 @@ def zeroWindowMTM : MTM where
 the tape then satisfies the original output convention. -/
 theorem zeroWindowMTM_outputs (x : List Bool) :
     zeroWindowMTM.Outputs x [true, false, false, true, false] 6 := by
-  refine ⟨6, le_rfl, ⟨Or.inl rfl, fun s hs => ?_⟩, ?_, ?_⟩
-  · interval_cases s
-    · show ¬ ((0 : Fin 7) = 6 ∨ (0 : Fin 7) = 6); decide
-    · show ¬ ((1 : Fin 7) = 6 ∨ (1 : Fin 7) = 6); decide
-    · show ¬ ((2 : Fin 7) = 6 ∨ (2 : Fin 7) = 6); decide
-    · show ¬ ((3 : Fin 7) = 6 ∨ (3 : Fin 7) = 6); decide
-    · show ¬ ((4 : Fin 7) = 6 ∨ (4 : Fin 7) = 6); decide
-    · show ¬ ((5 : Fin 7) = 6 ∨ (5 : Fin 7) = 6); decide
+  let T₀ := zeroWindowMTM.inputTape x
+  let T₁ := Function.update T₀ (0 : ℤ) (some true)
+  let T₂ := Function.update T₁ (1 : ℤ) (some false)
+  let T₃ := Function.update T₂ (2 : ℤ) (some false)
+  let T₄ := Function.update T₃ (3 : ℤ) (some true)
+  let T₅ := Function.update T₄ (4 : ℤ) (some false)
+  let T₆ := Function.update T₅ (5 : ℤ) (none)
+  let cfg := zeroWindowMTM.run (zeroWindowMTM.init x)
+  have c₀ : cfg 0 = ⟨T₀, 0, (0 : Fin 7)⟩ := rfl
+  have c₁ : cfg 1 = ⟨T₁, 1, (1 : Fin 7)⟩ := by
+    change zeroWindowMTM.run (zeroWindowMTM.init x) (0+1) = _
+    rw [MTM.run_succ]; change zeroWindowMTM.step (cfg 0) = _
+    rw [c₀]; rfl
+  have c₂ : cfg 2 = ⟨T₂, 2, (2 : Fin 7)⟩ := by
+    change zeroWindowMTM.run (zeroWindowMTM.init x) (1+1) = _
+    rw [MTM.run_succ]; change zeroWindowMTM.step (cfg 1) = _
+    rw [c₁]; rfl
+  have c₃ : cfg 3 = ⟨T₃, 3, (3 : Fin 7)⟩ := by
+    change zeroWindowMTM.run (zeroWindowMTM.init x) (2+1) = _
+    rw [MTM.run_succ]; change zeroWindowMTM.step (cfg 2) = _
+    rw [c₂]; rfl
+  have c₄ : cfg 4 = ⟨T₄, 4, (4 : Fin 7)⟩ := by
+    change zeroWindowMTM.run (zeroWindowMTM.init x) (3+1) = _
+    rw [MTM.run_succ]; change zeroWindowMTM.step (cfg 3) = _
+    rw [c₃]; rfl
+  have c₅ : cfg 5 = ⟨T₅, 5, (5 : Fin 7)⟩ := by
+    change zeroWindowMTM.run (zeroWindowMTM.init x) (4+1) = _
+    rw [MTM.run_succ]; change zeroWindowMTM.step (cfg 4) = _
+    rw [c₄]; rfl
+  have c₆ : cfg 6 = ⟨T₆, 6, (6 : Fin 7)⟩ := by
+    change zeroWindowMTM.run (zeroWindowMTM.init x) (5+1) = _
+    rw [MTM.run_succ]; change zeroWindowMTM.step (cfg 5) = _
+    rw [c₅]; rfl
+  refine ⟨6, le_rfl, ⟨?_,?_⟩, ?_, ?_⟩
+  · change zeroWindowMTM.Halting (cfg 6).q
+    rw [c₆]; exact Or.inl rfl
+  · intro s hs
+    change ¬ zeroWindowMTM.Halting (cfg s).q
+    interval_cases s <;> simp only [c₀,c₁,c₂,c₃,c₄,c₅,MTM.Halting,zeroWindowMTM] <;> decide
   · intro i hi
-    have hi' : i = 0 ∨ i = 1 ∨ i = 2 ∨ i = 3 ∨ i = 4 := by
-      simp at hi
-      omega
-    rcases hi' with rfl | rfl | rfl | rfl | rfl <;> rfl
-  · rfl
+    change (cfg 6).tape i = _
+    rw [c₆]
+    simp only [List.length_cons, List.length_nil] at hi
+    interval_cases i <;> rfl
+  · change (cfg 6).tape 5 = none
+    rw [c₆]; rfl
 
 /-- The original manuscript definition, not a substitute encoding, gives
 the literal word above when the radius polynomial is zero. -/
 theorem originalWindowCode_zero (x : List Bool) :
     originalWindowCode (0 : Polynomial ℕ) x =
       [true, false, false, true, false] := by
-  simp [originalWindowCode_eq_windowWord, windowWord]
+  rw [originalWindowCode_eq_windowWord, Polynomial.eval_zero]
+  decide
 
 /-- An explicit `FP` certificate for the original lattice writer at
 the zero polynomial, with actual six-step single-tape transitions. -/
