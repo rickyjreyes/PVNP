@@ -629,3 +629,8 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhaseConstantWindow.zeroWindowMTM_outputs
 #print axioms PVNP.TwoPhaseConstantWindow.originalWindowCode_zero
 #print axioms PVNP.TwoPhaseConstantWindow.zeroWindowCode_fp
+
+-- Phase XIV: finite-control literal-output machine and fixed-radius FP witness.
+#print axioms PVNP.TwoPhaseFixedWord.literal_run_prefix
+#print axioms PVNP.TwoPhaseFixedWord.literalMTM_outputs
+#print axioms PVNP.TwoPhaseFixedWord.constantWindowCode_fp
