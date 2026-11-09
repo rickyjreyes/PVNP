@@ -7,6 +7,8 @@ on:
       - 'scripts/build_pdfs.sh'
       - 'scripts/verify_pdfs.py'
       - 'scripts/check_manuscript_alignment.py'
+      - 'scripts/run_release_verification.sh'
+      - 'scripts/test_release_staging.py'
       - '.github/workflows/pdfs.yml'
   pull_request:
   workflow_dispatch:
@@ -24,6 +26,8 @@ jobs:
           persist-credentials: true
       - name: Check manuscript claim scope against the 91-claim inventory
         run: python3 scripts/check_manuscript_alignment.py
+      - name: Test that failed release gates never publish a PDF
+        run: python3 scripts/test_release_staging.py
       - name: Install LaTeX
         run: |
           sudo apt-get update -qq
