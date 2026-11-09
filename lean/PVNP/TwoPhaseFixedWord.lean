@@ -85,7 +85,9 @@ theorem literal_run_prefix (word x : List Bool) :
       · subst i
         simp [Function.update]
       · have hsmall : i < t := by omega
-        simpa [Function.update, by omega : (i : ℤ) ≠ (t : ℤ)] using hp i hsmall
+        have hne : (i : ℤ) ≠ (t : ℤ) := by omega
+        rw [Function.update_ne hne]
+        exact hp i hsmall
 
 /-- After exactly `word.length + 1` transitions, the literal word occupies
 cells 0 through length-1, the next cell is blank, and the head has just
