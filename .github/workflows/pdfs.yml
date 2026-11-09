@@ -28,15 +28,16 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-science texlive-fonts-recommended lmodern poppler-utils
-      - name: Rebuild every revised manuscript and the one-PDF release
+      - name: Rebuild all parts into an isolated candidate PDF
         env:
           PVNP_PDF_REVIEW_DIR: ${{ runner.temp }}/pvnp-pdf-review
+          PVNP_PDF_OUTPUT: ${{ runner.temp }}/pvnp-pdf-staged/paper.pdf
         run: bash scripts/build_pdfs.sh
-      - name: Verify the actual latest Part I and II PDF text and all bound sources
+      - name: Verify the latest Part I and II PDF text and all bound sources
         run: |
           python3 scripts/verify_pdfs.py \
             "${{ runner.temp }}/pvnp-pdf-review/pdfs" \
-            pvnp/preprints/consolidated-wave-computation/paper.pdf
+            "${{ runner.temp }}/pvnp-pdf-staged/paper.pdf"
       - name: Retain compiled manuscripts and LaTeX logs for independent review
         if: always()
         uses: actions/upload-artifact@v4
@@ -48,6 +49,9 @@ jobs:
       - name: Commit one compiled PDF and retire duplicate tracked archive PDFs
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
+          # Promote only the candidate that passed the preceding compiled-PDF checks.
+          install -m 0644 "${{ runner.temp }}/pvnp-pdf-staged/paper.pdf" \
+            pvnp/preprints/consolidated-wave-computation/paper.pdf
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -f pvnp/preprints/consolidated-wave-computation/paper.pdf
