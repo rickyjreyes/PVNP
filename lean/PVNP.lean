@@ -185,3 +185,6 @@ import PVNP.TwoPhaseConstantWindow
 import PVNP.ContinuumSeparator
 import PVNP.PhaseEnergyTrap
 import PVNP.ToroidalSampling
+
+import PVNP.ReadoutPrecision
+import PVNP.SerialWitness

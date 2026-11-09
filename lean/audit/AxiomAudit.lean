@@ -645,3 +645,10 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.ToroidalSampling.smooth
 #print axioms PVNP.ToroidalSampling.interpolate
 #print axioms PVNP.ToroidalSampling.sat_iff_sampled_zero
+#print axioms PVNP.ReadoutPrecision.error_bound
+#print axioms PVNP.ReadoutPrecision.same_sign
+#print axioms PVNP.SerialWitness.sound
+#print axioms PVNP.SerialWitness.complete
+#print axioms PVNP.SerialWitness.dense_iff
+#print axioms PVNP.SerialWitness.call_width
+#print axioms PVNP.SerialWitness.verifier_call_bound
