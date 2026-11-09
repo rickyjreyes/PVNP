@@ -15,6 +15,7 @@ mkdir -p "$RUN_DIR"
 RUN_DIR="$(cd "$RUN_DIR" && pwd)"
 echo "Verification output: $RUN_DIR"
 python3 "$ROOT/scripts/check_manuscript_alignment.py"
+python3 "$ROOT/scripts/test_release_staging.py" | tee "$RUN_DIR/release-staging-test.txt"
 
 # Never overwrite the tracked release PDF until the *whole* --all gate passes.
 # The PDF-only mode intentionally leaves only review artifacts, not a publication.
