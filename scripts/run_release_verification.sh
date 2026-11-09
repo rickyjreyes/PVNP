@@ -16,13 +16,19 @@ RUN_DIR="$(cd "$RUN_DIR" && pwd)"
 echo "Verification output: $RUN_DIR"
 python3 "$ROOT/scripts/check_manuscript_alignment.py"
 
+# Never overwrite the tracked release PDF until the *whole* --all gate passes.
+# The PDF-only mode intentionally leaves only review artifacts, not a publication.
+STAGED_PDF="$RUN_DIR/staged-release/paper.pdf"
 if [[ "$MODE" == --all || "$MODE" == --pdf-only ]]; then
   for exe in pdflatex pdfinfo pdftotext python3; do
     command -v "$exe" >/dev/null || { echo "Required executable missing: $exe" >&2; exit 1; }
   done
-  PVNP_PDF_REVIEW_DIR="$RUN_DIR/pdf" bash "$ROOT/scripts/build_pdfs.sh"
-  python3 "$ROOT/scripts/verify_pdfs.py" "$RUN_DIR/pdf/pdfs"  \
-    "$ROOT/pvnp/preprints/consolidated-wave-computation/paper.pdf" | tee "$RUN_DIR/pdf-validation.txt"
+  mkdir -p "$(dirname "$STAGED_PDF")"
+  rm -f "$STAGED_PDF"
+  PVNP_PDF_OUTPUT="$STAGED_PDF" PVNP_PDF_REVIEW_DIR="$RUN_DIR/pdf" \
+    bash "$ROOT/scripts/build_pdfs.sh"
+  python3 "$ROOT/scripts/verify_pdfs.py" "$RUN_DIR/pdf/pdfs" \
+    "$STAGED_PDF" | tee "$RUN_DIR/pdf-validation.txt"
 fi
 
 if [[ "$MODE" == --all || "$MODE" == --lean-only ]]; then
@@ -50,6 +56,20 @@ if [[ "$MODE" == --all || "$MODE" == --dashboard-only ]]; then
     node pvnp/dashboard/build.js --check
     node pvnp/dashboard/check.js
   ) 2>&1 | tee "$RUN_DIR/dashboard-check.txt"
+fi
+
+if [[ "$MODE" == --all ]]; then
+  # Publish only after PDF, Lean, axiom audit and dashboard gates all succeeded.
+  FINAL_PDF="$ROOT/pvnp/preprints/consolidated-wave-computation/paper.pdf"
+  test -s "$STAGED_PDF" || { echo "Validated release PDF missing" >&2; exit 1; }
+  install -m 0644 "$STAGED_PDF" "$FINAL_PDF"
+  cmp -s "$STAGED_PDF" "$FINAL_PDF" || {
+    echo "Published PDF differs from verified release artifact" >&2
+    exit 1
+  }
+  echo "Promoted independently validated release PDF: $FINAL_PDF"
+elif [[ "$MODE" == --pdf-only ]]; then
+  echo "PDF-only validation passed; staged PDF retained at $STAGED_PDF (not published)."
 fi
 
 echo "All requested $MODE verification gates passed."
