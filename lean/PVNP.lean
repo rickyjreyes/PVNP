@@ -188,3 +188,4 @@ import PVNP.ToroidalSampling
 
 import PVNP.ReadoutPrecision
 import PVNP.SerialWitness
+import PVNP.DenseTableauOutput

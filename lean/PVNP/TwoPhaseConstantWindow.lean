@@ -87,7 +87,7 @@ theorem zeroWindowMTM_outputs (x : List Bool) :
     rw [c₆]; exact Or.inl rfl
   · intro s hs
     change ¬ zeroWindowMTM.Halting (cfg s).q
-    interval_cases s <;> simp only [c₀,c₁,c₂,c₃,c₄,c₅] <;> decide
+    interval_cases s <;> simp only [c₀,c₁,c₂,c₃,c₄,c₅,MTM.Halting,zeroWindowMTM] <;> decide
   · intro i hi
     change (cfg 6).tape i = _
     rw [c₆]

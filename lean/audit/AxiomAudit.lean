@@ -652,3 +652,7 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.SerialWitness.dense_iff
 #print axioms PVNP.SerialWitness.call_width
 #print axioms PVNP.SerialWitness.verifier_call_bound
+#print axioms PVNP.DenseTableauOutput.untouched
+#print axioms PVNP.DenseTableauOutput.bound_of_output
+#print axioms PVNP.DenseTableauOutput.quartic_length
+#print axioms PVNP.DenseTableauOutput.quartic_writer
