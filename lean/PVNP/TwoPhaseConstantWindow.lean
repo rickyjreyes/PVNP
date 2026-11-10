@@ -47,6 +47,7 @@ def zeroWindowMTM : MTM where
 
 /-- The first halting time is six, independent of the incoming word;
 the tape then satisfies the original output convention. -/
+set_option maxHeartbeats 2000000 in
 theorem zeroWindowMTM_outputs (x : List Bool) :
     zeroWindowMTM.Outputs x [true, false, false, true, false] 6 := by
   refine ⟨6, le_rfl, ⟨Or.inl rfl, fun s hs => ?_⟩, ?_, ?_⟩
@@ -69,7 +70,7 @@ the literal word above when the radius polynomial is zero. -/
 theorem originalWindowCode_zero (x : List Bool) :
     originalWindowCode (0 : Polynomial ℕ) x =
       [true, false, false, true, false] := by
-  simp [originalWindowCode_eq_windowWord, windowWord]
+  simp [originalWindowCode_eq_windowWord, windowWord] <;> decide
 
 /-- An explicit `FP` certificate for the original lattice writer at
 the zero polynomial, with actual six-step single-tape transitions. -/
