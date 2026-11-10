@@ -16,13 +16,13 @@ COUNT_BASELINE = {"Exact": 78, "Restricted": 2, "Refuted": 4, "Open": 7}
 def parse_inventory(path: pathlib.Path) -> dict[str, str]:
     claims = {}
     for line in path.read_text(encoding="utf-8").splitlines():
-        item = re.match(r"^\\|\\s*((?:I|II|III)-[0-9]+)\\s*\\|", line)
+        item = re.match(r"^[|][ ]*((?:I|II|III)-[0-9]+)[ ]*[|]", line)
         if not item:
             continue
         claim_id = item.group(1)
         # Do not split on every pipe: TeX math in the inventory includes
         # escaped vertical bars inside a status description.
-        matches = re.findall(r"\\|\\s*(Exact|Restricted|Refuted|Open)\\b", line)
+        matches = re.findall(r"[|][ ]*(Exact|Restricted|Refuted|Open)(?![A-Za-z])", line)
         if not matches:
             raise ValueError(f"Missing status for {claim_id}")
         status = matches[-1]
