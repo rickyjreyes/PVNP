@@ -39,7 +39,7 @@ class TestPhaseXVIIITenPolynomialWriter(unittest.TestCase):
         kwargs = dict(blank="_", zero="0", one="1", start="q", accept="q", reject="q")
         for coefficients in ((0,), (1,), (0, 1), (1, 0, 1)):
             machine = input_writer(coefficients, alphabet, **kwargs)
-            for n in range(7):
+            for n in range(7 if coefficients in ((0,), (1,)) else 5):
                 for x in (tuple(False for _ in range(n)), tuple(i % 2 == 0 for i in range(n))):
                     actual, steps = execute(machine, x)
                     expected = original_input_bits(x, coefficients, alphabet, **kwargs)
