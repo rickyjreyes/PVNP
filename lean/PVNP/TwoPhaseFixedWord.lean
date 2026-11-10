@@ -88,6 +88,8 @@ theorem literal_run_prefix (word x : List Bool) :
           simp [Function.update]
         · have hsmall : i < t := by omega
           have hne : (i : ℤ) ≠ (t : ℤ) := by omega
+          change Function.update C.tape (t : ℤ) (some (word.getD t false)) (i : ℤ) =
+            some (word.getD i false)
           rw [Function.update_of_ne hne]
           exact hp i hsmall
 
