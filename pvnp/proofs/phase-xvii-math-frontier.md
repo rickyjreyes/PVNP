@@ -187,3 +187,56 @@ until the external exact-head build is supplied.
 
 A successful build and clean audit certify the *statements actually
 written*, not the original physical assumptions or novelty.
+
+
+## Phase XVII continuation: II-10 normalization and charged runtime evidence
+
+Further mathematical code has been added directly to the original
+`lean/PVNP/TwoPhasePolynomialWriter.lean` implementation.
+
+- `writer_coeffs_length` establishes that the assembler's coefficient
+  list has exactly `p.natDegree+1` entries, independent of input.
+- `writer_clock_poly_bound` imports the existing explicit polynomial
+  domination theorem to bound the assembler's *numeric* Horner radius.
+  This does **not** bound the time taken by its Turing-machine execution.
+- `expected_window_length_from_writer_clock` connects the actual
+  polynomial clock to the exact canonical window-word length `3L+5`.
+- `partiallyNormalizedTape` models the actual sentinel plus raw/work
+  input cells during the initial left-to-right normalization.
+- `partially_normalized_current_input` identifies the next raw
+  input symbol, and `partially_normalized_extend` expresses the exact
+  single-cell tape update as an inductive extension of that prefix.
+- `normalize_raw_rule` checks the original program's concrete
+  `MTM.δ` transition on a raw symbol.
+
+These are **Lean proof candidates pending exact-head compilation**.
+They are a useful foundation for an eventual induction proving the
+full machine run through the normalization phase. They do not yet
+establish an unconditional `MTM.Outputs` or `FP` theorem.
+
+The independent `writer_trace_audit.py` tests the actual Python
+`Writer.transition`, checking address validity, head moves, left-end
+sentinel preservation, normalization count, first halt, terminal blank,
+exact output and the recorded polynomial step bound. The corresponding
+`test_phase_xvii_writer_trace.py` exercises both original writers on
+bounded inputs and several Horner coefficient families.
+
+**Verification status:** The new trace tests have not been run on the
+exact branch head; their results must not be represented as passing
+without terminal output. The new Lean code requires the pinned
+Lean build and permitted-axiom audit. The authoritative claim ledger
+remains unchanged.
+
+The remaining II-10 operational obligations, in order, are:
+
+1. Prove the concrete `MTM.run` normalization induction using the
+   local prefix-update lemma.
+2. Prove `ret`/left-end and `scan` control invariants for all
+   emitted instructions.
+3. Prove the Horner accumulator's actual write-counter invariants for
+   all polynomial coefficients and input lengths.
+4. Prove exact window and original encoder output tapes at first halt.
+5. Prove a polynomial upper bound on the counted transitions and
+   discharge the `FP` assumptions of `originalUniform`.
+
+No part of this work establishes P versus NP.
