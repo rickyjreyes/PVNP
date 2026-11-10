@@ -8,35 +8,35 @@
     "Open": 7,
     "total": 91
   },
-  "percent_meaning": "Subjective research work estimates, not verified claim completion, likelihood of truth, proof coverage or CI pass; do not auto-increment on commits.",
+  "percent_meaning": "Provisional subjective research progress; not verified proof coverage, probability of truth or original-claim completion. Phase XVII candidates do not imply status promotion.",
   "status_authority": "pvnp/proofs/manuscript-lean-inventory.md",
   "targets": [
     {
       "id": "II-10",
       "title": "Original polynomial-time writers",
       "status": "Restricted",
-      "research_estimate_percent": 70,
+      "research_estimate_percent": 72,
       "metric": "research",
-      "evidence": "Fixed-radius machines, two-phase decoder, and generic discrete equivalence compile on merged PR #66.",
-      "remaining_obligation": "Prove MTM.Outputs and polynomial first-halt bound for the unrestricted polynomial window and original input encoders."
+      "evidence": "Verified fixed-radius writer and canonical two-phase semantics. Phase XVII adds original assembler polynomial-radius arithmetic, a proposed whole-configuration input normalization run proof, and unexecuted adversarial control/trace tests. The Phase XVII Lean candidates are not kernel-checked at the current head.",
+      "remaining_obligation": "After verifying normalization, prove actual Horner counter and output serialization invariants, exact MTM.Outputs and first halt, and polynomial transition counts for both original polynomial writers."
     },
     {
       "id": "I-31",
       "title": "Uniform separator theorem",
       "status": "Open",
-      "research_estimate_percent": 35,
+      "research_estimate_percent": 38,
       "metric": "research",
-      "evidence": "SeparatorPrice.mesh_price, contrast_of_readout and binary_cut_price apply under explicit contrasts.",
-      "remaining_obligation": "Establish trajectory-uniform readout contrast and coercivity for the frozen continuum model, or find countermodel."
+      "evidence": "Phase XVI abstract scaling no-go was locally Lean-built. Phase XVII proposes a sharp normalized detector-contrast ray price but has not established a uniform frozen-PDE trajectory estimate.",
+      "remaining_obligation": "Prove a uniform positive cost-to-contrast ratio for all admissible physical trajectories under the frozen WCT model, or construct an admissible counterexample."
     },
     {
       "id": "I-37",
       "title": "General toroidal locking",
       "status": "Open",
-      "research_estimate_percent": 25,
+      "research_estimate_percent": 32,
       "metric": "research",
-      "evidence": "ToroidalDiagonal odd/even finite ring lemmas verified; Phase XVI arbitrary-CNF logical torus candidate awaits Lean build.",
-      "remaining_obligation": "Realize arbitrary CNF in an admissible WCT physical torus with sound/complete robust readout and charged costs."
+      "evidence": "Finite formula-dependent torus logically encodes SAT. Phase XVII adds a polynomial-size Boolean-cell CNF encoding with charged equality constraints and a finite-row Lean candidate; physical realization and locality remain unproved.",
+      "remaining_obligation": "Prove nearest-neighbor admissible WCT physical toroidal realization, robust bidirectional locking correspondence, convergence and charged construction/readout bounds."
     },
     {
       "id": "I-32",
