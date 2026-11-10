@@ -188,3 +188,6 @@ import PVNP.TwoPhaseFixedWord
 -- These imports enforce compilation without claiming the unrestricted FP proofs.
 import PVNP.TwoPhasePolynomialWriter
 import PVNP.TwoPhasePrefixWriter
+
+-- III-22: precise time-reversal no-go theorems; no complexity-class implication.
+import PVNP.ArrowOfTime
