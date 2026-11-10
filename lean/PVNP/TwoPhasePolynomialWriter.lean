@@ -349,6 +349,28 @@ noncomputable def windowMTM (p : Polynomial ℕ) : MTM :=
 noncomputable def inputMTM (M : MTM) (p : Polynomial ℕ) : MTM :=
   build (assemble (coeffs p) (inputBody M))
 
+/-- The actual original polynomial *window writer* completes the
+normalization phase with the exact preserved input prefix, regardless
+of the polynomial's coefficients. The output phase is still open. -/
+theorem windowMTM_normalization (p : Polynomial ℕ)
+    (x : List Bool) (k : ℕ) (hk : k ≤ x.length) :
+    (windowMTM p).run ((windowMTM p).init x) (k + 2) =
+      (⟨partiallyNormalizedTape x k, (k : ℤ), .normalize⟩ :
+        (windowMTM p).Cfg) := by
+  exact run_normalizes_input (assemble (coeffs p) windowBody) x k hk
+
+/-- The actual original polynomial *input-code writer* has the identical
+verified normalization prefix. This does not assume the correctness
+of its later Horner-counter or serialization phases. -/
+theorem inputMTM_normalization (M : MTM) (p : Polynomial ℕ)
+    (x : List Bool) (k : ℕ) (hk : k ≤ x.length) :
+    (inputMTM M p).run ((inputMTM M p).init x) (k + 2) =
+      (⟨partiallyNormalizedTape x k, (k : ℤ), .normalize⟩ :
+        (inputMTM M p).Cfg) := by
+  exact run_normalizes_input
+    (assemble (coeffs p) (inputBody M)) x k hk
+
+
 /-- A common polynomial bound from the sweep accounting. The remaining
 low-level proof concerns these two fixed MTMs and this output convention. -/
 noncomputable def timePoly (cs : List ℕ) (w : ℕ) : Polynomial ℕ :=
