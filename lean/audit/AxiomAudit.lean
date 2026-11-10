@@ -634,3 +634,7 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhaseFixedWord.literal_run_prefix
 #print axioms PVNP.TwoPhaseFixedWord.literalMTM_outputs
 #print axioms PVNP.TwoPhaseFixedWord.constantWindowCode_fp
+-- Phase XVI finite toroidal CNF lock: kernel-checked logical equivalence and obstruction.
+#print axioms PVNP.ToroidalCNFLock.rows_constant
+#print axioms PVNP.ToroidalCNFLock.lock_iff_satisfiable
+#print axioms PVNP.ToroidalCNFLock.bare_ring_lock_not_sat_classifier
