@@ -253,6 +253,31 @@ theorem normalize_raw_rule (program : ℕ × Array Inst) (b : Bool) :
       (.normalize, .work {emptyCell with inp := some b}, .R) := by
   rfl
 
+/-- A full *actual machine-configuration* normalization step preserves
+the entire tape invariant and advances the head exactly one position.
+This is the inductive successor obligation for the polynomial writer's
+normalization phase. The initial sentinel state and the later Horner
+and output phases remain separate proof obligations. -/
+theorem normalization_cfg_step (program : ℕ × Array Inst)
+    (x : List Bool) (k : ℕ) (hk : k < x.length) :
+    (build program).step
+      ⟨partiallyNormalizedTape x k, (k : ℤ), .normalize⟩ =
+      (⟨partiallyNormalizedTape x (k + 1), ((k + 1 : ℕ) : ℤ), .normalize⟩ :
+        (build program).Cfg) := by
+  change
+    (⟨Function.update (partiallyNormalizedTape x k) (k : ℤ)
+        ((build program).δ (.normalize)
+          (partiallyNormalizedTape x k (k : ℤ))).2.1,
+       (k : ℤ) +
+        ((build program).δ (.normalize)
+          (partiallyNormalizedTape x k (k : ℤ))).2.2.shift,
+       ((build program).δ (.normalize)
+          (partiallyNormalizedTape x k (k : ℤ))).1⟩ :
+        (build program).Cfg) = _
+  rw [partially_normalized_current_input x k hk, normalize_raw_rule]
+  simp only [Mv.shift, partially_normalized_extend, Nat.cast_add, Nat.cast_one]
+
+
 noncomputable def windowMTM (p : Polynomial ℕ) : MTM :=
   build (assemble (coeffs p) windowBody)
 
