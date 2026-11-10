@@ -188,3 +188,6 @@ import PVNP.TwoPhaseFixedWord
 -- These imports enforce compilation without claiming the unrestricted FP proofs.
 import PVNP.TwoPhasePolynomialWriter
 import PVNP.TwoPhasePrefixWriter
+-- Phase XVI: a formula-dependent finite toroidal CNF consistency equivalence.
+-- Logical constraint system only; does not establish physical I-37.
+import PVNP.ToroidalCNFLock
