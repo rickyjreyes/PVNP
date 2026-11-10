@@ -114,6 +114,12 @@ are compiled candidates, but not the unrestricted II-10 FP theorem.
 
 ## Verification
 
+A new `test_phase_xvi_polynomial_writer.py` probes the II-10 Python
+candidate against adversarial input lengths, radius-zero boundaries and
+higher-degree Horner coefficient lists. These added II-10 tests have
+**not yet been executed against the exact GitHub PR head**, and passing
+them would not establish the unrestricted machine-output theorem.
+
 Two new Lean modules are included in `lean/PVNP.lean` and their principal
 theorems in `lean/audit/AxiomAudit.lean`. They require exact-head
 Lean 4.23.0 compilation and allowed-axiom checks. A successful Python
