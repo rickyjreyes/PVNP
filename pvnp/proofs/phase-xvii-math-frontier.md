@@ -283,3 +283,37 @@ lake build PVNP
 lake env lean audit/AxiomAudit.lean > axiom-audit.txt
 python audit/check_axioms.py audit/AxiomAudit.lean axiom-audit.txt
 ```
+
+
+## Build repair after exact-head Windows verification (2026-11-10)
+
+Windows Git Bash log for commit `d05fa3a4ef39052ae5ad53d7b66be070e5d9e76f`
+shows both Python groups pass: 9 Phase XVI tests and 12 Phase XVII
+tests. The status reconciliation also passes (78/2/4/7).
+
+The Lean targeted build still failed in
+`PVNP.TwoPhasePolynomialWriter`. Diagnostics:
+
+- `run_normalizes_input`: the base-case tactic for
+  `mark_to_normalize` was underindented, causing a remaining goal
+  and later spurious `succ`/parser errors. The indentation is
+  corrected without weakening the theorem.
+- `timePoly_eval`: `Polynomial.eval_listSum` was not a
+  Lean 4.23.0 declaration. Replaced the invalid lemma reference
+  with an explicit induction on the list of natural coefficients,
+  using the existing `List.sum_cons` and `Polynomial.eval_add`
+  simplifications.
+
+These fixes are **not yet kernel-verified**. A clean targeted build,
+full build, and permitted-axiom validator are still necessary, and the
+PR remains draft. The original II-10 complete `MTM.Outputs` and
+polynomial-time claims remain unresolved. The claim ledger is unchanged.
+
+Recheck from any current working directory using the exact head:
+
+```bash
+cd /r/RESEARCH/PVNP/PVNP-PhaseXVII
+git fetch origin
+git switch --detach origin/research/phase-xvii-math-frontier-20261110
+bash scripts/verify_phase_xvii.sh
+```
