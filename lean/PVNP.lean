@@ -191,3 +191,5 @@ import PVNP.TwoPhasePrefixWriter
 -- Phase XVI: a formula-dependent finite toroidal CNF consistency equivalence.
 -- Logical constraint system only; does not establish physical I-37.
 import PVNP.ToroidalCNFLock
+-- Phase XVI: abstract amplitude-scaling obstruction (I-31 necessary assumption).
+import PVNP.SeparatorAmplitude
