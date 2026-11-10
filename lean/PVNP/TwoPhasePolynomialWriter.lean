@@ -138,6 +138,36 @@ theorem writer_clock_eq_polynomial (p : Polynomial ℕ) (n : ℕ) :
   rw [h]
   exact CookLevin.Gen.horner_hcoeffs p n
 
+/-- The assembled machine has a fixed finite coefficient program depending
+only on p; its list length does not depend on the runtime input length. -/
+theorem writer_coeffs_length (p : Polynomial ℕ) :
+    (coeffs p).length = p.natDegree + 1 := by
+  simp [coeffs]
+
+/-- The *numeric radius clock* of the original finite-control assembler
+has a classical polynomial upper bound for every natural input length.
+This uses the already kernel-checked polynomial domination theorem.
+This is NOT a statement about the MTM execution time. -/
+theorem writer_clock_poly_bound (p : Polynomial ℕ) :
+    ∃ c k : ℕ, 1 ≤ c ∧ 1 ≤ k ∧
+      ∀ n : ℕ, CookLevin.Gen.horner ((coeffs p).reverse) n ≤
+        c * (max n 1) ^ k := by
+  obtain ⟨c, k, hc, hk, hb⟩ := PartIITuring.poly_le_cmax p
+  exact ⟨c, k, hc, hk, fun n => by
+    rw [writer_clock_eq_polynomial]
+    exact hb n⟩
+
+/-- The canonical output word has exactly the length prescribed by the
+original writer's numeric Horner clock. No statement about actual
+tape writes or their first-halting time is inferred. -/
+theorem expected_window_length_from_writer_clock
+    (p : Polynomial ℕ) (x : List Bool) :
+    (TwoPhaseUniform.originalWindowCode p x).length =
+      3 * CookLevin.Gen.horner ((coeffs p).reverse) x.length + 5 := by
+  rw [TwoPhaseWindowWord.originalWindowCode_length_from_word,
+    writer_clock_eq_polynomial]
+
+
 
 private def windowBody : Asm ℕ := do
   let endWord ← putI .finish
