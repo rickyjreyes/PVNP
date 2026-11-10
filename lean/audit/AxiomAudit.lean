@@ -660,3 +660,5 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhasePolynomialWriter.start_to_mark
 #print axioms PVNP.TwoPhasePolynomialWriter.mark_to_normalize
 #print axioms PVNP.TwoPhasePolynomialWriter.run_normalizes_input
+#print axioms PVNP.TwoPhasePolynomialWriter.windowMTM_normalization
+#print axioms PVNP.TwoPhasePolynomialWriter.inputMTM_normalization
