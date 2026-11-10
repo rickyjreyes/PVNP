@@ -175,7 +175,7 @@ finite-control tape-machine execution implements that Horner value. -/
 theorem writer_clock_eq_polynomial (p : Polynomial ℕ) (n : ℕ) :
     CookLevin.Gen.horner ((coeffs p).reverse) n = p.eval n := by
   have h : (coeffs p).reverse = CookLevin.Gen.hcoeffs p := by
-    simp [coeffs, CookLevin.Gen.hcoeffs, List.reverse_map]
+    simp [coeffs, CookLevin.Gen.hcoeffs, List.map_reverse]
   rw [h]
   exact CookLevin.Gen.horner_hcoeffs p n
 
@@ -289,8 +289,7 @@ theorem initialized_sentinel_tape (program : ℕ × Array Inst)
     simp [partiallyNormalizedTape]
   · have hnot : ¬ (0 ≤ i ∧ i < (0 : ℤ)) := by omega
     rw [Function.update_of_ne hi]
-    simp only [partiallyNormalizedTape, if_neg hi, if_neg hnot]
-    rfl
+    simp [MTM.inputTape, build, partiallyNormalizedTape, hi, hnot]
 
 /-- The machine's first transition moves left to install the sentinel.
 The input tape remains unchanged. -/
@@ -334,7 +333,8 @@ theorem run_normalizes_input (program : ℕ × Array Inst) (x : List Bool) :
       rw [MTM.run_succ]
       change (build program).step
         ((build program).run ((build program).init x) (0 + 1)) = _
-      rw [MTM.run_succ, MTM.run_zero, start_to_mark, mark_to_normalize]
+      rw [MTM.run_succ, MTM.run_zero, start_to_mark]
+    simpa only [Nat.cast_zero] using mark_to_normalize program x
   | succ k ih =>
       intro hk
       rw [show (k + 1) + 2 = (k + 2) + 1 by omega,
@@ -389,8 +389,11 @@ theorem timePoly_eval (cs : List ℕ) (w n : ℕ) :
       let S := n + R + (w + 3) * (2 * R + 3) + 8
       let Q := (cs.length + 4) * (12 + 8 * w) * (R + 1) + (1 + cs.sum) + 10
       (Q + 4) * (2 * S + 6) := by
+  have hsum :
+      Polynomial.eval n ((cs.map (fun c : ℕ => (c : Polynomial ℕ))).sum) = cs.sum := by
+    simp [Polynomial.eval_listSum]
   simp [timePoly, Polynomial.eval_add, Polynomial.eval_mul,
     Polynomial.eval_pow, Polynomial.eval_C, Polynomial.eval_X,
-    Polynomial.eval_one, Polynomial.eval_ofNat]
+    Polynomial.eval_one, Polynomial.eval_ofNat, hsum]
 
 end PVNP.TwoPhasePolynomialWriter
