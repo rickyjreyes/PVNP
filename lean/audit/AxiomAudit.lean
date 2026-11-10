@@ -640,3 +640,9 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.ToroidalCNFLock.bare_ring_lock_not_sat_classifier
 -- Phase XVI: abstract quadratic amplitude-scaling obstruction.
 #print axioms PVNP.SeparatorAmplitude.no_uniform_quadratic_price
+
+-- Phase XVII: finite-row logical torus and normalized contrast theorems.
+#print axioms PVNP.ToroidalFiniteRows.rowLock_iff_satisfiable
+#print axioms PVNP.ToroidalFiniteRows.finiteTrace_length
+#print axioms PVNP.SeparatorNormalizedRay.contrast_forces_quadratic_price
+#print axioms PVNP.SeparatorNormalizedRay.price_is_sharp
