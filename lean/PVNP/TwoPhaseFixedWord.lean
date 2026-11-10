@@ -79,15 +79,17 @@ theorem literal_run_prefix (word x : List Bool) :
         rw [hδ, hh]
         rfl
       rw [hs]
-      refine ⟨rfl, by omega, ?_⟩
-      intro i hi
-      by_cases heq : i = t
-      · subst i
-        simp [Function.update]
-      · have hsmall : i < t := by omega
-        have hne : (i : ℤ) ≠ (t : ℤ) := by omega
-        rw [Function.update_ne hne]
-        exact hp i hsmall
+      refine ⟨rfl, ?_, ?_⟩
+      · change (t : ℤ) + 1 = ((t + 1 : ℕ) : ℤ)
+        omega
+      · intro i hi
+        by_cases heq : i = t
+        · subst i
+          simp [Function.update]
+        · have hsmall : i < t := by omega
+          have hne : (i : ℤ) ≠ (t : ℤ) := by omega
+          rw [Function.update_of_ne hne]
+          exact hp i hsmall
 
 /-- After exactly `word.length + 1` transitions, the literal word occupies
 cells 0 through length-1, the next cell is blank, and the head has just
@@ -118,7 +120,8 @@ theorem literalMTM_outputs (word x : List Bool) :
       exact Or.inl rfl
     · intro t ht
       have hle : t ≤ word.length := by omega
-      have hqT := (literal_run_prefix word x t hle).1
+      have hqT : ((M.run (M.init x) t).q).val = t := by
+        exact (literal_run_prefix word x t hle).1
       have hne : ((M.run (M.init x) t).q).val ≠ word.length + 1 := by omega
       intro hhalt
       rcases hhalt with ha | hr
@@ -129,7 +132,7 @@ theorem literalMTM_outputs (word x : List Bool) :
     · intro i hi
       change Function.update C.tape (word.length : ℤ) none (i : ℤ) =
         some (word.getD i false)
-      rw [Function.update_ne (by omega : (i : ℤ) ≠ (word.length : ℤ))]
+      rw [Function.update_of_ne (by omega : (i : ℤ) ≠ (word.length : ℤ))]
       exact hp i hi
     · change Function.update C.tape (word.length : ℤ) none (word.length : ℤ) = none
       simp
@@ -140,8 +143,10 @@ theorem constantWindowCode_fp (L : ℕ) :
     FP (originalWindowCode (Polynomial.C L)) := by
   refine ⟨literalMTM (windowWord L), Polynomial.C ((windowWord L).length + 1), ?_⟩
   intro x
-  have hword : originalWindowCode (Polynomial.C L) x = windowWord L := by
-    simpa using originalWindowCode_eq_windowWord (Polynomial.C L) x
-  simpa [hword] using literalMTM_outputs (windowWord L) x
+  change (literalMTM (windowWord L)).Outputs x
+    (originalWindowCode (Polynomial.C L) x)
+    ((Polynomial.C ((windowWord L).length + 1)).eval x.length)
+  simpa only [originalWindowCode_eq_windowWord, Polynomial.eval_C] using
+    literalMTM_outputs (windowWord L) x
 
 end PVNP.TwoPhaseFixedWord
