@@ -646,3 +646,4 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.ToroidalFiniteRows.finiteTrace_length
 #print axioms PVNP.SeparatorNormalizedRay.contrast_forces_quadratic_price
 #print axioms PVNP.SeparatorNormalizedRay.price_is_sharp
+#print axioms PVNP.TwoPhasePolynomialWriter.writer_clock_eq_polynomial
