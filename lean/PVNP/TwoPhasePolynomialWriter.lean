@@ -277,6 +277,71 @@ theorem normalization_cfg_step (program : ℕ × Array Inst)
   rw [partially_normalized_current_input x k hk, normalize_raw_rule]
   simp only [Mv.shift, partially_normalized_extend, Nat.cast_add, Nat.cast_one]
 
+/-- The initial input tape with the left-end marker installed is the
+zero-length normalized prefix. -/
+theorem initialized_sentinel_tape (program : ℕ × Array Inst)
+    (x : List Bool) :
+    Function.update ((build program).inputTape x) (-1 : ℤ) .leftEnd =
+      partiallyNormalizedTape x 0 := by
+  funext i
+  by_cases hi : i = (-1 : ℤ)
+  · subst i
+    simp [partiallyNormalizedTape]
+  · have hnot : ¬ (0 ≤ i ∧ i < (0 : ℤ)) := by omega
+    rw [Function.update_of_ne hi]
+    simp only [partiallyNormalizedTape, if_neg hi, if_neg hnot]
+    rfl
+
+/-- The machine's first transition moves left to install the sentinel.
+The input tape remains unchanged. -/
+theorem start_to_mark (program : ℕ × Array Inst) (x : List Bool) :
+    (build program).step ((build program).init x) =
+      (⟨(build program).inputTape x, (-1 : ℤ), .mark⟩ :
+        (build program).Cfg) := by
+  simp [MTM.step, MTM.init, build, step, Mv.shift, Function.update_eq_self]
+
+/-- The second transition installs the left-end marker and returns
+the head to cell zero in the normalization control state. -/
+theorem mark_to_normalize (program : ℕ × Array Inst) (x : List Bool) :
+    (build program).step
+      (⟨(build program).inputTape x, (-1 : ℤ), .mark⟩ :
+        (build program).Cfg) =
+      (⟨partiallyNormalizedTape x 0, (0 : ℤ), .normalize⟩ :
+        (build program).Cfg) := by
+  change
+    (⟨Function.update ((build program).inputTape x) (-1 : ℤ) .leftEnd,
+       (-1 : ℤ) + 1, .normalize⟩ : (build program).Cfg) = _
+  rw [initialized_sentinel_tape program x]
+  rfl
+
+/-- Complete inductive *prefix-normalization execution* of the actual
+single-head MTM for arbitrary input length. At time k+2, with k input
+cells processed, the head is at k and the complete tape is exactly
+the one defined by `partiallyNormalizedTape`.
+
+This completes only the initialization/normalization phase. The
+return scans, Horner counters, and output writer remain unproved. -/
+theorem run_normalizes_input (program : ℕ × Array Inst) (x : List Bool) :
+    ∀ k : ℕ, k ≤ x.length →
+      (build program).run ((build program).init x) (k + 2) =
+        (⟨partiallyNormalizedTape x k, (k : ℤ), .normalize⟩ :
+          (build program).Cfg) := by
+  intro k
+  induction k with
+  | zero =>
+      intro _
+      change (build program).run ((build program).init x) (1 + 1) = _
+      rw [MTM.run_succ]
+      change (build program).step
+        ((build program).run ((build program).init x) (0 + 1)) = _
+      rw [MTM.run_succ, MTM.run_zero, start_to_mark, mark_to_normalize]
+  | succ k ih =>
+      intro hk
+      rw [show (k + 1) + 2 = (k + 2) + 1 by omega,
+        MTM.run_succ, ih (by omega)]
+      exact normalization_cfg_step program x k (by omega)
+
+
 
 noncomputable def windowMTM (p : Polynomial ℕ) : MTM :=
   build (assemble (coeffs p) windowBody)
