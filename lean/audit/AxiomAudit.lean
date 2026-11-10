@@ -638,3 +638,5 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.ToroidalCNFLock.rows_constant
 #print axioms PVNP.ToroidalCNFLock.lock_iff_satisfiable
 #print axioms PVNP.ToroidalCNFLock.bare_ring_lock_not_sat_classifier
+-- Phase XVI: abstract quadratic amplitude-scaling obstruction.
+#print axioms PVNP.SeparatorAmplitude.no_uniform_quadratic_price
