@@ -41,6 +41,24 @@ class TestWriterCertificates(unittest.TestCase):
                     expected = original_input_bits(x, cs, alphabet, **kwargs)
                     certify_execution(machine, x, expected)
 
+    def test_polynomial_budget_expression_and_monotonicity(self):
+        # Mirrors the fully evaluated Nat-polynomial expression in
+        # PVNP.TwoPhasePolynomialWriter.timePoly_eval. The numbers are
+        # tests of arithmetic agreement, not proof of an execution bound.
+        for cs in ((), (0,), (1,), (0, 1), (3, 0, 2), (1, 1, 1, 1)):
+            machine = window_writer(cs)
+            prev = -1
+            for n in range(18):
+                radius_upper = (1 + sum(cs)) * (n + 1) ** len(cs)
+                span = (n + radius_upper
+                        + (machine.width + 3) * (2 * radius_upper + 3) + 8)
+                sweeps = ((len(cs) + 4) * (12 + 8 * machine.width)
+                          * (radius_upper + 1) + (1 + sum(cs)) + 10)
+                expected = (sweeps + 4) * (2 * span + 6)
+                self.assertEqual(machine.step_bound(n), expected)
+                self.assertGreaterEqual(expected, prev)
+                prev = expected
+
     def test_malformed_control_rejected(self):
         broken = Writer((Instruction("take", (), (0, 1)),), 0, (), 1)
         with self.assertRaisesRegex(ValueError, "Dangling"):
