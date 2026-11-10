@@ -1,4 +1,4 @@
-import PVNP.TwoPhaseConstantWindow
+import PVNP.TwoPhaseWindowWord
 
 /-!
 # Phase XIV: general fixed-word original MTM output transducer
@@ -135,8 +135,7 @@ theorem literalMTM_outputs (word x : List Bool) :
       simp
 
 /-- The canonical original window writer is a genuine constant-time
-single-tape transducer for every *fixed* radius L. This is a strict
-extension of `zeroWindowCode_fp`, not the arbitrary-polynomial result. -/
+single-tape transducer for every *fixed* radius L. This covers all fixed radii, including the zero case, but not arbitrary-polynomial radii. -/
 theorem constantWindowCode_fp (L : ℕ) :
     FP (originalWindowCode (Polynomial.C L)) := by
   refine ⟨literalMTM (windowWord L), Polynomial.C ((windowWord L).length + 1), ?_⟩
