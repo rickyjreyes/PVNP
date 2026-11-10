@@ -80,6 +80,11 @@ jobs:
         run: |
           python3 -m unittest discover -s pvnp/tests -p 'test_phase_xvi_*.py'
           python3 pvnp/phase_xvi/status.py --check
+      - name: Phase XVII kernel-check coefficient bridge, finite rows, normalized contrast
+        run: lake build PVNP.TwoPhasePolynomialWriter PVNP.ToroidalFiniteRows PVNP.SeparatorNormalizedRay
+      - name: Phase XVII finite Boolean torus and II-10 control certificates
+        working-directory: .
+        run: python3 -m unittest discover -s pvnp/tests -p 'test_phase_xvii_*.py'
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt
