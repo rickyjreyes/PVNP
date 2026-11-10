@@ -49,6 +49,47 @@ private def addr (p : Array Inst) (i : ℕ) : Fin (p.size+1) := ⟨min i p.size,
 private def takeMark (c : Cell) (k : Mark) : Sym :=
   .work {c with flags := Function.update c.flags k false}
 
+/-! ### Normalization phase: local operational proof obligations
+
+These lemmas are about the *actual* finite-control transducer's tape
+symbols and transition rule, not an abstract polynomial-output function.
+They isolate the induction step needed for its still-unproved full
+`MTM.Outputs` correctness theorem. -/
+
+/-- During normalization, positions before k contain work symbols retaining
+their exact input bits; the remaining positions are still raw input bits.
+The fixed left-end sentinel sits at -1. -/
+def partiallyNormalizedTape (x : List Bool) (k : ℕ) (i : ℤ) : Sym :=
+  if i = -1 then .leftEnd
+  else if 0 ≤ i ∧ i < (k : ℤ) then
+    .work {emptyCell with inp := some (x.getD i.toNat false)}
+  else if 0 ≤ i ∧ i < (x.length : ℤ) then
+    .raw (x.getD i.toNat false)
+  else .blank
+
+/-- The next input cell remains unchanged until its normalization step. -/
+theorem partially_normalized_current_input (x : List Bool) (k : ℕ)
+    (hk : k < x.length) :
+    partiallyNormalizedTape x k (k : ℤ) = .raw (x.getD k false) := by
+  simp [partiallyNormalizedTape, hk, show (k : ℤ) ≠ -1 by omega]
+
+/-- Replacing the current raw symbol with the marked work symbol extends
+the correctly normalized prefix by exactly one cell, with all other
+tape positions unchanged. -/
+theorem partially_normalized_extend (x : List Bool) (k : ℕ) :
+    Function.update (partiallyNormalizedTape x k) (k : ℤ)
+      (.work {emptyCell with inp := some (x.getD k false)}) =
+    partiallyNormalizedTape x (k + 1) := by
+  funext i
+  by_cases hi : i = (k : ℤ)
+  · subst i
+    simp [partiallyNormalizedTape]
+  · rw [Function.update_of_ne hi]
+    unfold partiallyNormalizedTape
+    split_ifs <;> first | rfl | omega
+
+
+
 private def step (p : Array Inst) (entry : ℕ) :
     State p.size → Sym → State p.size × Sym × Mv
   | .start, s => (.mark, s, .L)
@@ -203,6 +244,14 @@ private def build (program : ℕ × Array Inst) : MTM where
   q0 := .start
   qacc := .done
   qrej := .done
+
+/-- The actual MTM normalization transition preserves the input bit
+and turns the raw symbol into a marked work symbol. This is the exact
+single-step rule needed by the prefix-normalization induction. -/
+theorem normalize_raw_rule (program : ℕ × Array Inst) (b : Bool) :
+    (build program).δ (.normalize) (.raw b) =
+      (.normalize, .work {emptyCell with inp := some b}, .R) := by
+  rfl
 
 noncomputable def windowMTM (p : Polynomial ℕ) : MTM :=
   build (assemble (coeffs p) windowBody)
