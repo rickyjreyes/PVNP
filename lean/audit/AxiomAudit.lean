@@ -634,3 +634,9 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhaseFixedWord.literal_run_prefix
 #print axioms PVNP.TwoPhaseFixedWord.literalMTM_outputs
 #print axioms PVNP.TwoPhaseFixedWord.constantWindowCode_fp
+
+-- III-22: model-relative reversibility and no-global-strict-arrow theorems.
+#print axioms PVNP.ArrowOfTime.involution_monotone_eq
+#print axioms PVNP.ArrowOfTime.involution_no_global_strict_increase
+#print axioms PVNP.ArrowOfTime.time_reversal_monotone_eq
+#print axioms PVNP.ArrowOfTime.time_reversal_no_global_strict_increase
