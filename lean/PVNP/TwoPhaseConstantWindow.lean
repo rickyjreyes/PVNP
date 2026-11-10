@@ -1,9 +1,9 @@
-import PVNP.TwoPhaseWindowWord
+import PVNP.TwoPhaseFixedWord
 
 /-!
 # Phase XIV: actual MTM output machine for the constant original W_M window
 
-This is a *real* finite-state, single-tape output writer under the Part II
+This is a specialization of the generic finite-state, single-tape output writer under the Part II
 `MTM.Outputs` convention.  It handles every input, including the empty
 word, when the radius polynomial is identically zero.  The target word is
 `[1,0,0,1,0]`, namely the complete canonical code
@@ -23,47 +23,19 @@ namespace PVNP.TwoPhaseConstantWindow
 open PVNP.PartIITuring PVNP.PartIIUniform
 open PVNP.TwoPhaseUniform PVNP.TwoPhaseWindowWord
 
-/-- Six transitions overwrite cells 0..4 with the canonical word and
-write the required blank at cell 5.  The seventh control state is halting.
-Remaining input cells to the right are irrelevant to `MTM.Shows`. -/
-def zeroWindowMTM : MTM where
-  Q := Fin 7
-  Γ := Option Bool
-  blank := none
-  inp := some
-  inp_inj := Option.some_injective _
-  inp_ne_blank := fun _ => Option.some_ne_none _
-  δ q a := match q with
-    | 0 => (1, some true, .R)
-    | 1 => (2, some false, .R)
-    | 2 => (3, some false, .R)
-    | 3 => (4, some true, .R)
-    | 4 => (5, some false, .R)
-    | 5 => (6, none, .R)
-    | _ => (6, a, .R)
-  q0 := 0
-  qacc := 6
-  qrej := 6
+/-- The fixed five-bit zero-radius machine.  It uses the same one-cell
+finite-control transitions as the generic literal writer, specialized to
+the original canonical zero-radius W_M output. -/
+def zeroWindowMTM : MTM :=
+  TwoPhaseFixedWord.literalMTM [true, false, false, true, false]
 
-/-- The first halting time is six, independent of the incoming word;
-the tape then satisfies the original output convention. -/
-set_option maxHeartbeats 2000000 in
+/-- First-halt output for every input, including the empty input. This is
+a specialization of the general fixed-word transition proof, rather than
+a six-step full-tape normalization by definitional equality. -/
 theorem zeroWindowMTM_outputs (x : List Bool) :
     zeroWindowMTM.Outputs x [true, false, false, true, false] 6 := by
-  refine ⟨6, le_rfl, ⟨Or.inl rfl, fun s hs => ?_⟩, ?_, ?_⟩
-  · interval_cases s
-    · show ¬ ((0 : Fin 7) = 6 ∨ (0 : Fin 7) = 6); decide
-    · show ¬ ((1 : Fin 7) = 6 ∨ (1 : Fin 7) = 6); decide
-    · show ¬ ((2 : Fin 7) = 6 ∨ (2 : Fin 7) = 6); decide
-    · show ¬ ((3 : Fin 7) = 6 ∨ (3 : Fin 7) = 6); decide
-    · show ¬ ((4 : Fin 7) = 6 ∨ (4 : Fin 7) = 6); decide
-    · show ¬ ((5 : Fin 7) = 6 ∨ (5 : Fin 7) = 6); decide
-  · intro i hi
-    have hi' : i = 0 ∨ i = 1 ∨ i = 2 ∨ i = 3 ∨ i = 4 := by
-      simp at hi
-      omega
-    rcases hi' with rfl | rfl | rfl | rfl | rfl <;> rfl
-  · rfl
+  simpa only [zeroWindowMTM] using
+    (TwoPhaseFixedWord.literalMTM_outputs [true, false, false, true, false] x)
 
 /-- The original manuscript definition, not a substitute encoding, gives
 the literal word above when the radius polynomial is zero. -/
