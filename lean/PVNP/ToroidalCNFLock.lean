@@ -17,7 +17,7 @@ In particular it does not close the original I-37 claim or imply P ≠ NP.
 
 namespace PVNP.ToroidalCNFLock
 
-open PVNP.PartI PVNP.CrossingSAT
+open PVNP.PartI PVNP.CrossingSAT PVNP.ToroidalDiagonal
 
 /-- A row is a Boolean assignment to the logical variables.  Consecutive
 rows agree, the last row closes onto the first, and row j satisfies clause j.
