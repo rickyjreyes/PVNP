@@ -66,6 +66,13 @@ jobs:
         run: lake build PVNP.TwoPhaseWindowWord
       - name: Kernel check original zero-radius lattice FP witness
         run: lake build PVNP.TwoPhaseConstantWindow
+      - name: Check all fixed-radius original W_M lattice-writer FP candidates
+        run: lake build PVNP.TwoPhaseFixedWord
+      - name: Check original polynomial and prefix transducers (II-10 candidates)
+        run: lake build PVNP.TwoPhasePolynomialWriter PVNP.TwoPhasePrefixWriter
+      - name: Run original two-phase transducer regression
+        working-directory: .
+        run: python3 -m unittest discover -s pvnp/tests -p 'test_two_phase_tape_writer.py'
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt

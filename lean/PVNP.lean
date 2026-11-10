@@ -180,3 +180,11 @@ import PVNP.TwoPhaseWindowWord
 
 -- Phase XIV: an actual finite-state zero-radius MTM lattice FP witness.
 import PVNP.TwoPhaseConstantWindow
+
+-- Phase XIV: literal-output finite-control MTM and constant-radius W_M FP candidate.
+import PVNP.TwoPhaseFixedWord
+
+-- Phase XV: original polynomial-radius and fixed-prefix writer proof candidates.
+-- These imports enforce compilation without claiming the unrestricted FP proofs.
+import PVNP.TwoPhasePolynomialWriter
+import PVNP.TwoPhasePrefixWriter

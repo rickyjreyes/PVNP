@@ -8,6 +8,7 @@ on:
       - 'pvnp/two_phase_reference.py'
       - 'pvnp/two_phase_state_serializer.py'
       - 'pvnp/tests/test_two_phase_state_serializer.py'
+      - 'pvnp/tests/test_two_phase_fixed_word.py'
       - '.github/workflows/split-sat-regression.yml'
   pull_request:
     paths:
@@ -33,6 +34,9 @@ jobs:
 
       - name: Original two-phase W_M canonical-writer reference checks
         run: python -m unittest discover -s pvnp/tests -p 'test_two_phase_reference.py'
+
+      - name: Generic finite-state fixed-window writer cross-checks
+        run: python -m unittest discover -s pvnp/tests -p 'test_two_phase_fixed_word.py'
 
       - name: Original two-phase W_M one-hot state serializer checks
         run: python -m unittest discover -s pvnp/tests -p 'test_two_phase_state_serializer.py'
