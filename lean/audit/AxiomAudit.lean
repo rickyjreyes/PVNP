@@ -650,3 +650,4 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhasePolynomialWriter.writer_coeffs_length
 #print axioms PVNP.TwoPhasePolynomialWriter.writer_clock_poly_bound
 #print axioms PVNP.TwoPhasePolynomialWriter.expected_window_length_from_writer_clock
+#print axioms PVNP.ToroidalFiniteRows.lock_rows_constant
