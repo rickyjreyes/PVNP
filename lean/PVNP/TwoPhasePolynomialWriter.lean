@@ -334,7 +334,7 @@ theorem run_normalizes_input (program : ℕ × Array Inst) (x : List Bool) :
       change (build program).step
         ((build program).run ((build program).init x) (0 + 1)) = _
       rw [MTM.run_succ, MTM.run_zero, start_to_mark]
-    simpa only [Nat.cast_zero] using mark_to_normalize program x
+      simpa only [Nat.cast_zero] using mark_to_normalize program x
   | succ k ih =>
       intro hk
       rw [show (k + 1) + 2 = (k + 2) + 1 by omega,
@@ -389,11 +389,16 @@ theorem timePoly_eval (cs : List ℕ) (w n : ℕ) :
       let S := n + R + (w + 3) * (2 * R + 3) + 8
       let Q := (cs.length + 4) * (12 + 8 * w) * (R + 1) + (1 + cs.sum) + 10
       (Q + 4) * (2 * S + 6) := by
-  have hsum :
-      Polynomial.eval n ((cs.map (fun c : ℕ => (c : Polynomial ℕ))).sum) = cs.sum := by
-    simp [Polynomial.eval_listSum]
+  have hsum : ∀ xs : List ℕ,
+      Polynomial.eval n ((xs.map (fun c : ℕ => (c : Polynomial ℕ))).sum) =
+        xs.sum := by
+    intro xs
+    induction xs with
+    | nil => simp
+    | cons c xs ih =>
+        simp [List.map_cons, List.sum_cons, Polynomial.eval_add, ih]
   simp [timePoly, Polynomial.eval_add, Polynomial.eval_mul,
-    Polynomial.eval_pow, Polynomial.eval_C, Polynomial.eval_X,
-    Polynomial.eval_one, Polynomial.eval_ofNat, hsum]
+    Polynomial.eval_pow, Polynomial.eval_X,
+    Polynomial.eval_one, Polynomial.eval_ofNat, hsum cs]
 
 end PVNP.TwoPhasePolynomialWriter
