@@ -27,3 +27,17 @@ class TestCanonicalTapeWriter(unittest.TestCase):
                 word, steps = execute(machine, x)
                 self.assertEqual(word, original_input_bits(x, cs, alphabet, **kwargs))
                 self.assertLessEqual(steps, machine.step_bound(len(x)))
+
+
+    def test_nonconstant_input_writer_mixed_words(self):
+        alphabet = enumerate_states(('_', '0', '1'), ('q',))
+        kwargs = dict(blank='_', zero='0', one='1', start='q', accept='q', reject='q')
+        inputs = ((), (False,), (True, False), (False, True, True))
+        for cs in ((1,), (0, 1), (1, 1), (0, 0, 1)):
+            machine = input_writer(cs, alphabet, **kwargs)
+            for x in inputs:
+                with self.subTest(coefficients=cs, input=x):
+                    actual, steps = execute(machine, x)
+                    expected = original_input_bits(x, cs, alphabet, **kwargs)
+                    self.assertEqual(actual, expected)
+                    self.assertLessEqual(steps, machine.step_bound(len(x)))
