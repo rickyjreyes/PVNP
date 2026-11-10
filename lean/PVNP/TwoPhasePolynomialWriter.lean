@@ -267,4 +267,18 @@ noncomputable def timePoly (cs : List ℕ) (w : ℕ) : Polynomial ℕ :=
   let Q := Polynomial.C ((cs.length+4)*(12+8*w))*(R+1)+Polynomial.C (1+cs.sum)+10
   (Q+4)*(2*S+6)
 
+/-- Exact numeric form of the specified polynomial transition budget.
+It matches the fixed-control writer's Python `step_bound` formula.
+The statement verifies the budget *expression*, not that every
+execution actually halts within that budget. -/
+theorem timePoly_eval (cs : List ℕ) (w n : ℕ) :
+    (timePoly cs w).eval n =
+      let R := (1 + cs.sum) * (n + 1) ^ cs.length
+      let S := n + R + (w + 3) * (2 * R + 3) + 8
+      let Q := (cs.length + 4) * (12 + 8 * w) * (R + 1) + (1 + cs.sum) + 10
+      (Q + 4) * (2 * S + 6) := by
+  simp [timePoly, Polynomial.eval_add, Polynomial.eval_mul,
+    Polynomial.eval_pow, Polynomial.eval_C, Polynomial.eval_X,
+    Polynomial.eval_one, Polynomial.eval_ofNat]
+
 end PVNP.TwoPhasePolynomialWriter
