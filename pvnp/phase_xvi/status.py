@@ -16,17 +16,19 @@ COUNT_BASELINE = {"Exact": 78, "Restricted": 2, "Refuted": 4, "Open": 7}
 def parse_inventory(path: pathlib.Path) -> dict[str, str]:
     claims = {}
     for line in path.read_text(encoding="utf-8").splitlines():
-        if not line.startswith("| "):
+        item = re.match(r"^\\|\\s*((?:I|II|III)-[0-9]+)\\s*\\|", line)
+        if not item:
             continue
-        cells = [c.strip() for c in line.strip().strip("|").split("|")]
-        if len(cells) < 5 or not re.fullmatch(r"(?:I|II|III)-[0-9]+", cells[0]):
-            continue
-        status = cells[-1].split(".")[0].strip().split(" ")[0]
-        if status not in COUNT_BASELINE:
-            raise ValueError(f"Unknown status {status!r} for {cells[0]}")
-        if cells[0] in claims:
-            raise ValueError(f"Duplicate claim {cells[0]}")
-        claims[cells[0]] = status
+        claim_id = item.group(1)
+        # Do not split on every pipe: TeX math in the inventory includes
+        # escaped vertical bars inside a status description.
+        matches = re.findall(r"\\|\\s*(Exact|Restricted|Refuted|Open)\\b", line)
+        if not matches:
+            raise ValueError(f"Missing status for {claim_id}")
+        status = matches[-1]
+        if claim_id in claims:
+            raise ValueError(f"Duplicate claim {claim_id}")
+        claims[claim_id] = status
     return claims
 
 
