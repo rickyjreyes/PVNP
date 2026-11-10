@@ -193,3 +193,7 @@ import PVNP.TwoPhasePrefixWriter
 import PVNP.ToroidalCNFLock
 -- Phase XVI: abstract amplitude-scaling obstruction (I-31 necessary assumption).
 import PVNP.SeparatorAmplitude
+
+-- Phase XVII: charged finite-row logical torus and sharp detector-contrast ray price.
+import PVNP.ToroidalFiniteRows
+import PVNP.SeparatorNormalizedRay
