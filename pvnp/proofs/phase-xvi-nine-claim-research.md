@@ -42,11 +42,13 @@ is unsatisfiable, yet the all-false row assignment is a cyclic lock.
 The companion candidate Lean theorem is
 `ToroidalCNFLock.bare_ring_lock_not_sat_classifier`.
 
-**Very important scope limit:** the row alphabet contains a full
-(n)-bit assignment. The theorem is an abstract local ring consistency
-statement, not a bounded-alphabet WCT torus, a physical stationary point,
-an attractor, an efficient decision procedure, or an I-37 resolution.
-It does not establish a resource lower bound or (P\ne NP).
+**Very important scope limit:** each Lean row is an arbitrary Boolean
+assignment function on all natural-numbered indices, not a finite
+physical cell. The finite formula mentions only finitely many indices,
+but the theorem does not charge, localize or truncate that representation.
+This is an abstract consistency theorem, not a bounded-alphabet WCT torus,
+a physical stationary point, an attractor, an efficient SAT algorithm,
+a resource lower bound, or an I-37 resolution. No P versus NP result follows.
 
 ### Independently executed finite experiments
 
