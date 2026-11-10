@@ -240,3 +240,46 @@ The remaining II-10 operational obligations, in order, are:
    discharge the `FP` assumptions of `originalUniform`.
 
 No part of this work establishes P versus NP.
+
+
+### Follow-on formalization: full normalization-prefix run (Lean candidates)
+
+The actual `MTM.run` proof has been extended beyond the local
+transition rule to the initialization and arbitrary-length input scan:
+
+- `initialized_sentinel_tape`: placing the left-end marker at -1
+  produces exactly the initial partially normalized tape.
+- `start_to_mark`, `mark_to_normalize`: the first two actual
+  machine transitions install the sentinel and return the head to
+  the origin.
+- `normalization_cfg_step`: a single genuine `MTM.step` preserves
+  and extends the raw/work tape invariant.
+- `run_normalizes_input`: inductive statement for every prefix
+  `k ≤ x.length` that at time `k+2` the head is at `k`, the
+  state is `.normalize`, and the complete tape is exactly the
+  partially normalized input.
+- `windowMTM_normalization`, `inputMTM_normalization`: apply
+  the generic run invariant to both original assembled machines.
+
+A distinct candidate theorem `timePoly_eval` identifies the full
+numeric form of the specified single-head runtime budget. It does
+not prove an execution uses at most that many steps. The Python
+tests check arithmetic equality and monotonicity of the budget at
+bounded inputs, not universal completion.
+
+**Scope and verification:** These are uncompiled candidates on the
+latest Phase XVII head and have not yet been kernel- or axiom-checked.
+They would establish an actual input-normalization subroutine once
+verified, but not its termination in the final `.done` control or
+the correctness of the Horner and output phases. II-10 stays Restricted.
+
+**Targeted validation:**
+
+```bash
+python -m unittest discover -s pvnp/tests -p 'test_phase_xvii_*.py'
+cd lean
+lake build PVNP.TwoPhasePolynomialWriter
+lake build PVNP
+lake env lean audit/AxiomAudit.lean > axiom-audit.txt
+python audit/check_axioms.py audit/AxiomAudit.lean axiom-audit.txt
+```
