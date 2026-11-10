@@ -1,4 +1,5 @@
 import PVNP.TwoPhaseWindowWord
+import PVNP.CookLevinGen
 
 /-! Concrete finite-control single-tape programs for the original polynomial
 radius. Addresses and state-code words are fixed at machine construction. A
@@ -124,6 +125,19 @@ private def assemble (cs : List ℕ) (body : Asm ℕ) : ℕ × Array Inst :=
 
 private def coeffs (p : Polynomial ℕ) : List ℕ :=
   (List.range (p.natDegree+1)).map p.coeff
+
+/-- The coefficient sequence assembled by the *actual polynomial writer* is
+low-degree-first and is executed in reverse by its nested Horner control.
+Its numeric clock value exactly equals the original polynomial radius.
+This settles coefficient ordering only. It does not prove that the
+finite-control tape-machine execution implements that Horner value. -/
+theorem writer_clock_eq_polynomial (p : Polynomial ℕ) (n : ℕ) :
+    CookLevin.Gen.horner ((coeffs p).reverse) n = p.eval n := by
+  have h : (coeffs p).reverse = CookLevin.Gen.hcoeffs p := by
+    simp [coeffs, CookLevin.Gen.hcoeffs, List.reverse_map]
+  rw [h]
+  exact CookLevin.Gen.horner_hcoeffs p n
+
 
 private def windowBody : Asm ℕ := do
   let endWord ← putI .finish
