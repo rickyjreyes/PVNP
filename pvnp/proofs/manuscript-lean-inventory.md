@@ -208,7 +208,7 @@ Counts:
 | III-19 | Cor. `cor:var` | P_var is vacuous | `variation_class_vacuous` | Exact |
 | III-20 | Remark WIN-21 | parity: Var=n, B→=n2ⁿ | `parity_total_influence`, `parity_directed_boundary` | Exact |
 | III-21 | Decoder-uniformity paragraph | fixed sign code, unrestricted decoder | `DecoderUniformity.*` | Exact |
-| III-22 | §8 arrow-of-time remark | no equivalence with retrocausality | — | Open (no mathematical content to formalize) |
+| III-22 | §8 arrow-of-time remark | no equivalence with retrocausality | `ArrowOfTime.involution_monotone_eq`, `time_reversal_monotone_eq`, `time_reversal_no_global_strict_increase` (unverified auxiliary candidates) | Open (interpretive; no formal physical retrocausality model or theorem statement). The precise reversal no-go lemmas are independent of P/NP and do not close this interpretive remark. |
 
 Counts:
 * Exact (21): III-1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21.
