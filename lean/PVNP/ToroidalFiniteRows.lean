@@ -29,6 +29,22 @@ def RowLock (F : Formula) (n : ℕ) (rows : ℕ → Fin n → Bool) : Prop :=
   (∀ (j : ℕ) (hj : j < F.length),
     evalClause (rowValuation n (rows j)) F[j] = true)
 
+/-- Equality constraints on the finite Boolean rows propagate all the
+way from the origin to the closing row. This is the exact local-copy
+invariant that a future charged physical implementation must realize. -/
+theorem lock_rows_constant (F : Formula) (n : ℕ)
+    (rows : ℕ → Fin n → Bool) (h : RowLock F n rows) :
+    ∀ j ≤ F.length, rows j = rows 0 := by
+  obtain ⟨heq, _, _⟩ := h
+  intro j
+  induction j with
+  | zero => intro _; rfl
+  | succ j ih =>
+      intro hj
+      calc
+        rows (j + 1) = rows j := heq j (by omega)
+        _ = rows 0 := ih (by omega)
+
 /-- A formula whose variables are bounded by n has a finite-alphabet
 logical toroidal lock precisely when it is satisfiable. This is a CSP
 representation theorem, not a physical locking result. -/
