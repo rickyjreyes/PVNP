@@ -63,6 +63,12 @@ Implement safe documentation and checker improvements on `research/pvnp-public-r
 
 ## Free offline release workflow (no GitHub Actions billing)
 
+**Single command:** `bash scripts/review_public_release_offline.sh --all`
+For the PDF alone use `--pdf-only`; for rights/history checks use
+`--audit-only`; use `--approval-status` to display remaining approvals.
+This wrapper supports Python on Windows Git Bash without `python3` on PATH.
+
+
 Hosted CI is **not a required publication mechanism**. CI issue #59 can be
 left unresolved until runner allocation becomes available; this is not a
 reason to incur additional GitHub Actions costs. Use a full-history local
