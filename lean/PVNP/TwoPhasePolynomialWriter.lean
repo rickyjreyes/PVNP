@@ -401,4 +401,157 @@ theorem timePoly_eval (cs : List ℕ) (w n : ℕ) :
     Polynomial.eval_pow, Polynomial.eval_X,
     Polynomial.eval_one, Polynomial.eval_ofNat, hsum cs]
 
+
+/-! ### Phase XVIII: actual return sweep following input normalization
+
+After normalization the machine sits on the first blank after the input.
+The following results verify the concrete, symbol-by-symbol return sweep:
+the blank dispatch enters the saved program counter, each non-sentinel
+cell is traversed without modification, and the left-end sentinel
+restarts execution at tape position zero.  They do not establish the
+subsequent Horner counter loop or either final MTM.Outputs theorem. -/
+
+/-- A normalized input's first cell beyond the input is blank. -/
+theorem normalized_end_blank (x : List Bool) :
+    partiallyNormalizedTape x x.length (x.length : ℤ) = .blank := by
+  simp [partiallyNormalizedTape, show (x.length : ℤ) ≠ -1 by omega]
+
+/-- No cell at a nonnegative index contains the left-end marker. -/
+theorem normalized_nonnegative_not_sentinel (x : List Bool) (k j : ℕ) :
+    partiallyNormalizedTape x k (j : ℤ) ≠ .leftEnd := by
+  simp [partiallyNormalizedTape, show (j : ℤ) ≠ -1 by omega]
+
+/-- The actual machine returns left over a non-sentinel cell without
+changing any tape symbol or changing the saved finite control address. -/
+theorem return_step_non_sentinel (program : ℕ × Array Inst)
+    (tape : ℤ → Sym) (pc : Fin (program.2.size + 1)) (i : ℤ)
+    (hi : tape i ≠ .leftEnd) :
+    (build program).step
+      (⟨tape, i, .ret pc⟩ : (build program).Cfg) =
+    (⟨tape, i - 1, .ret pc⟩ : (build program).Cfg) := by
+  cases hs : tape i with
+  | leftEnd => exact (hi hs).elim
+  | blank =>
+      simp [MTM.step, build, step, hs, Mv.shift, Function.update_eq_self]
+  | raw b =>
+      simp [MTM.step, build, step, hs, Mv.shift, Function.update_eq_self]
+  | work c =>
+      simp [MTM.step, build, step, hs, Mv.shift, Function.update_eq_self]
+
+/-- The actual machine changes from return control to scan control
+exactly at the left-end sentinel, leaving that sentinel intact. -/
+theorem return_step_sentinel (program : ℕ × Array Inst)
+    (tape : ℤ → Sym) (pc : Fin (program.2.size + 1))
+    (hs : tape (-1) = .leftEnd) :
+    (build program).step
+      (⟨tape, -1, .ret pc⟩ : (build program).Cfg) =
+    (⟨tape, 0, .scan pc⟩ : (build program).Cfg) := by
+  simp [MTM.step, build, step, hs, Mv.shift, Function.update_eq_self]
+
+/-- A return sweep of n work cells uses exactly n actual MTM transitions,
+does not mutate the tape, and reaches the left-end marker with its program
+counter unchanged.  The only hypothesis is absence of additional sentinels
+in the scanned nonnegative cells. -/
+theorem return_walk (program : ℕ × Array Inst)
+    (tape : ℤ → Sym) (pc : Fin (program.2.size + 1)) (n : ℕ) :
+    (∀ j : ℕ, j < n → tape (j : ℤ) ≠ .leftEnd) →
+    (build program).run
+      (⟨tape, (n : ℤ) - 1, .ret pc⟩ : (build program).Cfg) n =
+    (⟨tape, -1, .ret pc⟩ : (build program).Cfg) := by
+  induction n with
+  | zero =>
+      intro _
+      simp [MTM.run_zero]
+  | succ n ih =>
+      intro hn
+      have hc : (((n + 1 : ℕ) : ℤ) - 1) = (n : ℤ) := by omega
+      rw [hc, show n + 1 = 1 + n by omega, MTM.run_add]
+      simp only [MTM.run_succ, MTM.run_zero]
+      rw [return_step_non_sentinel program tape pc (n : ℤ) (hn n (by omega))]
+      exact ih (fun j hj => hn j (by omega))
+
+/-- On a complete normalized input the next transition enters return
+control at the actual assembled entry address. -/
+theorem normalization_end_step (program : ℕ × Array Inst)
+    (x : List Bool) :
+    (build program).step
+      (⟨partiallyNormalizedTape x x.length, (x.length : ℤ), .normalize⟩ :
+        (build program).Cfg) =
+    (⟨partiallyNormalizedTape x x.length, (x.length : ℤ) - 1,
+      .ret (addr program.2 program.1)⟩ : (build program).Cfg) := by
+  simp [MTM.step, build, step, normalized_end_blank x,
+    Mv.shift, Function.update_eq_self]
+
+/-- The actual assembled machine executes exactly n+2 steps from the
+first blank after normalized input to the first instruction's scan state.
+The tape is unchanged during dispatch and return. -/
+theorem return_dispatch_after_normalization (program : ℕ × Array Inst)
+    (x : List Bool) :
+    (build program).run
+      (⟨partiallyNormalizedTape x x.length, (x.length : ℤ), .normalize⟩ :
+        (build program).Cfg) (x.length + 2) =
+    (⟨partiallyNormalizedTape x x.length, 0,
+      .scan (addr program.2 program.1)⟩ : (build program).Cfg) := by
+  let tape := partiallyNormalizedTape x x.length
+  let pc := addr program.2 program.1
+  have hfirst :
+      (build program).step
+        (⟨tape, (x.length : ℤ), .normalize⟩ : (build program).Cfg) =
+      (⟨tape, (x.length : ℤ) - 1, .ret pc⟩ : (build program).Cfg) := by
+    exact normalization_end_step program x
+  have hwalk :
+      (build program).run
+        (⟨tape, (x.length : ℤ) - 1, .ret pc⟩ : (build program).Cfg)
+        x.length =
+      (⟨tape, -1, .ret pc⟩ : (build program).Cfg) := by
+    apply return_walk program tape pc x.length
+    intro j hj
+    exact normalized_nonnegative_not_sentinel x x.length j
+  have hlast :
+      (build program).step
+        (⟨tape, -1, .ret pc⟩ : (build program).Cfg) =
+      (⟨tape, 0, .scan pc⟩ : (build program).Cfg) := by
+    apply return_step_sentinel
+    simp [tape, partiallyNormalizedTape]
+  change (build program).run
+      (⟨tape, (x.length : ℤ), .normalize⟩ : (build program).Cfg)
+      (x.length + 2) =
+    (⟨tape, 0, .scan pc⟩ : (build program).Cfg)
+  calc
+    (build program).run
+        (⟨tape, (x.length : ℤ), .normalize⟩ : (build program).Cfg)
+        (x.length + 2) =
+      (build program).run
+        ((build program).step
+          (⟨tape, (x.length : ℤ), .normalize⟩ : (build program).Cfg))
+        (x.length + 1) := by
+          rw [show x.length + 2 = 1 + (x.length + 1) by omega, MTM.run_add]
+          simp only [MTM.run_succ, MTM.run_zero]
+    _ = (build program).run
+          (⟨tape, (x.length : ℤ) - 1, .ret pc⟩ : (build program).Cfg)
+          (x.length + 1) := by rw [hfirst]
+    _ = (build program).step
+          ((build program).run
+            (⟨tape, (x.length : ℤ) - 1, .ret pc⟩ : (build program).Cfg)
+            x.length) := by rw [MTM.run_succ]
+    _ = (build program).step
+          (⟨tape, -1, .ret pc⟩ : (build program).Cfg) := by rw [hwalk]
+    _ = (⟨tape, 0, .scan pc⟩ : (build program).Cfg) := hlast
+
+/-- First instruction dispatch at exactly 2n+4 steps from the untouched
+input of any assembled polynomial writer, with no restriction on the
+coefficient list, input length, or body instructions. -/
+theorem run_to_first_instruction (program : ℕ × Array Inst)
+    (x : List Bool) :
+    (build program).run ((build program).init x)
+      (2 * x.length + 4) =
+    (⟨partiallyNormalizedTape x x.length, 0,
+      .scan (addr program.2 program.1)⟩ : (build program).Cfg) := by
+  rw [show 2 * x.length + 4 =
+      (x.length + 2) + (x.length + 2) by omega,
+    MTM.run_add,
+    run_normalizes_input program x x.length (le_refl _)]
+  exact return_dispatch_after_normalization program x
+
+
 end PVNP.TwoPhasePolynomialWriter
