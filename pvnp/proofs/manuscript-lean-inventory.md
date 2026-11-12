@@ -1,10 +1,10 @@
 # Manuscript-to-Lean inventory (Parts I–III), live checklist
 
 Started 5 November 2026. The source of truth is the three manuscripts in
-`pvnp/papers/*/main.tex` (October 27 source, with Part I I-10/I-12/I-13/I-20 and Part II II-7/II-8/II-17 corrections on November 6, 2026), read in full. Each mathematically
-substantive claim is listed with its source, the Lean declaration that matches it (if any), and
-its status. Pure definitions, purely empirical sections and research-direction remarks without
-mathematical content are not counted.
+`pvnp/papers/*/main.tex` (October 27 source, with Part I I-10/I-12/I-13/I-20 and Part II II-7/II-8/II-17 corrections on November 6, 2026), read in full. Each mathematically substantive claim is listed with its source, the Lean declaration
+that matches it (if any), and its status. One interpretive record, III-22, is retained
+for traceability but is **not** a theorem or an unresolved mathematical conjecture.
+Pure definitions and other discussions without mathematical assertions are not counted.
 
 **Status vocabulary**
 
@@ -13,21 +13,22 @@ mathematical content are not counted.
 | **Exact** | The manuscript claim, with its own hypotheses and quantifiers, is a kernel-checked Lean theorem. For a claim stated as an implication, the implication itself is what is verified; its premises are not thereby proved. |
 | **Restricted** | Lean proves the statement for a narrower model or encoding than the manuscript states. The gap is named. |
 | **Refuted** | The claim as stated is false, and a Lean counterexample satisfies the claim's own hypotheses. A corrected statement is proved where possible. |
-| **Open** | A conjecture or hypothesis stated as such in the manuscript, or a claim that is not well posed or not yet formalized. The missing piece is named. |
+| **Open** | A substantive mathematical conjecture or hypothesis whose original statement remains unresolved. The missing piece is named. |
+| **Interpretive** | A manuscript discussion with no independently quantified mathematical proposition; editorial status, not a verified theorem or unproved conjecture. |
 
 Lean paths are relative to `lean/`. "(new)" marks declarations added in this pass.
 
 ## Coverage table
 
-| Paper | Claims | Exact | Restricted | Refuted | Open |
-|---|---|---|---|---|---|
-| Part I | 41 | 30 | 1 | 4 | 6 |
-| Part II | 28 | 27 | 1 | 0 | 0 |
-| Part III | 22 | 21 | 0 | 0 | 1 |
-| **Total** | **91** | **78** | **2** | **4** | **7** |
+| Paper | Audited entries | Exact | Restricted | Refuted | Open | Interpretive |
+|---|---|---|---|---|---|---|
+| Part I | 41 | 30 | 1 | 4 | 6 | 0 |
+| Part II | 28 | 27 | 1 | 0 | 0 | 0 |
+| Part III | 22 | 21 | 0 | 0 | 0 | 1 |
+| **Total** | **91** | **78** | **2** | **4** | **6** | **1** |
 
-* Exact verification coverage for the amended manuscripts = Exact / Total = 78/91 ≈ 85.7% (77/91 before II-24, 75/91 after I-10/I-13, 73/91 after II-7/II-8/II-17, 70/91 original).
-* Status conclusively determined by a proof or a counterexample (Exact + Refuted) = 82/91 ≈ 90.1%.
+* Of **90 mathematical entries**, 78/90 ≈ 86.7% are Exact. Earlier coverage figures used all 91 catalogued entries as denominator. The change is entirely editorial; no new theorem has been proved.
+* Exact + Refuted = 82/90 ≈ 91.1% of mathematical entries. The unsolved six Open mathematical claims remain unaltered.
 * **Provenance:** The original October 27 manuscript inventory was 70 Exact, 2 Restricted, 11 Refuted, 8 Open. Claims II-7, II-8 and II-17 were false as written in that version. Their original Lean counterexamples remain in the repository. In the amended manuscript, their statements are restricted/corrected to match the already-proved Lean theorems; the historical count is not retroactively overwritten.
 * **I-12/I-20 scope:** I-12 now states an exact **conditional counterargument** in the frozen WCT submodel with charged polynomial-time indicator encoders: under the *hypothetical* P_TM = NP_TM, dense SAT is implementable; an unconditional barrier in that submodel would imply P_TM != NP_TM. This does not prove either equality or inequality. I-20 now states the proved **explicit-state description-size obstruction** K_D(s) <= |s|+c. A separate physical cost model distinguishes preparation from verification of a *succinct* certificate and from decision; its claimed lower-bound premises remain open, and the original state-as-short-witness inference is withdrawn.
 * **I-10/I-13 scope:** I-10 is now a new *conditional* obstruction to exact nonconstant symbolic readouts under an explicit common-successor transition-relation hypothesis. Curvature collapse is **not** proved to imply this hypothesis. The original language triviality and unique-rule non-identifiability assertions are no longer claimed as theorems. I-13 now states the quiescent finite-support bound already proved in Lean. All original counterexamples are preserved.
@@ -208,12 +209,13 @@ Counts:
 | III-19 | Cor. `cor:var` | P_var is vacuous | `variation_class_vacuous` | Exact |
 | III-20 | Remark WIN-21 | parity: Var=n, B→=n2ⁿ | `parity_total_influence`, `parity_directed_boundary` | Exact |
 | III-21 | Decoder-uniformity paragraph | fixed sign code, unrestricted decoder | `DecoderUniformity.*` | Exact |
-| III-22 | §8 arrow-of-time remark | no equivalence with retrocausality | — | Open (no mathematical content to formalize) |
+| III-22 | §8 arrow-of-time remark | explicitly disclaims any proved equivalence with retrocausality | — | Interpretive (no independent theorem) |
 
 Counts:
 * Exact (21): III-1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21.
 * Restricted (0).
-* Open (1): III-22.
+* Open (0).
+* Interpretive (1): III-22, an explicit research direction rather than a theorem.
 
 ## Smallest missing lemmas (for the P-versus-NP conclusion)
 
