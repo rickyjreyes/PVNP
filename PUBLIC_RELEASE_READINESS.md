@@ -68,30 +68,30 @@ left unresolved until runner allocation becomes available; this is not a
 reason to incur additional GitHub Actions costs. Use a full-history local
 clone instead:
 
-\`\`\`bash
+```bash
 python3 -m unittest pvnp.tests.test_offline_publication_gates
 python3 scripts/check_manuscript_alignment.py
 bash scripts/verify_public_pdf_offline.sh
 python3 scripts/audit_release_assets.py --history
 python3 scripts/audit_public_release.py --history
 python3 scripts/check_publication_approval.py
-\`\`\`
+```
 
 The PDF command rebuilds the four source manuscripts and bound technical
 volume, checks every embedded page against the freshly compiled standalone
 PDFs, and exports representative page PNGs to
-\`.release-verification/pdf-offline/visual/\`. **A human must inspect them.**
+`.release-verification/pdf-offline/visual/`. **A human must inspect them.**
 The history/audit reports and private approval JSON also stay in the
 gitignored directory.
 
 For full technical revalidation, the existing locally runnable
-\`bash scripts/verify_public_release.sh\` remains available and invokes
+`bash scripts/verify_public_release.sh` remains available and invokes
 Lean/axiom and other gates. It is separate from hosted Actions.
 
 **Implementation does not equal clearance:** the active code/manuscript
 licenses are still unselected; third-party content, historic disclosures,
 privacy and patent effects still need a person to review and explicitly
 approve. The optional checker
-\`python3 scripts/check_publication_approval.py --require-approved\`
+`python3 scripts/check_publication_approval.py --require-approved`
 fails until a complete final-commit approval record and the actual
 approved licenses exist. Do not change repository visibility automatically.
