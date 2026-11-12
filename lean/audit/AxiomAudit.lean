@@ -1,5 +1,5 @@
 import PVNP
-/-! Axiom audit for the principal ASTRA theorems (run with `lake env lean audit/AxiomAudit.lean`).
+/-! Axiom audit for the principal PVNP theorems (run with `lake env lean audit/AxiomAudit.lean`).
 Every listed declaration must depend only on `propext`, `Classical.choice`, `Quot.sound`. -/
 -- Issue #11
 #print axioms PVNP.Discrete.TM.toWCC_step_encode

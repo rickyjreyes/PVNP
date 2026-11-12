@@ -1,8 +1,7 @@
 # Milestone 5: checkpoint of the uniform simulator infrastructure (5 November 2026)
 
 > **Superseded (5 November 2026, later the same day).** The items listed below as "not yet
-> established" are now kernel-checked on the successor branch
-> `astra/uniform-equivalence-m5-final-20261105`:
+> established" are now kernel-checked in the subsequent integrated Lean tree:
 > * the semantic round theorem `PVNP.UniformSim.Spec.round_spec`;
 > * the end-to-end simulation `PVNP.UniformSim.Spec.sim_halts`;
 > * the explicit time polynomial `timePoly` (`T_{M_W}(x) ≤ q_W(|x| + T_W(x) + 1)`,

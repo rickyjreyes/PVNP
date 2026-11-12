@@ -29,7 +29,7 @@ jobs:
           python-version: '3.11'
       - name: Exhaustive small-input SAT semantics
         run: python -m unittest discover -s pvnp/tests -p 'test_split_three_sat.py'
-      - name: ASTRA executable cross-checks of Lean constructions (not proofs)
+      - name: PVNP discrete executable cross-checks of Lean constructions (not proofs)
         run: python -m unittest discover -s pvnp/tests -p 'test_astra_discrete.py'
 
       - name: Original two-phase W_M canonical-writer reference checks

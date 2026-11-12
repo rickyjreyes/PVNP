@@ -1,8 +1,8 @@
-# ASTRA completion report — PVNP mathematical and Lean program (2 November 2026)
+# PVNP mathematical and Lean completion report (2 November 2026)
 
 Author of the research program: **Richard J. Reyes**. Original publications (Zenodo releases 03, 12, 13 and the May/November/December 2025 versions) are preserved unchanged; this report records the current, revised state of the mathematics.
 
-Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (which itself extends `main`). Every result below was checked locally with the pinned toolchain (`leanprover/lean4:v4.23.0`, Mathlib `v4.23.0`) via `lake build PVNP`, and the axiom audit `lean/audit/AxiomAudit.lean` (checked in CI by `lean/audit/check_axioms.py`) reports only the standard axioms `propext`, `Classical.choice`, `Quot.sound` (or a subset) for all 67 principal declarations. GitHub Actions on the branch head is the authoritative CI record.
+Checkpoint based on PR #14 head `98d0ac20` (which itself extends `main`); the original development history remains in Git. Every result below was checked locally with the pinned toolchain (`leanprover/lean4:v4.23.0`, Mathlib `v4.23.0`) via `lake build PVNP`, and the axiom audit `lean/audit/AxiomAudit.lean` (checked in CI by `lean/audit/check_axioms.py`) reports only the standard axioms `propext`, `Classical.choice`, `Quot.sound` (or a subset) for all 67 principal declarations. GitHub Actions on the branch head is the authoritative CI record.
 
 ---
 
@@ -110,7 +110,7 @@ Branch: `astra/complete-program-20261102`, built on PR #14 head `98d0ac20` (whic
 
 No percentages are used. Status words follow the charter's labels.
 
-| ID | Status after ASTRA | Evidence / outstanding dependency |
+| ID | Status at this checkpoint | Evidence / outstanding dependency |
 |---|---|---|
 | O1 | **Maintained.** Original releases and titles untouched; revisions recorded in manuscripts' revision registers and this report. | Ongoing: keep original-vs-revised ledger with source anchors. |
 | O2 | **Complete for the dense CNF encoding.** One uniform instance/witness language (`SATV.encDense`, assignment witness, `|w| ≤ |x|`); an explicit verifier TM with yes/no correctness and time `2(N+3)²` (`satTM_decides`, `V_SAT_mem_P_TM`); `SAT_dense_mem_NP_TM`, `SAT_dense_mem_NP_WCC`; semantic agreement with Part I CNF satisfiability (`encDense_mem_SAT_iff`). "Physical admissibility" of the encoding is a separate O4–O6 question. | NP-completeness (Cook–Levin) of the dense encoding is classical but not formalized; the sparse/binary-index encoding is not formalized. |
@@ -121,7 +121,7 @@ No percentages are used. Status words follow the charter's labels.
 | O7 | **Open;** every tested universal statement refuted at stated scope; discrete version proved equivalent to classical P ≠ NP. | M2. |
 | O8 | **Open.** No candidate language with a physical verifier and a proved all-decider lower bound. | M1 + M2. |
 | O9 | **Reduced to classical P vs NP** for the discrete model (`p_vs_np_discrete_transfer`); for the physical model blocked on M1. | Classical P ≠ NP itself (unresolved). |
-| O10 | **Advanced.** 67 principal declarations axiom-audited; CI enforces the audit; Python cross-checks added (`pvnp/tests/test_astra_discrete.py`). | Independent adversarial review; manuscript text alignment (section D). |
+| O10 | **Advanced.** 67 principal declarations axiom-audited; CI enforces the audit; Python discrete-model cross-checks added (test file retained under its existing executable name). | Independent adversarial review; manuscript text alignment (section D). |
 
 ---
 

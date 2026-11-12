@@ -1,6 +1,6 @@
 # Frozen physical computational model `WCT-Phys` and the status of every resource (issue #10, O4–O8)
 
-**ASTRA, 2 November 2026.** This document fixes one physical computational model so that every resource is an explicit function of the input length `n`, and records — resource by resource — what is a kernel-checked theorem, what is an analytic theorem, what is refuted, and what is open. It does **not** claim any physical or classical separation.
+**2 November 2026 checkpoint.** This document fixes one physical computational model so that every resource is an explicit function of the input length `n`, and records — resource by resource — what is a kernel-checked theorem, what is an analytic theorem, what is refuted, and what is open. It does **not** claim any physical or classical separation.
 
 ## 1. The model `WCT-Phys`
 
