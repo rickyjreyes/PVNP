@@ -51,6 +51,6 @@ license is not a blanket patent clearance.
 
 The local approval template is [PUBLICATION_APPROVAL.template.json](PUBLICATION_APPROVAL.template.json).
 Create the actual record in the gitignored
-\`.release-verification/publication-approval.json\` and use
-\`python3 scripts/check_publication_approval.py --require-approved\`
+`.release-verification/publication-approval.json` and use
+`python3 scripts/check_publication_approval.py --require-approved`
 only after the active approved licenses and all review gates exist.
