@@ -7,24 +7,24 @@ This is a release-control document, not a new mathematical result or a grant of 
 
 PRs [#68](https://github.com/rickyjreyes/PVNP/pull/68), [#69](https://github.com/rickyjreyes/PVNP/pull/69), and [#73](https://github.com/rickyjreyes/PVNP/pull/73) were merged into `main`. Phase XVIII closes the original discrete II-10 two-phase writer obligation at its corrected scope. The amended 91-claim inventory is **79 Exact, 1 Restricted, 4 Refuted, 7 Open**. Some Exact entries prove conditional implications only. No classical P versus NP separation, continuum WCT ↔ Turing equivalence, or physical toroidal-locking theorem follows.
 
-The original writer proof was reported to pass pinned Lean 4.23.0, a 7,386-job full build, an allowed-axiom audit, and the repository verification gate at proof head `df8824c` and promotion head `417c2d4`. These are locally reported runs, not successful GitHub-hosted jobs. CI issue [#59](https://github.com/rickyjreyes/PVNP/issues/59) remains relevant: failed jobs with **zero executed steps** provide no compiler verdict.
+At exact Phase XIX commit [`c92158f`](https://github.com/rickyjreyes/PVNP/commit/c92158f99ed6667cce4761de4d4631d2e4086d34), a user-supplied Windows Git Bash log records a successful 7,260-job targeted II-10 build, a 7,386-job complete Lean build, an allowed-axiom audit of 627 declarations (only `propext`, `Classical.choice`, and `Quot.sound`), and 24/24 II-10 regressions. The release preflight also passed four security-audit unit tests and Gitleaks 8.30.1 on all locally available refs, with zero heuristic matches in 287 tracked text files. At later Phase XIX commit [`75a2cd6`](https://github.com/rickyjreyes/PVNP/commit/75a2cd6f5fb526f527f5494c2264ce793eb9ff35), the dashboard generator and all 13 dashboard test groups passed on Windows after a CRLF compatibility fix. These are **user-reported local runs**, not successful GitHub-hosted jobs. CI issue [#59](https://github.com/rickyjreyes/PVNP/issues/59) remains relevant.
 
 ## Required gates before public visibility
 
 | Gate | Current evidence | Release decision |
 | --- | --- | --- |
 | Original II-10 code and manuscript classification | Integrated in #73; local kernel/audit evidence reported | Mathematically accepted in current inventory; retain provenance |
-| PR #74 reconciliation | Divergent documentation/dashboard promotion overlaps #73 | Open: review unique changes, do not merge conflicting history blindly |
-| Full pinned Lean + axiom audit on final public-release tree | Prior local proof-head runs, not a final release-tree run | **BLOCKED** |
-| Full Python suite, dashboard generation/check, and manuscript alignment | Partial prior tests and author reports | **BLOCKED** until exact release-head run |
+| PR #74 reconciliation | PR #74 closed as superseded; unique unmerged content retained on its branch | Review any unique deltas separately; do not merge conflicting history wholesale |
+| Full pinned Lean + axiom audit on final public-release tree | **PASS at `c92158f`: 7,386 jobs, 627 audited declarations**. Later documentation/dashboard commits need their own final reproducibility record | **PROVISIONALLY VERIFIED**, not a completed final all-in-one release gate |
+| Python regressions, dashboard generation/check, and manuscript alignment | **PASS:** 24/24 II-10 regressions, 4/4 audit tests and status/source alignment at `c92158f`; 13/13 dashboard groups at `75a2cd6` | Component checks passed locally; combined gate still blocked by PDF tooling |
 | Consolidated PDF regeneration and inspection | Existing verification scripts; revised source may postdate artifact | **BLOCKED** |
-| Full-history secret/privacy scan | No complete-history scanner result recorded | **BLOCKED** |
+| Full-history secret/privacy scan | **PASS:** Gitleaks 8.30.1 on all locally available refs; 287 tracked text files yielded zero heuristic matches | Scanner passed; manual review of binaries, PDFs, metadata, historical refs and other branches **PENDING** |
 | Third-party content and dataset rights audit | Not completed | **BLOCKED** |
 | Software/manuscript licensing decision | No root LICENSE; see [licensing options](docs/PUBLIC_LICENSE_DECISION.md) | **BLOCKED** on author approval |
 | Patent and publication disclosure review | Not completed; repository history will become visible | **BLOCKED** on author/patent-counsel review |
 | Explicit approval to change private → public | Not given | **BLOCKED** |
 
-**A green source lint or locally reported proof-head build does not satisfy these final-release gates.**
+**These component passes do not satisfy the final publication gate.** In particular, the PDF build and rendered inspection, manual history/privacy/rights review, explicit licensing and patent disclosure decisions, and author authorization remain outstanding.
 
 ## Final verification in a full-history clone
 
@@ -57,6 +57,6 @@ These tracks are not prerequisites to making a clearly scoped research repositor
 
 ## Merge/release policy
 
-Implement safe documentation and checker improvements on `research/pvnp-public-release-readiness`. Keep patent/legal approvals and repository visibility separate. Do not rewrite public history, erase negative results, invent CI success, merge superseded proof candidates (#70), or duplicate recovered II-10 work (#72). Resolve #74 file by file.
+Implement safe documentation and checker improvements on `research/pvnp-public-release-readiness`. Keep patent/legal approvals and repository visibility separate. Do not rewrite history, erase negative results, invent hosted CI success, merge superseded proof candidates (#70), or duplicate recovered II-10 work (#72). PR #74 is closed as superseded; preserve its unique unmerged work for targeted file-by-file review.
 
 **Only the author may authorize the final license and private-to-public transition after the blockers are reviewed.**
