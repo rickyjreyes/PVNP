@@ -1,0 +1,14 @@
+{
+  "schema": "PVNP-publication-approval-v1",
+  "status": "UNSIGNED_TEMPLATE_NOT_AUTHORIZATION",
+  "reviewed_commit_sha": null,
+  "pdf_rebuilt_and_content_verified": false,
+  "pdf_visual_inspection_approved": false,
+  "all_ref_history_privacy_reviewed": false,
+  "third_party_rights_cleared": false,
+  "patent_disclosure_reviewed": false,
+  "selected_code_license": null,
+  "selected_manuscript_license": null,
+  "license_scope_approved": false,
+  "permission_to_make_repository_public": false
+}
