@@ -5,8 +5,8 @@ window.PVNP_DATA = {
  "repository": "https://github.com/rickyjreyes/PVNP",
  "inventory": {
   "path": "pvnp/proofs/manuscript-lean-inventory.md",
-  "date": "2026-11-06",
-  "blob": "104c6c5af6d20d4600c6387aa2282d93b8cb1548",
+  "date": "2026-11-12",
+  "blob": "0e143aff3b93e9981c417c37d583ab7e9e0f366e",
   "url": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md",
   "table": {
    "parts": {
@@ -22,8 +22,8 @@ window.PVNP_DATA = {
     "II": {
      "total": 28,
      "counts": {
-      "Exact": 27,
-      "Restricted": 1,
+      "Exact": 28,
+      "Restricted": 0,
       "Refuted": 0,
       "Open": 0
      }
@@ -39,8 +39,8 @@ window.PVNP_DATA = {
     }
    },
    "counts": {
-    "Exact": 78,
-    "Restricted": 2,
+    "Exact": 79,
+    "Restricted": 1,
     "Refuted": 4,
     "Open": 7
    },
@@ -92,9 +92,10 @@ window.PVNP_DATA = {
   }
  },
  "lean": {
-  "tree": "2d98d6d07120063d0cd667f3147e08ae30f269cb",
-  "matches_verified": false,
-  "links_ref": "main"
+  "tree": "6f307fc9ff234fe054f7a8293d27ccb97c6d2508",
+  "matches_verified": true,
+  "links_ref": "df8824ca659b2e931eb4302251569d6c6c6140b3",
+  "verified_by": "external-pr"
  },
  "parts": {
   "I": "Curvature-Bounded Wave Computation",
@@ -114,12 +115,12 @@ window.PVNP_DATA = {
     "PartISeparation.complexity_schema": [
      {
       "name": "PartISeparation.complexity_schema",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L135",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L135",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L58",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L59",
    "conditional": {
     "kind": "open",
     "note": "Verified: (1) curvature cost above every polynomial-time bound together with (2) verifiability implies ψ* ∈ NP \\ P (state version). Not proved: premise (1)."
@@ -134,7 +135,7 @@ window.PVNP_DATA = {
    "status": "Open",
    "details": "Open (conjecture)",
    "refs": {},
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L59"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L60"
   },
   {
    "id": "I-3",
@@ -148,26 +149,26 @@ window.PVNP_DATA = {
     "PartIPsiSat.roundPhase_satisfies": [
      {
       "name": "PartIPsiSat.roundPhase_satisfies",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhasePenaltyMargin.lean#L38",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhasePenaltyMargin.lean#L38",
       "audited": true
      }
     ],
     "PartIPsiSat.eventually_satisfies_of_energy_tendsto": [
      {
       "name": "PartIPsiSat.eventually_satisfies_of_energy_tendsto",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhasePenaltyMargin.lean#L48",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhasePenaltyMargin.lean#L48",
       "audited": true
      }
     ],
     "PhaseLockScope.bare_phase_lock_not_sat": [
      {
       "name": "PhaseLockScope.bare_phase_lock_not_sat",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhaseLockScope.lean#L53",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhaseLockScope.lean#L53",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L60",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L61",
    "historical": {
     "title": "§2.3/§4.1 phase-locking criterion \"SAT ⟺ ∃xᵢ: ∇φ→0, |ψ|²→max\"",
     "claim": "informal limits, encoding unspecified",
@@ -190,12 +191,12 @@ window.PVNP_DATA = {
     "PartISeparation.conditional_symbolic_separation": [
      {
       "name": "PartISeparation.conditional_symbolic_separation",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L147",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L147",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L61",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L62",
    "conditional": {
     "kind": "open",
     "note": "Verified: verifiable and not constructible implies ψ* ∈ NP \\ P and P ≠ NP (state version). Not proved: premise (2), non-constructibility."
@@ -213,38 +214,38 @@ window.PVNP_DATA = {
     "P_WCC_eq_P_TM": [
      {
       "name": "Discrete.P_WCC_eq_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ComplexityEquivalence.lean#L27",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ComplexityEquivalence.lean#L27",
       "audited": true
      }
     ],
     "NP_WCC_eq_NP_TM": [
      {
       "name": "Discrete.NP_WCC_eq_NP_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ComplexityEquivalence.lean#L31",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ComplexityEquivalence.lean#L31",
       "audited": true
      }
     ],
     "p_vs_np_discrete_transfer": [
      {
       "name": "Discrete.p_vs_np_discrete_transfer",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ComplexityEquivalence.lean#L44",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ComplexityEquivalence.lean#L44",
       "audited": true
      }
     ],
     "PartISeparation.conditional_bridge_WCC/WCCD": [
      {
       "name": "PartISeparation.conditional_bridge_WCC",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L317",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L317",
       "audited": true
      },
      {
       "name": "PartISeparation.conditional_bridge_WCCD",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L320",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L320",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L62",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L63",
    "conditional": {
     "kind": "open",
     "note": "Verified: the class identifications, whose premises are proved for the discrete model, and the implication from a separation to P ≠ NP. Not proved: any such separation."
@@ -262,19 +263,19 @@ window.PVNP_DATA = {
     "PartIPsiSat.psi_sat_completeness": [
      {
       "name": "PartIPsiSat.psi_sat_completeness",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIPsiSat.lean#L170",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIPsiSat.lean#L170",
       "audited": true
      }
     ],
     "psi_sat_completeness_field": [
      {
       "name": "PartIPsiSat.psi_sat_completeness_field",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIPsiSat.lean#L208",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIPsiSat.lean#L208",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L63"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L64"
   },
   {
    "id": "I-7",
@@ -288,12 +289,12 @@ window.PVNP_DATA = {
     "PartIPsiSat.zero_penalty_not_stationary": [
      {
       "name": "PartIPsiSat.zero_penalty_not_stationary",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIPsiSat.lean#L269",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIPsiSat.lean#L269",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L64"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L65"
   },
   {
    "id": "I-8",
@@ -307,19 +308,19 @@ window.PVNP_DATA = {
     "PartIDimLock.win04_gaussian": [
      {
       "name": "PartIDimLock.win04_gaussian",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIDimLock.lean#L144",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIDimLock.lean#L144",
       "audited": true
      }
     ],
     "laplacian_ψ": [
      {
       "name": "PartIDimLock.laplacian_ψ",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIDimLock.lean#L86",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIDimLock.lean#L86",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L65"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L66"
   },
   {
    "id": "I-9",
@@ -333,12 +334,12 @@ window.PVNP_DATA = {
     "PartISeparation.win05": [
      {
       "name": "PartISeparation.win05",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L186",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L186",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L66",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L67",
    "conditional": {
     "kind": "open",
     "note": "Verified: a verifier together with every decider exceeding a rail infinitely often implies P^phys ≠ NP^phys. Not proved: the hardness premise for any language."
@@ -356,26 +357,26 @@ window.PVNP_DATA = {
     "PartISeparation.invariant_constant_of_common_successor": [
      {
       "name": "PartISeparation.invariant_constant_of_common_successor",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L459",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L459",
       "audited": true
      }
     ],
     "no_nontrivial_invariant_of_common_successor": [
      {
       "name": "PartISeparation.no_nontrivial_invariant_of_common_successor",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L471",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L471",
       "audited": true
      }
     ],
     "trivial_partition_invariant": [
      {
       "name": "PartISeparation.trivial_partition_invariant",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L437",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L437",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L67",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L68",
    "conditional": {
     "kind": "open",
     "note": "Verified: under common-successor mixing of the observable transition relation, no nonconstant symbolic readout is invariant. Not proved: the mixing hypothesis, which curvature collapse is not shown to imply."
@@ -398,7 +399,7 @@ window.PVNP_DATA = {
      "PartISeparation.trivial_partition_invariant": [
       {
        "name": "PartISeparation.trivial_partition_invariant",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L437",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L437",
        "audited": true
       }
      ]
@@ -418,26 +419,26 @@ window.PVNP_DATA = {
     "P_WCC_eq_P_TM": [
      {
       "name": "Discrete.P_WCC_eq_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ComplexityEquivalence.lean#L27",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ComplexityEquivalence.lean#L27",
       "audited": true
      }
     ],
     "PartIIUniform.P_disc_eq_P_TM": [
      {
       "name": "PartIIUniform.P_disc_eq_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniformEquiv.lean#L74",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniformEquiv.lean#L74",
       "audited": true
      }
     ],
     "PhysicalAudit.unrestricted_phys_ne_P_TM": [
      {
       "name": "PhysicalAudit.unrestricted_phys_ne_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhysicalDiagonal.lean#L97",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhysicalDiagonal.lean#L97",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L68",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L69",
    "historical": {
     "title": "Remark `rem:infinite-compute`",
     "claim": "within the rail, P_WCC = P_Turing",
@@ -448,14 +449,14 @@ window.PVNP_DATA = {
      "P_WCC_eq_P_TM": [
       {
        "name": "Discrete.P_WCC_eq_P_TM",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ComplexityEquivalence.lean#L27",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ComplexityEquivalence.lean#L27",
        "audited": true
       }
      ],
      "PartIIUniform.P_disc_eq_P_TM": [
       {
        "name": "PartIIUniform.P_disc_eq_P_TM",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniformEquiv.lean#L74",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniformEquiv.lean#L74",
        "audited": true
       }
      ]
@@ -475,26 +476,26 @@ window.PVNP_DATA = {
     "PartISeparation.PNP_SAT_physically_constant": [
      {
       "name": "PartISeparation.PNP_SAT_physically_constant",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L402",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L402",
       "audited": true
      }
     ],
     "category_error_claim_implies_classical": [
      {
       "name": "PartISeparation.category_error_claim_implies_classical",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L409",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L409",
       "audited": true
      }
     ],
     "PhysicalAudit.PhysConst_polyEnc_eq_P_TM": [
      {
       "name": "PhysicalAudit.PhysConst_polyEnc_eq_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhysicalModelAudit.lean#L139",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhysicalModelAudit.lean#L139",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L69",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L70",
    "conditional": {
     "kind": "open",
     "note": "Verified: in the restricted charged-encoder frozen model, P_TM = NP_TM gives a constant-cost dense SAT implementation, so a barrier there would entail P_TM ≠ NP_TM. Not proved: P_TM = NP_TM or P_TM ≠ NP_TM."
@@ -518,14 +519,14 @@ window.PVNP_DATA = {
      "PartISeparation.PNP_SAT_physically_constant": [
       {
        "name": "PartISeparation.PNP_SAT_physically_constant",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L402",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L402",
        "audited": true
       }
      ],
      "category_error_claim_implies_classical": [
       {
        "name": "PartISeparation.category_error_claim_implies_classical",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L409",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L409",
        "audited": true
       }
      ]
@@ -545,40 +546,40 @@ window.PVNP_DATA = {
     "PartILocality.supp_step_subset": [
      {
       "name": "PartILocality.supp_step_subset",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartILocality.lean#L57",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartILocality.lean#L57",
       "audited": true
      }
     ],
     "supp_iterate_subset": [
      {
       "name": "PartILocality.supp_iterate_subset",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartILocality.lean#L87",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartILocality.lean#L87",
       "audited": false
      }
     ],
     "support_poly_bound": [
      {
       "name": "PartILocality.support_poly_bound",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartILocality.lean#L117",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartILocality.lean#L117",
       "audited": true
      }
     ],
     "local_growth_needs_quiescence": [
      {
       "name": "PartILocality.local_growth_needs_quiescence",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartILocality.lean#L69",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartILocality.lean#L69",
       "audited": true
      }
     ],
     "linear_growth_false_d2": [
      {
       "name": "PartILocality.linear_growth_false_d2",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartILocality.lean#L201",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartILocality.lean#L201",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L70",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L71",
    "amended": {
     "pr": 46,
     "scope": "Quiescence assumption added and the linear bound replaced by |supp C_t| ≤ |supp C_0|(2rt+1)^d. Locality alone does not give superpolynomial time.",
@@ -598,28 +599,28 @@ window.PVNP_DATA = {
      "PartILocality.supp_step_subset": [
       {
        "name": "PartILocality.supp_step_subset",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartILocality.lean#L57",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartILocality.lean#L57",
        "audited": true
       }
      ],
      "local_growth_needs_quiescence": [
       {
        "name": "PartILocality.local_growth_needs_quiescence",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartILocality.lean#L69",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartILocality.lean#L69",
        "audited": true
       }
      ],
      "linear_growth_false_d2": [
       {
        "name": "PartILocality.linear_growth_false_d2",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartILocality.lean#L201",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartILocality.lean#L201",
        "audited": true
       }
      ],
      "support_poly_bound": [
       {
        "name": "PartILocality.support_poly_bound",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartILocality.lean#L117",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartILocality.lean#L117",
        "audited": true
       }
      ]
@@ -639,26 +640,26 @@ window.PVNP_DATA = {
     "PartILocality.clause_flip_local": [
      {
       "name": "PartILocality.clause_flip_local",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartILocality.lean#L214",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartILocality.lean#L214",
       "audited": true
      }
     ],
     "clause_flip_rounds": [
      {
       "name": "PartILocality.clause_flip_rounds",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartILocality.lean#L223",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartILocality.lean#L223",
       "audited": true
      }
     ],
     "clause_flip_ceil": [
      {
       "name": "PartILocality.clause_flip_ceil",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartILocality.lean#L246",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartILocality.lean#L246",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L71"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L72"
   },
   {
    "id": "I-15",
@@ -672,12 +673,12 @@ window.PVNP_DATA = {
     "PartILocality.parallel_flips": [
      {
       "name": "PartILocality.parallel_flips",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartILocality.lean#L254",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartILocality.lean#L254",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L72"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L73"
   },
   {
    "id": "I-16",
@@ -691,26 +692,26 @@ window.PVNP_DATA = {
     "PartISeparation.WCCDepth": [
      {
       "name": "PartISeparation.WCCDepth",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L211",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L211",
       "audited": false
      }
     ],
     "CrossingSATMatrix.quadratic_every_budget": [
      {
       "name": "CrossingSATMatrix.quadratic_every_budget",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/QuadraticHorizon.lean#L26",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/QuadraticHorizon.lean#L26",
       "audited": true
      }
     ],
     "FiniteHorizon.fast_through_horizon": [
      {
       "name": "FiniteHorizon.fast_through_horizon",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/FiniteHorizonSAT.lean#L14",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/FiniteHorizonSAT.lean#L14",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L73",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L74",
    "historical": {
     "title": "Conj. `conj:wcc_depth`",
     "claim": "every uniform discrete WCC decider of 3-SAT is superpolynomial i.o.",
@@ -721,7 +722,7 @@ window.PVNP_DATA = {
      "PartISeparation.WCCDepth": [
       {
        "name": "PartISeparation.WCCDepth",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L211",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L211",
        "audited": false
       }
      ]
@@ -741,19 +742,19 @@ window.PVNP_DATA = {
     "PartISeparation.WCCDepth_iff_not_P_TM": [
      {
       "name": "PartISeparation.WCCDepth_iff_not_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L229",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L229",
       "audited": true
      }
     ],
     "WCCDDepth_iff_not_P_TM": [
      {
       "name": "PartISeparation.WCCDDepth_iff_not_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L236",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L236",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L74"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L75"
   },
   {
    "id": "I-18",
@@ -767,19 +768,19 @@ window.PVNP_DATA = {
     "PartISeparation.internal_sep_conditional": [
      {
       "name": "PartISeparation.internal_sep_conditional",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L250",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L250",
       "audited": true
      }
     ],
     "internal_sep_SAT": [
      {
       "name": "PartISeparation.internal_sep_SAT",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L258",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L258",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L75",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L76",
    "conditional": {
     "kind": "open",
     "note": "Verified: the conjecture implies dense CNF-SAT ∈ NP_WCC \\ P_WCC, hence P_WCC ⊊ NP_WCC. Not proved: the conjecture."
@@ -797,12 +798,12 @@ window.PVNP_DATA = {
     "internal_sep_conditional": [
      {
       "name": "PartISeparation.internal_sep_conditional",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L250",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L250",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L76",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L77",
    "conditional": {
     "kind": "open",
     "note": "Verified: the conjecture implies P ≠ NP. Not proved: the conjecture."
@@ -820,19 +821,19 @@ window.PVNP_DATA = {
     "PartISeparation.Kc_le": [
      {
       "name": "PartISeparation.Kc_le",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L417",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L417",
       "audited": false
      }
     ],
     "high_K_not_poly_witness": [
      {
       "name": "PartISeparation.high_K_not_poly_witness",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L428",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L428",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L77",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L78",
    "amended": {
     "pr": 47,
     "scope": "Now a negative description-size obstruction, K_D(s) ≤ |s|+c. The original state-as-short-witness inference is withdrawn; this is not a lower bound or a separation.",
@@ -851,7 +852,7 @@ window.PVNP_DATA = {
      "PartISeparation.high_K_not_poly_witness": [
       {
        "name": "PartISeparation.high_K_not_poly_witness",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L428",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L428",
        "audited": true
       }
      ]
@@ -871,12 +872,12 @@ window.PVNP_DATA = {
     "conditional_interface_bound": [
      {
       "name": "Discrete.conditional_interface_bound",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhysicalComplexityClasses.lean#L121",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhysicalComplexityClasses.lean#L121",
       "audited": false
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L78",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L79",
    "conditional": {
     "kind": "open",
     "note": "Verified: substituting an area lower bound and a coercivity bound yields the curvature-cost bound. Not proved: the two input lower bounds for deciders."
@@ -894,19 +895,19 @@ window.PVNP_DATA = {
     "ManuscriptRemarks.valid_telescoping": [
      {
       "name": "ManuscriptRemarks.valid_telescoping",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ManuscriptRemarks.lean#L26",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ManuscriptRemarks.lean#L26",
       "audited": true
      }
     ],
     "telescoping_bound": [
      {
       "name": "Discrete.telescoping_bound",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhysicalComplexityClasses.lean#L100",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhysicalComplexityClasses.lean#L100",
       "audited": false
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L79"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L80"
   },
   {
    "id": "I-23",
@@ -920,19 +921,19 @@ window.PVNP_DATA = {
     "ManuscriptRemarks.padding_stability": [
      {
       "name": "ManuscriptRemarks.padding_stability",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ManuscriptRemarks.lean#L42",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ManuscriptRemarks.lean#L42",
       "audited": true
      }
     ],
     "superlinear_padding": [
      {
       "name": "ManuscriptRemarks.superlinear_padding",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ManuscriptRemarks.lean#L56",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ManuscriptRemarks.lean#L56",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L80"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L81"
   },
   {
    "id": "I-24",
@@ -946,12 +947,12 @@ window.PVNP_DATA = {
     "PartISeparation.np_type_conditional": [
      {
       "name": "PartISeparation.np_type_conditional",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L191",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L191",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L81",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L82",
    "conditional": {
     "kind": "open",
     "note": "Verified: a verifier and the absence of an admissible decider give L ∈ NP^phys \\ P^phys. Not proved: the absence of a decider for any language."
@@ -969,19 +970,19 @@ window.PVNP_DATA = {
     "conditional_symbolic_separation": [
      {
       "name": "PartISeparation.conditional_symbolic_separation",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L147",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L147",
       "audited": true
      }
     ],
     "state_separation_not_language_separation": [
      {
       "name": "PartISeparation.state_separation_not_language_separation",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L361",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L361",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L82"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L83"
   },
   {
    "id": "I-26",
@@ -995,20 +996,20 @@ window.PVNP_DATA = {
     "conditional_symbolic_separation": [
      {
       "name": "PartISeparation.conditional_symbolic_separation",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L147",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L147",
       "audited": true
      }
     ],
     "state_separation_not_language_separation": [
      {
       "name": "PartISeparation.state_separation_not_language_separation",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L361",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L361",
       "audited": true
      }
     ]
    },
    "same_as": "I-25",
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L83"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L84"
   },
   {
    "id": "I-27",
@@ -1022,12 +1023,12 @@ window.PVNP_DATA = {
     "PartISeparation.accepted_language_not_in_NP_diff_P": [
      {
       "name": "PartISeparation.accepted_language_not_in_NP_diff_P",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L378",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L378",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L84"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L85"
   },
   {
    "id": "I-28",
@@ -1041,12 +1042,12 @@ window.PVNP_DATA = {
     "PartISeparation.universal_scope_counterexample": [
      {
       "name": "PartISeparation.universal_scope_counterexample",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L385",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L385",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L85"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L86"
   },
   {
    "id": "I-29",
@@ -1060,19 +1061,19 @@ window.PVNP_DATA = {
     "PartIPsiSat.uniform_symbolic_verification": [
      {
       "name": "PartIPsiSat.uniform_symbolic_verification",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIPsiSat.lean#L310",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIPsiSat.lean#L310",
       "audited": true
      }
     ],
     "SATV.V_SAT_mem_P_TM": [
      {
       "name": "Discrete.SATV.V_SAT_mem_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SATVerifier.lean#L903",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/SATVerifier.lean#L903",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L86"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L87"
   },
   {
    "id": "I-30",
@@ -1086,12 +1087,12 @@ window.PVNP_DATA = {
     "universal_scope_counterexample": [
      {
       "name": "PartISeparation.universal_scope_counterexample",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L385",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L385",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L87"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L88"
   },
   {
    "id": "I-31",
@@ -1105,26 +1106,26 @@ window.PVNP_DATA = {
     "SeparatorPrice.mesh_price": [
      {
       "name": "SeparatorPrice.mesh_price",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SeparatorPrice.lean#L11",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/SeparatorPrice.lean#L11",
       "audited": true
      }
     ],
     "SeparatorPrice.contrast_of_readout": [
      {
       "name": "SeparatorPrice.contrast_of_readout",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SeparatorPrice.lean#L28",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/SeparatorPrice.lean#L28",
       "audited": true
      }
     ],
     "SeparatorPrice.binary_cut_price": [
      {
       "name": "SeparatorPrice.binary_cut_price",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SeparatorPrice.lean#L55",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/SeparatorPrice.lean#L55",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L88",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L89",
    "historical": {
     "title": "Hyp. `lem:separator-price`",
     "claim": "uniform interface price",
@@ -1147,19 +1148,19 @@ window.PVNP_DATA = {
     "SeparatorPrice.binary_cut_price": [
      {
       "name": "SeparatorPrice.binary_cut_price",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SeparatorPrice.lean#L55",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/SeparatorPrice.lean#L55",
       "audited": true
      }
     ],
     "CurvatureBarrier.graphStorageCost_le_n_mul_d_sq": [
      {
       "name": "CurvatureBarrier.graphStorageCost_le_n_mul_d_sq",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/CurvatureBarrier.lean#L123",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/CurvatureBarrier.lean#L123",
       "audited": false
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L89",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L90",
    "historical": {
     "title": "Hyp. `prop:locked-expander-full`",
     "claim": "encoding-uniform interface growth 2^{γn}",
@@ -1182,12 +1183,12 @@ window.PVNP_DATA = {
     "PartISeparation.conditional_product_lower_bound": [
      {
       "name": "PartISeparation.conditional_product_lower_bound",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L296",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L296",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L90",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L91",
    "conditional": {
     "kind": "open",
     "note": "Verified: the price inequality and the area-growth hypothesis, both quantified over every decider, give C_Θ(L,n) ≥ κ₀c₀2^{γn}. Not proved: either hypothesis for a concrete language."
@@ -1205,19 +1206,19 @@ window.PVNP_DATA = {
     "SATV.V_SAT_mem_P_TM": [
      {
       "name": "Discrete.SATV.V_SAT_mem_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SATVerifier.lean#L903",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/SATVerifier.lean#L903",
       "audited": true
      }
     ],
     "uniform_symbolic_verification": [
      {
       "name": "PartIPsiSat.uniform_symbolic_verification",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIPsiSat.lean#L310",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIPsiSat.lean#L310",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L91"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L92"
   },
   {
    "id": "I-35",
@@ -1231,17 +1232,17 @@ window.PVNP_DATA = {
     "conditional_bridge_WCC/WCCD": [
      {
       "name": "PartISeparation.conditional_bridge_WCC",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L317",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L317",
       "audited": true
      },
      {
       "name": "PartISeparation.conditional_bridge_WCCD",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L320",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L320",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L92",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L93",
    "conditional": {
     "kind": "open",
     "note": "Verified: under the same-class identifications, a separation gives P ≠ NP. Not proved: the separation."
@@ -1259,12 +1260,12 @@ window.PVNP_DATA = {
     "PartISeparation.restricted_separation_schema_iff": [
      {
       "name": "PartISeparation.restricted_separation_schema_iff",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L330",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L330",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L93"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L94"
   },
   {
    "id": "I-37",
@@ -1278,19 +1279,19 @@ window.PVNP_DATA = {
     "ToroidalDiagonal.even_encRing_mem_SAT": [
      {
       "name": "ToroidalDiagonal.even_encRing_mem_SAT",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ToroidalDiagonal.lean#L164",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ToroidalDiagonal.lean#L164",
       "audited": true
      }
     ],
     "ToroidalDiagonal.odd_encRing_not_SAT": [
      {
       "name": "ToroidalDiagonal.odd_encRing_not_SAT",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ToroidalDiagonal.lean#L158",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ToroidalDiagonal.lean#L158",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L94",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L95",
    "historical": {
     "title": "§12.3 \"nonexistence of a toroidal locking configuration ⟺ unsatisfiability\"",
     "claim": "informal",
@@ -1313,33 +1314,33 @@ window.PVNP_DATA = {
     "PartIIUniform.P_disc_eq_P_TM": [
      {
       "name": "PartIIUniform.P_disc_eq_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniformEquiv.lean#L74",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniformEquiv.lean#L74",
       "audited": true
      }
     ],
     "P_WCC_eq_P_TM": [
      {
       "name": "Discrete.P_WCC_eq_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ComplexityEquivalence.lean#L27",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ComplexityEquivalence.lean#L27",
       "audited": true
      }
     ],
     "P_WCCR_eq_P_TM": [
      {
       "name": "Discrete.P_WCCR_eq_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/WCCRadius.lean#L831",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/WCCRadius.lean#L831",
       "audited": true
      }
     ],
     "P_WCCD_eq_P_TM": [
      {
       "name": "Discrete.P_WCCD_eq_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/WCCDSweepMain.lean#L532",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/WCCDSweepMain.lean#L532",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L95"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L96"
   },
   {
    "id": "I-39",
@@ -1353,33 +1354,33 @@ window.PVNP_DATA = {
     "PartIIUniform.NP_disc_eq_NP_TM": [
      {
       "name": "PartIIUniform.NP_disc_eq_NP_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniformEquiv.lean#L189",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniformEquiv.lean#L189",
       "audited": true
      }
     ],
     "NP_WCC_eq_NP_TM": [
      {
       "name": "Discrete.NP_WCC_eq_NP_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ComplexityEquivalence.lean#L31",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ComplexityEquivalence.lean#L31",
       "audited": true
      }
     ],
     "NP_WCCR_eq_NP_TM": [
      {
       "name": "Discrete.NP_WCCR_eq_NP_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/WCCRadius.lean#L836",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/WCCRadius.lean#L836",
       "audited": true
      }
     ],
     "NP_WCCD_eq_NP_TM": [
      {
       "name": "Discrete.NP_WCCD_eq_NP_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/WCCDSweepMain.lean#L536",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/WCCDSweepMain.lean#L536",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L96"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L97"
   },
   {
    "id": "I-40",
@@ -1393,12 +1394,12 @@ window.PVNP_DATA = {
     "SATV.V_SAT_mem_P_TM": [
      {
       "name": "Discrete.SATV.V_SAT_mem_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SATVerifier.lean#L903",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/SATVerifier.lean#L903",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L97"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L98"
   },
   {
    "id": "I-41",
@@ -1412,19 +1413,19 @@ window.PVNP_DATA = {
     "PartISeparation.curv_bdd_sep": [
      {
       "name": "PartISeparation.curv_bdd_sep",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L197",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L197",
       "audited": true
      }
     ],
     "fixed_n_impossible": [
      {
       "name": "PartISeparation.fixed_n_impossible",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L202",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L202",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L98",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L99",
    "conditional": {
     "kind": "open",
     "note": "Verified: physical NP membership plus asymptotic hardness against every decider gives a physical separation; the fixed-n impossibility remark is unconditional. Not proved: the hardness premise."
@@ -1442,12 +1443,12 @@ window.PVNP_DATA = {
     "WCC.step": [
      {
       "name": "Discrete.WCC.step",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/DiscreteMachines.lean#L153",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/DiscreteMachines.lean#L153",
       "audited": false
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L124"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L125"
   },
   {
    "id": "II-2",
@@ -1461,19 +1462,19 @@ window.PVNP_DATA = {
     "PartIITwoPhase.two_steps": [
      {
       "name": "PartIITwoPhase.two_steps",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L211",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L211",
       "audited": true
      }
     ],
     "TM.toWCC_step_encode": [
      {
       "name": "Discrete.TM.toWCC_step_encode",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/TMtoWCC.lean#L115",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/TMtoWCC.lean#L115",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L125"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L126"
   },
   {
    "id": "II-3",
@@ -1487,12 +1488,12 @@ window.PVNP_DATA = {
     "WCC.run": [
      {
       "name": "Discrete.WCC.run",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/DiscreteMachines.lean#L156",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/DiscreteMachines.lean#L156",
       "audited": false
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L126"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L127"
   },
   {
    "id": "II-4",
@@ -1506,19 +1507,19 @@ window.PVNP_DATA = {
     "PartIIManuscript.wave_symbol_forward": [
      {
       "name": "PartIIManuscript.wave_symbol_forward",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIManuscript.lean#L38",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIManuscript.lean#L38",
       "audited": true
      }
     ],
     "wave_symbol_converse": [
      {
       "name": "PartIIManuscript.wave_symbol_converse",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIManuscript.lean#L48",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIManuscript.lean#L48",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L127"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L128"
   },
   {
    "id": "II-5",
@@ -1532,12 +1533,12 @@ window.PVNP_DATA = {
     "PartIIManuscript.compatibility_necessary": [
      {
       "name": "PartIIManuscript.compatibility_necessary",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIManuscript.lean#L67",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIManuscript.lean#L67",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L128"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L129"
   },
   {
    "id": "II-6",
@@ -1551,12 +1552,12 @@ window.PVNP_DATA = {
     "WCC.step": [
      {
       "name": "Discrete.WCC.step",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/DiscreteMachines.lean#L153",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/DiscreteMachines.lean#L153",
       "audited": false
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L129"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L130"
   },
   {
    "id": "II-7",
@@ -1570,26 +1571,26 @@ window.PVNP_DATA = {
     "PartIITwoPhase.invariant_even": [
      {
       "name": "PartIITwoPhase.invariant_even",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L256",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L256",
       "audited": true
      }
     ],
     "invariant_odd": [
      {
       "name": "PartIITwoPhase.invariant_odd",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L274",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L274",
       "audited": true
      }
     ],
     "invariant_literal_fails": [
      {
       "name": "PartIITwoPhase.invariant_literal_fails",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L417",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L417",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L130",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L131",
    "amended": {
     "pr": 45,
     "scope": "Quantifier range corrected from all t ≥ 0 to 0 ≤ t ≤ L(n). The corrected theorem was already kernel-checked; the manuscript now states it.",
@@ -1608,21 +1609,21 @@ window.PVNP_DATA = {
      "PartIITwoPhase.invariant_even": [
       {
        "name": "PartIITwoPhase.invariant_even",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L256",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L256",
        "audited": true
       }
      ],
      "invariant_odd": [
       {
        "name": "PartIITwoPhase.invariant_odd",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L274",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L274",
        "audited": true
       }
      ],
      "invariant_literal_fails": [
       {
        "name": "PartIITwoPhase.invariant_literal_fails",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L417",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L417",
        "audited": true
       }
      ]
@@ -1642,33 +1643,33 @@ window.PVNP_DATA = {
     "PartIITwoPhase.two_steps": [
      {
       "name": "PartIITwoPhase.two_steps",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L211",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L211",
       "audited": true
      }
     ],
     "one_step": [
      {
       "name": "PartIITwoPhase.one_step",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L242",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L242",
       "audited": true
      }
     ],
     "one_step_of_inWin": [
      {
       "name": "PartIITwoPhase.one_step_of_inWin",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L219",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L219",
       "audited": true
      }
     ],
     "one_step_literal_fails": [
      {
       "name": "PartIITwoPhase.one_step_literal_fails",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L410",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L410",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L131",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L132",
    "amended": {
     "pr": 45,
     "scope": "Same correction: C_{2t} encodes the configuration for 0 ≤ t ≤ L(n), and the two-step identity holds while the head stays in Λ_n.",
@@ -1687,28 +1688,28 @@ window.PVNP_DATA = {
      "PartIITwoPhase.two_steps": [
       {
        "name": "PartIITwoPhase.two_steps",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L211",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L211",
        "audited": true
       }
      ],
      "one_step": [
       {
        "name": "PartIITwoPhase.one_step",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L242",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L242",
        "audited": true
       }
      ],
      "one_step_of_inWin": [
       {
        "name": "PartIITwoPhase.one_step_of_inWin",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L219",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L219",
        "audited": true
       }
      ],
      "one_step_literal_fails": [
       {
        "name": "PartIITwoPhase.one_step_literal_fails",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L410",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L410",
        "audited": true
       }
      ]
@@ -1728,73 +1729,114 @@ window.PVNP_DATA = {
     "PartIITwoPhase.runtime": [
      {
       "name": "PartIITwoPhase.runtime",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L340",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L340",
       "audited": true
      }
     ],
     "runtime_accepts": [
      {
       "name": "PartIITwoPhase.runtime_accepts",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L362",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L362",
       "audited": true
      }
     ],
     "card_window": [
      {
       "name": "PartIITwoPhase.card_window",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L86",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L86",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L132"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L133"
   },
   {
    "id": "II-10",
    "part": "II",
    "title": "Thm. `thm:tm_to_wcc`",
    "claim": "W_M decides L in time 2T_M ≤ 2c·max(n,1)^k; P_Turing ⊆ P_WCC",
-   "lean": "`PartIITwoPhase.tm_to_wcc_decides`, `PartIIUniform.P_Turing_subset_P_disc` (new), `TM.toWCC_decides`, `P_TM_subset_P_WCC`, `TwoPhaseDecoder.decM_fp`",
-   "status": "Restricted",
-   "details": "Restricted. The original two-phase decoder runs in polynomial time on every canonical configuration, with accept taking precedence. The original encoder and window writer still need polynomial-output transducers. The two-update simulation and the uniform class inclusion are proved.",
+   "lean": "`PartIITwoPhase.tm_to_wcc_decides`, `TwoPhaseDecoder.decM_fp`, `TwoPhasePolynomialWriter.windowMTM_outputs`, `inputMTM_outputs`, `originalWindowCode_fp`, `originalInputCode_fp`, `originalWM`, `originalWM_first_answer`, `originalWM_decides`, `P_Turing_subset_P_disc_by_original`",
+   "status": "Exact",
+   "details": "Exact. The original polynomial-radius single-tape writers produce the canonical words at first halt with polynomial transition bounds. Both FP witnesses construct the original uniform W_M. The first-answer theorem gives time 2T_M(x) and the correct decision inside the certified head window. This does not establish physical realization or P ≠ NP.",
    "refs": {
     "PartIITwoPhase.tm_to_wcc_decides": [
      {
       "name": "PartIITwoPhase.tm_to_wcc_decides",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L370",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L370",
       "audited": true
-     }
-    ],
-    "PartIIUniform.P_Turing_subset_P_disc": [
-     {
-      "name": "PartIIUniform.P_Turing_subset_P_disc",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniform.lean#L782",
-      "audited": true
-     }
-    ],
-    "TM.toWCC_decides": [
-     {
-      "name": "Discrete.TM.toWCC_decides",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/TMtoWCC.lean#L211",
-      "audited": true
-     }
-    ],
-    "P_TM_subset_P_WCC": [
-     {
-      "name": "Discrete.P_TM_subset_P_WCC",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/TMtoWCC.lean#L220",
-      "audited": false
      }
     ],
     "TwoPhaseDecoder.decM_fp": [
      {
       "name": "TwoPhaseDecoder.decM_fp",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/TwoPhaseDecoder.lean#L292",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/TwoPhaseDecoder.lean#L292",
+      "audited": true
+     }
+    ],
+    "TwoPhasePolynomialWriter.windowMTM_outputs": [
+     {
+      "name": "TwoPhasePolynomialWriter.windowMTM_outputs",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/TwoPhasePolynomialFP.lean#L149",
+      "audited": true
+     }
+    ],
+    "inputMTM_outputs": [
+     {
+      "name": "TwoPhasePolynomialWriter.inputMTM_outputs",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/TwoPhasePolynomialFP.lean#L322",
+      "audited": true
+     }
+    ],
+    "originalWindowCode_fp": [
+     {
+      "name": "TwoPhasePolynomialWriter.originalWindowCode_fp",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/TwoPhasePolynomialFP.lean#L158",
+      "audited": true
+     }
+    ],
+    "originalInputCode_fp": [
+     {
+      "name": "TwoPhasePolynomialWriter.originalInputCode_fp",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/TwoPhasePolynomialFP.lean#L330",
+      "audited": true
+     }
+    ],
+    "originalWM": [
+     {
+      "name": "TwoPhasePolynomialWriter.originalWM",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/TwoPhasePolynomialFP.lean#L339",
+      "audited": true
+     }
+    ],
+    "originalWM_first_answer": [
+     {
+      "name": "TwoPhasePolynomialWriter.originalWM_first_answer",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/TwoPhasePolynomialFP.lean#L358",
+      "audited": true
+     }
+    ],
+    "originalWM_decides": [
+     {
+      "name": "TwoPhasePolynomialWriter.originalWM_decides",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/TwoPhasePolynomialFP.lean#L345",
+      "audited": true
+     }
+    ],
+    "P_Turing_subset_P_disc_by_original": [
+     {
+      "name": "TwoPhasePolynomialWriter.P_Turing_subset_P_disc_by_original",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/TwoPhasePolynomialFP.lean#L409",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L133",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L134",
+   "formalized": {
+    "pr": 73,
+    "decl": "TwoPhasePolynomialWriter.originalWM_first_answer",
+    "from": "Restricted",
+    "scope_change": "The original 27 October theorem used c*n^k and was corrected on 6 November to c*max(n,1)^k to cover empty input; the actual original W_M construction and its uniform polynomial-time writer hypotheses are now discharged. This is a proof of the corrected original manuscript statement, not a physical WCT claim."
+   },
    "historical": {
     "title": "Thm. `thm:tm_to_wcc`",
     "claim": "W_M decides L in time 2T_M ≤ 2cn^k; P_Turing ⊆ P_WCC",
@@ -1805,28 +1847,28 @@ window.PVNP_DATA = {
      "PartIITwoPhase.tm_to_wcc_decides": [
       {
        "name": "PartIITwoPhase.tm_to_wcc_decides",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITwoPhase.lean#L370",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITwoPhase.lean#L370",
        "audited": true
       }
      ],
      "PartIIUniform.P_Turing_subset_P_disc": [
       {
        "name": "PartIIUniform.P_Turing_subset_P_disc",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniform.lean#L782",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniform.lean#L782",
        "audited": true
       }
      ],
      "TM.toWCC_decides": [
       {
        "name": "Discrete.TM.toWCC_decides",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/TMtoWCC.lean#L211",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/TMtoWCC.lean#L211",
        "audited": true
       }
      ],
      "P_TM_subset_P_WCC": [
       {
        "name": "Discrete.P_TM_subset_P_WCC",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/TMtoWCC.lean#L220",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/TMtoWCC.lean#L220",
        "audited": false
       }
      ]
@@ -1846,40 +1888,40 @@ window.PVNP_DATA = {
     "PartIIUniform.wcc_to_tm": [
      {
       "name": "PartIIUniform.wcc_to_tm",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniformEquiv.lean#L53",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniformEquiv.lean#L53",
       "audited": true
      }
     ],
     "P_disc_subset_P_TM": [
      {
       "name": "PartIIUniform.P_disc_subset_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniformEquiv.lean#L62",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniformEquiv.lean#L62",
       "audited": true
      }
     ],
     "WCC.toTM_decides": [
      {
       "name": "Discrete.WCC.toTM_decides",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/WCCtoTM.lean#L606",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/WCCtoTM.lean#L606",
       "audited": true
      }
     ],
     "WCCR.toTM_decides": [
      {
       "name": "Discrete.WCCR.toTM_decides",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/WCCRadius.lean#L723",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/WCCRadius.lean#L723",
       "audited": true
      }
     ],
     "WCCDSweep.toTM_decides": [
      {
       "name": "Discrete.WCCDSweep.toTM_decides",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/WCCDSweepMain.lean#L499",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/WCCDSweepMain.lean#L499",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L134"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L135"
   },
   {
    "id": "II-12",
@@ -1893,19 +1935,19 @@ window.PVNP_DATA = {
     "PartIIUniform.P_disc_eq_P_TM": [
      {
       "name": "PartIIUniform.P_disc_eq_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniformEquiv.lean#L74",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniformEquiv.lean#L74",
       "audited": true
      }
     ],
     "PartIITuring.P_Turing_eq_P_TM": [
      {
       "name": "PartIITuring.P_Turing_eq_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITuringModel.lean#L593",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITuringModel.lean#L593",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L135",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L136",
    "historical": {
     "title": "Cor. `cor:pwcc_equals_pturing`",
     "claim": "P_WCC = P_Turing",
@@ -1916,14 +1958,14 @@ window.PVNP_DATA = {
      "PartIIUniform.P_disc_eq_P_TM": [
       {
        "name": "PartIIUniform.P_disc_eq_P_TM",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniformEquiv.lean#L74",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniformEquiv.lean#L74",
        "audited": true
       }
      ],
      "PartIITuring.P_Turing_eq_P_TM": [
       {
        "name": "PartIITuring.P_Turing_eq_P_TM",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITuringModel.lean#L593",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITuringModel.lean#L593",
        "audited": true
       }
      ]
@@ -1943,19 +1985,19 @@ window.PVNP_DATA = {
     "PartIIUniform.NP_disc_eq_NP_TM": [
      {
       "name": "PartIIUniform.NP_disc_eq_NP_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniformEquiv.lean#L189",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniformEquiv.lean#L189",
       "audited": true
      }
     ],
     "PartIITuring.NP_Turing_eq_NP_TM": [
      {
       "name": "PartIITuring.NP_Turing_eq_NP_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITuringModel.lean#L855",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITuringModel.lean#L855",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L136"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L137"
   },
   {
    "id": "II-14",
@@ -1969,12 +2011,12 @@ window.PVNP_DATA = {
     "TM.toWCC_decides": [
      {
       "name": "Discrete.TM.toWCC_decides",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/TMtoWCC.lean#L211",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/TMtoWCC.lean#L211",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L137"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L138"
   },
   {
    "id": "II-15",
@@ -1988,19 +2030,19 @@ window.PVNP_DATA = {
     "PartIIUniform.P_disc_eq_P_TM": [
      {
       "name": "PartIIUniform.P_disc_eq_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniformEquiv.lean#L74",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniformEquiv.lean#L74",
       "audited": true
      }
     ],
     "NP_disc_eq_NP_TM": [
      {
       "name": "PartIIUniform.NP_disc_eq_NP_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniformEquiv.lean#L189",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniformEquiv.lean#L189",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L138"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L139"
   },
   {
    "id": "II-16",
@@ -2014,12 +2056,12 @@ window.PVNP_DATA = {
     "p_vs_np_discrete_transfer": [
      {
       "name": "Discrete.p_vs_np_discrete_transfer",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ComplexityEquivalence.lean#L44",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ComplexityEquivalence.lean#L44",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L139",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L140",
    "conditional": {
     "kind": "open",
     "note": "Verified: a language in NP^disc \\ P^disc implies P ≠ NP. Not proved: the existence of such a language, which the proved class equalities make equivalent to P ≠ NP."
@@ -2037,33 +2079,33 @@ window.PVNP_DATA = {
     "PartIITuring.P_Turing_eq_P_TM": [
      {
       "name": "PartIITuring.P_Turing_eq_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITuringModel.lean#L593",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITuringModel.lean#L593",
       "audited": true
      }
     ],
     "P_Turing_lit_eq": [
      {
       "name": "PartIITuring.P_Turing_lit_eq",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITuringModel.lean#L228",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITuringModel.lean#L228",
       "audited": true
      }
     ],
     "P_Turing_lit_ne_P_TM": [
      {
       "name": "PartIITuring.P_Turing_lit_ne_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITuringModel.lean#L910",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITuringModel.lean#L910",
       "audited": true
      }
     ],
     "P_Turing_lit_ne_NP_Turing": [
      {
       "name": "PartIITuring.P_Turing_lit_ne_NP_Turing",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITuringModel.lean#L922",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITuringModel.lean#L922",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L140",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L141",
    "amended": {
     "pr": 45,
     "scope": "Time bound corrected from c·n^k to c·max(n,1)^k. With the original bound, n = 0 forced T_M(0) = 0 and P_Turing degenerated to {∅, Σ*}.",
@@ -2084,28 +2126,28 @@ window.PVNP_DATA = {
      "PartIITuring.P_Turing_lit_eq": [
       {
        "name": "PartIITuring.P_Turing_lit_eq",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITuringModel.lean#L228",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITuringModel.lean#L228",
        "audited": true
       }
      ],
      "P_Turing_lit_ne_P_TM": [
       {
        "name": "PartIITuring.P_Turing_lit_ne_P_TM",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITuringModel.lean#L910",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITuringModel.lean#L910",
        "audited": true
       }
      ],
      "P_Turing_lit_ne_NP_Turing": [
       {
        "name": "PartIITuring.P_Turing_lit_ne_NP_Turing",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITuringModel.lean#L922",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITuringModel.lean#L922",
        "audited": true
       }
      ],
      "P_Turing_eq_P_TM": [
       {
        "name": "PartIITuring.P_Turing_eq_P_TM",
-       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITuringModel.lean#L593",
+       "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITuringModel.lean#L593",
        "audited": true
       }
      ]
@@ -2125,19 +2167,19 @@ window.PVNP_DATA = {
     "PartIIManuscript.bandlimit_eff": [
      {
       "name": "PartIIManuscript.bandlimit_eff",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIManuscript.lean#L82",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIManuscript.lean#L82",
       "audited": true
      }
     ],
     "bandlimit_sharp": [
      {
       "name": "PartIIManuscript.bandlimit_sharp",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIManuscript.lean#L90",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIManuscript.lean#L90",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L141",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L142",
    "conditional": {
     "kind": "model",
     "note": "Verified from the manuscript's physical identities, stated as explicit hypotheses. The identities are modelling assumptions, not Lean theorems."
@@ -2155,19 +2197,19 @@ window.PVNP_DATA = {
     "PartIIManuscript.spatial_capacity": [
      {
       "name": "PartIIManuscript.spatial_capacity",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIManuscript.lean#L104",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIManuscript.lean#L104",
       "audited": true
      }
     ],
     "spatial_capacity_energy": [
      {
       "name": "PartIIManuscript.spatial_capacity_energy",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIManuscript.lean#L158",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIManuscript.lean#L158",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L142"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L143"
   },
   {
    "id": "II-20",
@@ -2181,12 +2223,12 @@ window.PVNP_DATA = {
     "PartIIManuscript.lane_update_bound": [
      {
       "name": "PartIIManuscript.lane_update_bound",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIManuscript.lean#L172",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIManuscript.lean#L172",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L143"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L144"
   },
   {
    "id": "II-21",
@@ -2200,12 +2242,12 @@ window.PVNP_DATA = {
     "PartIIManuscript.spacetime_capacity": [
      {
       "name": "PartIIManuscript.spacetime_capacity",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIManuscript.lean#L185",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIManuscript.lean#L185",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L144",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L145",
    "conditional": {
     "kind": "model",
     "note": "Verified with the independent-lane premise as an explicit hypothesis. The premise is a modelling assumption."
@@ -2223,12 +2265,12 @@ window.PVNP_DATA = {
     "PartIIManuscript.spacetime_capacity": [
      {
       "name": "PartIIManuscript.spacetime_capacity",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIManuscript.lean#L185",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIManuscript.lean#L185",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L145"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L146"
   },
   {
    "id": "II-23",
@@ -2242,19 +2284,19 @@ window.PVNP_DATA = {
     "PartIIManuscript.phys_step_ceiling": [
      {
       "name": "PartIIManuscript.phys_step_ceiling",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIManuscript.lean#L208",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIManuscript.lean#L208",
       "audited": true
      }
     ],
     "rounds_le_events": [
      {
       "name": "PartIIManuscript.rounds_le_events",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIManuscript.lean#L223",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIManuscript.lean#L223",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L146",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L147",
    "conditional": {
     "kind": "model",
     "note": "Verified under the explicit counting premise T_W ≤ N_updates + 1 and the capacity premises, which are modelling assumptions."
@@ -2272,19 +2314,19 @@ window.PVNP_DATA = {
     "PartIIManuscript.conditional_np_safety_all": [
      {
       "name": "PartIIManuscript.conditional_np_safety_all",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ConditionalNPSafety.lean#L101",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ConditionalNPSafety.lean#L101",
       "audited": true
      }
     ],
     "PartIIManuscript.conditional_np_safety": [
      {
       "name": "PartIIManuscript.conditional_np_safety",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ConditionalNPSafety.lean#L136",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ConditionalNPSafety.lean#L136",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L147",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L148",
    "conditional": {
     "kind": "open",
     "note": "Assumes polynomial physical resources, the capacity law, uniform simulation with counted update rounds, and P_Turing ≠ NP_Turing."
@@ -2316,26 +2358,26 @@ window.PVNP_DATA = {
     "unrestricted_encoder_trivializes_WCC": [
      {
       "name": "Discrete.unrestricted_encoder_trivializes_WCC",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/WCCGenerality.lean#L263",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/WCCGenerality.lean#L263",
       "audited": true
      }
     ],
     "advice_bit_trivializes": [
      {
       "name": "Discrete.advice_bit_trivializes",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/WCCGenerality.lean#L277",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/WCCGenerality.lean#L277",
       "audited": true
      }
     ],
     "P_WCC_enc_id": [
      {
       "name": "Discrete.P_WCC_enc_id",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/WCCGenerality.lean#L194",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/WCCGenerality.lean#L194",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L148"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L149"
   },
   {
    "id": "II-26",
@@ -2349,40 +2391,40 @@ window.PVNP_DATA = {
     "PartIIUniform.P_TM_subset_P_disc": [
      {
       "name": "PartIIUniform.P_TM_subset_P_disc",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniform.lean#L791",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniform.lean#L791",
       "audited": true
      }
     ],
     "MTM.answerWriter": [
      {
       "name": "PartIITuring.MTM.answerWriter",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniform.lean#L201",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniform.lean#L201",
       "audited": false
      }
     ],
     "answerWriter_outputs": [
      {
       "name": "PartIITuring.MTM.answerWriter_outputs",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniform.lean#L364",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniform.lean#L364",
       "audited": true
      }
     ],
     "UWCC": [
      {
       "name": "PartIIUniform.UWCC",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniform.lean#L99",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniform.lean#L99",
       "audited": false
      }
     ],
     "FP": [
      {
       "name": "PartIIUniform.FP",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniform.lean#L67",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniform.lean#L67",
       "audited": false
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L149"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L150"
   },
   {
    "id": "II-27",
@@ -2396,12 +2438,12 @@ window.PVNP_DATA = {
     "PartIIManuscript.phys_step_ceiling": [
      {
       "name": "PartIIManuscript.phys_step_ceiling",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIManuscript.lean#L208",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIManuscript.lean#L208",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L150",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L151",
    "conditional": {
     "kind": "model",
     "note": "Verified through phys_step_ceiling, under the same capacity and counting premises as II-23."
@@ -2419,19 +2461,19 @@ window.PVNP_DATA = {
     "PartIITuring.NP_Turing_eq_NP_TM": [
      {
       "name": "PartIITuring.NP_Turing_eq_NP_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITuringModel.lean#L855",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITuringModel.lean#L855",
       "audited": true
      }
     ],
     "MTM.guard": [
      {
       "name": "PartIITuring.MTM.guard",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIITuringModel.lean#L664",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIITuringModel.lean#L664",
       "audited": false
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L151"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L152"
   },
   {
    "id": "III-1",
@@ -2445,12 +2487,12 @@ window.PVNP_DATA = {
     "PartIIIAnalytic.zero_cost_counterexample": [
      {
       "name": "PartIIIAnalytic.zero_cost_counterexample",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIIAnalytic.lean#L107",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIIAnalytic.lean#L107",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L190"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L191"
   },
   {
    "id": "III-2",
@@ -2464,13 +2506,13 @@ window.PVNP_DATA = {
     "PartIIIAnalytic.zero_cost_counterexample": [
      {
       "name": "PartIIIAnalytic.zero_cost_counterexample",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIIAnalytic.lean#L107",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIIAnalytic.lean#L107",
       "audited": true
      }
     ]
    },
    "same_as": "III-1",
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L191"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L192"
   },
   {
    "id": "III-3",
@@ -2484,12 +2526,12 @@ window.PVNP_DATA = {
     "conditional_additive_storage": [
      {
       "name": "Discrete.conditional_additive_storage",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhysicalComplexityClasses.lean#L114",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhysicalComplexityClasses.lean#L114",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L192",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L193",
    "conditional": {
     "kind": "model",
     "note": "Verified: additivity of stored energy and a per-cell minimum c₀ give E_store ≥ n·c₀. Assumed: additivity and the per-cell bound."
@@ -2507,12 +2549,12 @@ window.PVNP_DATA = {
     "PartIIIAnalytic.curvature_cost_le": [
      {
       "name": "PartIIIAnalytic.curvature_cost_le",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIIAnalytic.lean#L60",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIIAnalytic.lean#L60",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L193"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L194"
   },
   {
    "id": "III-5",
@@ -2526,12 +2568,12 @@ window.PVNP_DATA = {
     "ManuscriptRemarks.win13_counterexample": [
      {
       "name": "ManuscriptRemarks.win13_counterexample",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ManuscriptRemarks.lean#L67",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ManuscriptRemarks.lean#L67",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L194"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L195"
   },
   {
    "id": "III-6",
@@ -2545,19 +2587,19 @@ window.PVNP_DATA = {
     "PartIIUniform.P_disc_eq_P_TM": [
      {
       "name": "PartIIUniform.P_disc_eq_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniformEquiv.lean#L74",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniformEquiv.lean#L74",
       "audited": true
      }
     ],
     "NP_disc_eq_NP_TM": [
      {
       "name": "PartIIUniform.NP_disc_eq_NP_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIUniformEquiv.lean#L189",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIUniformEquiv.lean#L189",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L195"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L196"
   },
   {
    "id": "III-7",
@@ -2571,26 +2613,26 @@ window.PVNP_DATA = {
     "ManuscriptRemarks.p_in_np_phys": [
      {
       "name": "ManuscriptRemarks.p_in_np_phys",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ManuscriptRemarks.lean#L104",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ManuscriptRemarks.lean#L104",
       "audited": true
      }
     ],
     "P_TM_subset_NP_TM": [
      {
       "name": "Discrete.P_TM_subset_NP_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PSubsetNP.lean#L661",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PSubsetNP.lean#L661",
       "audited": true
      }
     ],
     "P_WCC_subset_NP_WCC": [
      {
       "name": "Discrete.P_WCC_subset_NP_WCC",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PSubsetNP.lean#L670",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PSubsetNP.lean#L670",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L196"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L197"
   },
   {
    "id": "III-8",
@@ -2604,12 +2646,12 @@ window.PVNP_DATA = {
     "ManuscriptRemarks.win16": [
      {
       "name": "ManuscriptRemarks.win16",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ManuscriptRemarks.lean#L113",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ManuscriptRemarks.lean#L113",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L197"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L198"
   },
   {
    "id": "III-9",
@@ -2623,12 +2665,12 @@ window.PVNP_DATA = {
     "inclusions_do_not_determine": [
      {
       "name": "Discrete.inclusions_do_not_determine",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhysicalComplexityClasses.lean#L128",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhysicalComplexityClasses.lean#L128",
       "audited": false
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L198"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L199"
   },
   {
    "id": "III-10",
@@ -2642,12 +2684,12 @@ window.PVNP_DATA = {
     "classical_question_well_posed": [
      {
       "name": "Discrete.classical_question_well_posed",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhysicalComplexityClasses.lean#L142",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhysicalComplexityClasses.lean#L142",
       "audited": false
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L199"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L200"
   },
   {
    "id": "III-11",
@@ -2661,12 +2703,12 @@ window.PVNP_DATA = {
     "conditional_interface_bound": [
      {
       "name": "Discrete.conditional_interface_bound",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhysicalComplexityClasses.lean#L121",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhysicalComplexityClasses.lean#L121",
       "audited": false
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L200",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L201",
    "conditional": {
     "kind": "model",
     "note": "Verified: an area lower bound A and the coercivity κ·area ≤ cost give C_Θ ≥ κA. Assumed: both bounds."
@@ -2684,12 +2726,12 @@ window.PVNP_DATA = {
     "SATV.V_SAT_mem_P_TM": [
      {
       "name": "Discrete.SATV.V_SAT_mem_P_TM",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SATVerifier.lean#L903",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/SATVerifier.lean#L903",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L201"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L202"
   },
   {
    "id": "III-13",
@@ -2703,12 +2745,12 @@ window.PVNP_DATA = {
     "telescoping_bound": [
      {
       "name": "Discrete.telescoping_bound",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhysicalComplexityClasses.lean#L100",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhysicalComplexityClasses.lean#L100",
       "audited": false
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L202"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L203"
   },
   {
    "id": "III-14",
@@ -2722,19 +2764,19 @@ window.PVNP_DATA = {
     "restricted_separation_schema_iff": [
      {
       "name": "PartISeparation.restricted_separation_schema_iff",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartISeparation.lean#L330",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartISeparation.lean#L330",
       "audited": true
      }
     ],
     "inclusions_do_not_determine": [
      {
       "name": "Discrete.inclusions_do_not_determine",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhysicalComplexityClasses.lean#L128",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhysicalComplexityClasses.lean#L128",
       "audited": false
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L203"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L204"
   },
   {
    "id": "III-15",
@@ -2748,19 +2790,19 @@ window.PVNP_DATA = {
     "PartIIIHighFreq3D.cube_gradient_energy": [
      {
       "name": "PartIIIHighFreq3D.cube_gradient_energy",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIIHighFreq3D.lean#L96",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIIHighFreq3D.lean#L96",
       "audited": true
      }
     ],
     "cube_curvature_lower": [
      {
       "name": "PartIIIHighFreq3D.cube_curvature_lower",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIIHighFreq3D.lean#L104",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIIHighFreq3D.lean#L104",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L204"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L205"
   },
   {
    "id": "III-16",
@@ -2774,12 +2816,12 @@ window.PVNP_DATA = {
     "PartIIIAnalytic.capacity_law": [
      {
       "name": "PartIIIAnalytic.capacity_law",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PartIIIAnalytic.lean#L79",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PartIIIAnalytic.lean#L79",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L205"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L206"
   },
   {
    "id": "III-17",
@@ -2793,12 +2835,12 @@ window.PVNP_DATA = {
     "directed_boundary_eq": [
      {
       "name": "PartIII.directed_boundary_eq",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhysicalComplexityClasses.lean#L149",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhysicalComplexityClasses.lean#L149",
       "audited": true
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L206"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L207"
   },
   {
    "id": "III-18",
@@ -2812,12 +2854,12 @@ window.PVNP_DATA = {
     "variation_class_vacuous": [
      {
       "name": "PartIII.variation_class_vacuous",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhysicalComplexityClasses.lean#L200",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhysicalComplexityClasses.lean#L200",
       "audited": false
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L207"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L208"
   },
   {
    "id": "III-19",
@@ -2831,12 +2873,12 @@ window.PVNP_DATA = {
     "variation_class_vacuous": [
      {
       "name": "PartIII.variation_class_vacuous",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhysicalComplexityClasses.lean#L200",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhysicalComplexityClasses.lean#L200",
       "audited": false
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L208"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L209"
   },
   {
    "id": "III-20",
@@ -2850,19 +2892,19 @@ window.PVNP_DATA = {
     "parity_total_influence": [
      {
       "name": "PartIII.parity_total_influence",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhysicalComplexityClasses.lean#L191",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhysicalComplexityClasses.lean#L191",
       "audited": true
      }
     ],
     "parity_directed_boundary": [
      {
       "name": "PartIII.parity_directed_boundary",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/PhysicalComplexityClasses.lean#L195",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/PhysicalComplexityClasses.lean#L195",
       "audited": false
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L209"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L210"
   },
   {
    "id": "III-21",
@@ -2876,12 +2918,12 @@ window.PVNP_DATA = {
     "DecoderUniformity.*": [
      {
       "name": "PVNP/DecoderUniformity.lean",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/DecoderUniformity.lean",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/DecoderUniformity.lean",
       "audited": false
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L210"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L211"
   },
   {
    "id": "III-22",
@@ -2892,7 +2934,7 @@ window.PVNP_DATA = {
    "status": "Open",
    "details": "Open (no mathematical content to formalize)",
    "refs": {},
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L211"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L212"
   }
  ],
  "supporting": [
@@ -2903,7 +2945,7 @@ window.PVNP_DATA = {
    "statement": "For every single-tape machine M, input length n and time t, an explicit bounded-fan-in Boolean circuit outputs M's first answer whenever that answer appears by step t.",
    "file": "lean/PVNP/TMBooleanTableau.lean",
    "line": 222,
-   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/TMBooleanTableau.lean#L222",
+   "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/TMBooleanTableau.lean#L222",
    "audited": true
   },
   {
@@ -2913,7 +2955,7 @@ window.PVNP_DATA = {
    "statement": "That circuit has size at most K_M·(t+1)·(4t+2), polynomial in t for a fixed machine.",
    "file": "lean/PVNP/TMBooleanTableau.lean",
    "line": 219,
-   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/TMBooleanTableau.lean#L219",
+   "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/TMBooleanTableau.lean#L219",
    "audited": true
   },
   {
@@ -2923,7 +2965,7 @@ window.PVNP_DATA = {
    "statement": "Every polynomial-time Turing-machine language has polynomial-size circuit families.",
    "file": "lean/PVNP/TMBooleanTableau.lean",
    "line": 229,
-   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/TMBooleanTableau.lean#L229",
+   "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/TMBooleanTableau.lean#L229",
    "audited": true
   },
   {
@@ -2933,7 +2975,7 @@ window.PVNP_DATA = {
    "statement": "Every circuit has a linear-size CNF certificate of its evaluation, with one variable per shared gate.",
    "file": "lean/PVNP/CircuitCNF.lean",
    "line": 186,
-   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/CircuitCNF.lean#L186",
+   "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/CircuitCNF.lean#L186",
    "audited": true
   },
   {
@@ -2943,7 +2985,7 @@ window.PVNP_DATA = {
    "statement": "Every NP_TM language has polynomial-size verifier circuits over the input and a padded certificate.",
    "file": "lean/PVNP/VerifierCircuits.lean",
    "line": 122,
-   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/VerifierCircuits.lean#L122",
+   "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/VerifierCircuits.lean#L122",
    "audited": true
   },
   {
@@ -2953,7 +2995,7 @@ window.PVNP_DATA = {
    "statement": "Every NP_TM language reduces to SAT_dense by polynomial-size literal projections. No machine is claimed to compute them, so this is not CL-1.",
    "file": "lean/PVNP/SATProjection.lean",
    "line": 103,
-   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SATProjection.lean#L103",
+   "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/SATProjection.lean#L103",
    "audited": true
   },
   {
@@ -2963,7 +3005,7 @@ window.PVNP_DATA = {
    "statement": "SAT_dense ∉ P/poly if and only if NP_TM ⊄ P/poly. Neither side is proved.",
    "file": "lean/PVNP/SATProjection.lean",
    "line": 116,
-   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SATProjection.lean#L116",
+   "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/SATProjection.lean#L116",
    "audited": true
   },
   {
@@ -2973,7 +3015,7 @@ window.PVNP_DATA = {
    "statement": "The packed matrix instance word(S, U) is in SAT_dense exactly when some entry of S is not in U.",
    "file": "lean/PVNP/CrossingSATMatrix.lean",
    "line": 103,
-   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/CrossingSATMatrix.lean#L103",
+   "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/CrossingSATMatrix.lean#L103",
    "audited": true
   },
   {
@@ -2983,7 +3025,7 @@ window.PVNP_DATA = {
    "statement": "Any single-tape machine deciding SAT_dense in time T satisfies (G(n)+1)·ℓ ≤ 2·T(N(n)) under the stated counting condition.",
    "file": "lean/PVNP/CrossingSATMatrix.lean",
    "line": 171,
-   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/CrossingSATMatrix.lean#L171",
+   "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/CrossingSATMatrix.lean#L171",
    "audited": true
   },
   {
@@ -2993,7 +3035,7 @@ window.PVNP_DATA = {
    "statement": "Every correct single-tape SAT_dense decider has arbitrarily long rejected inputs x with |x|² ≤ 384·b_M·time_M(x). This quadratic, machine-dependent bound is far from superpolynomial.",
    "file": "lean/PVNP/CrossingSATMatrix.lean",
    "line": 225,
-   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/CrossingSATMatrix.lean#L225",
+   "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/CrossingSATMatrix.lean#L225",
    "audited": true
   },
   {
@@ -3003,7 +3045,7 @@ window.PVNP_DATA = {
    "statement": "On valid packed matrix instances, a single-layer circuit of size at most 1+4n·2^n decides membership, so this hard-input family cannot yield circuit lower bounds.",
    "file": "lean/PVNP/CrossingSATMatrix.lean",
    "line": 282,
-   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/CrossingSATMatrix.lean#L282",
+   "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/CrossingSATMatrix.lean#L282",
    "audited": true
   },
   {
@@ -3013,7 +3055,7 @@ window.PVNP_DATA = {
    "statement": "The uniform construction proves SAT_dense ∉ P_TM if and only if P_TM ≠ NP_TM. The separation itself remains open.",
    "file": "lean/PVNP/CookLevinUniform.lean",
    "line": 134,
-   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/CookLevinUniform.lean#L134",
+   "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/CookLevinUniform.lean#L134",
    "audited": true
   },
   {
@@ -3023,7 +3065,7 @@ window.PVNP_DATA = {
    "statement": "The dense encoding of a finite equality ring with a negated seam is unsatisfiable at every ring length. The seam bit determines the answer on this family.",
    "file": "lean/PVNP/ToroidalDiagonal.lean",
    "line": 158,
-   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ToroidalDiagonal.lean#L158",
+   "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ToroidalDiagonal.lean#L158",
    "audited": true
   },
   {
@@ -3033,7 +3075,7 @@ window.PVNP_DATA = {
    "statement": "The dense encoding of the same ring with an ordinary seam has a constant satisfying assignment.",
    "file": "lean/PVNP/ToroidalDiagonal.lean",
    "line": 164,
-   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ToroidalDiagonal.lean#L164",
+   "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/ToroidalDiagonal.lean#L164",
    "audited": true
   }
  ],
@@ -3045,11 +3087,11 @@ window.PVNP_DATA = {
    "decls": [
     {
      "name": "SATProjection.SAT_circuit_lower_iff",
-     "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SATProjection.lean#L116"
+     "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/SATProjection.lean#L116"
     },
     {
      "name": "SATProjection.SATLowerBound_of_NP_circuit_lower",
-     "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SATProjection.lean#L119"
+     "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/SATProjection.lean#L119"
     }
    ],
    "formal": "Stated as a hypothesis; not proved"
@@ -3061,7 +3103,7 @@ window.PVNP_DATA = {
    "decls": [
     {
      "name": "CrossingSAT.SATLowerBound",
-     "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/CrossingSAT.lean#L558"
+     "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/CrossingSAT.lean#L558"
     }
    ],
    "formal": "Defined as a Prop; not proved"
@@ -3072,7 +3114,7 @@ window.PVNP_DATA = {
    "decls": [
     {
      "name": "CookLevin.Gen.satLowerBound_iff_P_ne_NP",
-     "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/CookLevinUniform.lean#L134"
+     "url": "https://github.com/rickyjreyes/PVNP/blob/df8824ca659b2e931eb4302251569d6c6c6140b3/lean/PVNP/CookLevinUniform.lean#L134"
     }
    ],
    "formal": "Equivalence proved; separation open"
@@ -3091,7 +3133,7 @@ window.PVNP_DATA = {
    "url": "https://github.com/rickyjreyes/PVNP/actions/runs/42279295347",
    "commit_url": "https://github.com/rickyjreyes/PVNP/commit/713f484cbe4fd16a66ec780308e96fa1a972d9fe"
   },
-  "checked_at": "2026-11-06T21:00:00Z",
+  "checked_at": "2026-11-12",
   "prs": [
    {
     "number": 43,
@@ -3364,7 +3406,20 @@ window.PVNP_DATA = {
     "head_url": "https://github.com/rickyjreyes/PVNP/commit/e2a3818d99b262e99c59382cab848fe9203158a8",
     "merge_url": "https://github.com/rickyjreyes/PVNP/commit/89058ccc00bfc578601965ea3b63309bf445635a"
    }
-  ]
+  ],
+  "staged": {
+   "sha": "df8824ca659b2e931eb4302251569d6c6c6140b3",
+   "lean_tree": "6f307fc9ff234fe054f7a8293d27ccb97c6d2508",
+   "source": "author-reported local Lean 4.23.0 exact-head run",
+   "build_jobs": 7386,
+   "axiom_audit": "passed, standard permitted Lean axioms",
+   "reference_tests": "371+371 concrete cases, zero failures",
+   "verified_at": "2026-11-12",
+   "pr": 73,
+   "note": "Source verification occurred in the author's independent development session. GitHub-hosted runners have not supplied a successful equivalent check; do not label this as verified on main.",
+   "commit_url": "https://github.com/rickyjreyes/PVNP/commit/df8824ca659b2e931eb4302251569d6c6c6140b3",
+   "pr_url": "https://github.com/rickyjreyes/PVNP/pull/73"
+  }
  },
  "unresolved_lean_names": [
   "pair x w"
