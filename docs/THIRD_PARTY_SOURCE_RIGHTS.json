@@ -1,0 +1,51 @@
+{
+  "schema": "PVNP-publication-source-rights-v1",
+  "scope": "Review aid, not a grant of rights",
+  "recorded_at": "2026-11-12",
+  "author": "Richard J. Reyes",
+  "assets": [
+    {
+      "published_record": "https://doi.org/10.5281/zenodo.17743607",
+      "source": "pvnp/papers/part-i-curvature-bounded-wave-computation/main.tex",
+      "pdf": "pvnp/preprints/part-i-curvature-bounded-wave-computation/paper.pdf",
+      "zenodo_license": "UNVERIFIED",
+      "author_content_rights": "REVIEW"
+    },
+    {
+      "published_record": "https://doi.org/10.5281/zenodo.17732642",
+      "source": "pvnp/papers/part-ii-discrete-wcc-turing-equivalence/main.tex",
+      "pdf": "pvnp/preprints/part-ii-discrete-wcc-turing-equivalence/paper.pdf",
+      "zenodo_license": "UNVERIFIED",
+      "author_content_rights": "REVIEW"
+    },
+    {
+      "published_record": "https://doi.org/10.5281/zenodo.17783074",
+      "source": "pvnp/papers/part-iii-physical-complexity-reassessment/main.tex",
+      "pdf": "pvnp/preprints/part-iii-physical-complexity-reassessment/paper.pdf",
+      "zenodo_license": "UNVERIFIED",
+      "author_content_rights": "REVIEW"
+    },
+    {
+      "published_record": null,
+      "source": "pvnp/papers/supplement-fixed-mass-nodal-coercivity/main.tex",
+      "pdf": "pvnp/preprints/supplement-fixed-mass-nodal-coercivity/paper.pdf",
+      "zenodo_license": "NOT_APPLICABLE",
+      "author_content_rights": "REVIEW"
+    },
+    {
+      "published_record": null,
+      "source": "pvnp/papers/consolidated-wave-computation/main.tex",
+      "pdf": "pvnp/preprints/consolidated-wave-computation/paper.pdf",
+      "zenodo_license": "NOT_APPLICABLE",
+      "author_content_rights": "REVIEW"
+    }
+  ],
+  "repo_sources": "PVNP original Lean/Python/JS/shell/html source",
+  "upstream_licensing": {
+    "Lean/Mathlib": "use upstream licenses; dependencies not relicensed by PVNP",
+    "TeX packages": "check distribution licenses if bundled",
+    "Python/Node packages": "check distributions and notices"
+  },
+  "historical_commit_contributors": "MANUAL_REVIEW_REQUIRED",
+  "licensed_for_public_distribution": false
+}
