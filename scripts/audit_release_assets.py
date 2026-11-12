@@ -16,6 +16,12 @@ TEX_INCLUDE = re.compile(r"\\(input|include|includegraphics|includepdf|bibliogra
 SENSITIVE = re.compile(r"(^|/)(\.env(?:\.[^/]*)?|id_rsa|id_ed25519|credentials(?:\.[^/]*)?|private[_-]?key(?:\.[^/]*)?)($|/)|\.(pem|p12|pfx|key)$", re.I)
 PRIVATE_META = re.compile(r"[/\\](Users|home)[/\\]|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}|file://|token=", re.I)
 
+PDF_TEXT_RISKS = {
+    "email_address": re.compile(r"[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}"),
+    "home_directory_path": re.compile(r"(?:[A-Z]:\\\\Users\\\\|/home/|/Users/)", re.I),
+    "copy_or_permission_notice": re.compile(r"reproduced with permission|adapted from|all rights reserved", re.I),
+}
+
 def git(*args, binary=False):
     p = subprocess.run(["git", "-C", str(ROOT), *args], check=True, capture_output=True)
     return p.stdout if binary else p.stdout.decode(errors="replace").strip()
@@ -48,6 +54,14 @@ def main():
                 record["metadata_checked"] = info.returncode == 0
                 if info.returncode == 0:
                     record["metadata_fields_to_review"] = metadata_flags(info.stdout)
+            if shutil.which("pdftotext"):
+                body = subprocess.run(["pdftotext", str(p), "-"], capture_output=True, text=True)
+                record["pdf_text_checked"] = body.returncode == 0
+                if body.returncode == 0:
+                    record["pdf_text_review_flag_counts"] = {
+                        name: len(pattern.findall(body.stdout))
+                        for name, pattern in PDF_TEXT_RISKS.items()
+                    }
             pdfs.append(record)
         if path.startswith("pvnp/papers/") and path.endswith(".tex"):
             for cmd, ref in TEX_INCLUDE.findall(p.read_text(encoding="utf-8")):
