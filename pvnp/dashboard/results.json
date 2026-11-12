@@ -12,7 +12,8 @@
   "formalizations": [
     {"id": "II-24", "pr": 54, "decl": "PartIIManuscript.conditional_np_safety", "from": "Open"},
     {"id": "II-10", "pr": 73, "decl": "TwoPhasePolynomialWriter.originalWM_decides", "from": "Restricted",
-     "restated": "The time bound in this row was corrected from 2cn^k to 2c·max(n,1)^k by PR #45 (see II-17). The proof covers both forms: originalWM_first_answer gives T_{W_M}(x) = 2T_M(x) for every first-halt time inside the window."}
+     "restated": "The time bound in this row was corrected from 2cn^k to 2c·max(n,1)^k by PR #45 (see II-17). The proof covers both forms: originalWM_first_answer gives T_{W_M}(x) = 2T_M(x) for every first-halt time inside the window."},
+    {"id": "I-31", "pr": 74, "decl": "SeparatorFrozen.no_uniform_separator_price", "from": "Open", "to": "Refuted"}
   ],
   "amendments": [
     {"id": "II-7", "pr": 45, "counterexamples": ["invariant_literal_fails"],

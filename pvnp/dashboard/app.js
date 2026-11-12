@@ -160,7 +160,7 @@
     byId("amendments").replaceChildren(
       el("p", null, `Original snapshot: ${d.historical.table.counts.Exact} Exact, ${d.historical.table.counts.Restricted} Restricted, ${d.historical.table.counts.Refuted} Refuted, ${d.historical.table.counts.Open} Open. `,
         `Current: ${d.inventory.table.counts.Exact} Exact, ${d.inventory.table.counts.Restricted} Restricted, ${d.inventory.table.counts.Refuted} Refuted, ${d.inventory.table.counts.Open} Open. `,
-        `The ${amended.length} claims below changed status because their manuscript statements were corrected. Lean proves the corrected forms; the original forms stay refuted. PR #54 also proved the original conditional statement II-24. Its classical separation premise remains open. PR #73 proved II-10 for the original two-phase machine of the manuscript.`),
+        `The ${amended.length} claims below changed status because their manuscript statements were corrected. Lean proves the corrected forms; the original forms stay refuted. PR #54 also proved the original conditional statement II-24. Its classical separation premise remains open. PR #73 proved II-10 for the original two-phase machine of the manuscript, and PR #74 refuted the separator-price hypothesis I-31 for the frozen trajectory class.`),
       el("div", { class: "rows" }, amended.map(c => el("div", { class: "row" },
         el("div", { class: "row-head" },
           el("span", { class: "row-title" }, `${c.id} · `, inline(c.title)),
@@ -247,8 +247,10 @@
         c.amended && el("p", { class: "small" }, el("strong", null, "Correction. "), c.amended.scope)));
     }
     if (c.formalized && view === "current")
-      body.append(el("p", { class: "small" }, el("strong", null, "Proved later. "),
-        `Originally ${c.formalized.from}. Theorem `, el("code", null, c.formalized.decl), ", ",
+      body.append(el("p", { class: "small" },
+        el("strong", null, c.formalized.to === "Refuted" ? "Refuted later. " : "Proved later. "),
+        `Originally ${c.formalized.from}. ${c.formalized.to === "Refuted" ? "Counterexample" : "Theorem"} `,
+        el("code", null, c.formalized.decl), ", ",
         link(`${d.repository}/pull/${c.formalized.pr}`, `PR #${c.formalized.pr}`), ".",
         c.formalized.restated ? " " + c.formalized.restated : false));
     body.append(el("p", { class: "small" }, link(r.source, view === "historical" && c.historical ? "Row in the original inventory" : "Row in the current inventory")));

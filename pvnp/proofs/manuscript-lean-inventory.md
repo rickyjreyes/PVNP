@@ -21,13 +21,14 @@ Lean paths are relative to `lean/`. "(new)" marks declarations added in this pas
 
 | Paper | Claims | Exact | Restricted | Refuted | Open |
 |---|---|---|---|---|---|
-| Part I | 41 | 30 | 1 | 4 | 6 |
+| Part I | 41 | 30 | 1 | 5 | 5 |
 | Part II | 28 | 28 | 0 | 0 | 0 |
 | Part III | 22 | 21 | 0 | 0 | 1 |
-| **Total** | **91** | **79** | **1** | **4** | **7** |
+| **Total** | **91** | **79** | **1** | **5** | **6** |
 
 * Exact verification coverage for the amended manuscripts = Exact / Total = 79/91 ≈ 86.8% (78/91 before II-10, 77/91 before II-24, 75/91 after I-10/I-13, 73/91 after II-7/II-8/II-17, 70/91 original).
-* Status conclusively determined by a proof or a counterexample (Exact + Refuted) = 83/91 ≈ 91.2%.
+* Status conclusively determined by a proof or a counterexample (Exact + Refuted) = 84/91 ≈ 92.3% (83/91 before I-31).
+* **Phase XVIII, I-31 refuted for the frozen trajectory class (12 November 2026):** `lem:separator-price` asks for `Φ(ψ) ≥ κ₀ 𝓗^{d−1}(∂𝓡_ψ)` with `κ₀` independent of the input length. On the torus of side `L_n` the exact plane waves of fixed amplitude keep `Φ` bounded while the interface has length at least `L_n`, so no `κ₀ > 0` works. See `pvnp/proofs/phase-xviii-i31-separator-counterexample.md`.
 * **Phase XVIII, II-10 at its original scope (12 November 2026):** the actual machines `windowMTM p` and `inputMTM M p` are proved to write `originalWindowCode p x` and `originalInputCode M p x` at their first halt within explicit polynomial transition bounds, for every polynomial `p`, machine `M` and input. Both `FP` hypotheses of the original uniform machine are therefore theorems, and II-10 is Exact. The exact-head gate `scripts/verify_ii10_original_wm.sh` passed on commit `df8824c` (Lean 4.23.0, 7,386 jobs, 627 audited declarations). See `pvnp/proofs/II10_VERIFICATION_LEDGER.md`.
 * **Provenance:** The original October 27 manuscript inventory was 70 Exact, 2 Restricted, 11 Refuted, 8 Open. Claims II-7, II-8 and II-17 were false as written in that version. Their original Lean counterexamples remain in the repository. In the amended manuscript, their statements are restricted/corrected to match the already-proved Lean theorems; the historical count is not retroactively overwritten.
 * **I-12/I-20 scope:** I-12 now states an exact **conditional counterargument** in the frozen WCT submodel with charged polynomial-time indicator encoders: under the *hypothetical* P_TM = NP_TM, dense SAT is implementable; an unconditional barrier in that submodel would imply P_TM != NP_TM. This does not prove either equality or inequality. I-20 now states the proved **explicit-state description-size obstruction** K_D(s) <= |s|+c. A separate physical cost model distinguishes preparation from verification of a *succinct* certificate and from decision; its claimed lower-bound premises remain open, and the original state-as-short-witness inference is withdrawn.
@@ -46,6 +47,7 @@ Lean paths are relative to `lean/`. "(new)" marks declarations added in this pas
   * Manuscript correction (6 November 2026): II-7, II-8 and II-17 now match the existing corrected Lean statements.
   * Part I correction (6 November 2026): I-10 is re-scoped to a conditional common-successor theorem with a new Lean proof; I-13 now matches the existing quiescent finite-support bound. Neither proves WCT-induced mixing nor complexity-class separation.
   * Phase XVIII (12 November 2026, PR #73): II-10 moves from Restricted to Exact. The original polynomial-radius window and input writers are verified as polynomial-time single-tape transducers (`PVNP.TwoPhasePolynomialExec`, `State`, `Program`, `Outputs`, `FP`), which removes the two writer hypotheses of `thm:tm_to_wcc`.
+  * Phase XVIII (12 November 2026, PR #74): I-31 moves from Open to Refuted. `PVNP.SeparatorFrozen` gives exact frozen-PDE fields of fixed readout contrast whose curvature functional stays bounded while their decision interface grows linearly with the torus side; the corrected, width-dependent price is proved.
   * Part I computational-model clarification (6 November 2026): I-12 is replaced with the previously kernel-proved conditional charged-encoder compatibility statement; I-20 is replaced by the existing explicit-state description-length obstruction, with preparation and certificate verification separated. Original counterarguments remain in Lean.
 
 **What the "Exact" count does not mean.** It includes conditional propositions whose
@@ -87,7 +89,7 @@ classical `P ≠ NP`.
 | I-28 | §11.2 "Universal scope" | ∀M ∃ instance whose solution M misses ⇒ ψ* ∉ P ⇒ P≠NP | `PartISeparation.universal_scope_counterexample` (new) | Refuted (holds for a language in P) |
 | I-29 | App. A Prop. "Uniform symbolic verification" | 𝟏{E_logic[a]=0} decidable in poly time | `PartIPsiSat.uniform_symbolic_verification` (new), `SATV.V_SAT_mem_P_TM` | Exact (the "≤ 3m literal checks" count is algorithm-specific, not formalized) |
 | I-30 | App. A.2–A.3 limitation statements | verifier efficiency / diagonalization give no NP\P language | `universal_scope_counterexample` | Exact |
-| I-31 | Hyp. `lem:separator-price` | uniform interface price | `SeparatorPrice.mesh_price`, `SeparatorPrice.contrast_of_readout`, `SeparatorPrice.binary_cut_price` | Open. Verified for mesh faces with a fixed readout contrast and on a two-level graph rail. A uniform price for the physical trajectory class remains open. |
+| I-31 | Hyp. `lem:separator-price` | uniform interface price | `SeparatorFrozen.no_uniform_separator_price`, `SeparatorFrozen.separator_price_hypothesis_false`, `SeparatorFrozen.no_uniform_price_modulus`, `SeparatorFrozen.stripe_device_violates`, `SeparatorFrozen.layer_price` (Phase XVIII); `SeparatorPrice.mesh_price`, `SeparatorPrice.contrast_of_readout`, `SeparatorPrice.binary_cut_price` | Refuted for the frozen physical trajectory class. On the torus of side L, the exact plane-wave solution of amplitude A (fixed, so the readout contrast is fixed) has Φ = ∫(\|∇ψ\|² + \|Θψ\|²) ≤ 4π²\|A\|² + 16π⁴c²\|A\|²/L² for every curvature operator with \|Θψ\| ≤ c\|Δψ\| (Δ itself, the Θ_ε of Part III), while the Euclidean 𝓗¹ of the frontier of its decision region {Re ψ > 0} is at least L, at every time. Every κ₀ > 0 fails once L is large. The fields are used by an admissible decider (`stripe_device_decides`), and a modulus readout fails in the same way. Corrected statements: a transition of width w costs at least 4η²/w per unit length (`layer_price`, sharp), and the mesh price holds for sharp interfaces. |
 | I-32 | Hyp. `prop:locked-expander-full` | encoding-uniform interface growth 2^{γn} | `SeparatorPrice.binary_cut_price`, `CurvatureBarrier.graphStorageCost_le_n_mul_d_sq` | Open. Bounded-degree binary graph storage costs at most a constant times the cut size. Every-decider exponential growth still needs an independent theorem. |
 | I-33 | Prop. `lem:lower` | the two hypotheses ⇒ C_Θ(L,n) ≥ κ₀c₀2^{γn} | `PartISeparation.conditional_product_lower_bound` (new) | Exact |
 | I-34 | Remark WIN-06 | direct clause evaluation needs no enumeration | `SATV.V_SAT_mem_P_TM`, `uniform_symbolic_verification` | Exact |
@@ -103,8 +105,8 @@ Counts:
 * Exact (30): I-1, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 29, 30, 33, 34, 35, 36,
   38, 39, 40, 41.
 * Restricted (1): I-11.
-* Refuted (4): I-25, 26, 27, 28. Original I-10, I-12, I-13 and I-20 counterarguments/counterexamples remain preserved against superseded statements.
-* Open (6): I-2, 3, 16, 31, 32, 37.
+* Refuted (5): I-25, 26, 27, 28, 31. Original I-10, I-12, I-13 and I-20 counterarguments/counterexamples remain preserved against superseded statements.
+* Open (5): I-2, 3, 16, 32, 37.
 
 ### Status of the Part I separation argument
 

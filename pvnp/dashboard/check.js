@@ -31,11 +31,11 @@ const claim = id => d.claims.find(c => c.id === id);
 test("current totals", () => {
   const s = app.summarize(d.claims, "current");
   assert.equal(s.total, 91);
-  assert.deepEqual({ ...s.counts }, { Exact: 79, Restricted: 1, Refuted: 4, Open: 7 });
+  assert.deepEqual({ ...s.counts }, { Exact: 79, Restricted: 1, Refuted: 5, Open: 6 });
   assert.equal(app.percent(s.counts.Exact, s.total), "86.8%");
-  assert.equal(s.counts.Exact + s.counts.Refuted, 83);
-  assert.equal(app.percent(83, 91), "91.2%");
-  const parts = { I: [41, 30, 1, 4, 6, "73.2%"], II: [28, 28, 0, 0, 0, "100.0%"], III: [22, 21, 0, 0, 1, "95.5%"] };
+  assert.equal(s.counts.Exact + s.counts.Refuted, 84);
+  assert.equal(app.percent(84, 91), "92.3%");
+  const parts = { I: [41, 30, 1, 5, 5, "73.2%"], II: [28, 28, 0, 0, 0, "100.0%"], III: [22, 21, 0, 0, 1, "95.5%"] };
   for (const [p, [t, e, r, f, o, pct]] of Object.entries(parts)) {
     const g = s.parts[p];
     assert.deepEqual([g.total, g.counts.Exact, g.counts.Restricted, g.counts.Refuted, g.counts.Open], [t, e, r, f, o], "Part " + p);
@@ -80,12 +80,20 @@ test("amended claims: Exact now, Refuted originally, counterexamples retained", 
   assert.equal(claim("II-10").formalized.pr, 73);
   assert.equal(claim("II-10").formalized.decl, "TwoPhasePolynomialWriter.originalWM_decides");
   assert.equal(claim("II-10").formalized.from, "Restricted");
+  assert.equal(claim("II-10").formalized.to, "Exact");
   assert.ok(claim("II-10").formalized.restated.length > 40);
   for (const n of ["originalWindowCode_fp", "originalInputCode_fp", "originalWM_first_answer"])
     assert.ok(Object.values(claim("II-10").refs).flat().some(r => r.name === "TwoPhasePolynomialWriter." + n && r.audited), "II-10 links audited " + n);
   const open = v => d.claims.filter(c => app.statusIn(c, v) === "Open").map(c => c.id);
-  assert.deepEqual(open("current"), open("historical").filter(id => id !== "II-24"));
-  assert.deepEqual(claim("II-24").formalized, { pr: 54, decl: "PartIIManuscript.conditional_np_safety", from: "Open" });
+  assert.deepEqual(open("current"), open("historical").filter(id => !["II-24", "I-31"].includes(id)));
+  /* I-31: refuted for the frozen trajectory class in PR #74; the hypothesis text is unchanged. */
+  assert.equal(claim("I-31").status, "Refuted", "I-31");
+  assert.equal(claim("I-31").historical.status, "Open", "I-31 original");
+  assert.deepEqual(claim("I-31").formalized,
+    { pr: 74, decl: "SeparatorFrozen.no_uniform_separator_price", from: "Open", to: "Refuted" });
+  for (const n of ["no_uniform_separator_price", "stripe_device_violates", "no_uniform_price_modulus", "layer_price"])
+    assert.ok(Object.values(claim("I-31").refs).flat().some(r => r.name === "SeparatorFrozen." + n && r.audited), "I-31 links audited " + n);
+  assert.deepEqual(claim("II-24").formalized, { pr: 54, decl: "PartIIManuscript.conditional_np_safety", from: "Open", to: "Exact" });
   assert.equal(claim("II-24").conditional.kind, "open");
 });
 
@@ -182,6 +190,9 @@ test("parser and generator guards", () => {
   assert.throws(() => build.generate({ registry: r }), /formalization must preserve/);
   r = clone(); r.formalizations = r.formalizations.filter(f => f.id !== "II-10");
   assert.throws(() => build.generate({ registry: r }), /registered amendments/);
+  /* A refutation must name its target status. */
+  r = clone(); delete r.formalizations.find(f => f.id === "I-31").to;
+  assert.throws(() => build.generate({ registry: r }), /formalization must preserve/);
   r = clone(); r.conditional.open["I-25"] = "a refuted claim cannot be conditional-exact";
   assert.throws(() => build.generate({ registry: r }), /not Exact/);
   r = clone(); delete r.conditional.open["I-19"];
@@ -203,4 +214,4 @@ test("parser and generator guards", () => {
 if (!d.lean.matches_verified)
   console.warn("Note: lean/ differs from the last recorded verified commit; declaration links point to main.");
 if (process.exitCode) console.error(`${passed} test groups passed; failures above.`);
-else console.log(`Dashboard check PASS (${passed} groups): 91 claims; 79 Exact (86.8%), 83 resolved (91.2%); original 70/2/11/8; toroidal results integrated; SATLowerBound open.`);
+else console.log(`Dashboard check PASS (${passed} groups): 91 claims; 79 Exact (86.8%), 84 resolved (92.3%); original 70/2/11/8; toroidal results integrated; SATLowerBound open.`);
