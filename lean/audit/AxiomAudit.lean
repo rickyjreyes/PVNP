@@ -672,3 +672,11 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhasePolynomialWriter.normalization_end_step
 #print axioms PVNP.TwoPhasePolynomialWriter.return_dispatch_after_normalization
 #print axioms PVNP.TwoPhasePolynomialWriter.run_to_first_instruction
+-- Phase XVIII continuation: complete pre-dispatch nonhalting interval.
+#print axioms PVNP.TwoPhasePolynomialWriter.return_walk_prefix
+#print axioms PVNP.TwoPhasePolynomialWriter.run_return_prefix
+#print axioms PVNP.TwoPhasePolynomialWriter.normalization_not_halting
+#print axioms PVNP.TwoPhasePolynomialWriter.return_not_halting
+#print axioms PVNP.TwoPhasePolynomialWriter.not_halting_before_first_instruction
+#print axioms PVNP.TwoPhasePolynomialWriter.windowMTM_not_halting_before_entry
+#print axioms PVNP.TwoPhasePolynomialWriter.inputMTM_not_halting_before_entry
