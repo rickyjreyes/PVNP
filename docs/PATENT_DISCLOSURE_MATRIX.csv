@@ -1,0 +1,9 @@
+Area,Files or material,Pre-existing public exposure,Filing support assessed,Decision,status
+Discrete WCC and finite machine models,lean/PVNP and manuscripts,Some manuscript material published 2025,No,Author or counsel review,PENDING
+Curvature and nonlinear physical-computation models,pvnp/papers and Lean math,Some manuscript material published 2025,No,Compare filed specifications,PENDING
+Noisy readout and resource accounting,lean/PVNP plus scripts,Unconfirmed,No,Check new 2026 content,PENDING
+New algorithmic proof techniques,Lean source and manuscript revisions,Unconfirmed,No,Decide patent relevance,PENDING
+Consolidated revised manuscript,pvnp/papers/consolidated-wave-computation/main.tex,Not newly published as consolidated work,No,Diff against original Zenodo text,PENDING
+Historical refs and removed files,All reachable Git commits and tags,Some previously private,No,Review newly exposed history,PENDING
+Public code licensing,Proposed BSD-3-Clause scope,Not yet authorized,No,Confirm patent licensing strategy,PENDING
+Public manuscript licensing,Proposed CC BY 4.0 scope,Existing Zenodo licenses unverified,No,Confirm existing licenses and patent rights,PENDING

@@ -48,10 +48,11 @@ else
 fi
 
 python3 scripts/check_public_release_docs.py
-python3 -m unittest pvnp.tests.test_public_release_audit
+python3 -m unittest pvnp.tests.test_public_release_audit pvnp.tests.test_offline_publication_gates
 
 # Scans all locally available refs and history. Never commit scanner reports.
 python3 scripts/audit_public_release.py --history
+python3 scripts/audit_release_assets.py --history
 
 # This is the exact original-writer regression suite, including the Lean gate.
 bash scripts/verify_ii10_original_wm.sh
@@ -63,3 +64,8 @@ bash scripts/run_release_verification.sh --all
 echo "TECHNICAL GATES PASSED at $(git rev-parse HEAD)"
 echo "NOT PUBLICATION AUTHORIZATION: patent, third-party rights, metadata,"
 echo "manual privacy review, licensing and explicit visibility approval are still required."
+
+# Opt-in hard stop for an author-approved public visibility transition.
+if [[ "${PVNP_REQUIRE_PUBLIC_APPROVAL:-0}" == 1 ]]; then
+  python3 scripts/check_publication_approval.py --require-approved
+fi

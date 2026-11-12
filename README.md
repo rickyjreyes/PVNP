@@ -59,13 +59,15 @@ The original manuscripts, independent supplements, negative results, and Lean ch
 - [**Lean formalization**](lean/README.md) provides kernel-checkable supporting results for all three papers; it does not prove the still-open WCC separations.
 
 
+**Offline PDF and rights release review (no GitHub Actions):** `bash scripts/review_public_release_offline.sh --all` runs the consolidated PDF rebuild, independent PDF content/page checks, asset/history audit and approval-status report. It cannot grant a license or approve publication.
+
 **Reproduce all release checks locally:** `bash scripts/verify_public_release.sh` is the strict release preflight and invokes the combined PDF, Lean, axiom, manuscript and dashboard checks; `bash scripts/run_release_verification.sh --all` runs the underlying release-verification suite. The complete gate has **not** yet passed because the local PDF toolchain (`pdflatex` / `pdfinfo`) was unavailable. Require a successful final gate or an explicitly approved source-only publication scope before release. The individual source PDFs are retained only under ignored `.release-verification/` for review; a single consolidated PDF is the publication output.
 
 ## Build the one-PDF release
 
-Run `bash scripts/build_pdfs.sh` with the required LaTeX packages. The build compiles the three source manuscripts and supplement into **temporary archive PDFs** and then generates only `pvnp/preprints/consolidated-wave-computation/paper.pdf` as the primary output. On a successful `main` build, GitHub Actions commits this consolidated PDF and retires four redundant tracked PDF artifacts. The original LaTeX sources and Zenodo publication records are preserved.
+Run `bash scripts/build_pdfs.sh` with the required LaTeX packages. The build compiles the three source manuscripts and supplement into **temporary archive PDFs** and then generates only `pvnp/preprints/consolidated-wave-computation/paper.pdf` as the primary output. The optional hosted workflow can commit the consolidated PDF following a successful build, but offline verification does not require GitHub Actions. Publication of any PDF is a separate author-controlled decision. The original LaTeX sources and Zenodo publication records are preserved.
 
-**Verification is a separate gate:** the PDF build does not establish Lean proof validity. The complete local Lean/axiom checks passed at `c92158f` notwithstanding [hosted CI runner issue #59](https://github.com/rickyjreyes/PVNP/issues/59); the consolidated PDF generation and rendered-content checks have **not** been completed at the Phase XIX release head. GitHub visibility must remain unchanged until manual privacy, third-party content, patent disclosure and license decisions are completed.
+**Verification is a separate gate:** the PDF build does not establish Lean proof validity. The complete local Lean/axiom checks passed at `c92158f` notwithstanding [hosted CI runner issue #59](https://github.com/rickyjreyes/PVNP/issues/59); the consolidated PDF generation and rendered-content checks have **not** been completed at the Phase XIX release head. The new free, offline verification is `bash scripts/verify_public_pdf_offline.sh`; successful hosted Actions is not required if the local evidence is complete. GitHub visibility must remain unchanged until manual privacy, third-party content, patent disclosure and license decisions are completed.
 
 ## Latest quantitative scaling audit
 

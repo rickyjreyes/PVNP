@@ -45,7 +45,7 @@ With finite alphabets and local update rules, polynomial-time constructible latt
 \qquad
 \mathbf{NP}_{\mathrm{WCC}}^{\mathrm{disc}}=\mathbf{NP}_{\mathrm{TM}}.
 \]
-The original two-phase machine \(W_M\) has a distinct open uniformity obligation: its complete original initial encoder and lattice writer must be certified polynomial-time transducers. The generic discrete class equivalence does not by itself discharge that obligation.
+The original two-phase machine \(W_M\) has its complete canonical window and input-code writers formally verified as polynomial-time transducers in the amended discrete model (II-10, Phase XVIII). This does not establish a physically resource-preserving continuum realization.
 
 \subsection{Physical realization and mathematical lower bounds}
 The continuum WCT resource model additionally requires uniform field preparation, precision, stable readout, and full accounting of energy and computational cost. The discrete equivalences do not prove that a concrete nonlinear PDE realizes them with polynomial overhead. Finite-domain coercivity, phase readout, and separator estimates have explicit assumptions that need not be input-size uniform.
@@ -54,25 +54,25 @@ The repository includes uniform Cook--Levin reductions and a characterization of
 \[
 \mathrm{SAT}_{\mathrm{dense}}\notin\mathbf P_{\mathrm{TM}}
 \]
-remains an open conjectural target. The physical all-decider separator and expander claims also remain open.
+remains an open conjectural target. The uniform separator-price hypothesis is refuted for frozen growing-torus trajectories; the encoding-independent expander and universal complexity lower-bound claims remain open.
 
 \section{Maintained formalization ledger and verification}
-The amended 91-claim ledger recorded 78 Exact, 2 Restricted, 4 Refuted, and 7 Open claims on 7 November 2026; since the addendum of 12 November 2026 in the register below it records 79 Exact, 1 Restricted, 4 Refuted, and 7 Open. The Exact category includes proved conditional implications whose premises are not established; it does not mean classical P is unequal to NP. See the continuously maintained \href{https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md}{manuscript formalization inventory} and \href{https://github.com/rickyjreyes/PVNP/tree/main/lean}{Lean source tree}.
+The 91-claim inventory recorded 78 Exact, 2 Restricted, 4 Refuted and 7 Open on 7 November 2026. After original II-10 was completed on 12 November, the totals became 79 Exact, 1 Restricted, 4 Refuted and 7 Open. The I-31 counterexample subsequently established the current 79 Exact, 1 Restricted, 5 Refuted and 6 Open. The Exact category includes proved conditional implications whose premises are not established; it does not mean classical P is unequal to NP. See the continuously maintained \href{https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md}{manuscript formalization inventory} and \href{https://github.com/rickyjreyes/PVNP/tree/main/lean}{Lean source tree}.
 
 \begin{center}\small
 \begin{tabular}{@{}p{0.33\linewidth}p{0.58\linewidth}@{}}\toprule
 Topic & Established limit\\\midrule
 Uniform discrete WCC & Proved classical P and NP class equivalences within the formal discrete model.\\
-Original two-phase \(W_M\) & Exact decoder and simulation support; full original polynomial-time writer obligations remain restricted.\\
+Original two-phase \(W_M\) & Original finite discrete encoders, writers, and simulation support are Exact at the amended model scope; physical realization remains separate.\\
 Dense SAT & Uniform Cook--Levin and restricted quadratic single-tape lower bounds; universal superpolynomial target open.\\
 Physical WCC & Charged, robust, uniform physical-to-discrete resource bridge missing.\\
-Curvature interfaces & Restricted finite mesh and graph estimates; universal separator and expander hardness open.\\
+Curvature interfaces & Uniform interface price refuted in the frozen growing-torus class (I-31); independent expander hardness open.\\
 Phase readout & Logical-energy SAT certification does not imply efficient physical convergence or preparation.\\
 Auxiliary nodal estimate & Fixed-domain analytical result; its finite two-site algebra is formalized, not the full continuum theorem.\\
 \bottomrule\end{tabular}
 \end{center}
 
-\textbf{Build caveat.} Some newly merged Phase XII and XIII Lean declarations entered the repository while GitHub-hosted checks failed before their first job step. This volume does not certify those declarations as independently kernel-checked until a complete Lean build and axiom audit succeeds. A PDF compilation is not evidence of a successful Lean verification.
+\textbf{Build caveat.} Hosted GitHub Actions jobs have failed before execution. At commit \texttt{c92158f}, the author reported a local full Lean build and allowed-axiom audit; this must not be described as hosted CI or as a check of every later edit. A PDF compilation is not evidence of a Lean proof. The final publication still requires inspection of the generated PDF and disclosure controls.
 
 \subsection{Corrections to the historical separation program}
 Part I's original claims I-25 through I-28 inferred a
@@ -83,12 +83,12 @@ explicitly withdrawn in the revised Part I text.
 The requisite missing lower bound instead quantifies
 over every correct uniform \emph{decision algorithm}
 for one fixed language.  Part II's II-10 concerns
-the original two-phase $W_M$; its intrinsic runtime
-is proved, but the full canonical lattice and
-input-code transducers have not yet been shown
-polynomial time in the original single-tape model.
-The independent class inclusion uses a different,
-fully charged one-cell construction.
+the original two-phase $W_M$; its complete canonical
+window and input-code transducers are proved
+polynomial time within the specified finite discrete
+model. The independent class inclusion uses a
+different, fully charged one-cell construction.
+Neither result is a physical continuum realization.
 The Part III discussion distinguishes proven finite
 and algebraic estimates from continuum PDE and
 physical-measurement conditions that are not
@@ -100,13 +100,13 @@ compilations and may predate the latest revised
 LaTeX.  The release must rebuild all four source
 documents and bind them into this single volume.
 The exact-head Lean build and axiom audit
-are separate from PDF compilation.  The last
-successful older formalization baseline does not
-certify newer modules merged while GitHub Actions
-runner allocation was failing.  Until both the
-current full PDF and the current full Lean checks
-are reproducible, this is an updated source
-manuscript, not a fully verified final release.
+are separate from PDF compilation.  The exact-head local Lean build and axiom audit at
+\texttt{c92158f} are author-reported rather than
+hosted-CI results; later changes require separate
+provenance. Until the freshly regenerated PDF is
+checked against its sources and publication rights
+are cleared, this is a research manuscript rather
+than an approved public-release artifact.
 
 \section{Unresolved original-claim register}
 The following items are \emph{not} completed by the
@@ -121,10 +121,8 @@ I-2 & Open & Verifiable wavefield with independently proved nonconstructibility.
 I-3 & Open & Formula-dependent physical dynamics and robust readout, beyond logical-energy certificates.\\
 I-11 & Restricted & A charged, robust continuum physical-to-discrete resource bridge.\\
 I-16 & Open & An unrestricted superpolynomial SAT time lower bound against every correct decider.\\
-I-31 & Open & A uniform positive separator price for the admissible physical trajectory class.\\
 I-32 & Open & An encoding-independent exponential interface lower bound for every decider.\\
 I-37 & Open & Sound and complete arbitrary-formula toroidal physical locking.\\
-II-10 & Restricted & Original complete polynomial-time window and initial-configuration transducers.\\
 III-22 & Open & Interpretive arrow-of-time remark, not a formal theorem.\\
 \bottomrule
 \end{tabular}
@@ -132,9 +130,11 @@ III-22 & Open & Interpretive arrow-of-time remark, not a formal theorem.\\
 The four refuted historical Part I state-to-language
 claims I-25--I-28 remain in the audit and have been
 withdrawn from theorem status in the revised text.
-The 91-claim inventory therefore remains 78 Exact,
-2 Restricted, 4 Refuted and 7 Open.  No universal
-classical or physical separation follows.
+I-31 is also refuted for the frozen growing-torus trajectory
+class, not for all fixed-domain or hard-language variants.
+The current inventory is 79 Exact, 1 Restricted,
+5 Refuted and 6 Open. No universal classical or physical
+separation follows.
 
 \paragraph{Addendum, 12 November 2026.}
 II-10 is no longer unresolved.  The original complete
@@ -143,9 +143,11 @@ verified in Lean for every polynomial radius
 (\nolinkurl{TwoPhasePolynomialWriter.originalWindowCode_fp},
 \nolinkurl{TwoPhasePolynomialWriter.originalInputCode_fp}), so the
 author's two-phase $W_M$ is a uniform discrete WCC machine without
-hypotheses.  The inventory is now 79 Exact, 1 Restricted, 4 Refuted
-and 7 Open.  The other eight entries of the table are unchanged, and
-no universal classical or physical separation follows.
+hypotheses.  The completion of II-10 raised Exact to 79 and reduced Restricted to 1.
+The later I-31 counterexample below refutes the frozen-model hypothesis,
+leaving the current 79 Exact, 1 Restricted, 5 Refuted and 6 Open.
+The unresolved table above excludes both claims. No universal
+classical or physical separation follows.
 A second addendum of the same date refutes I-31 for the frozen
 trajectory class: exact plane waves of fixed amplitude keep the
 curvature functional bounded while their decision interface grows

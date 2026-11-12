@@ -55,6 +55,10 @@ def main() -> None:
             "missing publication approval gates")
     require("PENDING" in license_note and "No license has been selected" in license_note,
             "licensing document may assert unauthorized permission")
+    require("verify_public_pdf_offline.sh" in release,
+            "release documentation must describe the offline PDF gate")
+    require("docs/PATENT_PUBLIC_DISCLOSURE_REVIEW.md" in release,
+            "patent disclosure hold point is not linked")
     print("PASS: release-facing documentation matches amended original II-10 scope")
     print("NOTE: source validation is not proof, legal approval, or visibility authorization")
 

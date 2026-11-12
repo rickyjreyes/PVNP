@@ -94,15 +94,23 @@ def main() -> None:
         must(len(labels) == len(set(labels)), "Duplicate LaTeX labels in source")
         refs = re.findall(r"\\(?:eqref|autoref|ref)\{([^}]*)\}", f)
         must(set(refs).issubset(labels), "Unresolved internal LaTeX reference")
+    must("II-10 & Restricted" not in combined,
+         "Consolidated volume still labels the settled II-10 claim Restricted")
+    must("I-31 & Open" not in combined,
+         "Consolidated volume still labels frozen-model I-31 as unresolved")
+    must("79 Exact, 1 Restricted, 5 Refuted" in combined and "6 Open" in combined,
+         "The consolidated volume does not contain current inventory totals")
+    must("Original complete polynomial-time window and initial-configuration transducers." not in combined,
+         "Current consolidated register contains outdated II-10 gate")
     must(combined.count("\\includepdf[") == 4, "Consolidated volume not binding four parts")
     for name in ("part-i", "part-ii", "part-iii", "supplement"):
         must("archive/" + name + ".pdf" in combined,
              f"Missing {name} PDF from consolidated volume")
     must("Unresolved original-claim register" in combined,
-         "Consolidated volume missing the nine Restricted/Open entries")
+         "Consolidated volume missing the current seven-claim unresolved register")
     must("two-site" in supplement, "Missing supplement finite-model disclaimer")
     print("PASS: Part I-III historical corrections and 91-claim inventory are aligned")
-    print("PASS: consolidated LaTeX sources and nine-claim register are structurally consistent")
+    print("PASS: consolidated LaTeX sources and amended 91-claim register are structurally consistent")
     print("NOTE: these static checks DO NOT verify Lean or compiled PDF output")
 
 

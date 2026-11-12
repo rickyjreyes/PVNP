@@ -17,11 +17,11 @@ At exact Phase XIX commit [`c92158f`](https://github.com/rickyjreyes/PVNP/commit
 | PR #74 reconciliation | PR #74 closed as superseded; unique unmerged content retained on its branch | Review any unique deltas separately; do not merge conflicting history wholesale |
 | Full pinned Lean + axiom audit on final public-release tree | **PASS at `c92158f`: 7,386 jobs, 627 audited declarations**. Later documentation/dashboard commits need their own final reproducibility record | **PROVISIONALLY VERIFIED**, not a completed final all-in-one release gate |
 | Python regressions, dashboard generation/check, and manuscript alignment | **PASS:** 24/24 II-10 regressions, 4/4 audit tests and status/source alignment at `c92158f`; 13/13 dashboard groups at `75a2cd6` | Component checks passed locally; combined gate still blocked by PDF tooling |
-| Consolidated PDF regeneration and inspection | Existing verification scripts; revised source may postdate artifact | **BLOCKED** |
-| Full-history secret/privacy scan | **PASS:** Gitleaks 8.30.1 on all locally available refs; 287 tracked text files yielded zero heuristic matches | Scanner passed; manual review of binaries, PDFs, metadata, historical refs and other branches **PENDING** |
-| Third-party content and dataset rights audit | Not completed | **BLOCKED** |
-| Software/manuscript licensing decision | No root LICENSE; see [licensing options](docs/PUBLIC_LICENSE_DECISION.md) | **BLOCKED** on author approval |
-| Patent and publication disclosure review | Not completed; repository history will become visible | **BLOCKED** on author/patent-counsel review |
+| Consolidated PDF regeneration and inspection | Corrected II-10 scope in consolidated LaTeX; free offline page/visual verification script prepared | **PENDING LOCAL REBUILD AND HUMAN INSPECTION** |
+| Full-history secret/privacy scan | Prior local Gitleaks scan passed; additional offline history and PDF-metadata inventory tool prepared | Manual review of binaries, PDFs, metadata, historical refs and branches **PENDING** |
+| Third-party content and dataset rights audit | [Asset inventory and review plan](docs/RELEASE_RIGHTS_AND_HISTORY.md) prepared | **MANUAL SIGN-OFF PENDING** |
+| Software/manuscript licensing decision | Inactive [BSD-3-Clause and CC BY 4.0 proposals](docs/PUBLIC_LICENSE_DECISION.md) ready for selection; no active LICENSE | **AUTHOR APPROVAL PENDING** |
+| Patent and publication disclosure review | [Public-safe disclosure checklist](docs/PATENT_PUBLIC_DISCLOSURE_REVIEW.md) prepared | **AUTHOR/PATENT REVIEW PENDING** |
 | Explicit approval to change private → public | Not given | **BLOCKED** |
 
 **These component passes do not satisfy the final publication gate.** In particular, the PDF build and rendered inspection, manual history/privacy/rights review, explicit licensing and patent disclosure decisions, and author authorization remain outstanding.
@@ -60,3 +60,44 @@ These tracks are not prerequisites to making a clearly scoped research repositor
 Implement safe documentation and checker improvements on `research/pvnp-public-release-readiness`. Keep patent/legal approvals and repository visibility separate. Do not rewrite history, erase negative results, invent hosted CI success, merge superseded proof candidates (#70), or duplicate recovered II-10 work (#72). PR #74 is closed as superseded; preserve its unique unmerged work for targeted file-by-file review.
 
 **Only the author may authorize the final license and private-to-public transition after the blockers are reviewed.**
+
+## Free offline release workflow (no GitHub Actions billing)
+
+**Single command:** `bash scripts/review_public_release_offline.sh --all`
+For the PDF alone use `--pdf-only`; for rights/history checks use
+`--audit-only`; use `--approval-status` to display remaining approvals.
+This wrapper supports Python on Windows Git Bash without `python3` on PATH.
+
+
+Hosted CI is **not a required publication mechanism**. CI issue #59 can be
+left unresolved until runner allocation becomes available; this is not a
+reason to incur additional GitHub Actions costs. Use a full-history local
+clone instead:
+
+```bash
+python3 -m unittest pvnp.tests.test_offline_publication_gates
+python3 scripts/check_manuscript_alignment.py
+bash scripts/verify_public_pdf_offline.sh
+python3 scripts/audit_release_assets.py --history
+python3 scripts/audit_public_release.py --history
+python3 scripts/check_publication_approval.py
+```
+
+The PDF command rebuilds the four source manuscripts and bound technical
+volume, checks every embedded page against the freshly compiled standalone
+PDFs, and exports representative page PNGs to
+`.release-verification/pdf-offline/visual/`. **A human must inspect them.**
+The history/audit reports and private approval JSON also stay in the
+gitignored directory.
+
+For full technical revalidation, the existing locally runnable
+`bash scripts/verify_public_release.sh` remains available and invokes
+Lean/axiom and other gates. It is separate from hosted Actions.
+
+**Implementation does not equal clearance:** the active code/manuscript
+licenses are still unselected; third-party content, historic disclosures,
+privacy and patent effects still need a person to review and explicitly
+approve. The optional checker
+`python3 scripts/check_publication_approval.py --require-approved`
+fails until a complete final-commit approval record and the actual
+approved licenses exist. Do not change repository visibility automatically.
