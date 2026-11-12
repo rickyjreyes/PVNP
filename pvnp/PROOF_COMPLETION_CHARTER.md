@@ -67,9 +67,9 @@ The [split 3-CNF proof](proofs/split-3sat-reliable-channel.md) formalizes actual
 
 The [sphere-packing supplement](proofs/bandlimited-noisy-wave-packing.md) proves analytically that N independently decodable noisy complex D-mode readout states at fixed conserved mass M must satisfy `N <= (1+sqrt(M)/eta)^(2D)`. This is a universal bound over that specified codebook class, **not** an all-algorithm SAT bound, because an SAT decider need not separately decode all assignments. It is currently outside Lean and does not establish the link between an actual PDE trajectory and a distributed communication transcript.
 
-## ASTRA status update (2 November 2026)
+## Formalization status update (2 November 2026)
 
-This dated update supplements, and does not rewrite, the table above. Details and exact Lean names: [ASTRA completion report](proofs/astra-completion-report.md); frozen physical model and resource-by-resource status: [physical-model-freeze.md](proofs/physical-model-freeze.md).
+This dated update supplements, and does not rewrite, the table above. Details and exact Lean names: [2 November Lean completion report](proofs/lean-completion-report-20261102.md); frozen physical model and resource-by-resource status: [physical-model-freeze.md](proofs/physical-model-freeze.md).
 
 - **O3 — complete for the frozen discrete model.** Kernel-checked `P_WCC = P_TM` and `NP_WCC = NP_TM` from explicit simulations in both directions (`PVNP.Discrete.P_WCC_eq_P_TM`, `NP_WCC_eq_NP_TM`), plus flat machine serialization.
 - **O5 / O6 — partial.** The bandlimited packing theorem above is now Lean-verified (`PVNP.Packing.complex_receiver_packing`, `subspace_receiver_packing`); `C_Θ ≤ ‖Δψ‖²/(4ε²)` is proved as a Lebesgue-integral inequality; energy→curvature, distinguishability→curvature and bandwidth preservation are refuted in Lean.
