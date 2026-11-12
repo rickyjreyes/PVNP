@@ -47,6 +47,12 @@ def main() -> int:
     head = subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"],
                                    text=True).strip()
     issues = []
+    dirty = subprocess.check_output(
+        ["git", "-C", str(ROOT), "status", "--porcelain", "--untracked-files=no"],
+        text=True,
+    ).strip()
+    if dirty:
+        issues.append("tracked release tree has uncommitted changes")
     if not APPROVAL.is_file():
         issues.append("private local publication-approval.json does not exist")
     else:
