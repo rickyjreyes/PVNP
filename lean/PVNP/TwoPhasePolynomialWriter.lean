@@ -679,4 +679,60 @@ theorem inputMTM_not_halting_before_entry
     (assemble (coeffs p) (inputBody M)) x
 
 
+
+/-! ### First-halt and output composition at the actual assembler entry
+
+Once a body-execution theorem is supplied for the assembled instructions,
+this result translates it into the *original* MTM.Outputs definition.
+It is a conditional composition lemma, not a proof of either remaining
+Horner/body execution theorem. -/
+
+/-- Supply the first-halt and Shows obligations for the body starting at the
+real instruction-entry configuration. The already established normalization
+and return-sweep results then give the complete machine's first-halt output.
+The pre-dispatch segment is discharged rather than assumed. -/
+theorem outputs_of_assembled_body
+    (program : ℕ × Array Inst) (x y : List Bool) (t B : ℕ)
+    (hBound : 2 * x.length + 4 + t ≤ B)
+    (hFinal :
+      (build program).Halting
+        ((build program).run
+          (⟨partiallyNormalizedTape x x.length, 0,
+            .scan (addr program.2 program.1)⟩ : (build program).Cfg) t).q)
+    (hBefore :
+      ∀ s < t,
+        ¬ (build program).Halting
+          ((build program).run
+            (⟨partiallyNormalizedTape x x.length, 0,
+              .scan (addr program.2 program.1)⟩ : (build program).Cfg) s).q)
+    (hShows :
+      (build program).Shows
+        ((build program).run
+          (⟨partiallyNormalizedTape x x.length, 0,
+            .scan (addr program.2 program.1)⟩ : (build program).Cfg) t) y) :
+    (build program).Outputs x y B := by
+  let M := build program
+  let K := 2 * x.length + 4
+  let entry : M.Cfg :=
+    ⟨partiallyNormalizedTape x x.length, 0,
+      .scan (addr program.2 program.1)⟩
+  have hentry : M.run (M.init x) K = entry := by
+    exact run_to_first_instruction program x
+  have hshift (s : ℕ) :
+      M.run (M.init x) (K + s) = M.run entry s := by
+    rw [MTM.run_add, hentry]
+  refine ⟨K + t, hBound, ?_, ?_⟩
+  · refine ⟨?_, ?_⟩
+    · rw [hshift t]
+      exact hFinal
+    · intro s hs
+      by_cases hsmall : s < K
+      · exact not_halting_before_first_instruction program x s hsmall
+      · obtain ⟨r, rfl⟩ :=
+          Nat.exists_eq_add_of_le (show K ≤ s by omega)
+        rw [hshift r]
+        exact hBefore r (by omega)
+  · rw [hshift t]
+    exact hShows
+
 end PVNP.TwoPhasePolynomialWriter
