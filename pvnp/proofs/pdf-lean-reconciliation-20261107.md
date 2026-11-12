@@ -85,3 +85,14 @@ Run `bash scripts/run_release_verification.sh --all` in a full-history checkout 
 7. Preserve the original revised LaTeX sources and Zenodo DOIs. Do not rewrite the history or change repo visibility as a side effect of manuscript synchronization.
 
 **Status at creation:** Revised LaTeX and publication workflow have been committed to PR #61; no full updated consolidated PDF has been compiled, and the latest exact-head CI jobs continue to fail before execution. This is a source-level reconciliation, not a verified public release.
+
+
+## November 9, 2026: independently inspected source structure and safe-release gate
+
+The integrated `main` tree at `7316b81f9126d0366138e971d75a3277f4048a2a` was inspected through the connected GitHub repository API. All five current `main.tex` sources (Parts I, II, III, independent supplement, and consolidated volume) have balanced counted LaTeX environments, no duplicate labels, and no unresolved same-file `ref`/`eqref`/`autoref` targets. The consolidated source binds four documents, and the revised Part I source contains explicit withdrawal language for claims I-25 to I-28. These are **source-level checks only**, not proof of successful TeX compilation or visual correctness.
+
+The release pipeline previously overwrote the tracked `paper.pdf` during a local `--all` verification attempt *before* Lean, axiom audit, and dashboard checks could run. The independent release-gate fix changes this order: the PDF is compiled into a separate review-stage path; `--pdf-only` leaves that candidate staged; only successful `--all` execution promotes the staged PDF to the tracked publication location. The GitHub PDF workflow similarly compiles and validates a staged candidate before its main-branch commit step.
+
+A hermetic test harness injects PDF-build, PDF-content, Lean, and dashboard failures and asserts that no failure mutates the tracked publication PDF; a successful full mocked run does promote exactly the validated candidate. **These tests verify gate control flow, not the actual TeX, Lean, or dashboard content.**
+
+The private repository is still blocked by GitHub Actions runner allocation, and this inspection environment has no installed Lean toolchain or network access to clone the private project. Therefore the full pinned Lean build and axiom audit, exact-source compiled PDF inspection, and end-to-end `--all` result are **still pending**. Keep publication and claim statuses unchanged until a real full verification completes. Do not use green mock checks or merged unverified Lean code as a substitute for kernel certification.

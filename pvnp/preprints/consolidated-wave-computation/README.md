@@ -23,6 +23,8 @@ The original 2025 release identifiers retain their historical dates. Inclusion i
 
 **Independent release gate:** from the repository root run `bash scripts/run_release_verification.sh --all`. It retains locally rebuilt Part I and II review PDFs, exact source hashes and full logs without committing redundant PDF publications.
 
+**Atomic publication safeguard:** The release verification command first writes a staged candidate under `.release-verification/staged-release/paper.pdf`. `--pdf-only` validates the compiled PDF and leaves it staged without changing the tracked publication file. `--all` promotes that exact candidate to `paper.pdf` only after the compiled-PDF checks, full Lean build, axiom audit, and dashboard verification have all succeeded. If any gate fails, the existing tracked PDF is preserved. `scripts/test_release_staging.py` exercises this behavior with hermetic failure injections. A direct `bash scripts/build_pdfs.sh` remains a developer rebuild and is **not** an independent release certification.
+
 ## One-PDF release policy
 
 The three legacy PDFs and supplement PDF are historical compilation artifacts, **not four current primary releases**. The new workflow builds them only temporarily, compiles the single consolidated PDF, and (after a successful main build) removes the redundant PDF binaries from the current branch. Their LaTeX sources remain maintained and the old compiled versions remain accessible through Git history and historical Zenodo records.
