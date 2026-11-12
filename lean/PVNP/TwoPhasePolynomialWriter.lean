@@ -572,10 +572,13 @@ theorem return_walk_prefix (program : ℕ × Array Inst)
     (build program).run
       (⟨tape, (n : ℤ) - 1, .ret pc⟩ : (build program).Cfg) k =
     (⟨tape, (n : ℤ) - 1 - (k : ℤ), .ret pc⟩ : (build program).Cfg) := by
+  revert hk
   induction k with
   | zero =>
+      intro _
       simp [MTM.run_zero]
   | succ k ih =>
+      intro hk
       have hk' : k ≤ n := by omega
       have hlt : n - (k + 1) < n := by omega
       have hindex :
