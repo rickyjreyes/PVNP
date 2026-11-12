@@ -1,4 +1,4 @@
-# Theorem ↔ manuscript map (ASTRA v2, 2 November 2026)
+# Theorem ↔ manuscript map (revision 2, 2 November 2026)
 
 Every numbered statement of the three PVNP manuscripts is listed here with its Lean counterpart, the
 assumptions the Lean statement actually uses, its domain or dimension, its status, and how the formal
@@ -37,7 +37,7 @@ All Lean names are relative to `lean/PVNP/`. "Audit" means the name is listed in
 | Lemma `lem:boundary_variation` | `PartIII.directed_boundary_eq` (+ `PartIIIExtended.*`) | none | Boolean cube | **PROVED** | none |
 | Thm. `thm:influence` | `PartIII.total_influence_le_dimension`, `PartIIIExtended.normalized_total_influence_le_n`; sharpness `PartIII.parity_total_influence` | none | Boolean cube | **PROVED** | none |
 | Cor. `cor:var` | `PartIII.variation_class_vacuous` | none | Boolean cube | **PROVED** | none |
-| Formal-status paragraph: encoder/decoder audit | `PhysicalAudit.unrestricted_encoder_trivializes`, `unrestricted_decoder_trivializes`, `PhysConst_polyEnc_eq_P_TM`, `physical_SAT_lower_bound_is_classical` | exact plane-wave solutions of the frozen PDE | 2-D box | **PROVED** | new in ASTRA v2 |
+| Formal-status paragraph: encoder/decoder audit | `PhysicalAudit.unrestricted_encoder_trivializes`, `unrestricted_decoder_trivializes`, `PhysConst_polyEnc_eq_P_TM`, `physical_SAT_lower_bound_is_classical` | exact plane-wave solutions of the frozen PDE | 2-D box | **PROVED** | added in revision 2 |
 | Formal-status paragraph: flux inequality, continuum | premise of `TransportCalculus.curvature_time_lower_bound` | flux inequality assumed | continuum | **ANALYTIC** (`wct-pde-transport-bound.md` §3) | not derived in Lean |
 | Formal-status paragraph: flux inequality, lattice | `WCTLattice.hasDerivAt_flux`, `flux_bound`, `lattice_flux_inequality`, `lattice_curvature_time_bound` | solution of the lattice ODE; `γ > 0` | discrete torus `ℤ/Nℤ`, any `N, h` | **PROVED** (derived) | `D = ‖(Δ_h+κ)z‖`; constant `Γ` explicit and uniform in `N` |
 | Formal-status paragraph: well-posedness | external `ReyesMath.Sobolev.global_wellposed`, `continuous_dependence`, `conservation`; bridge `lean/bridge/MathBridge.lean` | `γ > 0`, data in `H²(ℝ²)` | whole plane `ℝ²` | **PROVED** (external, verified) | not the torus model; see M3-T |
@@ -61,7 +61,7 @@ All Lean names are relative to `lean/PVNP/`. "Audit" means the name is listed in
 | Lemma `lem:verifier-encoding` | `Discrete.NP_TM_verifier_to_WCC` | none | 1-D | **PROVED** | — |
 | Thm. `thm:uniform-discrete-bijection` | `P_WCC_eq_P_TM`, `NP_WCC_eq_NP_TM` (+ radius-r) | fixed origin-marked encoding | 1-D | **PROVED-R** | for polynomial-time encoders the ⊇ inclusion is trivial (`unrestricted_encoder_trivializes_WCC`, `P_WCC_enc_id`) |
 | Prop. `prop:conditional-classical-lift` | `Discrete.p_vs_np_discrete_transfer`, `lower_bound_transfer`, `p_vs_np_radius_transfer` | none | discrete | **PROVED** | — |
-| Formal-status paragraph: encoders and advice | `Discrete.unrestricted_encoder_trivializes_WCC`, `advice_bit_trivializes` | none | 1-D | **PROVED** | new in ASTRA v2 |
+| Formal-status paragraph: encoders and advice | `Discrete.unrestricted_encoder_trivializes_WCC`, `advice_bit_trivializes` | none | 1-D | **PROVED** | added in revision 2 |
 
 ## Part I — *Curvature-bounded wave computation* (`pvnp/papers/part-i-curvature-bounded-wave-computation`)
 
