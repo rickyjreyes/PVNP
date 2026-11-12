@@ -680,3 +680,4 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhasePolynomialWriter.not_halting_before_first_instruction
 #print axioms PVNP.TwoPhasePolynomialWriter.windowMTM_not_halting_before_entry
 #print axioms PVNP.TwoPhasePolynomialWriter.inputMTM_not_halting_before_entry
+#print axioms PVNP.TwoPhasePolynomialWriter.outputs_of_assembled_body
