@@ -685,3 +685,8 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhasePolynomialWriter.finish_run_prefix
 #print axioms PVNP.TwoPhasePolynomialWriter.finish_scan_first_halt
 #print axioms PVNP.TwoPhasePolynomialWriter.outputs_of_prepared_finish
+-- Phase XVIII actual-machine certificate interface for original II-10 FP.
+#print axioms PVNP.TwoPhasePolynomialWriter.fp_of_finish_certificate
+#print axioms PVNP.TwoPhasePolynomialWriter.originalWindowCode_fp_of_finish_certificate
+#print axioms PVNP.TwoPhasePolynomialWriter.originalInputCode_fp_of_finish_certificate
+#print axioms PVNP.TwoPhasePolynomialWriter.originalUniform_of_finish_certificates
