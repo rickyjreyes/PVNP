@@ -53,9 +53,22 @@ def tracked_head_scan() -> tuple[int, int]:
         path = ROOT / name
         if any(part in SKIP_PARTS for part in Path(name).parts):
             continue
-        if path.suffix.lower() not in SUFFIXES and path.name not in {
-            ".gitignore", "Dockerfile", "Makefile", ".gitattributes"
-        }:
+        lower = path.name.lower()
+        sensitive_name = (
+            lower == ".env" or lower.startswith(".env.")
+            or lower in {"id_rsa", "id_ed25519", "credentials.json"}
+            or path.suffix.lower() in {".pem", ".p12", ".pfx", ".key"}
+        )
+        if sensitive_name:
+            print(f"REVIEW: sensitive-looking tracked filename {name}", file=sys.stderr)
+            findings += 1
+        if path.is_symlink():
+            print(f"REVIEW: tracked symlink {name}", file=sys.stderr)
+            findings += 1
+            continue
+        if path.suffix.lower() not in SUFFIXES and lower not in {
+            ".gitignore", "dockerfile", "makefile", ".gitattributes"
+        } and not lower.startswith(".env"):
             continue
         if not path.is_file() or path.stat().st_size > MAX_BYTES:
             continue
