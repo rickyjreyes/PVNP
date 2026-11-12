@@ -2528,6 +2528,33 @@ For all admissible fields used by a specified class of machines,
 $\Phi(\psi)\ge\kappa_0\mathcal H^{d-1}(\partial\mathcal R_\psi)$
 with $\kappa_0>0$ independent of the input length and encoding.
 \end{hypothesis}
+\begin{remark}[Addendum, 12 November 2026: the hypothesis fails on growing tori]
+\label{rem:separator-price-fails}
+In the frozen model the field lives on a torus of side $L_n$.
+The exact solution $\psi(t,x)=A\,e^{i(2\pi x_1/L-\omega t)}$ of the
+frozen equation has the same amplitude $|A|$ for every $L$, so its
+quadrature readout $\operatorname{Re}\psi$ reaches $\pm|A|$ with a fixed
+margin.  For every curvature operator with $|\Theta[\psi]|\le c|\Delta\psi|$,
+including $\Delta$ and the operator $\Theta_\varepsilon$ of Part III,
+\[
+ \Phi(\psi_t)\le 4\pi^2|A|^2+16\pi^4c^2|A|^2/L^2,
+\]
+while the frontier of $\{\operatorname{Re}\psi_t>0\}$ in the
+fundamental domain has Euclidean length at least $L$, at every time.
+Hence no $\kappa_0>0$ independent of the input length exists for the
+frozen trajectory class
+(\nolinkurl{SeparatorFrozen.no_uniform_separator_price}).  These
+fields are used by an admissible decider whose encoder writes the
+decision bit as the sign of $A$
+(\nolinkurl{SeparatorFrozen.stripe_device_violates}), and a modulus
+readout fails in the same way
+(\nolinkurl{SeparatorFrozen.no_uniform_price_modulus}).  What
+survives is a width-dependent price: a transition from $\le-\eta$ to
+$\ge\eta$ across width $w$ costs at least $4\eta^2/w$ per unit
+length, and this is sharp (\nolinkurl{SeparatorFrozen.layer_price}).
+A uniform $\kappa_0$ therefore requires a uniform bound on transition
+widths, as in the mesh price below.
+\end{remark}
 \begin{hypothesis}[Encoding-uniform expander interface growth]
 \label{prop:locked-expander-full}
 For every permitted decider and encoding of a hard-instance family,

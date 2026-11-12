@@ -710,3 +710,26 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhasePolynomialWriter.P_Turing_subset_P_disc_original
 #print axioms PVNP.TwoPhasePolynomialWriter.originalWM_mem_P_disc
 #print axioms PVNP.TwoPhasePolynomialWriter.P_Turing_subset_P_disc_by_original
+
+-- Phase XVIII, I-31: no uniform separator price for the frozen trajectory class.
+#print axioms PVNP.SeparatorFrozen.traj_solves
+#print axioms PVNP.SeparatorFrozen.traj_periodic
+#print axioms PVNP.SeparatorFrozen.traj_norm
+#print axioms PVNP.SeparatorFrozen.traj_contrast
+#print axioms PVNP.SeparatorFrozen.segment_subset
+#print axioms PVNP.SeparatorFrozen.hausdorff_segment
+#print axioms PVNP.SeparatorFrozen.interface_ge
+#print axioms PVNP.SeparatorFrozen.Phi_wave_le
+#print axioms PVNP.SeparatorFrozen.Phi_traj_le
+#print axioms PVNP.SeparatorFrozen.no_uniform_separator_price
+#print axioms PVNP.SeparatorFrozen.separator_price_hypothesis_false
+#print axioms PVNP.SeparatorFrozen.thetaEps_dominated
+#print axioms PVNP.SeparatorFrozen.separator_price_false_thetaEps
+#print axioms PVNP.SeparatorFrozen.stripe_device_decides
+#print axioms PVNP.SeparatorFrozen.stripe_device_violates
+#print axioms PVNP.SeparatorFrozen.Phi_bump_le
+#print axioms PVNP.SeparatorFrozen.bump_interface_ge
+#print axioms PVNP.SeparatorFrozen.no_uniform_price_modulus
+#print axioms PVNP.SeparatorFrozen.sq_integral_le
+#print axioms PVNP.SeparatorFrozen.layer_price
+#print axioms PVNP.SeparatorFrozen.layer_price_sharp

@@ -104,7 +104,9 @@ audit, and verification gate at source commit
 `df8824ca659b2e931eb4302251569d6c6c6140b3`; GitHub-hosted runners did
 not execute an equivalent workflow. The amended inventory now has **79 Exact,
 1 Restricted, 4 Refuted, 7 Open**, with **Part II 28/28 Exact**. The
-remaining Restricted claim is I-11. This result does not establish the
+remaining Restricted claim is I-11. A later addendum of the same day (PR #78)
+refutes I-31 for the frozen trajectory class, giving 79 Exact, 1 Restricted,
+5 Refuted, 6 Open. This result does not establish the
 unrestricted continuum WCT↔TM bridge or classical P ≠ NP. For the
 mathematical proof chain and verification provenance, see
 `pvnp/proofs/II10_VERIFICATION_LEDGER.md`.

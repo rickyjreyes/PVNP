@@ -10,7 +10,7 @@ import re
 
 TARGET_IDS = ("II-10", "I-31", "I-37", "I-32", "I-3", "I-11",
               "I-2", "I-16", "III-22")
-COUNT_BASELINE = {"Exact": 79, "Restricted": 1, "Refuted": 4, "Open": 7}
+COUNT_BASELINE = {"Exact": 79, "Restricted": 1, "Refuted": 5, "Open": 6}
 
 
 def parse_inventory(path: pathlib.Path) -> dict[str, str]:
