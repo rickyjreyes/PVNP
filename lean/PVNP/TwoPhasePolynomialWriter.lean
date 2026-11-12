@@ -927,4 +927,101 @@ theorem outputs_of_prepared_finish (program : ℕ × Array Inst)
     exact hShows
 
 
+
+/-! ### Explicit certificates for the two original FP witnesses
+
+The outstanding obligations are now factored into certificates describing
+the *actual assembled program*: reach its finish instruction, remain
+nonhalting beforehand, stage the exact canonical output, and satisfy the
+original polynomial transition budget. Supplying these certificates is the
+remaining mathematical work; they are not asserted by this definition. -/
+
+/-- A concrete assembled-program certificate, stronger than merely claiming
+that the expected output has polynomial length. The witnesses identify the
+actual finishing control state, tape and exact pre-finish execution time. -/
+structure WriterFinishCertificate
+    (program : ℕ × Array Inst) (f : List Bool → List Bool)
+    (budget : Polynomial ℕ) where
+  stageTime : List Bool → ℕ
+  finishPC : List Bool → Fin (program.2.size + 1)
+  stagedTape : List Bool → ℤ → Sym
+  reachesFinish : ∀ x,
+    (build program).run ((build program).init x) (stageTime x) =
+      (⟨stagedTape x, 0, .scan (finishPC x)⟩ : (build program).Cfg)
+  noEarlyHalt : ∀ x s, s < stageTime x →
+    ¬ (build program).Halting
+      ((build program).run ((build program).init x) s).q
+  finishInstruction : ∀ x, lookup program.2 (finishPC x) = .finish
+  exactStagedBits : ∀ x i, i < (f x).length →
+    ∃ c : Cell, stagedTape x (i : ℤ) = .work c ∧
+      c.out = some ((f x).getD i false)
+  trailingCellEmpty : ∀ x,
+    (asCell (stagedTape x ((f x).length : ℤ))).out = none
+  polynomialTime : ∀ x,
+    stageTime x + ((f x).length + 1) ≤ budget.eval x.length
+
+/-- Any certificate for the actual finite-control writer gives the original
+FP proposition by the exact first-halt and trailing-blank theorem above. -/
+theorem fp_of_finish_certificate
+    (program : ℕ × Array Inst) (f : List Bool → List Bool)
+    (budget : Polynomial ℕ)
+    (h : WriterFinishCertificate program f budget) :
+    FP f := by
+  refine ⟨build program, budget, ?_⟩
+  intro x
+  exact outputs_of_prepared_finish program x (f x)
+    (h.stageTime x) (budget.eval x.length)
+    (h.finishPC x) (h.stagedTape x)
+    (h.reachesFinish x) (h.noEarlyHalt x)
+    (h.finishInstruction x) (h.exactStagedBits x)
+    (h.trailingCellEmpty x) (h.polynomialTime x)
+
+/-- Exact remaining concrete-machine certificate needed for the *original*
+lattice-window writer. This theorem is conditional on its input certificate. -/
+theorem originalWindowCode_fp_of_finish_certificate (p : Polynomial ℕ)
+    (h : WriterFinishCertificate
+      (assemble (coeffs p) windowBody)
+      (TwoPhaseUniform.originalWindowCode p)
+      (timePoly (coeffs p) 1)) :
+    FP (TwoPhaseUniform.originalWindowCode p) :=
+  fp_of_finish_certificate
+    (assemble (coeffs p) windowBody)
+    (TwoPhaseUniform.originalWindowCode p)
+    (timePoly (coeffs p) 1) h
+
+/-- Exact remaining concrete-machine certificate needed for the *original*
+input-configuration encoder. It cannot be replaced by an output-length bound. -/
+theorem originalInputCode_fp_of_finish_certificate
+    (M : MTM) (p : Polynomial ℕ)
+    (h : WriterFinishCertificate
+      (assemble (coeffs p) (inputBody M))
+      (TwoPhaseUniform.originalInputCode M p)
+      (timePoly (coeffs p)
+        (3 + 2 * Fintype.card (PartIITwoPhase.S M)))) :
+    FP (TwoPhaseUniform.originalInputCode M p) :=
+  fp_of_finish_certificate
+    (assemble (coeffs p) (inputBody M))
+    (TwoPhaseUniform.originalInputCode M p)
+    (timePoly (coeffs p)
+      (3 + 2 * Fintype.card (PartIITwoPhase.S M))) h
+
+/-- The original two-phase W_M construction, conditional on *actual-machine*
+finish certificates for both canonical encoders. Establishing the two
+certificates without hypotheses will remove the original II-10 restriction. -/
+noncomputable def originalUniform_of_finish_certificates
+    (M : MTM) (p : Polynomial ℕ)
+    (hWindow : WriterFinishCertificate
+      (assemble (coeffs p) windowBody)
+      (TwoPhaseUniform.originalWindowCode p)
+      (timePoly (coeffs p) 1))
+    (hInput : WriterFinishCertificate
+      (assemble (coeffs p) (inputBody M))
+      (TwoPhaseUniform.originalInputCode M p)
+      (timePoly (coeffs p)
+        (3 + 2 * Fintype.card (PartIITwoPhase.S M)))) :
+    UWCC :=
+  TwoPhaseUniform.originalUniform M p
+    (originalWindowCode_fp_of_finish_certificate p hWindow)
+    (originalInputCode_fp_of_finish_certificate M p hInput)
+
 end PVNP.TwoPhasePolynomialWriter
