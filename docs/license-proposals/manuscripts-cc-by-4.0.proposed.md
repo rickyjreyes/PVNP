@@ -8,7 +8,7 @@ Official legal text: https://creativecommons.org/licenses/by/4.0/legalcode
 
 Candidate permission scope, subject to ownership and Zenodo-license review:
 only original author-owned written manuscripts and their original diagrams
-in \`pvnp/papers/\`, \`pvnp/preprints/\`, and original research documentation.
+in `pvnp/papers/`, `pvnp/preprints/`, and original research documentation.
 
 The PDF outputs are compiled distributions of manuscript source, not separate
 rights grants. Do not include third-party excerpts or non-author-owned
