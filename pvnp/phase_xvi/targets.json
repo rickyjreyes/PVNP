@@ -2,23 +2,23 @@
   "schema": 1,
   "as_of": "2026-11-12",
   "baseline": {
-    "Exact": 78,
-    "Restricted": 2,
+    "Exact": 79,
+    "Restricted": 1,
     "Refuted": 4,
     "Open": 7,
     "total": 91
   },
-  "percent_meaning": "Subjective research progress, not independent Lean proof coverage, probability, or permission to promote manuscript status; status promotions require exact-head full kernel and axiom audit.",
+  "percent_meaning": "Tracking estimates (except source-closed II-10), not probabilities or remaining classical P vs NP proof progress; claim status follows the authoritative inventory and external exact-head Lean evidence.",
   "status_authority": "pvnp/proofs/manuscript-lean-inventory.md",
   "targets": [
     {
       "id": "II-10",
       "title": "Original polynomial-time writers",
-      "status": "Restricted",
-      "research_estimate_percent": 95,
+      "status": "Exact",
+      "research_estimate_percent": 100,
       "metric": "research",
-      "evidence": "Phase XVIII supplies five source modules for literal MTM execution, abstract state, assembler/Horner, both first-halt output words, and polynomial FP witnesses. TwoPhasePolynomialFP.lean contains originalWindowCode_fp, originalInputCode_fp, originalWM, originalWM_decides and the original class-inclusion witness. The modules were reported individually compiled in another session; this integration branch explicitly imports them into PVNP.lean and registers the original results in the axiom audit. Full exact-head root build and audit have not been independently observed in this session.",
-      "remaining_obligation": "Run scripts/verify_ii10_original_wm.sh on the exact integration HEAD; verify entire PVNP Lean import graph, all newly registered theorem axioms, source-to-manuscript statement agreement, and regressions. Only then reclassify II-10 and reconcile the manuscript, inventory, registry and stacked PRs."
+      "evidence": "Original II-10 proof source is complete: actual finite-control execution, Horner assembly, both exact first-halt output words, canonical polynomial-time FP writers, original uniform W_M, exact first-answer equality and charged discrete class inclusion. The producing session reports that a 7,386-job full Lean build, standard-axiom audit and exact-head gate passed on df8824ca659b2e931eb4302251569d6c6c6140b3 (PR #73). That is user-provided external verification evidence, not a GitHub-hosted runner pass.",
+      "remaining_obligation": "The original finite-state/discrete theorem is closed under its specified polynomial-radius/head-window and corrected n=0 assumptions. Preserve the recorded exact-head source tree and external proof evidence on merge. Physical PDE realization, I-11 physical equivalence and universal SAT hardness remain distinct open problems."
     },
     {
       "id": "I-31",
