@@ -733,3 +733,37 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.SeparatorFrozen.sq_integral_le
 #print axioms PVNP.SeparatorFrozen.layer_price
 #print axioms PVNP.SeparatorFrozen.layer_price_sharp
+
+-- Phase XVIII, I-32: expander interface growth is as hard as P_TM ≠ NP_TM.
+#print axioms PVNP.ExpanderInterface.expanderGrowth_of_every_length
+#print axioms PVNP.ExpanderInterface.sep_of_const
+#print axioms PVNP.ExpanderInterface.sep_const
+#print axioms PVNP.ExpanderInterface.constDecides_mem_P_TM
+#print axioms PVNP.ExpanderInterface.expanderGrowth_const_iff
+#print axioms PVNP.ExpanderInterface.expanderGrowth_false_of_mem_P
+#print axioms PVNP.ExpanderInterface.expanderGrowth_SAT_iff
+#print axioms PVNP.ExpanderInterface.expanderGrowth_implies_P_ne_NP
+-- Phase XVIII, I-37, I-3, III-22: time reversal and no locking for the frozen flow.
+#print axioms PVNP.Torus.conjH_conjH
+#print axioms PVNP.Torus.conjH_isometry
+#print axioms PVNP.Torus.fnl_conj
+#print axioms PVNP.Torus.fc_conj
+#print axioms PVNP.Torus.isSolution_reverse
+#print axioms PVNP.Torus.isSolution_shift
+#print axioms PVNP.Torus.backward_eq_forward_conj
+#print axioms PVNP.Torus.flow_neg
+#print axioms PVNP.Torus.infDist_conjH_le
+#print axioms PVNP.Torus.no_locking
+#print axioms PVNP.Torus.unstable_or_unreachable
+#print axioms PVNP.Torus.realStates_conj
+#print axioms PVNP.Torus.field_real_of_realState
+#print axioms PVNP.Torus.phaseOrbit_conj
+#print axioms PVNP.Torus.no_locking_phaseOrbit
+#print axioms PVNP.Torus.no_locking_realStates
+-- Phase XVIII, I-16 and I-2.
+#print axioms PVNP.DepthBarrier.wccDepth_SAT_iff
+#print axioms PVNP.DepthBarrier.wccdDepth_SAT_iff
+#print axioms PVNP.DepthBarrier.uniform_depth_SAT_iff
+#print axioms PVNP.DepthBarrier.explicit_state_constructible
+#print axioms PVNP.DepthBarrier.no_separation_of_all_constructible
+#print axioms PVNP.DepthBarrier.explicit_no_separation
