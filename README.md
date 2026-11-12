@@ -65,7 +65,7 @@ The original manuscripts, independent supplements, negative results, and Lean ch
 
 Run `bash scripts/build_pdfs.sh` with the required LaTeX packages. The build compiles the three source manuscripts and supplement into **temporary archive PDFs** and then generates only `pvnp/preprints/consolidated-wave-computation/paper.pdf` as the primary output. On a successful `main` build, GitHub Actions commits this consolidated PDF and retires four redundant tracked PDF artifacts. The original LaTeX sources and Zenodo publication records are preserved.
 
-**Verification is a separate gate:** the PDF build does not establish Lean proof validity. The complete local Lean/axiom checks passed at `c92158f` notwithstanding [hosted CI runner issue #59](https://github.com/rickyjreyes/PVNP/issues/59); the consolidated PDF generation and rendered-content checks have **not** been completed at the Phase XIX release head. GitHub visibility must remain unchanged until manual privacy, third-party content, patent disclosure and license decisions are completed.
+**Verification is a separate gate:** the PDF build does not establish Lean proof validity. The complete local Lean/axiom checks passed at `c92158f` notwithstanding [hosted CI runner issue #59](https://github.com/rickyjreyes/PVNP/issues/59); the consolidated PDF generation and rendered-content checks have **not** been completed at the Phase XIX release head. The new free, offline verification is `bash scripts/verify_public_pdf_offline.sh`; successful hosted Actions is not required if the local evidence is complete. GitHub visibility must remain unchanged until manual privacy, third-party content, patent disclosure and license decisions are completed.
 
 ## Latest quantitative scaling audit
 
