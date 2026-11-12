@@ -1,0 +1,62 @@
+"""Local, network-free release-gate tests; do not grant legal clearance."""
+from __future__ import annotations
+
+import importlib.util
+from pathlib import Path
+import unittest
+
+ROOT = Path(__file__).resolve().parents[2]
+
+
+def module(name, relpath):
+    spec = importlib.util.spec_from_file_location(name, ROOT / relpath)
+    assert spec is not None and spec.loader is not None
+    out = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(out)
+    return out
+
+
+assets = module("assets", "scripts/audit_release_assets.py")
+approve = module("approve", "scripts/check_publication_approval.py")
+
+
+class OfflineReleaseTests(unittest.TestCase):
+    def test_pdf_and_source_categories_remain_manual(self):
+        self.assertIn("manual", assets.classify(
+            "pvnp/preprints/part-i-curvature-bounded-wave-computation/paper.pdf"))
+        self.assertIn("rights_review", assets.classify(
+            "pvnp/papers/part-i-curvature-bounded-wave-computation/main.tex"))
+
+    def test_tex_inclusion_and_metadata_detection(self):
+        self.assertEqual(assets.TEX_INCLUDE.findall(
+            r"\includepdf[pages=-]{archive/part-i.pdf}"),
+            [("includepdf", "archive/part-i.pdf")])
+        self.assertIn("Creator", assets.metadata_flags(
+            "Creator: C:\\Users\\example\\AppData\\TeX\nTitle: PVNP"))
+        self.assertEqual(assets.metadata_flags("Title: PVNP\nPages: 22"), [])
+
+    def test_incomplete_template_never_approves(self):
+        template = {
+            "schema": "PVNP-publication-approval-v1",
+            "status": "UNSIGNED_TEMPLATE_NOT_AUTHORIZATION",
+            "reviewed_commit_sha": None,
+        }
+        missing = approve.check(template, "0" * 40)
+        self.assertIn("author approval status not recorded", missing)
+        self.assertTrue(any("permission_to_make_repository_public" in s for s in missing))
+
+    def test_only_explicit_complete_acknowledgments_pass_logic(self):
+        data = {
+            "schema": "PVNP-publication-approval-v1",
+            "status": "AUTHOR_APPROVED",
+            "reviewed_commit_sha": "a" * 40,
+            "selected_code_license": "BSD-3-Clause",
+            "selected_manuscript_license": "CC-BY-4.0",
+        }
+        data.update({k: True for k in approve.REQUIRED_TRUE})
+        self.assertEqual(approve.check(data, "a" * 40), [])
+        self.assertTrue(approve.check(data, "b" * 40))
+
+
+if __name__ == "__main__":
+    unittest.main()
