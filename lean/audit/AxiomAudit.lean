@@ -681,3 +681,7 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhasePolynomialWriter.windowMTM_not_halting_before_entry
 #print axioms PVNP.TwoPhasePolynomialWriter.inputMTM_not_halting_before_entry
 #print axioms PVNP.TwoPhasePolynomialWriter.outputs_of_assembled_body
+-- Phase XVIII exact terminal scan and original MTM.Outputs composition.
+#print axioms PVNP.TwoPhasePolynomialWriter.finish_run_prefix
+#print axioms PVNP.TwoPhasePolynomialWriter.finish_scan_first_halt
+#print axioms PVNP.TwoPhasePolynomialWriter.outputs_of_prepared_finish
