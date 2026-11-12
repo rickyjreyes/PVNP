@@ -28,7 +28,7 @@ The original writer proof was reported to pass pinned Lean 4.23.0, a 7,386-job f
 
 ## Final verification in a full-history clone
 
-Run in the repository root with pinned Lean/Mathlib, Python 3, Node, PDF tools and a current Gitleaks installation:
+Run in the repository root with pinned Lean/Mathlib, Python 3, Node, PDF tools and a current Gitleaks installation. The strict combined technical gate is `bash scripts/verify_public_release.sh`. To isolate failures, use:
 
 ```bash
 git status --short
