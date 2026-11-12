@@ -32,7 +32,7 @@ def main() -> None:
         encoding="utf8"
     )
 
-    must("| **Total** | **91** | **78** | **2** | **4** | **7** |" in inventory,
+    must("| **Total** | **91** | **79** | **1** | **4** | **7** |" in inventory,
          "Canonical claim inventory unexpectedly changed")
     for number in (25, 26, 27, 28):
         must(re.search(r"Withdrawn[^\n]*I-" + str(number) + r"\b", p1) is not None,
@@ -56,6 +56,14 @@ def main() -> None:
          "Original II-10 theorem still presented as full unconditional uniformity")
     must("PartIIUniform.P" in p2 and "original" in p2.lower(),
          "Generic uniform class theorem and original W_M not distinguished")
+    # II-10 is Exact since 12 Nov 2026.  The theorem keeps its dated conditional
+    # wording; a dated addendum must name the Lean theorems that discharge it.
+    must("Addendum, 12 November 2026: both writer hypotheses are theorems" in p2
+         and "originalWindowCode_fp" in p2 and "originalInputCode_fp" in p2
+         and "originalWM_decides" in p2,
+         "Part II lacks the dated II-10 addendum naming the verified writer theorems")
+    must("Addendum, 12 November 2026" in combined and "79 Exact, 1 Restricted" in combined,
+         "Consolidated volume lacks the dated II-10 addendum and current counts")
     must("Current formalization status (7 November 2026)" in p2,
          "Missing current Part II status section")
     must("Current Lean formalization status (7 November 2026)" in p1,

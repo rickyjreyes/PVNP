@@ -26,7 +26,7 @@ The original repository PDFs were generated from revised LaTeX, not necessarily 
 
 ## Formalization boundary
 
-The amended 91-claim inventory currently records **78 Exact, 2 Restricted, 4 Refuted, 7 Open**. An Exact conditional implication does not prove its unverified premises. Neither classical P versus NP nor physical WCC separation is proved. Recent Phase XII/XIII integration awaits full kernel CI, and a PDF build cannot replace Lean verification.
+The amended 91-claim inventory currently records **79 Exact, 1 Restricted, 4 Refuted, 7 Open** (78/2/4/7 before II-10 became Exact on 12 November 2026). An Exact conditional implication does not prove its unverified premises. Neither classical P versus NP nor physical WCC separation is proved. Recent Phase XII/XIII integration awaits full kernel CI, and a PDF build cannot replace Lean verification.
 
 ## Verified Phase VI and Phase VIII results (November 2026)
 

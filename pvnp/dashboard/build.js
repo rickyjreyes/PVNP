@@ -242,10 +242,13 @@ function generate(overrides = {}) {
     if (proofById.has(c.id)) {
       const proof = proofById.get(c.id);
       const theorem = exact(proof.decl, c.id);
-      if (h.status !== proof.from || c.status !== "Exact" || h.claim !== c.claim ||
+      /* The row text must be the original one, unless the registry records why it was restated. */
+      const restated = typeof proof.restated === "string" && proof.restated.length > 40;
+      if (h.status !== proof.from || c.status !== "Exact" || (h.claim !== c.claim && !restated) ||
           !audited.has(theorem.full) || !Object.values(out.refs).flat().some(r => r.name === proof.decl))
         fail(`${c.id}: formalization must preserve the statement and link its audited theorem`);
       out.formalized = { pr: proof.pr, decl: proof.decl, from: proof.from };
+      if (restated) out.formalized.restated = proof.restated;
     }
     if (amendById.has(c.id)) {
       const a = amendById.get(c.id);

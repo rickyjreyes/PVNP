@@ -2,14 +2,18 @@
   "$comment": "Curated, versioned registry for the PVNP formalization dashboard. Claim statuses and every claim total come from pvnp/proofs/manuscript-lean-inventory.md, never from this file. This file records only (1) provenance of the historical snapshot and of the seven amended statements, (2) editorial notes on conditional Exact claims, (3) supporting results that are not manuscript claims, (4) open obligations, and (5) CI evidence. After editing, run: node pvnp/dashboard/build.js",
   "repository": "https://github.com/rickyjreyes/PVNP",
   "inventory_path": "pvnp/proofs/manuscript-lean-inventory.md",
-  "inventory_date": "2026-11-06",
+  "inventory_date": "2026-11-12",
   "historical": {
     "commit": "eaf8fa02720ee2e520e2c4b62046e75702cd3752",
     "label": "Original October 27 manuscript statements",
     "description": "Last inventory revision before the November 6 manuscript corrections (PRs #45, #46 and #47). The same file is on main up to dd7138b, the PR #43 merge.",
     "expected": {"Exact": 70, "Restricted": 2, "Refuted": 11, "Open": 8}
   },
-  "formalizations": [{"id": "II-24", "pr": 54, "decl": "PartIIManuscript.conditional_np_safety", "from": "Open"}],
+  "formalizations": [
+    {"id": "II-24", "pr": 54, "decl": "PartIIManuscript.conditional_np_safety", "from": "Open"},
+    {"id": "II-10", "pr": 73, "decl": "TwoPhasePolynomialWriter.originalWM_decides", "from": "Restricted",
+     "restated": "The time bound in this row was corrected from 2cn^k to 2c·max(n,1)^k by PR #45 (see II-17). The proof covers both forms: originalWM_first_answer gives T_{W_M}(x) = 2T_M(x) for every first-halt time inside the window."}
+  ],
   "amendments": [
     {"id": "II-7", "pr": 45, "counterexamples": ["invariant_literal_fails"],
      "scope": "Quantifier range corrected from all t ≥ 0 to 0 ≤ t ≤ L(n). The corrected theorem was already kernel-checked; the manuscript now states it."},

@@ -184,10 +184,13 @@ import PVNP.TwoPhaseConstantWindow
 -- Phase XIV: literal-output finite-control MTM and constant-radius W_M FP candidate.
 import PVNP.TwoPhaseFixedWord
 
--- Phase XV: original polynomial-radius and fixed-prefix writer proof candidates.
--- These imports enforce compilation without claiming the unrestricted FP proofs.
+-- Phase XV: machine definitions and fixed-prefix writer.
 import PVNP.TwoPhasePolynomialWriter
 import PVNP.TwoPhasePrefixWriter
+-- Phase XVIII: concrete step semantics, assembler/Horner execution, both
+-- first-halt output words and unconditional FP witnesses for original W_M.
+-- This import is the full-build gate for original II-10.
+import PVNP.TwoPhasePolynomialFP
 -- Phase XVI: a formula-dependent finite toroidal CNF consistency equivalence.
 -- Logical constraint system only; does not establish physical I-37.
 import PVNP.ToroidalCNFLock
@@ -197,3 +200,12 @@ import PVNP.SeparatorAmplitude
 -- Phase XVII: charged finite-row logical torus and sharp detector-contrast ray price.
 import PVNP.ToroidalFiniteRows
 import PVNP.SeparatorNormalizedRay
+
+-- Phase XVIII: the modules behind `PVNP.TwoPhasePolynomialFP` (imported above), listed so
+-- that each is a named build target. Exec: instruction-level transitions of `build P`;
+-- State: abstract work-region state; Program: assembler semantics and Horner's rule;
+-- Outputs: first halt and output word.
+import PVNP.TwoPhasePolynomialExec
+import PVNP.TwoPhasePolynomialState
+import PVNP.TwoPhasePolynomialProgram
+import PVNP.TwoPhasePolynomialOutputs

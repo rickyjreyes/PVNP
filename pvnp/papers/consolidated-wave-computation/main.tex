@@ -57,7 +57,7 @@ The repository includes uniform Cook--Levin reductions and a characterization of
 remains an open conjectural target. The physical all-decider separator and expander claims also remain open.
 
 \section{Maintained formalization ledger and verification}
-The amended 91-claim ledger records 78 Exact, 2 Restricted, 4 Refuted, and 7 Open claims. The Exact category includes proved conditional implications whose premises are not established; it does not mean classical P is unequal to NP. See the continuously maintained \href{https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md}{manuscript formalization inventory} and \href{https://github.com/rickyjreyes/PVNP/tree/main/lean}{Lean source tree}.
+The amended 91-claim ledger recorded 78 Exact, 2 Restricted, 4 Refuted, and 7 Open claims on 7 November 2026; since the addendum of 12 November 2026 in the register below it records 79 Exact, 1 Restricted, 4 Refuted, and 7 Open. The Exact category includes proved conditional implications whose premises are not established; it does not mean classical P is unequal to NP. See the continuously maintained \href{https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md}{manuscript formalization inventory} and \href{https://github.com/rickyjreyes/PVNP/tree/main/lean}{Lean source tree}.
 
 \begin{center}\small
 \begin{tabular}{@{}p{0.33\linewidth}p{0.58\linewidth}@{}}\toprule
@@ -135,6 +135,17 @@ withdrawn from theorem status in the revised text.
 The 91-claim inventory therefore remains 78 Exact,
 2 Restricted, 4 Refuted and 7 Open.  No universal
 classical or physical separation follows.
+
+\paragraph{Addendum, 12 November 2026.}
+II-10 is no longer unresolved.  The original complete
+polynomial-time window and initial-configuration transducers are
+verified in Lean for every polynomial radius
+(\nolinkurl{TwoPhasePolynomialWriter.originalWindowCode_fp},
+\nolinkurl{TwoPhasePolynomialWriter.originalInputCode_fp}), so the
+author's two-phase $W_M$ is a uniform discrete WCC machine without
+hypotheses.  The inventory is now 79 Exact, 1 Restricted, 4 Refuted
+and 7 Open.  The other eight entries of the table are unchanged, and
+no universal classical or physical separation follows.
 
 \section{Reproduction and source maintenance}
 The authoritative historical LaTeX sources remain under the four original manuscript directories in the repository. The single-release build first compiles them into temporary PDFs, binds them behind this overview, and installs only one primary consolidated PDF. Run \texttt{bash scripts/build\_pdfs.sh} to regenerate it. For the Lean formalization, use the pinned toolchain and run \texttt{lake build PVNP} followed by the standard axiom audit from within the \texttt{lean} directory.

@@ -68,8 +68,21 @@ jobs:
         run: lake build PVNP.TwoPhaseConstantWindow
       - name: Check all fixed-radius original W_M lattice-writer FP candidates
         run: lake build PVNP.TwoPhaseFixedWord
-      - name: Check original polynomial and prefix transducers (II-10 candidates)
-        run: lake build PVNP.TwoPhasePolynomialWriter PVNP.TwoPhasePrefixWriter
+      - name: Kernel-check original II-10 polynomial writer execution and FP witnesses
+        run: |
+          lake build PVNP.TwoPhasePolynomialExec PVNP.TwoPhasePolynomialState PVNP.TwoPhasePolynomialProgram PVNP.TwoPhasePolynomialOutputs PVNP.TwoPhasePolynomialFP
+          lake build PVNP.TwoPhasePolynomialWriter PVNP.TwoPhasePrefixWriter
+      - name: II-10 source proof closure guard
+        run: |
+          test -f PVNP/TwoPhasePolynomialExec.lean
+          test -f PVNP/TwoPhasePolynomialState.lean
+          test -f PVNP/TwoPhasePolynomialProgram.lean
+          test -f PVNP/TwoPhasePolynomialOutputs.lean
+          test -f PVNP/TwoPhasePolynomialFP.lean
+          grep -Fq 'import PVNP.TwoPhasePolynomialFP' PVNP.lean
+          grep -Fq '#print axioms PVNP.TwoPhasePolynomialWriter.originalWindowCode_fp' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.TwoPhasePolynomialWriter.originalInputCode_fp' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.TwoPhasePolynomialWriter.originalWM_decides' audit/AxiomAudit.lean
       - name: Run original two-phase transducer regression
         working-directory: .
         run: python3 -m unittest discover -s pvnp/tests -p 'test_two_phase_tape_writer.py'

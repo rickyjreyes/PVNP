@@ -662,3 +662,51 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhasePolynomialWriter.run_normalizes_input
 #print axioms PVNP.TwoPhasePolynomialWriter.windowMTM_normalization
 #print axioms PVNP.TwoPhasePolynomialWriter.inputMTM_normalization
+
+-- Phase XVIII: II-10 at its original scope. The actual polynomial-radius writers
+-- `windowMTM p` and `inputMTM M p` are polynomial-time transducers for the original codes.
+#print axioms PVNP.TwoPhasePolynomialWriter.ret_walk
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_copy
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_take_hit
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_take_miss
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_inc_in
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_inc_end
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_emit_in
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_emit_end
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_next_hit
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_next_miss
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_head
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_finish
+#print axioms PVNP.TwoPhasePolynomialWriter.Exec.trans
+#print axioms PVNP.TwoPhasePolynomialWriter.Exec.inc
+#print axioms PVNP.TwoPhasePolynomialWriter.Exec.emit
+#print axioms PVNP.TwoPhasePolynomialWriter.Exec.next_hit
+#print axioms PVNP.TwoPhasePolynomialWriter.Exec.head
+#print axioms PVNP.TwoPhasePolynomialWriter.word_emits
+#print axioms PVNP.TwoPhasePolynomialWriter.repeated_emits
+#print axioms PVNP.TwoPhasePolynomialWriter.inner_loop
+#print axioms PVNP.TwoPhasePolynomialWriter.outer_loop
+#print axioms PVNP.TwoPhasePolynomialWriter.stage_sem
+#print axioms PVNP.TwoPhasePolynomialWriter.horner_emits
+#print axioms PVNP.TwoPhasePolynomialWriter.stages_emits
+#print axioms PVNP.TwoPhasePolynomialWriter.windowBody_emits
+#print axioms PVNP.TwoPhasePolynomialWriter.inputBodyG_emits
+#print axioms PVNP.TwoPhasePolynomialWriter.normalize_steps
+#print axioms PVNP.TwoPhasePolynomialWriter.assemble_outputs
+#print axioms PVNP.TwoPhasePolynomialWriter.hv_coeffs
+#print axioms PVNP.TwoPhasePolynomialWriter.winTail_eq_windowWord
+#print axioms PVNP.TwoPhasePolynomialWriter.inW_eq_originalInputCode
+#print axioms PVNP.TwoPhasePolynomialWriter.windowMTM_outputs
+#print axioms PVNP.TwoPhasePolynomialWriter.inputMTM_outputs
+-- Also registered by the integration branch of PR #72 (literal original machines).
+#print axioms PVNP.TwoPhasePolynomialWriter.Steps.trans
+#print axioms PVNP.TwoPhasePolynomialWriter.StagesSpec
+#print axioms PVNP.TwoPhasePolynomialWriter.assemble_spec
+#print axioms PVNP.TwoPhasePolynomialWriter.originalWindowCode_fp
+#print axioms PVNP.TwoPhasePolynomialWriter.originalInputCode_fp
+#print axioms PVNP.TwoPhasePolynomialWriter.originalWM
+#print axioms PVNP.TwoPhasePolynomialWriter.originalWM_decides
+#print axioms PVNP.TwoPhasePolynomialWriter.originalWM_first_answer
+#print axioms PVNP.TwoPhasePolynomialWriter.P_Turing_subset_P_disc_original
+#print axioms PVNP.TwoPhasePolynomialWriter.originalWM_mem_P_disc
+#print axioms PVNP.TwoPhasePolynomialWriter.P_Turing_subset_P_disc_by_original
