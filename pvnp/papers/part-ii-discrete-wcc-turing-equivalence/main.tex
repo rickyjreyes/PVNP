@@ -938,59 +938,57 @@ Definition~\ref{def:pwcc}.
 We can now state the main equivalence theorem for the simulation direction
 TM $\Rightarrow$ WCC.
 
-\begin{theorem}[Original two-phase simulation: exact dynamics, conditional uniformity]
+\begin{theorem}[Original two-phase simulation with polynomial-time uniform writers]
 \label{thm:tm_to_wcc}
-Let a deterministic Turing machine $M$ decide a language $L$
-with first-halt time $T_M(x)$ bounded by
-$c\max\{|x|,1\}^k$, and let the original
-two-phase WCC window contain all head positions through that
-time.  The original local update rule and decoder have
-the first-answer equality
+Let a deterministic Turing machine $M$ decide a language $L$ with
+first-halt time $T_M(x)\le c\max\{|x|,1\}^{k}$.
+Choose a natural-coefficient polynomial $p$ whose radius contains all
+head positions and the initial input cells for each admissible $x$.
+Then the author's original two-phase machine $W_M$, equipped with the
+canonical finite-control lattice-window writer, complete configuration
+encoder, and decoder, is a uniform discrete WCC machine in
+Definition~\ref{def:wcc_machine}. Its first decision is the Turing
+answer, appearing at the exact intrinsic update time
 \[
-T_{W_M}(x)=2T_M(x)
+  T_{W_M}(x)=2T_M(x)\le2c\max\{|x|,1\}^{k}.
 \]
-for its \emph{intrinsic global-update time}, and agree with the
-Turing answer.  If, additionally, the
-\emph{original} canonical lattice writer
-$\operatorname{originalWindowCode}(p)$ and complete
-configuration encoder
-$\operatorname{originalInputCode}(M,p)$ are both
-polynomial-time computable under the manuscript's
-single-tape output convention, then this concrete
-$W_M$ meets the uniform discrete WCC preparation
-requirements and defines a polynomial-time WCC decider.
-
-Without those two writer hypotheses, the dynamical
-simulation alone does \emph{not} prove uniformity
-of this particular construction.  Independently, the
-uniform class inclusion
-\[
-P_{\mathrm{Turing}}\subseteq
-P_{\mathrm{WCC}}^{\mathrm{disc}}
-\]
-is proved using a different, fully charged
-one-cell encoder construction.
+Consequently the author's original construction witnesses
+$P_{\mathrm{Turing}}\subseteq P_{\mathrm{WCC}}^{\mathrm{disc}}$.
+This is a statement about finite discrete computation, not a physical
+wavefield realization or a classical complexity-class separation.
 \end{theorem}
 
 \begin{proof}
-The first-answer identity and its head-window
-hypotheses follow from Lemma~\ref{lem:runtime}
-and the two-phase invariant, formalized by
-\nolinkurl{PartIITwoPhase.runtime} and
-\nolinkurl{PartIITwoPhase.tm_to_wcc_decides}.
-The original decoder is polynomial-time
-(\nolinkurl{TwoPhaseDecoder.decM_fp}).
-The remaining writer hypotheses would exactly
-supply the lattice and encoder \texttt{FP}
-fields in the uniform WCC definition, and
-hence give the conditional claim for this $W_M$.
+The original local two-phase invariant and bounded-head-window hypotheses
+give the exact first-answer statement at time $2T_M(x)$ and the absence
+of earlier output, including for empty inputs. The machine-level theorem
+\nolinkurl{TwoPhasePolynomialWriter.originalWM_first_answer} applies
+this identity to the unconditional original uniform machine.
 
-The independent unconditional class inclusion
-uses the \texttt{PartIIUniform.oneCell} construction
-and \nolinkurl{PartIIUniform.P_TM_subset_P_disc},
-whose encoder runs the original Turing decider,
-charges that work, and writes the decision bit.
-These two different proofs must not be conflated.
+The two original preparation functions are polynomial-time \emph{as
+single-tape transducers}, not merely polynomial-length words. The actual
+finite-control transition program executes the Horner radius computation,
+emits each canonical output word, writes its trailing blank, and halts
+for the first time within a polynomial transition bound. These
+results are formalized by
+\nolinkurl{TwoPhasePolynomialWriter.assemble_outputs},
+\nolinkurl{TwoPhasePolynomialWriter.windowMTM_outputs},
+and \nolinkurl{TwoPhasePolynomialWriter.inputMTM_outputs}.
+The exact code equalities and preparation witnesses are
+\nolinkurl{TwoPhasePolynomialWriter.originalWindowCode_fp} and
+\nolinkurl{TwoPhasePolynomialWriter.originalInputCode_fp}.
+The original decoder is polynomial-time by
+\nolinkurl{TwoPhaseDecoder.decM_fp}.
+
+Thus \nolinkurl{TwoPhasePolynomialWriter.originalWM} constructs a
+\texttt{UWCC} with all preparation fields supplied, and
+\nolinkurl{TwoPhasePolynomialWriter.originalWM_decides} proves its
+bounded first-answer correctness. Finally,
+\nolinkurl{TwoPhasePolynomialWriter.P_Turing_subset_P_disc_by_original}
+establishes the class inclusion through this particular $W_M$,
+independently of the separate one-cell uniform construction.
+The classical SAT lower-bound and physically realizable PDE claims
+remain independent mathematical obligations.
 \end{proof}
 
 \subsection{Simulation of WCC by Turing machines}
@@ -1865,15 +1863,17 @@ verifier classes, with polynomial preservation of all relevant costs.
 No such physical-to-discrete resource equivalence or classical
 separation is established here.
 
-\subsection{Current formalization status (7 November 2026)}
+\subsection{Current formalization status (12 November 2026)}
 \label{sec:current-lean-status}
 The revised Part II inventory contains 28 statements:
-27 Exact under their amended hypotheses and
-one Restricted, namely the uniformity of the author's
-original two-phase machine $W_M$ (II-10).
-An exact conditional implication does not establish
-its open antecedents.  The statement below supersedes
-the manuscript's earlier dated kernel-status addenda.
+28 Exact under their amended hypotheses and zero Restricted.
+The former restriction on the original two-phase machine $W_M$
+(II-10) is discharged by polynomial-time canonical single-tape
+writers and its exact first-answer theorem. An exact conditional
+implication elsewhere in the paper still does not establish its
+unproved antecedents. This dated source update supersedes the
+earlier conditional-uniformity statement, while preserving its
+historical proof limitations in the audit.
 
 \paragraph{Discrete computational model.}
 For the one-dimensional, radius-one finite-state
@@ -1916,27 +1916,39 @@ model, not the existence of a physical wave
 implementation of the same resource costs.
 
 \paragraph{The author's original two-phase machine, II-10.}
-The actual alphabet, two-phase local rules,
-bounded-window invariant and first-answer
-time $T_{W_M}(x)=2T_M(x)$ are formalized as
-\nolinkurl{PartIITwoPhase.two_steps},
-\texttt{invariant\_even}, \texttt{invariant\_odd}
-and \texttt{runtime}, subject to the explicitly
-stated head-in-window range.
-The real canonical decoder is a
-polynomial-time transducer
-(\nolinkurl{TwoPhaseDecoder.decM_fp}),
-with accept taking precedence over reject
-in the declared output encoding.
-The original \emph{complete} polynomial-radius
-window bitmap writer and the full initial
-configuration state serializer still require
-Lean proofs as polynomial-time single-tape
-output machines.  The Phase XIII reference
-writers and exact bitmap statements supply
-supporting constructions, not these missing
-uniform \texttt{FP} witnesses.  Consequently
-the original construction remains Restricted.
+The exact alphabet, two-phase local rules, bounded-window invariant,
+and first-answer identity $T_{W_M}(x)=2T_M(x)$ are formalized by
+\nolinkurl{PartIITwoPhase.two_steps} and
+\nolinkurl{TwoPhasePolynomialWriter.originalWM_first_answer},
+within the proved head-in-window range.
+The decoder has an explicit polynomial-time witness
+(\nolinkurl{TwoPhaseDecoder.decM_fp}), with acceptance taking
+precedence over rejection in its output encoding.
+The complete polynomial-radius window writer and full initial
+configuration serializer are concrete single-tape machines whose
+exact first-halt outputs and polynomial transition bounds are proved
+by \texttt{windowMTM\_outputs} and \texttt{inputMTM\_outputs}.
+Their \texttt{FP} witnesses are
+\texttt{originalWindowCode\_fp} and \texttt{originalInputCode\_fp}.
+Consequently \texttt{originalWM} is a fully specified uniform
+discrete WCC machine, not a substitute one-cell construction, and
+\texttt{P\_Turing\_subset\_P\_disc\_by\_original} certifies its
+corrected class-inclusion claim. II-10 is classified Exact
+under these finite discrete assumptions, without implying
+a physically realizable wave mechanism.
+
+\paragraph{12 November 2026 verification addendum.}
+The author-provided external verification run reports that the
+full Lean v4.23.0 build and standard-axiom audit passed on commit
+\texttt{df8824ca659b2e931eb4302251569d6c6c6140b3}, including
+the new first-answer theorem, plus 742 concrete finite simulation
+cases without observed failures. This run was conducted in the
+author's development environment because the repository's hosted
+Actions runners did not execute the relevant jobs. The full
+instruction-trace proof and reproducibility conditions are recorded
+in \texttt{pvnp/proofs/II10\_VERIFICATION\_LEDGER.md}.
+The result is mathematical certification within the specified
+discrete Turing/WCC formal model, not an empirical WCT experiment.
 
 \paragraph{Historical corrections retained in the audit.}
 The original all-time two-phase invariant and
