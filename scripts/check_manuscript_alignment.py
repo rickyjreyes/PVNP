@@ -32,7 +32,7 @@ def main() -> None:
         encoding="utf8"
     )
 
-    must("| **Total** | **91** | **78** | **2** | **4** | **7** |" in inventory,
+    must("| **Total** | **91** | **79** | **1** | **4** | **7** |" in inventory,
          "Canonical claim inventory unexpectedly changed")
     for number in (25, 26, 27, 28):
         must(re.search(r"Withdrawn[^\n]*I-" + str(number) + r"\b", p1) is not None,
@@ -52,11 +52,17 @@ def main() -> None:
     ):
         must(re.search(disallowed, p1) is None,
              f"Superseded state-to-language proposition still present: {disallowed}")
-    must("Original two-phase simulation: exact dynamics, conditional uniformity" in p2,
-         "Original II-10 theorem still presented as full unconditional uniformity")
+    must("Original two-phase simulation with polynomial-time uniform writers" in p2,
+         "Original II-10 theorem must cite actual polynomial-time canonical writers")
+    must("TwoPhasePolynomialWriter.originalWM_first_answer" in p2
+         and "TwoPhasePolynomialWriter.originalInputCode_fp" in p2
+         and "TwoPhasePolynomialWriter.originalWindowCode_fp" in p2,
+         "Original II-10 theorem is missing exact first-answer and canonical FP witnesses")
+    must("28 Exact under their amended hypotheses and zero Restricted" in p2,
+         "Part II current status is stale after original II-10 completion")
     must("PartIIUniform.P" in p2 and "original" in p2.lower(),
          "Generic uniform class theorem and original W_M not distinguished")
-    must("Current formalization status (7 November 2026)" in p2,
+    must("Current formalization status (12 November 2026)" in p2,
          "Missing current Part II status section")
     must("Current Lean formalization status (7 November 2026)" in p1,
          "Missing current Part I status section")
@@ -87,7 +93,7 @@ def main() -> None:
     must("Unresolved original-claim register" in combined,
          "Consolidated volume missing the nine Restricted/Open entries")
     must("two-site" in supplement, "Missing supplement finite-model disclaimer")
-    print("PASS: Part I-III historical corrections and 91-claim inventory are aligned")
+    print("PASS: Part I-III historical corrections and 91-claim inventory (79 Exact) are aligned")
     print("PASS: consolidated LaTeX sources and nine-claim register are structurally consistent")
     print("NOTE: these static checks DO NOT verify Lean or compiled PDF output")
 
