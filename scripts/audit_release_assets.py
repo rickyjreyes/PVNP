@@ -17,8 +17,8 @@ SENSITIVE = re.compile(r"(^|/)(\.env(?:\.[^/]*)?|id_rsa|id_ed25519|credentials(?
 PRIVATE_META = re.compile(r"[/\\](Users|home)[/\\]|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}|file://|token=", re.I)
 
 PDF_TEXT_RISKS = {
-    "email_address": re.compile(r"[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}"),
-    "home_directory_path": re.compile(r"(?:[A-Z]:\\\\Users\\\\|/home/|/Users/)", re.I),
+    "email_address": re.compile(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}"),
+    "home_directory_path": re.compile(r"(?:[A-Z]:\\Users\\|/home/|/Users/)", re.I),
     "copy_or_permission_notice": re.compile(r"reproduced with permission|adapted from|all rights reserved", re.I),
 }
 

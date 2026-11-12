@@ -54,10 +54,10 @@ The repository includes uniform Cook--Levin reductions and a characterization of
 \[
 \mathrm{SAT}_{\mathrm{dense}}\notin\mathbf P_{\mathrm{TM}}
 \]
-remains an open conjectural target. The physical all-decider separator and expander claims also remain open.
+remains an open conjectural target. The uniform separator-price hypothesis is refuted for frozen growing-torus trajectories; the encoding-independent expander and universal complexity lower-bound claims remain open.
 
 \section{Maintained formalization ledger and verification}
-The amended 91-claim ledger recorded 78 Exact, 2 Restricted, 4 Refuted, and 7 Open claims on 7 November 2026; since the addendum of 12 November 2026 in the register below it records 79 Exact, 1 Restricted, 4 Refuted, and 7 Open. The Exact category includes proved conditional implications whose premises are not established; it does not mean classical P is unequal to NP. See the continuously maintained \href{https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md}{manuscript formalization inventory} and \href{https://github.com/rickyjreyes/PVNP/tree/main/lean}{Lean source tree}.
+The 91-claim inventory recorded 78 Exact, 2 Restricted, 4 Refuted and 7 Open on 7 November 2026. After original II-10 was completed on 12 November, the totals became 79 Exact, 1 Restricted, 4 Refuted and 7 Open. The I-31 counterexample subsequently established the current 79 Exact, 1 Restricted, 5 Refuted and 6 Open. The Exact category includes proved conditional implications whose premises are not established; it does not mean classical P is unequal to NP. See the continuously maintained \href{https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md}{manuscript formalization inventory} and \href{https://github.com/rickyjreyes/PVNP/tree/main/lean}{Lean source tree}.
 
 \begin{center}\small
 \begin{tabular}{@{}p{0.33\linewidth}p{0.58\linewidth}@{}}\toprule
@@ -66,7 +66,7 @@ Uniform discrete WCC & Proved classical P and NP class equivalences within the f
 Original two-phase \(W_M\) & Original finite discrete encoders, writers, and simulation support are Exact at the amended model scope; physical realization remains separate.\\
 Dense SAT & Uniform Cook--Levin and restricted quadratic single-tape lower bounds; universal superpolynomial target open.\\
 Physical WCC & Charged, robust, uniform physical-to-discrete resource bridge missing.\\
-Curvature interfaces & Restricted finite mesh and graph estimates; universal separator and expander hardness open.\\
+Curvature interfaces & Uniform interface price refuted in the frozen growing-torus class (I-31); independent expander hardness open.\\
 Phase readout & Logical-energy SAT certification does not imply efficient physical convergence or preparation.\\
 Auxiliary nodal estimate & Fixed-domain analytical result; its finite two-site algebra is formalized, not the full continuum theorem.\\
 \bottomrule\end{tabular}
@@ -121,7 +121,6 @@ I-2 & Open & Verifiable wavefield with independently proved nonconstructibility.
 I-3 & Open & Formula-dependent physical dynamics and robust readout, beyond logical-energy certificates.\\
 I-11 & Restricted & A charged, robust continuum physical-to-discrete resource bridge.\\
 I-16 & Open & An unrestricted superpolynomial SAT time lower bound against every correct decider.\\
-I-31 & Open & A uniform positive separator price for the admissible physical trajectory class.\\
 I-32 & Open & An encoding-independent exponential interface lower bound for every decider.\\
 I-37 & Open & Sound and complete arbitrary-formula toroidal physical locking.\\
 III-22 & Open & Interpretive arrow-of-time remark, not a formal theorem.\\
@@ -131,20 +130,30 @@ III-22 & Open & Interpretive arrow-of-time remark, not a formal theorem.\\
 The four refuted historical Part I state-to-language
 claims I-25--I-28 remain in the audit and have been
 withdrawn from theorem status in the revised text.
-The amended 91-claim inventory records 79 Exact,
-1 Restricted, 4 Refuted and 7 Open as of 12 November 2026.
-No universal classical or physical separation follows.
+I-31 is also refuted for the frozen growing-torus trajectory
+class, not for all fixed-domain or hard-language variants.
+The current inventory is 79 Exact, 1 Restricted,
+5 Refuted and 6 Open. No universal classical or physical
+separation follows.
 
 \paragraph{Addendum, 12 November 2026.}
-II-10 was previously Restricted but is now Exact. The original complete
+II-10 is no longer unresolved.  The original complete
 polynomial-time window and initial-configuration transducers are
 verified in Lean for every polynomial radius
 (\nolinkurl{TwoPhasePolynomialWriter.originalWindowCode_fp},
 \nolinkurl{TwoPhasePolynomialWriter.originalInputCode_fp}), so the
 author's two-phase $W_M$ is a uniform discrete WCC machine without
-hypotheses.  The inventory is now 79 Exact, 1 Restricted, 4 Refuted
-and 7 Open.  The unresolved-claim table above therefore omits II-10; no universal
+hypotheses.  The completion of II-10 raised Exact to 79 and reduced Restricted to 1.
+The later I-31 counterexample below refutes the frozen-model hypothesis,
+leaving the current 79 Exact, 1 Restricted, 5 Refuted and 6 Open.
+The unresolved table above excludes both claims. No universal
 classical or physical separation follows.
+A second addendum of the same date refutes I-31 for the frozen
+trajectory class: exact plane waves of fixed amplitude keep the
+curvature functional bounded while their decision interface grows
+with the torus side
+(\nolinkurl{SeparatorFrozen.no_uniform_separator_price}).  The
+inventory is then 79 Exact, 1 Restricted, 5 Refuted and 6 Open.
 
 \section{Reproduction and source maintenance}
 The authoritative historical LaTeX sources remain under the four original manuscript directories in the repository. The single-release build first compiles them into temporary PDFs, binds them behind this overview, and installs only one primary consolidated PDF. Run \texttt{bash scripts/build\_pdfs.sh} to regenerate it. For the Lean formalization, use the pinned toolchain and run \texttt{lake build PVNP} followed by the standard axiom audit from within the \texttt{lean} directory.

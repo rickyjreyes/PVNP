@@ -32,7 +32,7 @@ def main() -> None:
         encoding="utf8"
     )
 
-    must("| **Total** | **91** | **79** | **1** | **4** | **7** |" in inventory,
+    must("| **Total** | **91** | **79** | **1** | **5** | **6** |" in inventory,
          "Canonical claim inventory unexpectedly changed")
     for number in (25, 26, 27, 28):
         must(re.search(r"Withdrawn[^\n]*I-" + str(number) + r"\b", p1) is not None,
@@ -64,6 +64,12 @@ def main() -> None:
          "Part II lacks the dated II-10 addendum naming the verified writer theorems")
     must("Addendum, 12 November 2026" in combined and "79 Exact, 1 Restricted" in combined,
          "Consolidated volume lacks the dated II-10 addendum and current counts")
+    # I-31 is Refuted since 12 Nov 2026: the hypothesis stays in Part I with a dated addendum.
+    must("Addendum, 12 November 2026: the hypothesis fails on growing tori" in p1
+         and "no_uniform_separator_price" in p1 and "layer_price" in p1,
+         "Part I lacks the dated I-31 addendum naming the counterexample and the corrected price")
+    must("5 Refuted and 6 Open" in combined,
+         "Consolidated volume lacks the current counts after the I-31 refutation")
     must("Current formalization status (7 November 2026)" in p2,
          "Missing current Part II status section")
     must("Current Lean formalization status (7 November 2026)" in p1,
@@ -90,6 +96,10 @@ def main() -> None:
         must(set(refs).issubset(labels), "Unresolved internal LaTeX reference")
     must("II-10 & Restricted" not in combined,
          "Consolidated volume still labels the settled II-10 claim Restricted")
+    must("I-31 & Open" not in combined,
+         "Consolidated volume still labels frozen-model I-31 as unresolved")
+    must("79 Exact, 1 Restricted, 5 Refuted" in combined and "6 Open" in combined,
+         "The consolidated volume does not contain current inventory totals")
     must("Original complete polynomial-time window and initial-configuration transducers." not in combined,
          "Current consolidated register contains outdated II-10 gate")
     must(combined.count("\\includepdf[") == 4, "Consolidated volume not binding four parts")
@@ -97,7 +107,7 @@ def main() -> None:
         must("archive/" + name + ".pdf" in combined,
              f"Missing {name} PDF from consolidated volume")
     must("Unresolved original-claim register" in combined,
-         "Consolidated volume missing the current unresolved claim register")
+         "Consolidated volume missing the current seven-claim unresolved register")
     must("two-site" in supplement, "Missing supplement finite-model disclaimer")
     print("PASS: Part I-III historical corrections and 91-claim inventory are aligned")
     print("PASS: consolidated LaTeX sources and amended 91-claim register are structurally consistent")

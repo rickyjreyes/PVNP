@@ -4,8 +4,8 @@
   "baseline": {
     "Exact": 79,
     "Restricted": 1,
-    "Refuted": 4,
-    "Open": 7,
+    "Refuted": 5,
+    "Open": 6,
     "total": 91
   },
   "percent_meaning": "Subjective research progress, not independent Lean proof coverage, probability, or permission to promote manuscript status; status promotions require exact-head full kernel and axiom audit.",
@@ -23,11 +23,11 @@
     {
       "id": "I-31",
       "title": "Uniform separator theorem",
-      "status": "Open",
-      "research_estimate_percent": 38,
+      "status": "Refuted",
+      "research_estimate_percent": 100,
       "metric": "research",
-      "evidence": "Phase XVI abstract scaling no-go was locally Lean-built. Phase XVII proposes a sharp normalized detector-contrast ray price but has not established a uniform frozen-PDE trajectory estimate.",
-      "remaining_obligation": "Prove a uniform positive cost-to-contrast ratio for all admissible physical trajectories under the frozen WCT model, or construct an admissible counterexample."
+      "evidence": "Refuted for the frozen physical trajectory class. SeparatorFrozen.no_uniform_separator_price: on the torus of side L, the exact plane-wave solutions of fixed amplitude A have curvature functional at most 4π²|A|² + 16π⁴c²|A|²/L² (any curvature operator dominated by c|Δψ|, including Δ and the Part III Θ_ε), while the Euclidean length of the frontier of the decision region {Re ψ > 0} is at least L, at every time. These fields are used by an admissible decider (stripe_device_decides); the modulus readout fails the same way (no_uniform_price_modulus). Corrected statement: layer_price (sharp width-dependent price 4η²/w).",
+      "remaining_obligation": "None for the original hypothesis. A uniform price needs an extra hypothesis bounding transition widths (sharp interfaces), under which SeparatorPrice.mesh_price and SeparatorFrozen.layer_price apply."
     },
     {
       "id": "I-37",
@@ -35,8 +35,8 @@
       "status": "Open",
       "research_estimate_percent": 32,
       "metric": "research",
-      "evidence": "Finite formula-dependent torus logically encodes SAT. Phase XVII adds a polynomial-size Boolean-cell CNF encoding with charged equality constraints and a finite-row Lean candidate; physical realization and locality remain unproved.",
-      "remaining_obligation": "Prove nearest-neighbor admissible WCT physical toroidal realization, robust bidirectional locking correspondence, convergence and charged construction/readout bounds."
+      "evidence": "Obstruction (TorusNoLocking): the frozen flow is time-reversible (isSolution_reverse); a solution converging to a nonempty, Lyapunov-stable, conjugation-invariant lock set starts in it (no_locking), which covers the phase orbit of every binary-phase state (no_locking_phaseOrbit). Earlier: finite formula-dependent logical tori.",
+      "remaining_obligation": "Define the locking constraints. Any robust realization needs dissipative or forced dynamics outside the frozen model, with a bidirectional locking correspondence, convergence and charged construction/readout bounds."
     },
     {
       "id": "I-32",
@@ -44,8 +44,8 @@
       "status": "Open",
       "research_estimate_percent": 20,
       "metric": "research",
-      "evidence": "Binary-cut graph price and storage upper bounds exist; parity bypass remains an obstruction.",
-      "remaining_obligation": "Prove universal interface lower bound over admissible algorithms and encodings, or construct a counterexample."
+      "evidence": "ExpanderInterface.expanderGrowth_SAT_iff: in the charged constant-device class the hypothesis for dense SAT is equivalent to P_TM ≠ NP_TM; expanderGrowth_implies_P_ne_NP for any class containing those devices; false for every language in P_TM. Binary-cut graph price and storage upper bounds exist.",
+      "remaining_obligation": "Cannot be proved without proving P_TM ≠ NP_TM; in the constant-device class it cannot be refuted without P_TM = NP_TM."
     },
     {
       "id": "I-3",
@@ -53,8 +53,8 @@
       "status": "Open",
       "research_estimate_percent": 35,
       "metric": "research",
-      "evidence": "PartIPsiSat energy threshold, rounding and noisy certificate readout are proved.",
-      "remaining_obligation": "Build actual formula-dependent physical trajectory with certified convergence, completeness and robust observations."
+      "evidence": "PartIPsiSat energy threshold, rounding and noisy certificate readout are proved. Torus.no_locking_phaseOrbit: the frozen dynamics cannot converge into a stable binary-phase lock from outside it.",
+      "remaining_obligation": "Formula-dependent dissipative dynamics with certified convergence, completeness and robust observations; the frozen model cannot provide the convergence."
     },
     {
       "id": "I-11",
@@ -71,8 +71,8 @@
       "status": "Open",
       "research_estimate_percent": 15,
       "metric": "research",
-      "evidence": "Conditional symbolic separation template is proved under an unproved nonconstructibility premise.",
-      "remaining_obligation": "Construct and verify an admissible wavefield family with independently justified nonconstructibility and complexity correspondence."
+      "evidence": "DepthBarrier.explicit_no_separation: in the explicit-state reading every state is constructed in linear time, so NPst \\ Pst = ∅. Conditional symbolic separation template proved earlier.",
+      "remaining_obligation": "Fix a state notion (input-indexed families or physical fields with a preparation model) under which the conjecture is non-trivial, then construct or refute a verifiable non-constructible target."
     },
     {
       "id": "I-16",
@@ -80,8 +80,8 @@
       "status": "Open",
       "research_estimate_percent": 15,
       "metric": "research",
-      "evidence": "Quadratic and near-quadratic single-tape lower bounds exist; CL-1 transfers equivalence to P vs NP.",
-      "remaining_obligation": "Prove or refute the unconditional superpolynomial bound for all uniform SAT deciders; finite data cannot establish it."
+      "evidence": "DepthBarrier.wccDepth_SAT_iff, wccdDepth_SAT_iff, uniform_depth_SAT_iff: for dense SAT the conjecture is exactly P_TM ≠ NP_TM. Quadratic single-tape bounds at every budget exist.",
+      "remaining_obligation": "This is the classical P versus NP question; it is not resolved here, and finite data cannot establish it."
     },
     {
       "id": "III-22",
@@ -89,8 +89,8 @@
       "status": "Open",
       "research_estimate_percent": 90,
       "metric": "editorial",
-      "evidence": "Original Part III section is identified as an arrow-of-time interpretive remark, not a mathematical assertion.",
-      "remaining_obligation": "Decide editorial treatment and scope; no mathematical theorem can be claimed without a separately quantified proposition."
+      "evidence": "The remark states that no equivalence is proved. Torus.backward_eq_forward_conj and flow_neg give the exact frozen-model form of its sentence on inverse dynamics.",
+      "remaining_obligation": "Editorial: treat the remark as interpretation; no further theorem is claimed."
     }
   ]
 }
