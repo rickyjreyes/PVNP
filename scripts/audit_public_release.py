@@ -55,7 +55,10 @@ def tracked_head_scan() -> tuple[int, int]:
             continue
         lower = path.name.lower()
         sensitive_name = (
-            lower == ".env" or lower.startswith(".env.")
+            lower == ".env" or (
+                lower.startswith(".env.") and lower not in
+                {".env.example", ".env.sample", ".env.template"}
+            )
             or lower in {"id_rsa", "id_ed25519", "credentials.json"}
             or path.suffix.lower() in {".pem", ".p12", ".pfx", ".key"}
         )
