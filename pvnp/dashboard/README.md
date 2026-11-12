@@ -5,7 +5,7 @@ counterpart. Open `index.html` in a browser from a clone; it needs no server and
 network requests. The repository is private and GitHub Pages is not enabled, so there is no
 public deployment.
 
-The percentages count manuscript statements whose exact form is kernel-checked. They do not
+The percentages count manuscript statements whose amended form is kernel-checked, including II-10 after the author's reported exact-head external Lean build and axiom audit on `df8824c`. They do not
 measure progress toward proving P ≠ NP. The central theorem, `CrossingSAT.SATLowerBound`, is
 unproved, and the page assigns no percentage to it.
 
@@ -52,7 +52,7 @@ directory or to the inventory.
   `verification.main` (commit, `git rev-parse <commit>:lean`, run ID, completion time). Add the
   result to `supporting` with its PR and exact-head checks, then regenerate. A supporting
   result never changes the 91-claim coverage.
-* A proof of the same manuscript statement goes in `formalizations` with its audited declaration and previous status. The finite toroidal module from PR #49 was integrated in #55.
+* A proof of the same manuscript statement goes in `formalizations` with its audited declaration and previous status. II-10's original `c*n^k` premise was corrected in the manuscript to `c*max(n,1)^k`, so its formalization carries an explicit `scope_change` documenting the empty-input boundary. The externally checked PR source tree is recorded in `verification.staged` separately from successful hosted-main CI. The finite toroidal module from PR #49 was integrated in #55.
 
 Declaration links are pinned to the verified commit only while `lean/` is identical to it.
 Otherwise they point to `main`, and the page warns that newer Lean code is not yet recorded as
