@@ -12,6 +12,9 @@ if [[ "$(git rev-parse --is-shallow-repository)" != "false" ]]; then
 fi
 echo "PVNP technical release preflight: $(git rev-parse HEAD)"
 
+python3 scripts/check_public_release_docs.py
+python3 -m unittest pvnp.tests.test_public_release_audit
+
 # Scans all locally available refs and history. Never commit scanner reports.
 python3 scripts/audit_public_release.py --history
 
