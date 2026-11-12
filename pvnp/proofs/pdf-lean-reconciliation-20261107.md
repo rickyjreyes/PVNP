@@ -85,3 +85,24 @@ Run `bash scripts/run_release_verification.sh --all` in a full-history checkout 
 7. Preserve the original revised LaTeX sources and Zenodo DOIs. Do not rewrite the history or change repo visibility as a side effect of manuscript synchronization.
 
 **Status at creation:** Revised LaTeX and publication workflow have been committed to PR #61; no full updated consolidated PDF has been compiled, and the latest exact-head CI jobs continue to fail before execution. This is a source-level reconciliation, not a verified public release.
+
+## 12 November 2026 addendum: II-10 original scope closed
+
+This is a dated update to the 7 November baseline above, not a retroactive
+claim that the original proof was complete at that earlier date. PR #73 adds
+concrete, actual single-tape polynomial-radius lattice and configuration
+writers, proves exact first-halt output words and polynomial transition counts,
+and supplies the two previously missing `FP` witnesses. Its
+`TwoPhasePolynomialWriter.originalWM_first_answer` theorem identifies the
+original finite-WCC machine's first answer at exactly `2*T_M(x)`, with no
+premature output and with the corrected radius/empty-input boundary.
+
+The author reports a successful 7,386-job full Lean build, standard-axiom
+audit, and verification gate at source commit
+`df8824ca659b2e931eb4302251569d6c6c6140b3`; GitHub-hosted runners did
+not execute an equivalent workflow. The amended inventory now has **79 Exact,
+1 Restricted, 4 Refuted, 7 Open**, with **Part II 28/28 Exact**. The
+remaining Restricted claim is I-11. This result does not establish the
+unrestricted continuum WCT↔TM bridge or classical P ≠ NP. For the
+mathematical proof chain and verification provenance, see
+`pvnp/proofs/II10_VERIFICATION_LEDGER.md`.
