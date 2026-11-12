@@ -11,9 +11,17 @@ cannot make a patent/licensing/legal determination.
 - PDF set: three historic manuscripts, one fixed-mass supplement, and
   one consolidated volume. Each has an identified corresponding
   \`pvnp/papers/<slug>/main.tex\` source.
-- No externally stored figure binaries, datasets, or bibliography assets
-  were found in the sampled tree. This **does not** establish sole
+- All five maintained LaTeX sources were inspected for asset inclusion:
+  there are **no external `\\includegraphics` files**, one inline
+  `pgfplots` plot in Part I, and four `\\includepdf` references to
+  internally rebuilt standalone manuscripts in the consolidated source.
+  No externally tracked standalone image or dataset binary was identified
+  in the complete 319-entry current tree. This does **not** establish sole
   authorship or clearance of prose, copied code, citations, or history.
+- A preliminary sample of the most recent 300 GitHub commits includes
+  multiple author display names. This is **not** proof of independent
+  contributor rights but makes the authorship/chain-of-title audit important.
+  The full local all-ref history review remains pending.
 - Third-party runtime and build dependencies include Lean, Mathlib,
   Python dependencies, Node and TeX packages; these are not automatically
   redistributed under the proposed author-code or manuscript licenses.
