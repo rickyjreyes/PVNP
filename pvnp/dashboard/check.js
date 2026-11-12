@@ -11,7 +11,7 @@ const build = require("./build.js");
 const app = require("./app.js");
 
 const ROOT = path.resolve(__dirname, "..", "..");
-const read = rel => fs.readFileSync(path.join(ROOT, rel), "utf8");
+const read = rel => build.normalizeNewlines(fs.readFileSync(path.join(ROOT, rel), "utf8"));
 let passed = 0;
 function test(name, fn) {
   try { fn(); passed++; }
@@ -20,6 +20,16 @@ function test(name, fn) {
 
 /* 1. data.js is a fresh build of the versioned sources, and loads as the browser loads it. */
 const fresh = build.serialize(build.generate());
+test("Windows CRLF is accepted but source changes are not", () => {
+  assert.equal(build.normalizeNewlines(fresh.replace(/\n/g, "\r\n")), fresh);
+  assert.notEqual(build.normalizeNewlines(fresh + "modified"), fresh);
+  const md = read("pvnp/proofs/manuscript-lean-inventory.md");
+  assert.equal(
+    build.generate({ inventory: md.replace(/\n/g, "\r\n") }).inventory.blob,
+    build.generate({ inventory: md }).inventory.blob,
+    "inventory Git blob must not depend on the Windows checkout line endings"
+  );
+});
 test("data.js is up to date", () =>
   assert.equal(read("pvnp/dashboard/data.js"), fresh, "data.js is stale: run node pvnp/dashboard/build.js"));
 const sandbox = { window: {} };
