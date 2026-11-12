@@ -98,9 +98,16 @@
     const v = d.verification.main;
     const items = [
       ["Last verified main commit", [link(v.commit_url, el("code", null, short(v.sha))), " · ", link(v.url, `Lean CI run ${v.run} ✓`), " · ", el("span", { class: "nowrap" }, when(v.completed))]],
-      ["Lean sources behind this data", d.lean.matches_verified
-        ? [`Identical to the verified commit (tree `, el("code", null, short(d.lean.tree)), "). Declaration links are pinned to it."]
-        : [el("span", { class: "error" }, "Changed since the last recorded verification."), " Links point to main; new Lean code is not shown as verified."]],
+      ["Lean sources behind this data", d.lean.verified_by === "github-main"
+        ? ["Identical to verified main (tree ", el("code", null, short(d.lean.tree)), "). Declaration links are pinned to the recorded main commit."]
+        : d.lean.verified_by === "external-pr"
+          ? ["Identical to the independently checked PR source (tree ", el("code", null, short(d.lean.tree)), "). Links point to that PR commit; GitHub CI has not independently verified it."]
+          : [el("span", { class: "error" }, "Changed since the last recorded verification."), " Links point to main; new Lean code is not shown as verified."]],
+      ...(d.verification.staged ? [["II-10 external Lean verification", [
+        link(d.verification.staged.commit_url, el("code", null, short(d.verification.staged.sha))),
+        " · ", link(d.verification.staged.pr_url, `PR #${d.verification.staged.pr}`),
+        " · 7,386 local build jobs, standard-axiom audit reported passing. Not GitHub Actions."
+      ]]] : []),
       ["Inventory", [link(d.inventory.url, "manuscript-lean-inventory.md"), " · ", el("span", { class: "nowrap" }, d.inventory.date), " · blob ", el("code", null, short(d.inventory.blob))]],
       ["CI evidence recorded", [el("span", { class: "nowrap" }, when(d.verification.checked_at)), " · ", link("#evidence", "see table")]]
     ];
@@ -180,7 +187,7 @@
         el("div", { class: "row-head" }, el("span", { class: "row-title" }, s.title), el("span", { class: "tag ok" }, "Kernel-checked")),
         el("p", { class: "small" }, s.statement),
         el("div", { class: "meta" }, link(s.url, el("code", null, s.decl)),
-          d.lean.matches_verified ? link(v.url, el("span", { class: "tag ok" }, `main ${short(v.sha)} ✓`)) : null,
+          d.lean.verified_by === "github-main" ? link(v.url, el("span", { class: "tag ok" }, `main ${short(v.sha)} ✓`)) : null,
           link(lean.url, el("span", { class: "tag ok" }, `PR #${s.pr} exact-head lean ✓`)),
           s.audited && el("span", { class: "tag ok", title: "Listed in lean/audit/AxiomAudit.lean; only propext, Classical.choice and Quot.sound are allowed" }, "axiom audit")));
     });
@@ -206,6 +213,16 @@
       el("td", { "data-label": "Head" }, link(v.commit_url, el("code", null, short(v.sha)))),
       el("td", { "data-label": "Checks" }, checkTag({ name: v.job, conclusion: v.conclusion, run: v.run, url: v.url })),
       el("td", { class: "small", "data-label": "Note" }, v.note))];
+    if (d.verification.staged) {
+      const s = d.verification.staged;
+      rows.push(el("tr", null,
+        el("th", { scope: "row" }, link(s.pr_url, `#${s.pr}`),
+          el("div", { class: "small muted" }, "Original II-10 source proof")),
+        el("td", { "data-label": "State" }, el("span", { class: "tag wait" }, "external report, not hosted CI")),
+        el("td", { "data-label": "Head" }, link(s.commit_url, el("code", null, short(s.sha)))),
+        el("td", { class: "small", "data-label": "Checks" }, `Lean ${s.build_jobs} jobs; ${s.axiom_audit}`),
+        el("td", { class: "small", "data-label": "Note" }, `${s.source}; ${s.reference_tests}`)));
+    }
     for (const p of d.verification.prs) rows.push(el("tr", null,
       el("th", { scope: "row" }, link(p.url, `#${p.number}`), el("div", { class: "small muted" }, p.title)),
       el("td", { "data-label": "State" }, el("span", { class: "tag " + (p.state === "merged" ? "ok" : "wait") }, p.state === "merged" ? "merged" : p.state === "draft" ? "draft, not merged" : p.state),
