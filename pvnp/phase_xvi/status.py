@@ -1,7 +1,7 @@
 """Cross-check the Phase XVI registry and print nine per-claim progress bars.
 
 Estimates are not proof coverage, probabilities or machine-verified claims.
-The original 91-claim inventory is the authoritative classification source.
+The 91-entry inventory contains 90 mathematical claims plus III-22 as Interpretive.
 """
 import argparse
 import json
@@ -10,7 +10,7 @@ import re
 
 TARGET_IDS = ("II-10", "I-31", "I-37", "I-32", "I-3", "I-11",
               "I-2", "I-16", "III-22")
-COUNT_BASELINE = {"Exact": 78, "Restricted": 2, "Refuted": 4, "Open": 7}
+COUNT_BASELINE = {"Exact": 78, "Restricted": 2, "Refuted": 4, "Open": 6, "Interpretive": 1}
 
 
 def parse_inventory(path: pathlib.Path) -> dict[str, str]:
@@ -22,7 +22,7 @@ def parse_inventory(path: pathlib.Path) -> dict[str, str]:
         claim_id = item.group(1)
         # Do not split on every pipe: TeX math in the inventory includes
         # escaped vertical bars inside a status description.
-        matches = re.findall(r"[|][ ]*(Exact|Restricted|Refuted|Open)(?![A-Za-z])", line)
+        matches = re.findall(r"[|][ ]*(Exact|Restricted|Refuted|Open|Interpretive)(?![A-Za-z])", line)
         if not matches:
             raise ValueError(f"Missing status for {claim_id}")
         status = matches[-1]
@@ -74,7 +74,7 @@ def main() -> None:
     registry = json.loads(registry_path.read_text(encoding="utf-8"))
     counts = validate(registry, parse_inventory(inventory_path))
     if args.check:
-        print(f"PASS: nine claims agree with manuscript ledger {counts}")
+        print(f"PASS: nine tracked records agree with manuscript ledger {counts}")
     else:
         print(render(registry))
 
