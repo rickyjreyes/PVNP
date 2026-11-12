@@ -98,6 +98,8 @@ def scan_history() -> bool:
         "--redact", "--exit-code=1",
     ]
     result = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
+    if REPORT.exists():
+        REPORT.chmod(0o600)  # report may contain sensitive match metadata
     if result.returncode:
         print(
             f"BLOCKED: Gitleaks history scan returned {result.returncode}; "
