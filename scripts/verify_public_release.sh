@@ -10,6 +10,13 @@ if [[ "$(git rev-parse --is-shallow-repository)" != "false" ]]; then
   echo "BLOCKED: full git history required" >&2
   exit 1
 fi
+# Require the tested tree to match the recorded commit.
+if [[ -n "$(git status --porcelain --untracked-files=no)" ]]; then
+  echo "BLOCKED: tracked worktree changes; commit or revert before release verification" >&2
+  exit 1
+fi
+# Include current remote branches/tags in the all-ref secret scan; fail if fetch fails.
+git fetch --all --prune --tags
 echo "PVNP technical release preflight: $(git rev-parse HEAD)"
 
 python3 scripts/check_public_release_docs.py
