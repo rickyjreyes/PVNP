@@ -5,9 +5,9 @@ This is a release-control document, not a new mathematical result or a grant of 
 
 ## What is integrated
 
-PRs [#68](https://github.com/rickyjreyes/PVNP/pull/68), [#69](https://github.com/rickyjreyes/PVNP/pull/69), and [#73](https://github.com/rickyjreyes/PVNP/pull/73) were merged into \`main\`. Phase XVIII closes the original discrete II-10 two-phase writer obligation at its corrected scope. The amended 91-claim inventory is **79 Exact, 1 Restricted, 4 Refuted, 7 Open**. Some Exact entries prove conditional implications only. No classical P versus NP separation, continuum WCT ↔ Turing equivalence, or physical toroidal-locking theorem follows.
+PRs [#68](https://github.com/rickyjreyes/PVNP/pull/68), [#69](https://github.com/rickyjreyes/PVNP/pull/69), and [#73](https://github.com/rickyjreyes/PVNP/pull/73) were merged into `main`. Phase XVIII closes the original discrete II-10 two-phase writer obligation at its corrected scope. The amended 91-claim inventory is **79 Exact, 1 Restricted, 4 Refuted, 7 Open**. Some Exact entries prove conditional implications only. No classical P versus NP separation, continuum WCT ↔ Turing equivalence, or physical toroidal-locking theorem follows.
 
-The original writer proof was reported to pass pinned Lean 4.23.0, a 7,386-job full build, an allowed-axiom audit, and the repository verification gate at proof head \`df8824c\` and promotion head \`417c2d4\`. These are locally reported runs, not successful GitHub-hosted jobs. CI issue [#59](https://github.com/rickyjreyes/PVNP/issues/59) remains relevant: failed jobs with **zero executed steps** provide no compiler verdict.
+The original writer proof was reported to pass pinned Lean 4.23.0, a 7,386-job full build, an allowed-axiom audit, and the repository verification gate at proof head `df8824c` and promotion head `417c2d4`. These are locally reported runs, not successful GitHub-hosted jobs. CI issue [#59](https://github.com/rickyjreyes/PVNP/issues/59) remains relevant: failed jobs with **zero executed steps** provide no compiler verdict.
 
 ## Required gates before public visibility
 
@@ -30,7 +30,7 @@ The original writer proof was reported to pass pinned Lean 4.23.0, a 7,386-job f
 
 Run in the repository root with pinned Lean/Mathlib, Python 3, Node, PDF tools and a current Gitleaks installation:
 
-\`\`\`bash
+```bash
 git status --short
 git rev-parse HEAD
 git rev-parse --is-shallow-repository
@@ -40,15 +40,15 @@ bash scripts/run_release_verification.sh --all
 node pvnp/dashboard/build.js --check
 node pvnp/dashboard/check.js
 python3 scripts/check_manuscript_alignment.py
-\`\`\`
+```
 
-Keep all logs and scan findings in the ignored \`.release-verification/\` directory; **do not commit secret-scanner findings**. Review any results manually, including false positives, and rotate real exposed credentials before publishing. Check tags, historical commits, other branches, PDF metadata and large/binary assets separately. An automated scan does not certify confidentiality or patent freedom.
+Keep all logs and scan findings in the ignored `.release-verification/` directory; **do not commit secret-scanner findings**. Review any results manually, including false positives, and rotate real exposed credentials before publishing. Check tags, historical commits, other branches, PDF metadata and large/binary assets separately. An automated scan does not certify confidentiality or patent freedom.
 
 For PDF publication, rebuild the one-volume artifact and inspect that it corresponds to current LaTeX; historical Zenodo DOIs are not new publication dates.
 
 ## Independent research tracks
 
-- **I-31 (Open):** Author-reported work on frozen-torus plane-wave and three-mode separator counterexamples is still subject to checking the *exact* original quantifiers, admissible fields, detector/contrast definition, prescribed energy \`Φ\`, readout geometry, and normalization. Do not upgrade to Refuted on the strength of a candidate or a compiled supporting lemma.
+- **I-31 (Open):** Author-reported work on frozen-torus plane-wave and three-mode separator counterexamples is still subject to checking the *exact* original quantifiers, admissible fields, detector/contrast definition, prescribed energy `Φ`, readout geometry, and normalization. Do not upgrade to Refuted on the strength of a candidate or a compiled supporting lemma.
 - **I-32, I-3, I-37, I-2, I-16:** Remain Open.
 - **I-11:** Restricted, including the unresolved resource-preserving physical continuum bridge.
 - **III-22:** Open in current authoritative inventory. A separate interpretive reclassification proposal (#71) is not incorporated into the 79/1/4/7 count.
@@ -57,6 +57,6 @@ These tracks are not prerequisites to making a clearly scoped research repositor
 
 ## Merge/release policy
 
-Implement safe documentation and checker improvements on \`research/pvnp-public-release-readiness\`. Keep patent/legal approvals and repository visibility separate. Do not rewrite public history, erase negative results, invent CI success, merge superseded proof candidates (#70), or duplicate recovered II-10 work (#72). Resolve #74 file by file.
+Implement safe documentation and checker improvements on `research/pvnp-public-release-readiness`. Keep patent/legal approvals and repository visibility separate. Do not rewrite public history, erase negative results, invent CI success, merge superseded proof candidates (#70), or duplicate recovered II-10 work (#72). Resolve #74 file by file.
 
 **Only the author may authorize the final license and private-to-public transition after the blockers are reviewed.**
