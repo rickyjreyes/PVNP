@@ -662,3 +662,13 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhasePolynomialWriter.run_normalizes_input
 #print axioms PVNP.TwoPhasePolynomialWriter.windowMTM_normalization
 #print axioms PVNP.TwoPhasePolynomialWriter.inputMTM_normalization
+
+-- Phase XVIII: actual machine return sweep and first assembled instruction.
+#print axioms PVNP.TwoPhasePolynomialWriter.normalized_end_blank
+#print axioms PVNP.TwoPhasePolynomialWriter.normalized_nonnegative_not_sentinel
+#print axioms PVNP.TwoPhasePolynomialWriter.return_step_non_sentinel
+#print axioms PVNP.TwoPhasePolynomialWriter.return_step_sentinel
+#print axioms PVNP.TwoPhasePolynomialWriter.return_walk
+#print axioms PVNP.TwoPhasePolynomialWriter.normalization_end_step
+#print axioms PVNP.TwoPhasePolynomialWriter.return_dispatch_after_normalization
+#print axioms PVNP.TwoPhasePolynomialWriter.run_to_first_instruction
