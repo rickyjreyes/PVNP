@@ -209,3 +209,7 @@ import PVNP.TwoPhasePolynomialExec
 import PVNP.TwoPhasePolynomialState
 import PVNP.TwoPhasePolynomialProgram
 import PVNP.TwoPhasePolynomialOutputs
+
+-- Phase XVIII, I-31: the uniform separator price fails on the frozen torus at fixed contrast;
+-- the corrected price depends on the transition width.
+import PVNP.SeparatorFrozen

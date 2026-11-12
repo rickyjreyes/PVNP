@@ -4,8 +4,8 @@
   "baseline": {
     "Exact": 79,
     "Restricted": 1,
-    "Refuted": 4,
-    "Open": 7,
+    "Refuted": 5,
+    "Open": 6,
     "total": 91
   },
   "percent_meaning": "Subjective research progress, not independent Lean proof coverage, probability, or permission to promote manuscript status; status promotions require exact-head full kernel and axiom audit.",
@@ -23,11 +23,11 @@
     {
       "id": "I-31",
       "title": "Uniform separator theorem",
-      "status": "Open",
-      "research_estimate_percent": 38,
+      "status": "Refuted",
+      "research_estimate_percent": 100,
       "metric": "research",
-      "evidence": "Phase XVI abstract scaling no-go was locally Lean-built. Phase XVII proposes a sharp normalized detector-contrast ray price but has not established a uniform frozen-PDE trajectory estimate.",
-      "remaining_obligation": "Prove a uniform positive cost-to-contrast ratio for all admissible physical trajectories under the frozen WCT model, or construct an admissible counterexample."
+      "evidence": "Refuted for the frozen physical trajectory class. SeparatorFrozen.no_uniform_separator_price: on the torus of side L, the exact plane-wave solutions of fixed amplitude A have curvature functional at most 4π²|A|² + 16π⁴c²|A|²/L² (any curvature operator dominated by c|Δψ|, including Δ and the Part III Θ_ε), while the Euclidean length of the frontier of the decision region {Re ψ > 0} is at least L, at every time. These fields are used by an admissible decider (stripe_device_decides); the modulus readout fails the same way (no_uniform_price_modulus). Corrected statement: layer_price (sharp width-dependent price 4η²/w).",
+      "remaining_obligation": "None for the original hypothesis. A uniform price needs an extra hypothesis bounding transition widths (sharp interfaces), under which SeparatorPrice.mesh_price and SeparatorFrozen.layer_price apply."
     },
     {
       "id": "I-37",

@@ -98,6 +98,8 @@ jobs:
       - name: Phase XVII finite Boolean torus and II-10 control certificates
         working-directory: .
         run: python3 -m unittest discover -s pvnp/tests -p 'test_phase_xvii_*.py'
+      - name: Phase XVIII kernel-check the I-31 separator counterexample
+        run: lake build PVNP.SeparatorFrozen
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt
