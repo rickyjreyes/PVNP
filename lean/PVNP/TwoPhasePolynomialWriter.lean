@@ -735,4 +735,196 @@ theorem outputs_of_assembled_body
   · rw [hshift t]
     exact hShows
 
+
+/-! ### Phase XVIII: exact final output scan for the actual polynomial writer
+
+The assembler's finish instruction converts the staged work-cell output
+channel into the raw Boolean tape required by MTM.Shows. The results below
+prove its finite-control behavior, first-halt time, and exact output word
+independently of the still-open Horner and serialization invariants. -/
+
+/-- During the final scan, indices preceding k have been converted to raw
+output bits and all other cells still contain their original symbols. -/
+private def finishPrefixTape (y : List Bool) (tape : ℤ → Sym)
+    (k : ℕ) (i : ℤ) : Sym :=
+  if 0 ≤ i ∧ i < (k : ℤ) then .raw (y.getD i.toNat false) else tape i
+
+private theorem finishPrefixTape_zero (y : List Bool) (tape : ℤ → Sym) :
+    finishPrefixTape y tape 0 = tape := by
+  funext i
+  simp [finishPrefixTape, show ¬ (0 ≤ i ∧ i < (0 : ℤ)) by omega]
+
+private theorem finishPrefixTape_current (y : List Bool) (tape : ℤ → Sym)
+    (k : ℕ) :
+    finishPrefixTape y tape k (k : ℤ) = tape (k : ℤ) := by
+  simp [finishPrefixTape]
+
+private theorem finishPrefixTape_past (y : List Bool) (tape : ℤ → Sym)
+    (k i : ℕ) (hi : i < k) :
+    finishPrefixTape y tape k (i : ℤ) = .raw (y.getD i false) := by
+  simp [finishPrefixTape, show 0 ≤ (i : ℤ) by omega,
+    show (i : ℤ) < (k : ℤ) by omega]
+
+private theorem finishPrefixTape_extend (y : List Bool) (tape : ℤ → Sym)
+    (k : ℕ) :
+    Function.update (finishPrefixTape y tape k) (k : ℤ)
+      (.raw (y.getD k false)) =
+    finishPrefixTape y tape (k + 1) := by
+  funext i
+  by_cases hi : i = (k : ℤ)
+  · subst i
+    simp [finishPrefixTape]
+  · rw [Function.update_of_ne hi]
+    unfold finishPrefixTape
+    split_ifs <;> first | rfl | omega
+
+/-- An active finish instruction converts a staged output bit into the
+exact raw output symbol without changing its program counter. -/
+private theorem finish_step_bit (program : ℕ × Array Inst)
+    (pc : Fin (program.2.size + 1)) (tape : ℤ → Sym) (i : ℤ)
+    (c : Cell) (b : Bool)
+    (hpc : lookup program.2 pc = .finish)
+    (hc : tape i = .work c) (hb : c.out = some b) :
+    (build program).step
+      (⟨tape, i, .scan pc⟩ : (build program).Cfg) =
+    (⟨Function.update tape i (.raw b), i + 1, .scan pc⟩ :
+      (build program).Cfg) := by
+  simp [MTM.step, build, step, hc, hpc, hb, Mv.shift]
+
+/-- At the first work cell without a staged output bit, the actual finish
+instruction writes the required trailing blank and enters halting control.
+This also covers a genuinely blank tape cell, not just an empty work cell. -/
+private theorem finish_step_blank (program : ℕ × Array Inst)
+    (pc : Fin (program.2.size + 1)) (tape : ℤ → Sym) (i : ℤ)
+    (hpc : lookup program.2 pc = .finish)
+    (hb : (asCell (tape i)).out = none) :
+    (build program).step
+      (⟨tape, i, .scan pc⟩ : (build program).Cfg) =
+    (⟨Function.update tape i .blank, i + 1, .done⟩ :
+      (build program).Cfg) := by
+  simp [MTM.step, build, step, hpc, hb, Mv.shift]
+
+/-- Exact intermediate state of the final scan, for every prefix of a
+staged output word. No assertion about the preceding Horner loops is used. -/
+theorem finish_run_prefix (program : ℕ × Array Inst)
+    (pc : Fin (program.2.size + 1)) (tape : ℤ → Sym) (y : List Bool)
+    (hpc : lookup program.2 pc = .finish)
+    (hCells : ∀ i : ℕ, i < y.length →
+      ∃ c : Cell, tape (i : ℤ) = .work c ∧
+        c.out = some (y.getD i false)) :
+    ∀ k : ℕ, k ≤ y.length →
+      (build program).run
+        (⟨tape, 0, .scan pc⟩ : (build program).Cfg) k =
+      (⟨finishPrefixTape y tape k, (k : ℤ), .scan pc⟩ :
+        (build program).Cfg) := by
+  intro k
+  induction k with
+  | zero =>
+      intro _
+      rw [MTM.run_zero, finishPrefixTape_zero]
+      rfl
+  | succ k ih =>
+      intro hk
+      have hlt : k < y.length := by omega
+      obtain ⟨c, hc, hb⟩ := hCells k hlt
+      have hcur : finishPrefixTape y tape k (k : ℤ) = .work c := by
+        rw [finishPrefixTape_current]
+        exact hc
+      rw [MTM.run_succ, ih (by omega),
+        finish_step_bit program pc (finishPrefixTape y tape k)
+          (k : ℤ) c (y.getD k false) hpc hcur hb,
+        finishPrefixTape_extend]
+      congr 1 <;> omega
+
+/-- The actual finish-control loop is exact: it emits y on the output tape,
+adds the required blank, halts after exactly |y|+1 transitions, and never
+halts at any earlier scan step. This theorem does not assume MTM.Outputs. -/
+theorem finish_scan_first_halt (program : ℕ × Array Inst)
+    (pc : Fin (program.2.size + 1)) (tape : ℤ → Sym) (y : List Bool)
+    (hpc : lookup program.2 pc = .finish)
+    (hCells : ∀ i : ℕ, i < y.length →
+      ∃ c : Cell, tape (i : ℤ) = .work c ∧
+        c.out = some (y.getD i false))
+    (hEnd : (asCell (tape (y.length : ℤ))).out = none) :
+    (build program).Halting
+      ((build program).run
+        (⟨tape, 0, .scan pc⟩ : (build program).Cfg)
+        (y.length + 1)).q ∧
+    (∀ s < y.length + 1,
+      ¬ (build program).Halting
+        ((build program).run
+          (⟨tape, 0, .scan pc⟩ : (build program).Cfg) s).q) ∧
+    (build program).Shows
+      ((build program).run
+        (⟨tape, 0, .scan pc⟩ : (build program).Cfg)
+        (y.length + 1)) y := by
+  let M := build program
+  let C : M.Cfg := ⟨tape, 0, .scan pc⟩
+  have hcur : (asCell (finishPrefixTape y tape y.length
+      (y.length : ℤ))).out = none := by
+    rw [finishPrefixTape_current]
+    exact hEnd
+  have hfinal : M.run C (y.length + 1) =
+      (⟨Function.update (finishPrefixTape y tape y.length)
+          (y.length : ℤ) .blank,
+        (y.length : ℤ) + 1, .done⟩ : M.Cfg) := by
+    rw [MTM.run_succ, finish_run_prefix program pc tape y
+      hpc hCells y.length (le_refl _)]
+    exact finish_step_blank program pc (finishPrefixTape y tape y.length)
+      (y.length : ℤ) hpc hcur
+  refine ⟨?_, ?_, ?_⟩
+  · rw [hfinal]
+    exact Or.inl rfl
+  · intro s hs
+    have hle : s ≤ y.length := by omega
+    rw [finish_run_prefix program pc tape y hpc hCells s hle]
+    simp [MTM.Halting, build]
+  · rw [hfinal]
+    constructor
+    · intro i hi
+      change Function.update (finishPrefixTape y tape y.length)
+          (y.length : ℤ) .blank (i : ℤ) = .raw (y.getD i false)
+      rw [Function.update_of_ne
+        (by omega : (i : ℤ) ≠ (y.length : ℤ))]
+      exact finishPrefixTape_past y tape y.length i hi
+    · change Function.update (finishPrefixTape y tape y.length)
+        (y.length : ℤ) .blank (y.length : ℤ) = .blank
+      simp
+
+/-- Composes a verified body that reaches an actual finish instruction with
+its independently verified first-halt output scan. This discharges the
+complete terminal-scan obligation in the original MTM.Outputs definition. -/
+theorem outputs_of_prepared_finish (program : ℕ × Array Inst)
+    (x y : List Bool) (t B : ℕ)
+    (pc : Fin (program.2.size + 1)) (tape : ℤ → Sym)
+    (hReach : (build program).run ((build program).init x) t =
+      (⟨tape, 0, .scan pc⟩ : (build program).Cfg))
+    (hBefore : ∀ s < t,
+      ¬ (build program).Halting
+        ((build program).run ((build program).init x) s).q)
+    (hpc : lookup program.2 pc = .finish)
+    (hCells : ∀ i : ℕ, i < y.length →
+      ∃ c : Cell, tape (i : ℤ) = .work c ∧
+        c.out = some (y.getD i false))
+    (hEnd : (asCell (tape (y.length : ℤ))).out = none)
+    (hBound : t + (y.length + 1) ≤ B) :
+    (build program).Outputs x y B := by
+  let M := build program
+  obtain ⟨hHalt, hNoEarlier, hShows⟩ :=
+    finish_scan_first_halt program pc tape y hpc hCells hEnd
+  refine ⟨t + (y.length + 1), hBound, ?_, ?_⟩
+  · refine ⟨?_, ?_⟩
+    · rw [MTM.run_add, hReach]
+      exact hHalt
+    · intro s hs
+      by_cases hsmall : s < t
+      · exact hBefore s hsmall
+      · obtain ⟨r, rfl⟩ :=
+          Nat.exists_eq_add_of_le (show t ≤ s by omega)
+        rw [MTM.run_add, hReach]
+        exact hNoEarlier r (by omega)
+  · rw [MTM.run_add, hReach]
+    exact hShows
+
+
 end PVNP.TwoPhasePolynomialWriter
