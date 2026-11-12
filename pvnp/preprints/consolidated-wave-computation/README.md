@@ -12,11 +12,11 @@ This is the **primary repository release artifact**, compiled from the three his
 - [Claim-by-claim Lean formalization inventory](../../proofs/manuscript-lean-inventory.md)
 - [Original Zenodo publication identifiers](../../../CONTENTS.md#publication-identifiers)
 
-[**Manuscript-to-Lean source reconciliation**](../../proofs/pdf-lean-reconciliation-20261107.md) details the withdrawn Part I state-to-language theorems, restricted original two-phase construction, and current verification blockers.
+[**Manuscript-to-Lean source reconciliation**](../../proofs/pdf-lean-reconciliation-20261107.md) details the withdrawn Part I state-to-language theorems, historically restricted original two-phase construction, its 12 November 2026 closure (PR #73), and remaining verification/release blockers.
 
 ## Publication scope
 
-This **bound technical volume is not a proof of classical P != NP**. The existing formalized results include uniform discrete WCC complexity-class equivalences, restricted lower bounds for particular machine models, and conditional physical-resource estimates. The original uniform two-phase lattice/encoder cost proof, continuum physical equivalence, and universal SAT lower bound remain unresolved.
+This **bound technical volume is not a proof of classical P != NP**. The existing formalized results include uniform discrete WCC complexity-class equivalences, restricted lower bounds for particular machine models, and conditional physical-resource estimates. The original uniform two-phase lattice/encoder cost proof has now been discharged for the finite discrete model by both canonical polynomial-time writers and `originalWM_first_answer` (PR #73). Continuum physical equivalence and the universal SAT lower bound remain unresolved. The original II-10 exact-head Lean build/axiom audit was reported from an external development environment, not hosted CI.
 
 The original 2025 release identifiers retain their historical dates. Inclusion in the current 2026 bound volume does not represent three new papers or erase the source history. The independent supplement is included as an appendix, not counted as an original Part I-III claim.
 
