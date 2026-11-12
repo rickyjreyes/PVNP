@@ -64,10 +64,31 @@ def main() -> int:
         actual = sha256(PDF.read_bytes()).hexdigest()
         if actual != expected:
             issues.append("PDF differs from staged verified release artifact")
-    if not (pdf_stage / "content-validation.txt").is_file():
-        issues.append("offline page/content verification record missing")
-    if not (EVIDENCE / "rights-history.json").is_file():
+    validation = pdf_stage / "content-validation.txt"
+    if not validation.is_file() or "PASS: all revised sources included" not in validation.read_text(errors="replace"):
+        issues.append("successful offline PDF page/content verification record missing")
+    source_hashes = pdf_stage / "source-sha256.txt"
+    if not source_hashes.is_file():
+        issues.append("PDF source hash manifest missing")
+    else:
+        for line in source_hashes.read_text().splitlines():
+            try:
+                digest, path = line.split(None, 1)
+                current = ROOT / path.lstrip("*")
+                if not current.is_file() or sha256(current.read_bytes()).hexdigest() != digest:
+                    issues.append("PDF source changed since compilation: " + path)
+            except ValueError:
+                issues.append("malformed PDF source hash manifest")
+    rights = EVIDENCE / "rights-history.json"
+    if not rights.is_file():
         issues.append("rights/history file inventory missing")
+    else:
+        try:
+            audit = json.loads(rights.read_text(encoding="utf-8"))
+            if audit.get("commit") != head or not audit.get("history", {}).get("checked"):
+                issues.append("rights/history audit not completed on current HEAD")
+        except (ValueError, OSError):
+            issues.append("rights/history inventory unreadable")
     if not (ROOT / "LICENSE-CODE").is_file():
         issues.append("approved active LICENSE-CODE not installed")
     if not (ROOT / "LICENSE-MANUSCRIPTS").is_file():
