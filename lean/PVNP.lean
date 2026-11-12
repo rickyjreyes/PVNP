@@ -213,3 +213,12 @@ import PVNP.TwoPhasePolynomialOutputs
 -- Phase XVIII, I-31: the uniform separator price fails on the frozen torus at fixed contrast;
 -- the corrected price depends on the transition width.
 import PVNP.SeparatorFrozen
+-- Phase XVIII, I-32: in the charged constant model, expander interface growth for dense SAT
+-- is equivalent to P_TM ≠ NP_TM.
+import PVNP.ExpanderInterfaceBarrier
+-- Phase XVIII, I-37, I-3 and III-22: the frozen flow is time-reversible, so it cannot lock
+-- into a stable lock set from outside it, and backward evolution is conjugated forward evolution.
+import PVNP.TorusNoLocking
+-- Phase XVIII, I-16 and I-2: conj:wcc_depth for dense SAT is P_TM ≠ NP_TM; explicit states are
+-- always constructible.
+import PVNP.DepthBarrier

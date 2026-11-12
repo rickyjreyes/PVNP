@@ -100,6 +100,8 @@ jobs:
         run: python3 -m unittest discover -s pvnp/tests -p 'test_phase_xvii_*.py'
       - name: Phase XVIII kernel-check the I-31 separator counterexample
         run: lake build PVNP.SeparatorFrozen
+      - name: Phase XVIII kernel-check the I-32, I-37/I-3/III-22 and I-16/I-2 barrier modules
+        run: lake build PVNP.ExpanderInterfaceBarrier PVNP.TorusNoLocking PVNP.DepthBarrier
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt

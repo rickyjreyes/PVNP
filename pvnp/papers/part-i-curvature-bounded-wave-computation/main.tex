@@ -2562,6 +2562,17 @@ there is a worst-case input whose \emph{required} field trajectory
 incurs separator measure at least $c_0 2^{\gamma n}$ with constants
 independent of the algorithm.
 \end{hypothesis}
+\begin{remark}[Addendum, 12 November 2026: the expander hypothesis is as hard as $P\ne NP$]
+The charged constant devices of the frozen model, whose encoder writes a
+polynomial-time decision bit as a spatially constant amplitude, have no
+decision interface at any time.  Consequently, for dense SAT in the class
+of these devices the hypothesis above is equivalent to
+$P_{\mathrm{TM}}\ne NP_{\mathrm{TM}}$, and in every device class
+containing them it implies $P_{\mathrm{TM}}\ne NP_{\mathrm{TM}}$
+(\nolinkurl{ExpanderInterface.expanderGrowth_SAT_iff},
+\nolinkurl{ExpanderInterface.expanderGrowth_implies_P_ne_NP}).  For a
+language decidable in polynomial time it is false.
+\end{remark}
 Neither hypothesis follows merely from graph expansion or from
 counting disconnected truth assignments. An expander on $\Theta(n)$
 vertices has only $O(n)$ edges at bounded degree; an exponential
@@ -2767,6 +2778,14 @@ In this framework, a \emph{toroidal locking witness} for a
 toroidal $\psi$--electron structure whose phase-locking and flux
 constraints correspond to the satisfaction of all clauses. Nonexistence
 of such a locking configuration is equivalent to unsatisfiability.
+\emph{Addendum, 12 November 2026.}  The locking constraints are not
+defined here, so this sentence is not a theorem.  For the frozen
+dynamics there is an obstruction: the flow is time-reversible, so a
+solution that converges to a nonempty, Lyapunov-stable lock set that is
+invariant under complex conjugation already starts in that set
+(\nolinkurl{Torus.no_locking}).  This covers the phase orbit of every
+binary-phase state.  A robust locking realization therefore needs
+dissipative or forced dynamics.
 \subsection{Discrete Equivalence with Classical $P$ and $NP$}
 \label{sec:discrete-equivalence}
 The following statements concern \emph{uniform finite-state local-update}
