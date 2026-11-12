@@ -31,11 +31,11 @@ const claim = id => d.claims.find(c => c.id === id);
 test("current totals", () => {
   const s = app.summarize(d.claims, "current");
   assert.equal(s.total, 91);
-  assert.deepEqual({ ...s.counts }, { Exact: 78, Restricted: 2, Refuted: 4, Open: 7 });
-  assert.equal(app.percent(s.counts.Exact, s.total), "85.7%");
-  assert.equal(s.counts.Exact + s.counts.Refuted, 82);
-  assert.equal(app.percent(82, 91), "90.1%");
-  const parts = { I: [41, 30, 1, 4, 6, "73.2%"], II: [28, 27, 1, 0, 0, "96.4%"], III: [22, 21, 0, 0, 1, "95.5%"] };
+  assert.deepEqual({ ...s.counts }, { Exact: 79, Restricted: 1, Refuted: 4, Open: 7 });
+  assert.equal(app.percent(s.counts.Exact, s.total), "86.8%");
+  assert.equal(s.counts.Exact + s.counts.Refuted, 83);
+  assert.equal(app.percent(83, 91), "91.2%");
+  const parts = { I: [41, 30, 1, 4, 6, "73.2%"], II: [28, 28, 0, 0, 0, "100.0%"], III: [22, 21, 0, 0, 1, "95.5%"] };
   for (const [p, [t, e, r, f, o, pct]] of Object.entries(parts)) {
     const g = s.parts[p];
     assert.deepEqual([g.total, g.counts.Exact, g.counts.Restricted, g.counts.Refuted, g.counts.Open], [t, e, r, f, o], "Part " + p);
@@ -73,7 +73,12 @@ test("amended claims: Exact now, Refuted originally, counterexamples retained", 
     assert.equal(claim(id).status, "Refuted", id);
     assert.equal(app.statusIn(claim(id), "historical"), "Refuted", id + " original");
   }
-  for (const id of ["I-11", "II-10"]) assert.equal(claim(id).status, "Restricted", id);
+  assert.equal(claim("I-11").status, "Restricted", "only current restricted claim");
+  assert.equal(claim("II-10").status, "Exact", "original two-phase uniformity now closed");
+  assert.equal(claim("II-10").formalized.pr, 73);
+  assert.equal(claim("II-10").formalized.from, "Restricted");
+  assert.equal(claim("II-10").formalized.decl, "TwoPhasePolynomialWriter.originalWM_first_answer");
+  assert.match(claim("II-10").formalized.scope_change, /empty input|empty-input/i);
   const open = v => d.claims.filter(c => app.statusIn(c, v) === "Open").map(c => c.id);
   assert.deepEqual(open("current"), open("historical").filter(id => id !== "II-24"));
   assert.deepEqual(claim("II-24").formalized, { pr: 54, decl: "PartIIManuscript.conditional_np_safety", from: "Open" });
@@ -85,6 +90,20 @@ test("I-10, I-12 and I-20 keep their scope limitations", () => {
   assert.match(claim("I-12").details, /NOT proved/);
   assert.match(claim("I-20").details, /not a construction lower bound/);
   for (const id of ["I-10", "I-12"]) assert.equal(claim(id).conditional.kind, "open", id);
+});
+
+test("original II-10 independent source provenance", () => {
+  assert.equal(d.lean.verified_by, "external-pr");
+  assert.equal(d.lean.links_ref, d.verification.staged.sha);
+  assert.equal(d.verification.staged.pr, 73);
+  assert.equal(d.verification.staged.build_jobs, 7386);
+  assert.ok(d.verification.staged.source.includes("author-reported"));
+  assert.ok(d.verification.main.sha !== d.verification.staged.sha,
+    "externally checked PR must not masquerade as verified main");
+  const row = claim("II-10");
+  for (const name of ["originalWindowCode_fp", "originalInputCode_fp",
+    "originalWM_first_answer", "P_Turing_subset_P_disc_by_original"])
+    assert.ok(Object.values(row.refs).flat().some(x => x.name.endsWith("." + name) && x.audited), name);
 });
 
 /* 5. Conditional Exact claims are labelled, never shown as unconditional. */
@@ -161,7 +180,7 @@ test("parser and generator guards", () => {
   const md = read("pvnp/proofs/manuscript-lean-inventory.md");
   assert.throws(() => parseInventory(md.replace("| I-25 |", "| I-999 |")), /missing claim I-25/);
   assert.throws(() => parseInventory(md.replace("| **Total** | **91** |", "| **Total** | **92** |")), /Total row/);
-  assert.throws(() => parseInventory(md.replace(/^\| Part II \| 28 \| 27 \|/m, "| Part II | 28 | 25 |")), /Part II/);
+  assert.throws(() => parseInventory(md.replace(/^\| Part II \| 28 \| 28 \|/m, "| Part II | 28 | 26 |")), /Part II/);
   const reg = JSON.parse(read("pvnp/dashboard/results.json"));
   const clone = () => JSON.parse(JSON.stringify(reg));
   let r = clone(); r.amendments = r.amendments.filter(a => a.id !== "I-12");
@@ -170,6 +189,8 @@ test("parser and generator guards", () => {
   assert.throws(() => build.generate({ registry: r }), /formalization must preserve/);
   r = clone(); r.conditional.open["I-25"] = "a refuted claim cannot be conditional-exact";
   assert.throws(() => build.generate({ registry: r }), /not Exact/);
+  r = clone(); delete r.formalizations.find(x => x.id === "II-10").scope_change;
+  assert.throws(() => build.generate({ registry: r }), /corrected scope/);
   r = clone(); delete r.conditional.open["I-19"];
   assert.throws(() => build.generate({ registry: r }), /neither annotated nor exempted: I-19/);
   r = clone(); r.historical.expected.Exact = 77;
@@ -187,6 +208,6 @@ test("parser and generator guards", () => {
 });
 
 if (!d.lean.matches_verified)
-  console.warn("Note: lean/ differs from the last recorded verified commit; declaration links point to main.");
+  console.warn("Note: lean/ differs from both last verified main and externally checked II-10 PR source; links point to main.");
 if (process.exitCode) console.error(`${passed} test groups passed; failures above.`);
-else console.log(`Dashboard check PASS (${passed} groups): 91 claims; 78 Exact (85.7%), 82 resolved (90.1%); original 70/2/11/8; toroidal results integrated; SATLowerBound open.`);
+else console.log(`Dashboard check PASS (${passed} groups): 91 claims; 79 Exact (86.8%), 83 resolved (91.2%); original 70/2/11/8; toroidal results integrated; SATLowerBound open.`);
