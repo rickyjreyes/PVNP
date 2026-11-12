@@ -2,8 +2,8 @@
 
 **Date:** 12 November 2026
 **Pull requests:** [#73](https://github.com/rickyjreyes/PVNP/pull/73) (II-10, merged),
-[#78](https://github.com/rickyjreyes/PVNP/pull/78) (I-31, draft),
-[#79](https://github.com/rickyjreyes/PVNP/pull/79) (barriers, draft, stacked on #78)
+[#78](https://github.com/rickyjreyes/PVNP/pull/78) (I-31, merged),
+[#79](https://github.com/rickyjreyes/PVNP/pull/79) (barriers, merged after #78)
 
 ## Strongest result: II-10 is proved at its original scope
 
@@ -20,7 +20,7 @@ witness for every language of `P_Turing`. Merged in #73; proof note
 | Claim | Original statement | Outcome | Strongest new result | Lean | Original claim closed? | Remaining obstruction |
 |---|---|---|---|---|---|---|
 | II-10 | `thm:tm_to_wcc`: `W_M` decides `L` in `2T_M`; uniform | **PROVED** (Exact) | `originalWindowCode_fp`, `originalInputCode_fp`, `originalWM`, `originalWM_first_answer` | 5 modules, #73 | Yes | none |
-| I-31 | `lem:separator-price`: `Φ ≥ κ₀ 𝓗^{d−1}(∂𝓡)`, `κ₀` uniform | **REFUTED** for the frozen trajectory class (#78, for the author to accept) | exact plane waves of fixed contrast: `Φ` bounded, interface ≥ `L`; `no_uniform_separator_price`; corrected `layer_price` | `SeparatorFrozen`, 21 declarations | Yes, negatively | a fixed-domain variant is not decided |
+| I-31 | `lem:separator-price`: `Φ ≥ κ₀ 𝓗^{d−1}(∂𝓡)`, `κ₀` uniform | **REFUTED** for the frozen trajectory class (#78 merged; fixed-domain variant remains open) | exact plane waves of fixed contrast: `Φ` bounded, interface ≥ `L`; `no_uniform_separator_price`; corrected `layer_price` | `SeparatorFrozen`, 21 declarations | Yes, negatively | a fixed-domain variant is not decided |
 | I-37 | §12.3: no toroidal lock ⟺ UNSAT | **OPEN** (not well posed) | frozen flow is time-reversible; no convergence to a stable conjugation-invariant lock from outside (`no_locking`) | `TorusNoLocking` | No | locking constraints undefined; a realization needs dissipative/forced dynamics |
 | I-11 | `rem:infinite-compute`: within the rail `P_WCC = P_Turing` | **RESTRICTED** (unchanged) | — (discrete equality and diagonal countermodel already on `main`) | existing | No | certified polynomial simulation of the nonlinear PDE; TM realization with charged errors |
 | I-32 | `prop:locked-expander-full`: separator `≥ c₀2^{γn}` for every decider | **OPEN**, equivalent to `P_TM ≠ NP_TM` in the charged constant class | `expanderGrowth_SAT_iff`, `expanderGrowth_implies_P_ne_NP` | `ExpanderInterfaceBarrier` | No | proving it proves `P ≠ NP` |
