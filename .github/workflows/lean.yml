@@ -85,6 +85,8 @@ jobs:
       - name: Phase XVII finite Boolean torus and II-10 control certificates
         working-directory: .
         run: python3 -m unittest discover -s pvnp/tests -p 'test_phase_xvii_*.py'
+      - name: Phase XVIII kernel-check the original II-10 writers (Horner execution, first halt, FP, unconditional W_M)
+        run: lake build PVNP.TwoPhasePolynomialExec PVNP.TwoPhasePolynomialState PVNP.TwoPhasePolynomialProgram PVNP.TwoPhasePolynomialOutputs PVNP.TwoPhasePolynomialFP
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt

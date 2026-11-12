@@ -197,3 +197,13 @@ import PVNP.SeparatorAmplitude
 -- Phase XVII: charged finite-row logical torus and sharp detector-contrast ray price.
 import PVNP.ToroidalFiniteRows
 import PVNP.SeparatorNormalizedRay
+
+-- Phase XVIII: the original polynomial-radius writers of II-10, executed on the actual machine.
+-- Exec: instruction-level transitions of `build P`; State: abstract work-region state;
+-- Program: assembler semantics and Horner's rule; Outputs: first halt and output word;
+-- FP: `FP (originalWindowCode p)`, `FP (originalInputCode M p)` and the unconditional `W_M`.
+import PVNP.TwoPhasePolynomialExec
+import PVNP.TwoPhasePolynomialState
+import PVNP.TwoPhasePolynomialProgram
+import PVNP.TwoPhasePolynomialOutputs
+import PVNP.TwoPhasePolynomialFP
