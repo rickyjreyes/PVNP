@@ -3,6 +3,20 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
+# Git Bash often exposes Python as 'python' or 'py -3', not python3.
+if ! command -v python3 >/dev/null 2>&1 || ! python3 -c 'import sys' >/dev/null 2>&1; then
+  mkdir -p "$ROOT/.release-verification/bin"
+  if command -v python >/dev/null 2>&1 && python -c 'import sys' >/dev/null 2>&1; then
+    printf '#!/usr/bin/env bash\nexec python "$@"\n' > "$ROOT/.release-verification/bin/python3"
+  elif command -v py >/dev/null 2>&1 && py -3 -c 'import sys' >/dev/null 2>&1; then
+    printf '#!/usr/bin/env bash\nexec py -3 "$@"\n' > "$ROOT/.release-verification/bin/python3"
+  else
+    echo "BLOCKED: Python 3 is unavailable" >&2
+    exit 1
+  fi
+  chmod +x "$ROOT/.release-verification/bin/python3"
+  export PATH="$ROOT/.release-verification/bin:$PATH"
+fi
 for exe in pdflatex pdfinfo pdftotext pdftoppm python3 sha256sum; do
   command -v "$exe" >/dev/null || { echo "BLOCKED: missing $exe" >&2; exit 1; }
 done
