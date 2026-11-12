@@ -36,3 +36,21 @@ A publicly accessible repository without a license does not generally authorize 
 - Visibility authorization: **NOT GIVEN**
 
 This is a research-release checklist, not legal advice or a determination that any patent filing covers the full repository.
+
+## Implementation prepared 12 November 2026 (NOT AUTHORIZED)
+
+Two reviewable, inactive license candidates are committed:
+- [BSD-3-Clause source-code proposal](license-proposals/code-bsd-3-clause.proposed.txt)
+- [CC BY 4.0 author-owned manuscript proposal](license-proposals/manuscripts-cc-by-4.0.proposed.md)
+
+**No license has been selected**. These are drafts and carry no effective
+permission grant. Do not publish copies named LICENSE-CODE or
+LICENSE-MANUSCRIPTS until the author confirms actual scope, ownership,
+historical Zenodo licenses, and patent implications. A permissive software
+license is not a blanket patent clearance.
+
+The local approval template is [PUBLICATION_APPROVAL.template.json](PUBLICATION_APPROVAL.template.json).
+Create the actual record in the gitignored
+\`.release-verification/publication-approval.json\` and use
+\`python3 scripts/check_publication_approval.py --require-approved\`
+only after the active approved licenses and all review gates exist.
