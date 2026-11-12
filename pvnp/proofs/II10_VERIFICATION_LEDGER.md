@@ -1,66 +1,118 @@
-# II-10 original two-phase W_M: proof and release verification ledger
+# II-10 original two-phase W_M: verification and promotion record
 
-Date: 2026-11-12
+Date: 2026-11-12. Supersedes the provisional pre-verification ledger.
 
-## Exact claim and candidate theorem chain
+## Claim and precise scope
 
-Original Part II manuscript theorem `thm:tm_to_wcc` proves the two-phase W_M
-first-decision time of 2T_M(x) for a machine whose polynomial radius contains
-the simulated head trajectory. The 6 November amendment explicitly separates
-this dynamic simulation from its original canonical writer uniformity.
-The other single-cell uniform construction has always supplied a separate
-class-inclusion proof, not a certificate for original W_M.
+The corrected Part II theorem `thm:tm_to_wcc` says that the author's
+**original** two-phase finite discrete WCC machine W_M, whose radius
+contains the ordinary single-tape TM's first-halt trajectory, makes its
+first decision at exactly `2*T_M(x)` global update steps. The canonical
+window writer, complete initial-configuration encoder, and decoder are
+all polynomial-time transducers under `PartIIUniform.FP`. Consequently
+the original machine provides the charged discrete inclusion
+`P_Turing ⊆ P_disc`. The verified statement uses the corrected
+polynomial bound `c*max(n,1)^k`, covering the empty input.
 
-The recovered Phase XVIII source supplies the missing original-machine chain:
+This is **not** a proof of physically realizable WCT computation,
+physical class equivalence, or classical P ≠ NP.
 
-| File | Principal declaration / purpose |
+## Source proof inventory
+
+| File | Verified-source role |
 | --- | --- |
-| `TwoPhasePolynomialExec.lean` | Literal finite-control MTM instruction transitions, first halt and output scan |
-| `TwoPhasePolynomialState.lean` | Well-formed abstract work tape and instruction-level trace realization |
-| `TwoPhasePolynomialProgram.lean` | Assembler, repeated loops, Horner stages and charged execution |
-| `TwoPhasePolynomialOutputs.lean` | Output bodies, assembled trace, `assemble_outputs` using original `MTM.Outputs` |
-| `TwoPhasePolynomialFP.lean` | Canonical output-word equalities, polynomial bounds, original FP witnesses, original W_M construction and class inclusion |
+| `lean/PVNP/TwoPhasePolynomialExec.lean` | Literal MTM transition traces and raw output at first halt |
+| `lean/PVNP/TwoPhasePolynomialState.lean` | Abstract work-tape state, invariants, and instruction realization |
+| `lean/PVNP/TwoPhasePolynomialProgram.lean` | Actual assembler semantics, charged Horner execution and polynomial value |
+| `lean/PVNP/TwoPhasePolynomialOutputs.lean` | Exact output-body words, `assemble_spec`, `assemble_outputs` |
+| `lean/PVNP/TwoPhasePolynomialFP.lean` | Canonical output equalities, time-polynomial evaluations, both original FP witnesses, original W_M, first-answer equality, and original-machine class inclusion |
 
-In `PVNP.TwoPhasePolynomialWriter`, the intended top-level audit is:
+The key Lean declarations in namespace `PVNP.TwoPhasePolynomialWriter` are:
+`windowMTM_outputs`, `inputMTM_outputs`,
+`originalWindowCode_fp`, `originalInputCode_fp`,
+`originalWM`, `originalWM_decides`,
+`originalWM_first_answer`, and
+`P_Turing_subset_P_disc_by_original`. The root `lean/PVNP.lean`
+imports the top-level FP module. The axiom audit prints these
+declarations, and `.github/workflows/lean.yml` explicitly
+builds all five new modules.
 
-- `windowMTM_outputs` and `inputMTM_outputs`: exact output word, trailing blank, first halt and polynomial transition budget of each actual machine.
-- `originalWindowCode_fp` and `originalInputCode_fp`: witnesses of `FP` for the two actual canonical encoders.
-- `originalWM`: explicit `UWCC` constructed from those writers without conditional FP assumptions.
-- `originalWM_decides`: actual two-phase first-answer bound using the original W_M.
-- `P_Turing_subset_P_disc_by_original`: class inclusion using the actual W_M rather than the separate single-cell construction.
+## External verification evidence and boundary
 
-## Independent verification gates
+The producing session reported on 2026-11-12 that:
 
-The exact commit being promoted must satisfy all of:
+1. `lake build PVNP` succeeded with **7,386 build jobs**.
+2. `lake env lean audit/AxiomAudit.lean`, followed by the repository's `audit/check_axioms.py`, passed with only the standard permitted Lean axioms.
+3. `scripts/verify_ii10_original_wm.sh` completed on the **exact source commit**
+   `df8824ca659b2e931eb4302251569d6c6c6140b3`, after incorporating the PR #72 integration and the exact-first-answer theorem.
+4. Two concrete finite-reference sweeps covered **371 + 371 = 742 cases**, with no failures.
 
-1. `lake build PVNP.TwoPhasePolynomialExec PVNP.TwoPhasePolynomialState PVNP.TwoPhasePolynomialProgram PVNP.TwoPhasePolynomialOutputs PVNP.TwoPhasePolynomialFP`.
-2. `lake build PVNP`, with `import PVNP.TwoPhasePolynomialFP` in the root import tree.
-3. `lake env lean audit/AxiomAudit.lean` followed by `python3 audit/check_axioms.py audit/AxiomAudit.lean <audit output>`. Only `propext`, `Classical.choice` and `Quot.sound` are allowed. Include the top-level original `FP`, `Outputs` and `W_M` declarations in the audit.
-4. Python finite-reference tests and `python3 pvnp/phase_xvi/status.py --check`.
-5. Manuscript-to-Lean statement audit: distinguish the original W_M from the one-cell construction; preserve the radius and first-halt hypotheses, the `2T_M` intrinsic runtime, and polynomial encoder/decoder charges.
-6. Inspect the workflow run or an independent local build log **at the exact recorded source commit**. Absence of `sorry`, local single-file compilation, and an unassigned GitHub runner are not full-build certification.
+The build and audit successes above are **reported by the user's external
+execution session**. This assistant inspected the matching source on
+GitHub but did not independently execute Lean. GitHub-hosted Actions jobs
+on this branch previously failed before assigning a runner, with no
+executed steps; those job statuses are not proof failures, nor are they
+independent attestations of the external pass.
 
-Run `bash scripts/verify_ii10_original_wm.sh` from a working checkout for gates 1 through 4. This script does not modify research classifications.
+The promotion changes in this PR affect **documentation, registry,
+dashboard and manuscript sources**, not the Lean source tree. A
+consistent full-run provenance should therefore pin the verified
+**Lean tree** at `df8824c`, and keep the exact documentation-commit
+status checks separate. For independently reproducible verification
+run `bash scripts/verify_ii10_original_wm.sh` on the matching source
+branch with Lean 4.23.0 and its pinned dependency cache.
 
-## Manuscript promotion rule, not yet executed
+## Mathematical proof sketch
 
-The current source-inventory classification is `Restricted` while full-build
-confirmation is unavailable. Do not interpret the additional source theorems
-as kernel verified solely from their presence.
+1. Input normalization places input symbols into work cells, preserves
+   a unique left-end sentinel and returns to the first instruction.
+   This takes `2*|x|+4` transitions in the original machine.
+2. The assembler emits finite literal instructions. An abstract
+   well-formed work-state semantics is refined by real machine runs,
+   with a polynomial step charge for every abstract transition.
+3. Horner stages compute `hv (coeffs p) |x| = p.eval |x|`,
+   carrying their counters in the actual tape/flags.
+4. The window-body program constructs `windowWord (p.eval |x|)`.
+   The input-body program constructs the exact flattened canonical
+   state serializer `originalInputCode M p x` using fixed-width
+   `stateBits M` blocks.
+5. `assemble_outputs` proves `MTM.Outputs`, including **first halt**,
+   all raw output symbols, the trailing blank, and a polynomial-time
+   transition upper bound. It does not infer `FP` merely from
+   polynomial output *length*.
+6. These machine-level proofs yield unconditional
+   `originalWindowCode_fp` and `originalInputCode_fp`.
+   The existing `decM_fp` supplies the third preparation witness,
+   giving the actual uniform W_M.
+7. `originalWM_first_answer` imports the two-phase invariant and
+   proves the original first-decision time identity at `2*T` with
+   no earlier answer, provided `M.FirstHalt x T` and
+   `T ≤ p.eval |x|`. With the polynomial radius bound,
+   `P_Turing_subset_P_disc_by_original` completes the charged
+   discrete inclusion.
 
-**Only after all gates pass:**
+## Classification after the author-reported verification
 
-- Change II-10 in the manuscript inventory from `Restricted` to `Exact` and cite the original `FP`/W_M declarations. Its exact mathematical scope is the corrected original manuscript statement, not a new lower bound for SAT.
-- Change the count from **78 Exact, 2 Restricted, 4 Refuted, 7 Open** to **79 Exact, 1 Restricted, 4 Refuted, 7 Open**, with total still 91. Part II becomes 28 Exact, 0 Restricted.
-- Update `pvnp/phase_xvi/targets.json` and `pvnp/phase_xvi/status.py` in the *same promotion change*. Keep registry and inventory status synchronized.
-- Amend the Part II manuscript's conditional uniformity paragraph with the exact original-writer witnesses and remove the now-discharged conditional status. Retain separate runtime and complexity-class claims.
-- Record the exact passing Lean toolchain version, commit SHA, audit report and test outcomes in the release verification report.
-- Integrate this proof branch independently of the failing six-goal PR #70. Do not merge PR #70 as a prerequisite for these recovered modules.
+| Source | Exact | Restricted | Refuted | Open | Total |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Part I | 30 | 1 | 4 | 6 | 41 |
+| Part II | 28 | 0 | 0 | 0 | 28 |
+| Part III | 21 | 0 | 0 | 1 | 22 |
+| **Total** | **79** | **1** | **4** | **7** | **91** |
 
-## Current status
+The remaining Restricted entry is I-11. The universal SAT lower bound
+I-16 and the continuum/PDE physical bridge remain unresolved. The
+historical October 27 inventory snapshot must stay unchanged.
 
-The recovered source reportedly passed individual module kernel checks in
-another session. This integration branch adds full-tree imports, explicit
-axiom printing, CI compilation and a stand-alone release gate. Successful
-full-root compilation and axiom verification on this integration commit
-have **not yet been independently observed**. II-10 remains `Restricted`.
+## Pull-request integration
+
+- **PR #73:** original proof branch, stacked on PR #69; source tree
+  containing the first-answer theorem and the merged PR #72 integration.
+- **PR #72:** earlier integration draft, superseded for merging by the
+  consolidated source in PR #73.
+- **PR #70:** earlier first-instruction and final-scan proof
+  candidates, with six Lean goals reportedly unresolved; not
+  required for original II-10 closure.
+- **This follow-up promotion:** documentary/editorial status promotion,
+  stacked on PR #73. Merge in dependency order after review, without
+  treating GitHub runner failures as kernel results.
