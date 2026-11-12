@@ -554,4 +554,126 @@ theorem run_to_first_instruction (program : ℕ × Array Inst)
   exact return_dispatch_after_normalization program x
 
 
+
+/-! ### Phase XVIII continuation: prefix first-halt exclusion
+
+The first-halt property of the eventual Outputs theorem requires more than
+reaching the assembled entry: every earlier configuration must be nonhalting.
+These arguments use the actual machine control states and the exact
+intermediate return-sweep configurations. -/
+
+/-- Every intermediate return-sweep configuration retains the original tape
+and saved assembled program counter. The proof covers the empty input and
+every partial prefix of a nonempty return sweep. -/
+theorem return_walk_prefix (program : ℕ × Array Inst)
+    (tape : ℤ → Sym) (pc : Fin (program.2.size + 1))
+    (n k : ℕ) (hk : k ≤ n)
+    (hn : ∀ j : ℕ, j < n → tape (j : ℤ) ≠ .leftEnd) :
+    (build program).run
+      (⟨tape, (n : ℤ) - 1, .ret pc⟩ : (build program).Cfg) k =
+    (⟨tape, (n : ℤ) - 1 - (k : ℤ), .ret pc⟩ : (build program).Cfg) := by
+  induction k with
+  | zero =>
+      simp [MTM.run_zero]
+  | succ k ih =>
+      have hk' : k ≤ n := by omega
+      have hlt : n - (k + 1) < n := by omega
+      have hindex :
+          ((n - (k + 1) : ℕ) : ℤ) = (n : ℤ) - 1 - (k : ℤ) := by
+        omega
+      have hnon :
+          tape ((n : ℤ) - 1 - (k : ℤ)) ≠ .leftEnd := by
+        rw [← hindex]
+        exact hn (n - (k + 1)) hlt
+      rw [MTM.run_succ, ih hk', return_step_non_sentinel program tape pc _ hnon]
+      congr 1 <;> omega
+
+/-- Exact state of the original writer at every point between input
+normalization and the first assembled instruction. -/
+theorem run_return_prefix (program : ℕ × Array Inst)
+    (x : List Bool) (k : ℕ) (hk : k ≤ x.length) :
+    (build program).run ((build program).init x)
+      (x.length + 3 + k) =
+    (⟨partiallyNormalizedTape x x.length,
+      (x.length : ℤ) - 1 - (k : ℤ),
+      .ret (addr program.2 program.1)⟩ : (build program).Cfg) := by
+  let tape := partiallyNormalizedTape x x.length
+  let pc := addr program.2 program.1
+  have hentry :
+      (build program).run ((build program).init x) (x.length + 3) =
+      (⟨tape, (x.length : ℤ) - 1, .ret pc⟩ : (build program).Cfg) := by
+    rw [show x.length + 3 = (x.length + 2) + 1 by omega,
+      MTM.run_succ,
+      run_normalizes_input program x x.length (le_refl _)]
+    exact normalization_end_step program x
+  rw [show x.length + 3 + k = (x.length + 3) + k by omega, MTM.run_add,
+    hentry]
+  apply return_walk_prefix program tape pc x.length k hk
+  intro j hj
+  exact normalized_nonnegative_not_sentinel x x.length j
+
+/-- The actual writer is not in either halting state at any point of the
+normalization phase, including the first blank after the input. -/
+theorem normalization_not_halting (program : ℕ × Array Inst)
+    (x : List Bool) (k : ℕ) (hk : k ≤ x.length) :
+    ¬ (build program).Halting
+      ((build program).run ((build program).init x) (2 + k)).q := by
+  rw [show 2 + k = k + 2 by omega,
+    run_normalizes_input program x k hk]
+  simp [MTM.Halting, build]
+
+/-- The concrete writer's return sweep is nonhalting at every intermediate
+step, with the exact same saved finite control instruction address. -/
+theorem return_not_halting (program : ℕ × Array Inst)
+    (x : List Bool) (k : ℕ) (hk : k ≤ x.length) :
+    ¬ (build program).Halting
+      ((build program).run ((build program).init x)
+        (x.length + 3 + k)).q := by
+  rw [run_return_prefix program x k hk]
+  simp [MTM.Halting, build]
+
+/-- The actual finite-control writer cannot reach its accepting/rejecting
+state before its first assembled instruction. This supplies the entire
+initial segment of the nonhalting requirement in MTM.FirstHalt. -/
+theorem not_halting_before_first_instruction
+    (program : ℕ × Array Inst) (x : List Bool) :
+    ∀ s : ℕ, s < 2 * x.length + 4 →
+      ¬ (build program).Halting
+        ((build program).run ((build program).init x) s).q := by
+  intro s hs
+  by_cases hzero : s = 0
+  · subst s
+    simp [MTM.run_zero, MTM.init, MTM.Halting, build]
+  by_cases hone : s = 1
+  · subst s
+    rw [show 1 = 0 + 1 by omega, MTM.run_succ, MTM.run_zero,
+      start_to_mark]
+    simp [MTM.Halting, build]
+  by_cases hnorm : s ≤ x.length + 2
+  · obtain ⟨k, rfl⟩ :=
+      Nat.exists_eq_add_of_le (show 2 ≤ s by omega)
+    exact normalization_not_halting program x k (by omega)
+  · obtain ⟨k, rfl⟩ :=
+      Nat.exists_eq_add_of_le (show x.length + 3 ≤ s by omega)
+    exact return_not_halting program x k (by omega)
+
+/-- Neither original polynomial writer can halt before its actual assembler
+entry point. This is a first-halt prefix result, not an output-body theorem. -/
+theorem windowMTM_not_halting_before_entry
+    (p : Polynomial ℕ) (x : List Bool) :
+    ∀ s < 2 * x.length + 4,
+      ¬ (windowMTM p).Halting
+        ((windowMTM p).run ((windowMTM p).init x) s).q :=
+  not_halting_before_first_instruction
+    (assemble (coeffs p) windowBody) x
+
+theorem inputMTM_not_halting_before_entry
+    (M : MTM) (p : Polynomial ℕ) (x : List Bool) :
+    ∀ s < 2 * x.length + 4,
+      ¬ (inputMTM M p).Halting
+        ((inputMTM M p).run ((inputMTM M p).init x) s).q :=
+  not_halting_before_first_instruction
+    (assemble (coeffs p) (inputBody M)) x
+
+
 end PVNP.TwoPhasePolynomialWriter
