@@ -155,8 +155,14 @@ function generate(overrides = {}) {
   const leanTree = git(["rev-parse", "HEAD:lean"]).trim();
   const leanDirty = git(["status", "--porcelain", "--untracked-files=no", "--", "lean"]).trim() !== "";
   const verified = reg.verification.main;
-  const leanMatches = !leanDirty && leanTree === verified.lean_tree;
-  const ref = leanMatches ? verified.sha : "main";
+  const mainMatches = !leanDirty && leanTree === verified.lean_tree;
+  // The original II-10 PR was verified by an external Lean kernel run, not GitHub CI.
+  // Preserve the last genuine verified-main record, but pin links to its exact PR
+  // source tree while it is unchanged. Do not label the external run as main CI.
+  const staged = reg.verification.staged;
+  const stagedMatches = !!staged && !leanDirty && leanTree === staged.lean_tree;
+  const leanMatches = mainMatches || stagedMatches;
+  const ref = mainMatches ? verified.sha : stagedMatches ? staged.sha : "main";
   const blob = (file, line, at = ref) => `${repo}/blob/${at}/${file}${line ? "#L" + line : ""}`;
 
   const index = buildLeanIndex();
@@ -242,10 +248,17 @@ function generate(overrides = {}) {
     if (proofById.has(c.id)) {
       const proof = proofById.get(c.id);
       const theorem = exact(proof.decl, c.id);
-      if (h.status !== proof.from || c.status !== "Exact" || h.claim !== c.claim ||
+      // Historical empty-input corrections may change the statement before a
+      // previously Restricted claim is promoted. Require an explicit written
+      // scope change, rather than silently claiming the original text was proved.
+      const changedClaim = h.claim !== c.claim;
+      const explained = typeof proof.scope_change === "string" && proof.scope_change.length >= 40;
+      if (h.status !== proof.from || c.status !== "Exact" ||
+          (changedClaim && !explained) || (!changedClaim && !!proof.scope_change) ||
           !audited.has(theorem.full) || !Object.values(out.refs).flat().some(r => r.name === proof.decl))
-        fail(`${c.id}: formalization must preserve the statement and link its audited theorem`);
-      out.formalized = { pr: proof.pr, decl: proof.decl, from: proof.from };
+        fail(`${c.id}: formalization must preserve the statement or explain the corrected scope and link its audited theorem`);
+      out.formalized = { pr: proof.pr, decl: proof.decl, from: proof.from,
+        ...(explained ? { scope_change: proof.scope_change } : {}) };
     }
     if (amendById.has(c.id)) {
       const a = amendById.get(c.id);
@@ -316,7 +329,9 @@ function generate(overrides = {}) {
       ...p, url: `${repo}/pull/${p.number}`, head_url: `${repo}/commit/${p.head}`,
       merge_url: p.merge_commit ? `${repo}/commit/${p.merge_commit}` : null,
       checks: p.checks.map(c => ({ ...c, url: run(c.run) }))
-    }))
+    })),
+    staged: staged ? { ...staged, commit_url: `${repo}/commit/${staged.sha}`,
+      pr_url: `${repo}/pull/${staged.pr}` } : null
   };
 
   return {
@@ -332,7 +347,8 @@ function generate(overrides = {}) {
       url: `${repo}/blob/${reg.historical.commit}/${reg.inventory_path}`,
       table: { parts: historical.parts, counts: historical.counts, total: historical.total }
     },
-    lean: { tree: leanDirty ? "uncommitted changes" : leanTree, matches_verified: leanMatches, links_ref: ref },
+    lean: { tree: leanDirty ? "uncommitted changes" : leanTree, matches_verified: leanMatches,
+      links_ref: ref, verified_by: mainMatches ? "github-main" : stagedMatches ? "external-pr" : "unverified" },
     parts: Object.fromEntries(PARTS.map(p => [p, PART_NAMES[p]])),
     claims, supporting, pending, open, verification,
     unresolved_lean_names: [...unresolved].sort()
