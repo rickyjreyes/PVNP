@@ -698,6 +698,10 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhasePolynomialWriter.inW_eq_originalInputCode
 #print axioms PVNP.TwoPhasePolynomialWriter.windowMTM_outputs
 #print axioms PVNP.TwoPhasePolynomialWriter.inputMTM_outputs
+-- Also registered by the integration branch of PR #72 (literal original machines).
+#print axioms PVNP.TwoPhasePolynomialWriter.Steps.trans
+#print axioms PVNP.TwoPhasePolynomialWriter.StagesSpec
+#print axioms PVNP.TwoPhasePolynomialWriter.assemble_spec
 #print axioms PVNP.TwoPhasePolynomialWriter.originalWindowCode_fp
 #print axioms PVNP.TwoPhasePolynomialWriter.originalInputCode_fp
 #print axioms PVNP.TwoPhasePolynomialWriter.originalWM

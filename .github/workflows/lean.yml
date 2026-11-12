@@ -68,8 +68,21 @@ jobs:
         run: lake build PVNP.TwoPhaseConstantWindow
       - name: Check all fixed-radius original W_M lattice-writer FP candidates
         run: lake build PVNP.TwoPhaseFixedWord
-      - name: Check original polynomial and prefix transducers (II-10 candidates)
-        run: lake build PVNP.TwoPhasePolynomialWriter PVNP.TwoPhasePrefixWriter
+      - name: Kernel-check original II-10 polynomial writer execution and FP witnesses
+        run: |
+          lake build PVNP.TwoPhasePolynomialExec PVNP.TwoPhasePolynomialState PVNP.TwoPhasePolynomialProgram PVNP.TwoPhasePolynomialOutputs PVNP.TwoPhasePolynomialFP
+          lake build PVNP.TwoPhasePolynomialWriter PVNP.TwoPhasePrefixWriter
+      - name: II-10 source proof closure guard
+        run: |
+          test -f PVNP/TwoPhasePolynomialExec.lean
+          test -f PVNP/TwoPhasePolynomialState.lean
+          test -f PVNP/TwoPhasePolynomialProgram.lean
+          test -f PVNP/TwoPhasePolynomialOutputs.lean
+          test -f PVNP/TwoPhasePolynomialFP.lean
+          grep -Fq 'import PVNP.TwoPhasePolynomialFP' PVNP.lean
+          grep -Fq '#print axioms PVNP.TwoPhasePolynomialWriter.originalWindowCode_fp' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.TwoPhasePolynomialWriter.originalInputCode_fp' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.TwoPhasePolynomialWriter.originalWM_decides' audit/AxiomAudit.lean
       - name: Run original two-phase transducer regression
         working-directory: .
         run: python3 -m unittest discover -s pvnp/tests -p 'test_two_phase_tape_writer.py'
@@ -85,8 +98,6 @@ jobs:
       - name: Phase XVII finite Boolean torus and II-10 control certificates
         working-directory: .
         run: python3 -m unittest discover -s pvnp/tests -p 'test_phase_xvii_*.py'
-      - name: Phase XVIII kernel-check the original II-10 writers (Horner execution, first halt, FP, unconditional W_M)
-        run: lake build PVNP.TwoPhasePolynomialExec PVNP.TwoPhasePolynomialState PVNP.TwoPhasePolynomialProgram PVNP.TwoPhasePolynomialOutputs PVNP.TwoPhasePolynomialFP
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt
