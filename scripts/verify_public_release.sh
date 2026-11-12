@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Strict local technical preflight for an eventual public PVNP release.
+# Cannot approve licensing, patent disclosures, privacy, or repository visibility.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$ROOT"
+
+if [[ "$(git rev-parse --is-shallow-repository)" != "false" ]]; then
+  echo "BLOCKED: full git history required" >&2
+  exit 1
+fi
+echo "PVNP technical release preflight: $(git rev-parse HEAD)"
+
+# Scans all locally available refs and history. Never commit scanner reports.
+python3 scripts/audit_public_release.py --history
+
+# This is the exact original-writer regression suite, including the Lean gate.
+bash scripts/verify_ii10_original_wm.sh
+
+# This separately checks all revised manuscripts, the consolidated PDF,
+# full Lean project/axioms and the generated dashboard.
+bash scripts/run_release_verification.sh --all
+
+echo "TECHNICAL GATES PASSED at $(git rev-parse HEAD)"
+echo "NOT PUBLICATION AUTHORIZATION: patent, third-party rights, metadata,"
+echo "manual privacy review, licensing and explicit visibility approval are still required."
