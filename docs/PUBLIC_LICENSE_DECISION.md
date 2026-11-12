@@ -49,6 +49,8 @@ LICENSE-MANUSCRIPTS until the author confirms actual scope, ownership,
 historical Zenodo licenses, and patent implications. A permissive software
 license is not a blanket patent clearance.
 
+For an offline release checklist use `bash scripts/review_public_release_offline.sh --all`.
+
 The local approval template is [PUBLICATION_APPROVAL.template.json](PUBLICATION_APPROVAL.template.json).
 Create the actual record in the gitignored
 `.release-verification/publication-approval.json` and use
