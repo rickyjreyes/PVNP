@@ -37,7 +37,7 @@ class OfflineReleaseTests(unittest.TestCase):
 
     def test_pdf_text_flags_email_and_local_path(self):
         self.assertTrue(assets.PDF_TEXT_RISKS["email_address"].search("contact@example.org"))
-        self.assertTrue(assets.PDF_TEXT_RISKS["home_directory_path"].search("C:\\\\Users\\\\example"))
+        self.assertTrue(assets.PDF_TEXT_RISKS["home_directory_path"].search("C:\\Users\\example"))
 
     def test_incomplete_template_never_approves(self):
         template = {
