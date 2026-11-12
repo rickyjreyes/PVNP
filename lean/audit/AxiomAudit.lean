@@ -640,3 +640,25 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.ToroidalCNFLock.bare_ring_lock_not_sat_classifier
 -- Phase XVI: abstract quadratic amplitude-scaling obstruction.
 #print axioms PVNP.SeparatorAmplitude.no_uniform_quadratic_price
+
+-- Phase XVII: finite-row logical torus and normalized contrast theorems.
+#print axioms PVNP.ToroidalFiniteRows.rowLock_iff_satisfiable
+#print axioms PVNP.ToroidalFiniteRows.finiteTrace_length
+#print axioms PVNP.SeparatorNormalizedRay.contrast_forces_quadratic_price
+#print axioms PVNP.SeparatorNormalizedRay.price_is_sharp
+#print axioms PVNP.TwoPhasePolynomialWriter.writer_clock_eq_polynomial
+#print axioms PVNP.TwoPhasePolynomialWriter.writer_coeffs_length
+#print axioms PVNP.TwoPhasePolynomialWriter.writer_clock_poly_bound
+#print axioms PVNP.TwoPhasePolynomialWriter.expected_window_length_from_writer_clock
+#print axioms PVNP.ToroidalFiniteRows.lock_rows_constant
+#print axioms PVNP.TwoPhasePolynomialWriter.partially_normalized_current_input
+#print axioms PVNP.TwoPhasePolynomialWriter.partially_normalized_extend
+#print axioms PVNP.TwoPhasePolynomialWriter.normalize_raw_rule
+#print axioms PVNP.TwoPhasePolynomialWriter.normalization_cfg_step
+#print axioms PVNP.TwoPhasePolynomialWriter.timePoly_eval
+#print axioms PVNP.TwoPhasePolynomialWriter.initialized_sentinel_tape
+#print axioms PVNP.TwoPhasePolynomialWriter.start_to_mark
+#print axioms PVNP.TwoPhasePolynomialWriter.mark_to_normalize
+#print axioms PVNP.TwoPhasePolynomialWriter.run_normalizes_input
+#print axioms PVNP.TwoPhasePolynomialWriter.windowMTM_normalization
+#print axioms PVNP.TwoPhasePolynomialWriter.inputMTM_normalization
