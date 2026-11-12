@@ -2,8 +2,8 @@
   "schema": 1,
   "as_of": "2026-11-12",
   "baseline": {
-    "Exact": 78,
-    "Restricted": 2,
+    "Exact": 79,
+    "Restricted": 1,
     "Refuted": 4,
     "Open": 7,
     "total": 91
@@ -14,11 +14,11 @@
     {
       "id": "II-10",
       "title": "Original polynomial-time writers",
-      "status": "Restricted",
-      "research_estimate_percent": 95,
+      "status": "Exact",
+      "research_estimate_percent": 100,
       "metric": "research",
-      "evidence": "Phase XVIII supplies five source modules for literal MTM execution, abstract state, assembler/Horner, both first-halt output words, and polynomial FP witnesses. TwoPhasePolynomialFP.lean contains originalWindowCode_fp, originalInputCode_fp, originalWM, originalWM_decides and the original class-inclusion witness. The modules were reported individually compiled in another session; this integration branch explicitly imports them into PVNP.lean and registers the original results in the axiom audit. Full exact-head root build and audit have not been independently observed in this session.",
-      "remaining_obligation": "Run scripts/verify_ii10_original_wm.sh on the exact integration HEAD; verify entire PVNP Lean import graph, all newly registered theorem axioms, source-to-manuscript statement agreement, and regressions. Only then reclassify II-10 and reconcile the manuscript, inventory, registry and stacked PRs."
+      "evidence": "Kernel-verified at the original scope. For every polynomial p, machine M and input, the actual machines windowMTM p and inputMTM M p write originalWindowCode p x and originalInputCode M p x at their first halt within explicit polynomial transition bounds (windowMTM_outputs, inputMTM_outputs). Hence originalWindowCode_fp, originalInputCode_fp, the unconditional originalWM, originalWM_first_answer (T_W = 2 T_M), originalWM_decides and P_Turing_subset_P_disc_by_original. Gate scripts/verify_ii10_original_wm.sh passed on commit df8824c: Lean 4.23.0, lake build PVNP 7,386 jobs, 627 audited declarations with standard axioms only, 24 Python regression tests.",
+      "remaining_obligation": "None for the original claim. GitHub-hosted CI has not executed for this head (issue #59); the kernel evidence is the local exact-head gate."
     },
     {
       "id": "I-31",

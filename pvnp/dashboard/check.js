@@ -31,11 +31,11 @@ const claim = id => d.claims.find(c => c.id === id);
 test("current totals", () => {
   const s = app.summarize(d.claims, "current");
   assert.equal(s.total, 91);
-  assert.deepEqual({ ...s.counts }, { Exact: 78, Restricted: 2, Refuted: 4, Open: 7 });
-  assert.equal(app.percent(s.counts.Exact, s.total), "85.7%");
-  assert.equal(s.counts.Exact + s.counts.Refuted, 82);
-  assert.equal(app.percent(82, 91), "90.1%");
-  const parts = { I: [41, 30, 1, 4, 6, "73.2%"], II: [28, 27, 1, 0, 0, "96.4%"], III: [22, 21, 0, 0, 1, "95.5%"] };
+  assert.deepEqual({ ...s.counts }, { Exact: 79, Restricted: 1, Refuted: 4, Open: 7 });
+  assert.equal(app.percent(s.counts.Exact, s.total), "86.8%");
+  assert.equal(s.counts.Exact + s.counts.Refuted, 83);
+  assert.equal(app.percent(83, 91), "91.2%");
+  const parts = { I: [41, 30, 1, 4, 6, "73.2%"], II: [28, 28, 0, 0, 0, "100.0%"], III: [22, 21, 0, 0, 1, "95.5%"] };
   for (const [p, [t, e, r, f, o, pct]] of Object.entries(parts)) {
     const g = s.parts[p];
     assert.deepEqual([g.total, g.counts.Exact, g.counts.Restricted, g.counts.Refuted, g.counts.Open], [t, e, r, f, o], "Part " + p);
@@ -73,7 +73,16 @@ test("amended claims: Exact now, Refuted originally, counterexamples retained", 
     assert.equal(claim(id).status, "Refuted", id);
     assert.equal(app.statusIn(claim(id), "historical"), "Refuted", id + " original");
   }
-  for (const id of ["I-11", "II-10"]) assert.equal(claim(id).status, "Restricted", id);
+  assert.equal(claim("I-11").status, "Restricted", "I-11");
+  /* II-10: proved for the original two-phase machine in PR #73; the row text had been corrected by PR #45. */
+  assert.equal(claim("II-10").status, "Exact", "II-10");
+  assert.equal(claim("II-10").historical.status, "Restricted", "II-10 original");
+  assert.equal(claim("II-10").formalized.pr, 73);
+  assert.equal(claim("II-10").formalized.decl, "TwoPhasePolynomialWriter.originalWM_decides");
+  assert.equal(claim("II-10").formalized.from, "Restricted");
+  assert.ok(claim("II-10").formalized.restated.length > 40);
+  for (const n of ["originalWindowCode_fp", "originalInputCode_fp", "originalWM_first_answer"])
+    assert.ok(Object.values(claim("II-10").refs).flat().some(r => r.name === "TwoPhasePolynomialWriter." + n && r.audited), "II-10 links audited " + n);
   const open = v => d.claims.filter(c => app.statusIn(c, v) === "Open").map(c => c.id);
   assert.deepEqual(open("current"), open("historical").filter(id => id !== "II-24"));
   assert.deepEqual(claim("II-24").formalized, { pr: 54, decl: "PartIIManuscript.conditional_np_safety", from: "Open" });
@@ -161,13 +170,18 @@ test("parser and generator guards", () => {
   const md = read("pvnp/proofs/manuscript-lean-inventory.md");
   assert.throws(() => parseInventory(md.replace("| I-25 |", "| I-999 |")), /missing claim I-25/);
   assert.throws(() => parseInventory(md.replace("| **Total** | **91** |", "| **Total** | **92** |")), /Total row/);
-  assert.throws(() => parseInventory(md.replace(/^\| Part II \| 28 \| 27 \|/m, "| Part II | 28 | 25 |")), /Part II/);
+  assert.throws(() => parseInventory(md.replace(/^\| Part II \| 28 \| 28 \|/m, "| Part II | 28 | 25 |")), /Part II/);
   const reg = JSON.parse(read("pvnp/dashboard/results.json"));
   const clone = () => JSON.parse(JSON.stringify(reg));
   let r = clone(); r.amendments = r.amendments.filter(a => a.id !== "I-12");
   assert.throws(() => build.generate({ registry: r }), /registered amendments/);
   r = clone(); r.formalizations[0].decl = "PartIIManuscript.no_np_complete_decider";
   assert.throws(() => build.generate({ registry: r }), /formalization must preserve/);
+  /* II-10's row text differs from the original snapshot, which is accepted only with a recorded reason. */
+  r = clone(); delete r.formalizations.find(f => f.id === "II-10").restated;
+  assert.throws(() => build.generate({ registry: r }), /formalization must preserve/);
+  r = clone(); r.formalizations = r.formalizations.filter(f => f.id !== "II-10");
+  assert.throws(() => build.generate({ registry: r }), /registered amendments/);
   r = clone(); r.conditional.open["I-25"] = "a refuted claim cannot be conditional-exact";
   assert.throws(() => build.generate({ registry: r }), /not Exact/);
   r = clone(); delete r.conditional.open["I-19"];
@@ -189,4 +203,4 @@ test("parser and generator guards", () => {
 if (!d.lean.matches_verified)
   console.warn("Note: lean/ differs from the last recorded verified commit; declaration links point to main.");
 if (process.exitCode) console.error(`${passed} test groups passed; failures above.`);
-else console.log(`Dashboard check PASS (${passed} groups): 91 claims; 78 Exact (85.7%), 82 resolved (90.1%); original 70/2/11/8; toroidal results integrated; SATLowerBound open.`);
+else console.log(`Dashboard check PASS (${passed} groups): 91 claims; 79 Exact (86.8%), 83 resolved (91.2%); original 70/2/11/8; toroidal results integrated; SATLowerBound open.`);

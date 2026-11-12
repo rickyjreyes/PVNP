@@ -42,7 +42,7 @@ The exact commit being promoted must satisfy all of:
 
 Run `bash scripts/verify_ii10_original_wm.sh` from a working checkout for gates 1 through 4. This script does not modify research classifications.
 
-## Manuscript promotion rule, not yet executed
+## Manuscript promotion rule (executed on 12 November 2026, see the last section)
 
 The current source-inventory classification is `Restricted` while full-build
 confirmation is unavailable. Do not interpret the additional source theorems
@@ -57,10 +57,52 @@ as kernel verified solely from their presence.
 - Record the exact passing Lean toolchain version, commit SHA, audit report and test outcomes in the release verification report.
 - Integrate this proof branch independently of the failing six-goal PR #70. Do not merge PR #70 as a prerequisite for these recovered modules.
 
-## Current status
+## Gate result and promotion (12 November 2026)
 
-The recovered source reportedly passed individual module kernel checks in
-another session. This integration branch adds full-tree imports, explicit
-axiom printing, CI compilation and a stand-alone release gate. Successful
-full-root compilation and axiom verification on this integration commit
-have **not yet been independently observed**. II-10 remains `Restricted`.
+The gate was run where the pinned toolchain is installed, on the commit that
+merges the proof branch with the integration branch of PR #72.
+
+| Item | Result |
+| --- | --- |
+| Commit | `df8824ca659b2e931eb4302251569d6c6c6140b3` |
+| Toolchain | `leanprover/lean4:v4.23.0` |
+| Unfinished-proof scan of the five modules | none found |
+| Targeted build of the five modules | success, 7,260 jobs |
+| `lake build PVNP` | success, 7,386 jobs |
+| Axiom audit | 627 declarations, only `propext`, `Classical.choice`, `Quot.sound` |
+| `test_two_phase_tape_writer.py` | 3 tests, OK |
+| `test_phase_xvi_*.py` | 9 tests, OK |
+| `test_phase_xvii_*.py` | 12 tests, OK |
+| `status.py --check` | PASS (78/2/4/7 before promotion) |
+| Script exit | `PASS: original II-10 source, exact-head Lean kernel, axioms and regressions` |
+
+Gate 5 (statement audit). `originalWM M p` is `TwoPhaseUniform.originalUniform M p`
+with its two `FP` arguments supplied, so it has the manuscript's alphabet
+`S M`, rule `U M`, window `[-p(n), p(n)]`, encoder `encM` and decoder `decM`
+(`original_window`, `original_step`, `original_initial`, `original_decoder`).
+The radius hypothesis is `c·max(n,1)^k ≤ p(n)` and the first-halt hypothesis is
+`M.HaltsWithin x (c·max(|x|,1)^k)`, as in `thm:tm_to_wcc`. The runtime is the
+equality `T_{W_M}(x) = 2·T_M(x)` (`originalWM_first_answer`). The writers'
+transition bounds are the polynomials `windowTime (coeffs p)` and
+`inputTime M (coeffs p)`, and the decoder bound is `decM_fp`. The one-cell
+construction `PartIIUniform.oneCell` is not used anywhere in this chain.
+
+Gate 6. The log above is a local build at the recorded commit. GitHub-hosted
+runners have not executed any step for this branch (issue #59), so there is no
+hosted run to cite.
+
+Promotion carried out in the commit that follows `df8824c` on
+`research/phase-xviii-nine-claims-20261112` (PR #73):
+
+- inventory row II-10 is `Exact`; counts are 79 Exact, 1 Restricted, 4 Refuted,
+  7 Open; Part II is 28 Exact;
+- `pvnp/phase_xvi/targets.json` and `status.py` carry the same counts;
+- the dashboard registry lists II-10 as proved from `Restricted` by PR #73;
+- Part II and the consolidated volume carry addenda dated 12 November 2026;
+  the theorem keeps its conditional wording of 7 November;
+- the Lean sources are identical in `df8824c` and the promotion commit, and the
+  gate was run again on the promotion commit with the new counts.
+
+PR #70 was not merged. Its head `a796133` was compiled separately and fails
+with six `unsolved goals` errors (lines 421, 434, 436, 438, 481 and 791 of its
+`TwoPhasePolynomialWriter.lean`).
