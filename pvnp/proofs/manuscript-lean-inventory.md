@@ -22,13 +22,13 @@ Lean paths are relative to `lean/`. "(new)" marks declarations added in this pas
 | Paper | Claims | Exact | Restricted | Refuted | Open |
 |---|---|---|---|---|---|
 | Part I | 41 | 30 | 1 | 4 | 6 |
-| Part II | 28 | 27 | 1 | 0 | 0 |
+| Part II | 28 | 28 | 0 | 0 | 0 |
 | Part III | 22 | 21 | 0 | 0 | 1 |
-| **Total** | **91** | **78** | **2** | **4** | **7** |
+| **Total** | **91** | **79** | **1** | **4** | **7** |
 
-* Exact verification coverage for the amended manuscripts = Exact / Total = 78/91 ≈ 85.7% (77/91 before II-24, 75/91 after I-10/I-13, 73/91 after II-7/II-8/II-17, 70/91 original).
-* Status conclusively determined by a proof or a counterexample (Exact + Refuted) = 82/91 ≈ 90.1%.
-* **Phase XVIII original II-10 pending verification (12 November 2026):** five recovered Lean modules now express actual assembled-machine Horner execution, exact first-halt outputs, both original FP witnesses and a concrete `originalWM`. The integration PR imports them into `PVNP.lean`, audits the theorem names and adds a full-build gate. Existing 78/2/4/7 counts remain unchanged until that gate passes. See `pvnp/proofs/II10_VERIFICATION_LEDGER.md`.
+* Exact verification coverage for the amended manuscripts = Exact / Total = 79/91 ≈ 86.8% (77/91 before II-24, 75/91 after I-10/I-13, 73/91 after II-7/II-8/II-17, 70/91 original).
+* Status conclusively determined by a proof or a counterexample (Exact + Refuted) = 83/91 ≈ 91.2%.
+* **Phase XVIII original II-10 completion (12 November 2026, PR #73):** the original finite-control writer's actual instruction traces, Horner stages, output serialization, both polynomial-time FP witnesses, uniform `originalWM`, first-answer equality, and original-machine discrete class inclusion are included in the full root import. The author-provided exact-head verification log reports a 7,386-job Lean build, successful axiom audit, and a passing verification gate on `df8824ca659b2e931eb4302251569d6c6c6140b3`. This verification was performed externally, not by GitHub-hosted runners in this session. See `pvnp/proofs/II10_VERIFICATION_LEDGER.md`.
 * **Provenance:** The original October 27 manuscript inventory was 70 Exact, 2 Restricted, 11 Refuted, 8 Open. Claims II-7, II-8 and II-17 were false as written in that version. Their original Lean counterexamples remain in the repository. In the amended manuscript, their statements are restricted/corrected to match the already-proved Lean theorems; the historical count is not retroactively overwritten.
 * **I-12/I-20 scope:** I-12 now states an exact **conditional counterargument** in the frozen WCT submodel with charged polynomial-time indicator encoders: under the *hypothetical* P_TM = NP_TM, dense SAT is implementable; an unconditional barrier in that submodel would imply P_TM != NP_TM. This does not prove either equality or inequality. I-20 now states the proved **explicit-state description-size obstruction** K_D(s) <= |s|+c. A separate physical cost model distinguishes preparation from verification of a *succinct* certificate and from decision; its claimed lower-bound premises remain open, and the original state-as-short-witness inference is withdrawn.
 * **I-10/I-13 scope:** I-10 is now a new *conditional* obstruction to exact nonconstant symbolic readouts under an explicit common-successor transition-relation hypothesis. Curvature collapse is **not** proved to imply this hypothesis. The original language triviality and unique-rule non-identifiability assertions are no longer claimed as theorems. I-13 now states the quiescent finite-support bound already proved in Lean. All original counterexamples are preserved.
@@ -131,7 +131,7 @@ Counts:
 | II-7 | Lemma `lem:invariant` | two-phase invariant for 0 ≤ t ≤ L(n), including all t ≤ T_M(n) | `PartIITwoPhase.invariant_even`, `invariant_odd`; historical counterexample `invariant_literal_fails` | Exact (amended statement); original “all t ≥ 0” refuted by `rightMTM` when the head leaves Λ_n |
 | II-8 | Lemma `lem:one_step` | C_{2t} encodes the TM configuration for 0 ≤ t ≤ L(n); the two-step identity holds while the head stays in Λ_n | `PartIITwoPhase.two_steps`, `one_step`, `one_step_of_inWin`; historical counterexample `one_step_literal_fails` | Exact (amended statement); Lean also proves equality of restricted configurations through t ≤ L(n)+1, without head-in-window at the endpoint |
 | II-9 | Lemma `lem:runtime` | acceptance ⟺ q_acc; T_{W_M} = 2T_M; \|Λ_n\| = 2L(n)+1 | `PartIITwoPhase.runtime`, `runtime_accepts`, `card_window` (new) | Exact (first output of dec_M at time exactly 2T_M(x), when T_M(x) ≤ L(n)) |
-| II-10 | Thm. `thm:tm_to_wcc` | W_M decides L in time 2T_M ≤ 2c·max(n,1)^k; P_Turing ⊆ P_WCC | `PartIITwoPhase.tm_to_wcc_decides`, `TwoPhaseDecoder.decM_fp`, `TwoPhasePolynomialWriter.originalWindowCode_fp`, `originalInputCode_fp`, `originalWM`, `originalWM_decides`, `P_Turing_subset_P_disc_by_original` (Phase XVIII source; full integration verification pending) | Restricted pending exact-head verification. The recovered original polynomial finite-control writers and both FP proofs have been added as source and imported into the complete build. This classification remains unchanged until the full Lean kernel build and standard-axiom audit pass and the manuscript statement is reconciled. |
+| II-10 | Thm. `thm:tm_to_wcc` | W_M decides L in time 2T_M ≤ 2c·max(n,1)^k; P_Turing ⊆ P_WCC | `PartIITwoPhase.tm_to_wcc_decides`, `TwoPhaseDecoder.decM_fp`, `TwoPhasePolynomialWriter.windowMTM_outputs`, `inputMTM_outputs`, `originalWindowCode_fp`, `originalInputCode_fp`, `originalWM`, `originalWM_first_answer`, `originalWM_decides`, `P_Turing_subset_P_disc_by_original` | Exact. The original polynomial-radius single-tape writers produce the canonical words at first halt with polynomial transition bounds. Both FP witnesses construct the original uniform W_M. The first-answer theorem gives time 2T_M(x) and the correct decision inside the certified head window. This does not establish physical realization or P ≠ NP. |
 | II-11 | Thm. `thm:wcc_to_tm` | P_WCC ⊆ P_Turing | `PartIIUniform.wcc_to_tm`, `P_disc_subset_P_TM` (new); also `WCC.toTM_decides`, `WCCR.toTM_decides`, `WCCDSweep.toTM_decides` | Exact (uniform model, every d ≥ 1 and r ≥ 0: an explicit single-tape machine M_W, compiled from a sweep program, first answers within q_W(\|x\| + T_W(x) + 1) steps, lattice algorithm, encoder and decoder simulated and charged; P_Turing read with the corrected def:pturing, see II-17) |
 | II-12 | Cor. `cor:pwcc_equals_pturing` | P_WCC = P_Turing | `PartIIUniform.P_disc_eq_P_TM` (new), `PartIITuring.P_Turing_eq_P_TM` (corrected def:pturing) | Exact (uniform model of def:wcc_machine; the original, superseded def:pturing was degenerate, see II-17) |
 | II-13 | Thm. `thm:np_equiv` | NP_WCC = NP_Turing | `PartIIUniform.NP_disc_eq_NP_TM` (new), `PartIITuring.NP_Turing_eq_NP_TM` | Exact (verifier class `NP_disc` of def:wcc_verifier with binary alphabets: input word `pair x y`; \|Λ\| ≤ p(N) for \|y\| ≤ q(\|x\|), N = \|x\|+\|y\|; first decision within p(N) on every pair, the runtime scaling of def:tm_verifier; acceptance = first decision 1, the first-output convention of def:pwcc) |
@@ -152,8 +152,8 @@ Counts:
 | II-28 | Defs. `def:tm_verifier`, `def:npturing` vs Lean `NP_TM` | the manuscript's verifier class is NP | `PartIITuring.NP_Turing_eq_NP_TM`, `MTM.guard` (new) | Exact (binary input and witness alphabets, pair format `pair`; time bound p(\|x\|+\|y\|) required only on well-formed pairs, as in the manuscript) |
 
 Counts:
-* Exact (27): II-1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28.
-* Restricted (1): II-10.
+* Exact (28): II-1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28.
+* Restricted (0).
 * Refuted (0) in the amended Part II manuscript. Historical refutations (3): II-7, II-8, II-17, retained with their original counterexamples.
 * Open (0) in Part II. II-24 verifies an implication with its classical separation premise explicit.
 
@@ -182,7 +182,7 @@ Counts:
      (`round_spec`). The windows are gathered by cyclic rotations by
      `δ_v = Σ_k (v_k − r)(2R+1)^k` (`tasks_shift`, `member_nbr`). Hence `P_disc_eq_P_TM` and,
      for the verifier class `NP_disc`, `NP_disc_eq_NP_TM`.
-4. **What remains.** Phase XVIII introduces explicit original polynomial window/encoder writer source theorems, both FP witnesses, and an original `W_M` theorem. Their exact-head *full-build integration and axiom audit* are pending; no claim-count promotion is authorized on source presence or isolated compilation alone. II-24 follows under its original premises by #54.
+4. **Original II-10 closure.** The actual canonical polynomial writers and both `FP` fields are discharged by `TwoPhasePolynomialWriter.originalWindowCode_fp` and `originalInputCode_fp`. The resulting `originalWM_first_answer` proves the first-answer equality in the original head-window range, while `P_Turing_subset_P_disc_by_original` establishes the charged discrete class inclusion through the original two-phase machine. The independently scoped physical realization and SAT lower-bound conjectures remain open. II-24 remains conditional on its original premises.
 
 ## Part III — *Classical Complexity and Curvature-Bounded Physical Computation*
 
