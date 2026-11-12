@@ -662,3 +662,27 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhasePolynomialWriter.run_normalizes_input
 #print axioms PVNP.TwoPhasePolynomialWriter.windowMTM_normalization
 #print axioms PVNP.TwoPhasePolynomialWriter.inputMTM_normalization
+
+-- Phase XVIII: original polynomial writer, exact machine trace and body output.
+-- These are declarations for the *literal* original two-phase machines,
+-- not the existing substitute uniform class-inclusion construction.
+#print axioms PVNP.TwoPhasePolynomialWriter.Steps.trans
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_finish
+#print axioms PVNP.TwoPhasePolynomialWriter.Exec.trans
+#print axioms PVNP.TwoPhasePolynomialWriter.StagesSpec
+#print axioms PVNP.TwoPhasePolynomialWriter.horner_emits
+#print axioms PVNP.TwoPhasePolynomialWriter.windowBody_emits
+#print axioms PVNP.TwoPhasePolynomialWriter.inputBodyG_emits
+#print axioms PVNP.TwoPhasePolynomialWriter.assemble_spec
+#print axioms PVNP.TwoPhasePolynomialWriter.assemble_outputs
+#print axioms PVNP.TwoPhasePolynomialWriter.hv_coeffs
+#print axioms PVNP.TwoPhasePolynomialWriter.windowMTM_outputs
+#print axioms PVNP.TwoPhasePolynomialWriter.inputMTM_outputs
+#print axioms PVNP.TwoPhasePolynomialWriter.inW_eq_originalInputCode
+#print axioms PVNP.TwoPhasePolynomialWriter.originalWindowCode_fp
+#print axioms PVNP.TwoPhasePolynomialWriter.originalInputCode_fp
+#print axioms PVNP.TwoPhasePolynomialWriter.originalWM
+#print axioms PVNP.TwoPhasePolynomialWriter.originalWM_decides
+#print axioms PVNP.TwoPhasePolynomialWriter.P_Turing_subset_P_disc_original
+#print axioms PVNP.TwoPhasePolynomialWriter.originalWM_mem_P_disc
+#print axioms PVNP.TwoPhasePolynomialWriter.P_Turing_subset_P_disc_by_original
