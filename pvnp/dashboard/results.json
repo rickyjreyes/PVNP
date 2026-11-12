@@ -1,35 +1,100 @@
 {
-  "$comment": "Curated, versioned registry for the PVNP formalization dashboard. Claim statuses and every claim total come from pvnp/proofs/manuscript-lean-inventory.md, never from this file. This file records only (1) provenance of the historical snapshot and of the seven amended statements, (2) editorial notes on conditional Exact claims, (3) supporting results that are not manuscript claims, (4) open obligations, and (5) CI evidence. After editing, run: node pvnp/dashboard/build.js",
+  "$comment": "Claim statuses and totals derive exclusively from the authoritative 91-claim inventory. This registry records amendment/formalization provenance, conditionality, supporting work and verified source-tree evidence; local full Lean audit is independently reported, not a GitHub Actions pass.",
   "repository": "https://github.com/rickyjreyes/PVNP",
   "inventory_path": "pvnp/proofs/manuscript-lean-inventory.md",
-  "inventory_date": "2026-11-06",
+  "inventory_date": "2026-11-12",
   "historical": {
     "commit": "eaf8fa02720ee2e520e2c4b62046e75702cd3752",
     "label": "Original October 27 manuscript statements",
     "description": "Last inventory revision before the November 6 manuscript corrections (PRs #45, #46 and #47). The same file is on main up to dd7138b, the PR #43 merge.",
-    "expected": {"Exact": 70, "Restricted": 2, "Refuted": 11, "Open": 8}
+    "expected": {
+      "Exact": 70,
+      "Restricted": 2,
+      "Refuted": 11,
+      "Open": 8
+    }
   },
-  "formalizations": [{"id": "II-24", "pr": 54, "decl": "PartIIManuscript.conditional_np_safety", "from": "Open"}],
+  "formalizations": [
+    {
+      "id": "II-24",
+      "pr": 54,
+      "decl": "PartIIManuscript.conditional_np_safety",
+      "from": "Open"
+    },
+    {
+      "id": "II-10",
+      "pr": 73,
+      "decl": "TwoPhasePolynomialWriter.originalWM_first_answer",
+      "from": "Restricted",
+      "scope_change": "The original 27 October theorem used c*n^k and was corrected on 6 November to c*max(n,1)^k to cover empty input; the actual original W_M construction and its uniform polynomial-time writer hypotheses are now discharged. This is a proof of the corrected original manuscript statement, not a physical WCT claim."
+    }
+  ],
   "amendments": [
-    {"id": "II-7", "pr": 45, "counterexamples": ["invariant_literal_fails"],
-     "scope": "Quantifier range corrected from all t ≥ 0 to 0 ≤ t ≤ L(n). The corrected theorem was already kernel-checked; the manuscript now states it."},
-    {"id": "II-8", "pr": 45, "counterexamples": ["one_step_literal_fails"],
-     "scope": "Same correction: C_{2t} encodes the configuration for 0 ≤ t ≤ L(n), and the two-step identity holds while the head stays in Λ_n."},
-    {"id": "II-17", "pr": 45, "counterexamples": ["P_Turing_lit_eq", "P_Turing_lit_ne_P_TM", "P_Turing_lit_ne_NP_Turing"],
-     "scope": "Time bound corrected from c·n^k to c·max(n,1)^k. With the original bound, n = 0 forced T_M(0) = 0 and P_Turing degenerated to {∅, Σ*}."},
-    {"id": "I-10", "pr": 46, "counterexamples": ["trivial_partition_invariant"],
-     "scope": "Replaced by a conditional obstruction under an unproved common-successor mixing hypothesis. Curvature collapse is not shown to imply the hypothesis; language triviality and rule non-identifiability are no longer claimed."},
-    {"id": "I-13", "pr": 46, "counterexamples": ["local_growth_needs_quiescence", "linear_growth_false_d2"],
-     "scope": "Quiescence assumption added and the linear bound replaced by |supp C_t| ≤ |supp C_0|(2rt+1)^d. Locality alone does not give superpolynomial time."},
-    {"id": "I-12", "pr": 47, "counterexamples": ["PNP_SAT_physically_constant", "category_error_claim_implies_classical"],
-     "scope": "Now an explicitly conditional implication in the restricted charged-encoder frozen WCT model. The hypothetical P_TM = NP_TM is not proved, and no universal physical barrier is established."},
-    {"id": "I-20", "pr": 47, "counterexamples": ["high_K_not_poly_witness"],
-     "scope": "Now a negative description-size obstruction, K_D(s) ≤ |s|+c. The original state-as-short-witness inference is withdrawn; this is not a lower bound or a separation."}
+    {
+      "id": "II-7",
+      "pr": 45,
+      "counterexamples": [
+        "invariant_literal_fails"
+      ],
+      "scope": "Quantifier range corrected from all t ≥ 0 to 0 ≤ t ≤ L(n). The corrected theorem was already kernel-checked; the manuscript now states it."
+    },
+    {
+      "id": "II-8",
+      "pr": 45,
+      "counterexamples": [
+        "one_step_literal_fails"
+      ],
+      "scope": "Same correction: C_{2t} encodes the configuration for 0 ≤ t ≤ L(n), and the two-step identity holds while the head stays in Λ_n."
+    },
+    {
+      "id": "II-17",
+      "pr": 45,
+      "counterexamples": [
+        "P_Turing_lit_eq",
+        "P_Turing_lit_ne_P_TM",
+        "P_Turing_lit_ne_NP_Turing"
+      ],
+      "scope": "Time bound corrected from c·n^k to c·max(n,1)^k. With the original bound, n = 0 forced T_M(0) = 0 and P_Turing degenerated to {∅, Σ*}."
+    },
+    {
+      "id": "I-10",
+      "pr": 46,
+      "counterexamples": [
+        "trivial_partition_invariant"
+      ],
+      "scope": "Replaced by a conditional obstruction under an unproved common-successor mixing hypothesis. Curvature collapse is not shown to imply the hypothesis; language triviality and rule non-identifiability are no longer claimed."
+    },
+    {
+      "id": "I-13",
+      "pr": 46,
+      "counterexamples": [
+        "local_growth_needs_quiescence",
+        "linear_growth_false_d2"
+      ],
+      "scope": "Quiescence assumption added and the linear bound replaced by |supp C_t| ≤ |supp C_0|(2rt+1)^d. Locality alone does not give superpolynomial time."
+    },
+    {
+      "id": "I-12",
+      "pr": 47,
+      "counterexamples": [
+        "PNP_SAT_physically_constant",
+        "category_error_claim_implies_classical"
+      ],
+      "scope": "Now an explicitly conditional implication in the restricted charged-encoder frozen WCT model. The hypothetical P_TM = NP_TM is not proved, and no universal physical barrier is established."
+    },
+    {
+      "id": "I-20",
+      "pr": 47,
+      "counterexamples": [
+        "high_K_not_poly_witness"
+      ],
+      "scope": "Now a negative description-size obstruction, K_D(s) ≤ |s|+c. The original state-as-short-witness inference is withdrawn; this is not a lower bound or a separation."
+    }
   ],
   "conditional": {
     "$comment": "Exact means the stated implication is kernel-checked; it does not prove the premises. 'open' = a premise is an unproved complexity hypothesis. 'model' = explicit physical or modelling hypotheses that are assumptions, not theorems. build.js fails if an Exact row whose text mentions a premise, hypothesis, conditionality or an implication is neither listed here nor exempted with a reason.",
     "open": {
-      "II-24": "Assumes polynomial physical resources, the capacity law, uniform simulation with counted update rounds, and P_Turing \u2260 NP_Turing.",
+      "II-24": "Assumes polynomial physical resources, the capacity law, uniform simulation with counted update rounds, and P_Turing ≠ NP_Turing.",
       "I-1": "Verified: (1) curvature cost above every polynomial-time bound together with (2) verifiability implies ψ* ∈ NP \\ P (state version). Not proved: premise (1).",
       "I-4": "Verified: verifiable and not constructible implies ψ* ∈ NP \\ P and P ≠ NP (state version). Not proved: premise (2), non-constructibility.",
       "I-5": "Verified: the class identifications, whose premises are proved for the discrete model, and the implication from a separation to P ≠ NP. Not proved: any such separation.",
@@ -61,31 +126,90 @@
     }
   },
   "supporting": [
-    {"title": "First-answer TM tableau", "decl": "TMBooleanTableau.circuit_first", "pr": 43,
-     "statement": "For every single-tape machine M, input length n and time t, an explicit bounded-fan-in Boolean circuit outputs M's first answer whenever that answer appears by step t."},
-    {"title": "Polynomial circuit-size bound", "decl": "TMBooleanTableau.circuit_size", "pr": 43,
-     "statement": "That circuit has size at most K_M·(t+1)·(4t+2), polynomial in t for a fixed machine."},
-    {"title": "P_TM ⊆ P/poly", "decl": "TMBooleanTableau.P_TM_subset_PPoly", "pr": 43,
-     "statement": "Every polynomial-time Turing-machine language has polynomial-size circuit families."},
-    {"title": "Shared-gate CNF certificates", "decl": "CircuitCNF.circuit_good", "pr": 43,
-     "statement": "Every circuit has a linear-size CNF certificate of its evaluation, with one variable per shared gate."},
-    {"title": "NP verifier circuit families", "decl": "VerifierCircuits.verifier_family", "pr": 43,
-     "statement": "Every NP_TM language has polynomial-size verifier circuits over the input and a padded certificate."},
-    {"title": "Non-uniform NP-to-dense-SAT projections", "decl": "SATProjection.NP_projects_to_SAT", "pr": 43,
-     "statement": "Every NP_TM language reduces to SAT_dense by polynomial-size literal projections. No machine is claimed to compute them, so this is not CL-1."},
-    {"title": "SAT circuit lower-bound equivalence", "decl": "SATProjection.SAT_circuit_lower_iff", "pr": 43,
-     "statement": "SAT_dense ∉ P/poly if and only if NP_TM ⊄ P/poly. Neither side is proved."},
-    {"title": "Matrix SAT encoding", "decl": "CrossingSATMatrix.instanceWord_mem", "pr": 43,
-     "statement": "The packed matrix instance word(S, U) is in SAT_dense exactly when some entry of S is not in U."},
-    {"title": "Matrix crossing-sequence inequality", "decl": "CrossingSATMatrix.matrix_time", "pr": 43,
-     "statement": "Any single-tape machine deciding SAT_dense in time T satisfies (G(n)+1)·ℓ ≤ 2·T(N(n)) under the stated counting condition."},
-    {"title": "Quadratic hard-input family", "decl": "CrossingSATMatrix.quadratic_arbitrarily_large", "pr": 43,
-     "statement": "Every correct single-tape SAT_dense decider has arbitrarily long rejected inputs x with |x|² ≤ 384·b_M·time_M(x). This quadratic, machine-dependent bound is far from superpolynomial."},
-    {"title": "Restricted matrix-family circuit", "decl": "CrossingSATMatrix.matrix_promise_circuit", "pr": 43,
-     "statement": "On valid packed matrix instances, a single-layer circuit of size at most 1+4n·2^n decides membership, so this hard-input family cannot yield circuit lower bounds."},
-    {"title": "Uniform SAT decision transfer", "decl": "CookLevin.Gen.satLowerBound_iff_P_ne_NP", "pr": 53, "statement": "The uniform construction proves SAT_dense ∉ P_TM if and only if P_TM ≠ NP_TM. The separation itself remains open."},
-    {"title": "Negated toroidal seam", "decl": "ToroidalDiagonal.odd_encRing_not_SAT", "pr": 49, "statement": "The dense encoding of a finite equality ring with a negated seam is unsatisfiable at every ring length. The seam bit determines the answer on this family."},
-    {"title": "Ordinary toroidal seam", "decl": "ToroidalDiagonal.even_encRing_mem_SAT", "pr": 49, "statement": "The dense encoding of the same ring with an ordinary seam has a constant satisfying assignment."}
+    {
+      "title": "First-answer TM tableau",
+      "decl": "TMBooleanTableau.circuit_first",
+      "pr": 43,
+      "statement": "For every single-tape machine M, input length n and time t, an explicit bounded-fan-in Boolean circuit outputs M's first answer whenever that answer appears by step t."
+    },
+    {
+      "title": "Polynomial circuit-size bound",
+      "decl": "TMBooleanTableau.circuit_size",
+      "pr": 43,
+      "statement": "That circuit has size at most K_M·(t+1)·(4t+2), polynomial in t for a fixed machine."
+    },
+    {
+      "title": "P_TM ⊆ P/poly",
+      "decl": "TMBooleanTableau.P_TM_subset_PPoly",
+      "pr": 43,
+      "statement": "Every polynomial-time Turing-machine language has polynomial-size circuit families."
+    },
+    {
+      "title": "Shared-gate CNF certificates",
+      "decl": "CircuitCNF.circuit_good",
+      "pr": 43,
+      "statement": "Every circuit has a linear-size CNF certificate of its evaluation, with one variable per shared gate."
+    },
+    {
+      "title": "NP verifier circuit families",
+      "decl": "VerifierCircuits.verifier_family",
+      "pr": 43,
+      "statement": "Every NP_TM language has polynomial-size verifier circuits over the input and a padded certificate."
+    },
+    {
+      "title": "Non-uniform NP-to-dense-SAT projections",
+      "decl": "SATProjection.NP_projects_to_SAT",
+      "pr": 43,
+      "statement": "Every NP_TM language reduces to SAT_dense by polynomial-size literal projections. No machine is claimed to compute them, so this is not CL-1."
+    },
+    {
+      "title": "SAT circuit lower-bound equivalence",
+      "decl": "SATProjection.SAT_circuit_lower_iff",
+      "pr": 43,
+      "statement": "SAT_dense ∉ P/poly if and only if NP_TM ⊄ P/poly. Neither side is proved."
+    },
+    {
+      "title": "Matrix SAT encoding",
+      "decl": "CrossingSATMatrix.instanceWord_mem",
+      "pr": 43,
+      "statement": "The packed matrix instance word(S, U) is in SAT_dense exactly when some entry of S is not in U."
+    },
+    {
+      "title": "Matrix crossing-sequence inequality",
+      "decl": "CrossingSATMatrix.matrix_time",
+      "pr": 43,
+      "statement": "Any single-tape machine deciding SAT_dense in time T satisfies (G(n)+1)·ℓ ≤ 2·T(N(n)) under the stated counting condition."
+    },
+    {
+      "title": "Quadratic hard-input family",
+      "decl": "CrossingSATMatrix.quadratic_arbitrarily_large",
+      "pr": 43,
+      "statement": "Every correct single-tape SAT_dense decider has arbitrarily long rejected inputs x with |x|² ≤ 384·b_M·time_M(x). This quadratic, machine-dependent bound is far from superpolynomial."
+    },
+    {
+      "title": "Restricted matrix-family circuit",
+      "decl": "CrossingSATMatrix.matrix_promise_circuit",
+      "pr": 43,
+      "statement": "On valid packed matrix instances, a single-layer circuit of size at most 1+4n·2^n decides membership, so this hard-input family cannot yield circuit lower bounds."
+    },
+    {
+      "title": "Uniform SAT decision transfer",
+      "decl": "CookLevin.Gen.satLowerBound_iff_P_ne_NP",
+      "pr": 53,
+      "statement": "The uniform construction proves SAT_dense ∉ P_TM if and only if P_TM ≠ NP_TM. The separation itself remains open."
+    },
+    {
+      "title": "Negated toroidal seam",
+      "decl": "ToroidalDiagonal.odd_encRing_not_SAT",
+      "pr": 49,
+      "statement": "The dense encoding of a finite equality ring with a negated seam is unsatisfiable at every ring length. The seam bit determines the answer on this family."
+    },
+    {
+      "title": "Ordinary toroidal seam",
+      "decl": "ToroidalDiagonal.even_encRing_mem_SAT",
+      "pr": 49,
+      "statement": "The dense encoding of the same ring with an ordinary seam has a constant satisfying assignment."
+    }
   ],
   "pending": [],
   "open": [
@@ -117,32 +241,246 @@
     }
   ],
   "verification": {
-    "main": {"sha": "713f484cbe4fd16a66ec780308e96fa1a972d9fe", "lean_tree": "a3db75c86a5c8ceb01483a2c5e1762cc61015095", "workflow": "PVNP Lean supporting theorems", "job": "lean", "run": 42279295347, "conclusion": "success", "completed": "2026-11-06T19:43:35Z", "note": "Full import tree and standard-axiom audit on main following #54."},
-    "checked_at": "2026-11-06T21:00:00Z",
+    "main": {
+      "sha": "713f484cbe4fd16a66ec780308e96fa1a972d9fe",
+      "lean_tree": "a3db75c86a5c8ceb01483a2c5e1762cc61015095",
+      "workflow": "PVNP Lean supporting theorems",
+      "job": "lean",
+      "run": 42279295347,
+      "conclusion": "success",
+      "completed": "2026-11-06T19:43:35Z",
+      "note": "Full import tree and standard-axiom audit on main following #54."
+    },
+    "checked_at": "2026-11-12",
     "prs": [
-      {"number": 43, "title": "Phase X: first-answer TM circuits, dense SAT projections, and single-tape lower bounds", "head": "03aa90d1029f851ed2e3805d630761ae7776b1d1",
-       "state": "merged", "merge_commit": "dd7138bf7a839cbfa0ce55b9f2a12323e5e2a916",
-       "checks": [{"name": "lean", "run": 42166618297, "conclusion": "success"}, {"name": "phase-iii-targeted", "run": 42166618336, "conclusion": "success"}, {"name": "build", "run": 42166618316, "conclusion": "success"}]},
-      {"number": 45, "title": "Repair Part II finite-window quantifiers and empty-input polynomial bound", "head": "d4ff3734859bf11e6ea1d0a7fb3c81d18df719ea",
-       "state": "merged", "merge_commit": "5daa3c531e28689a53d68f09ad620e4505b76812",
-       "checks": [{"name": "lean", "run": 42180515947, "conclusion": "success"}, {"name": "phase-iii-targeted", "run": 42180515968, "conclusion": "success"}, {"name": "build", "run": 42180515962, "conclusion": "success"}]},
-      {"number": 46, "title": "Reformulate Part I I-10 and I-13 under corrected hypotheses", "head": "9f6bac603c24d8a773941c4301f9c112697cd667",
-       "state": "merged", "merge_commit": "6f78bc5a19b326ca6489d459a23dbe8678e51554",
-       "checks": [{"name": "lean", "run": 42181306212, "conclusion": "success"}, {"name": "phase-iii-targeted", "run": 42181306156, "conclusion": "success"}, {"name": "build", "run": 42181306099, "conclusion": "success"}]},
-      {"number": 47, "title": "Reformulate Part I I-12 and I-20 with charged encoders and succinct certificates", "head": "c469ca61dafd52fac3ad93546f21076b3fa19b51",
-       "state": "merged", "merge_commit": "0498989903f25290fa0a6346d4a2dacd1c9c34a9",
-       "checks": [{"name": "lean", "run": 42182340495, "conclusion": "success"}, {"name": "phase-iii-targeted", "run": 42182340451, "conclusion": "success"}, {"name": "build", "run": 42182340353, "conclusion": "success"}]},
-      {"number": 49, "title": "Experiment: finite toroidal diagonal feedback and dense SAT consistency", "head": "58307dcd58d1057a0799ffa542e09e3721369e94",
-       "state": "draft",
-       "note": "The original proof was checked at this PR head. Its module was subsequently integrated through PR #55.",
-       "checks": [{"name": "lean", "run": 42194502912, "conclusion": "success"}, {"name": "phase-iii-targeted", "run": 42194503004, "conclusion": "success"}, {"name": "build", "run": 42194502991, "conclusion": "success"}]},
-      {"number": 50, "title": "Add inventory-driven PVNP Lean formalization dashboard", "head": "acd11cf8f8a49a46410563fd0cbcdacde0953e2e",
-       "state": "merged", "merge_commit": "06564704f36dbb2050cd436449f4714e065b57e8",
-       "note": "Merged while its lean and PDF build checks were still running. It changed no Lean files; its lean check later passed.",
-       "checks": [{"name": "dashboard", "run": 42198790101, "conclusion": "success"}, {"name": "lean", "run": 42198790258, "conclusion": "success"}, {"name": "build", "run": 42198790112, "conclusion": "in_progress"}]},
-      {"number": 53, "title": "CL-1 parts 2–3: uniform Cook–Levin and SATLowerBound ↔ P_TM ≠ NP_TM", "head": "fe017eb0c0a640eee4d3e4dc2354c4878f14fbe6", "state": "merged", "merge_commit": "a7507de65e66586b61664d24f6aaec0a5653b4f4", "checks": [{"name": "build", "run": 42270468897, "conclusion": "success"}, {"name": "lean", "run": 42270469201, "conclusion": "success"}, {"name": "phase-iii-targeted", "run": 42270468977, "conclusion": "success"}]},
-      {"number": 54, "title": "II-24: finite-modification closure of P_TM and conditional NP-safety", "head": "943965f66e47a613c7abdaf7d4246fd315d4c5f2", "state": "merged", "merge_commit": "713f484cbe4fd16a66ec780308e96fa1a972d9fe", "checks": [{"name": "lean", "run": 42274055010, "conclusion": "success"}, {"name": "build", "run": 42274055029, "conclusion": "success"}, {"name": "phase-iii-targeted", "run": 42274055062, "conclusion": "success"}]},
-      {"number": 55, "title": "Phase XI integration: I-11 and I-3 scope tests, quadratic SAT bound, finite toroidal proof", "head": "e2a3818d99b262e99c59382cab848fe9203158a8", "state": "merged", "merge_commit": "89058ccc00bfc578601965ea3b63309bf445635a", "checks": [{"name": "lean", "run": 42290102943, "conclusion": "in_progress"}, {"name": "build", "run": 42290103032, "conclusion": "success"}, {"name": "phase-iii-targeted", "run": 42290102926, "conclusion": "success"}]}
-    ]
+      {
+        "number": 43,
+        "title": "Phase X: first-answer TM circuits, dense SAT projections, and single-tape lower bounds",
+        "head": "03aa90d1029f851ed2e3805d630761ae7776b1d1",
+        "state": "merged",
+        "merge_commit": "dd7138bf7a839cbfa0ce55b9f2a12323e5e2a916",
+        "checks": [
+          {
+            "name": "lean",
+            "run": 42166618297,
+            "conclusion": "success"
+          },
+          {
+            "name": "phase-iii-targeted",
+            "run": 42166618336,
+            "conclusion": "success"
+          },
+          {
+            "name": "build",
+            "run": 42166618316,
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "number": 45,
+        "title": "Repair Part II finite-window quantifiers and empty-input polynomial bound",
+        "head": "d4ff3734859bf11e6ea1d0a7fb3c81d18df719ea",
+        "state": "merged",
+        "merge_commit": "5daa3c531e28689a53d68f09ad620e4505b76812",
+        "checks": [
+          {
+            "name": "lean",
+            "run": 42180515947,
+            "conclusion": "success"
+          },
+          {
+            "name": "phase-iii-targeted",
+            "run": 42180515968,
+            "conclusion": "success"
+          },
+          {
+            "name": "build",
+            "run": 42180515962,
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "number": 46,
+        "title": "Reformulate Part I I-10 and I-13 under corrected hypotheses",
+        "head": "9f6bac603c24d8a773941c4301f9c112697cd667",
+        "state": "merged",
+        "merge_commit": "6f78bc5a19b326ca6489d459a23dbe8678e51554",
+        "checks": [
+          {
+            "name": "lean",
+            "run": 42181306212,
+            "conclusion": "success"
+          },
+          {
+            "name": "phase-iii-targeted",
+            "run": 42181306156,
+            "conclusion": "success"
+          },
+          {
+            "name": "build",
+            "run": 42181306099,
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "number": 47,
+        "title": "Reformulate Part I I-12 and I-20 with charged encoders and succinct certificates",
+        "head": "c469ca61dafd52fac3ad93546f21076b3fa19b51",
+        "state": "merged",
+        "merge_commit": "0498989903f25290fa0a6346d4a2dacd1c9c34a9",
+        "checks": [
+          {
+            "name": "lean",
+            "run": 42182340495,
+            "conclusion": "success"
+          },
+          {
+            "name": "phase-iii-targeted",
+            "run": 42182340451,
+            "conclusion": "success"
+          },
+          {
+            "name": "build",
+            "run": 42182340353,
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "number": 49,
+        "title": "Experiment: finite toroidal diagonal feedback and dense SAT consistency",
+        "head": "58307dcd58d1057a0799ffa542e09e3721369e94",
+        "state": "draft",
+        "note": "The original proof was checked at this PR head. Its module was subsequently integrated through PR #55.",
+        "checks": [
+          {
+            "name": "lean",
+            "run": 42194502912,
+            "conclusion": "success"
+          },
+          {
+            "name": "phase-iii-targeted",
+            "run": 42194503004,
+            "conclusion": "success"
+          },
+          {
+            "name": "build",
+            "run": 42194502991,
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "number": 50,
+        "title": "Add inventory-driven PVNP Lean formalization dashboard",
+        "head": "acd11cf8f8a49a46410563fd0cbcdacde0953e2e",
+        "state": "merged",
+        "merge_commit": "06564704f36dbb2050cd436449f4714e065b57e8",
+        "note": "Merged while its lean and PDF build checks were still running. It changed no Lean files; its lean check later passed.",
+        "checks": [
+          {
+            "name": "dashboard",
+            "run": 42198790101,
+            "conclusion": "success"
+          },
+          {
+            "name": "lean",
+            "run": 42198790258,
+            "conclusion": "success"
+          },
+          {
+            "name": "build",
+            "run": 42198790112,
+            "conclusion": "in_progress"
+          }
+        ]
+      },
+      {
+        "number": 53,
+        "title": "CL-1 parts 2–3: uniform Cook–Levin and SATLowerBound ↔ P_TM ≠ NP_TM",
+        "head": "fe017eb0c0a640eee4d3e4dc2354c4878f14fbe6",
+        "state": "merged",
+        "merge_commit": "a7507de65e66586b61664d24f6aaec0a5653b4f4",
+        "checks": [
+          {
+            "name": "build",
+            "run": 42270468897,
+            "conclusion": "success"
+          },
+          {
+            "name": "lean",
+            "run": 42270469201,
+            "conclusion": "success"
+          },
+          {
+            "name": "phase-iii-targeted",
+            "run": 42270468977,
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "number": 54,
+        "title": "II-24: finite-modification closure of P_TM and conditional NP-safety",
+        "head": "943965f66e47a613c7abdaf7d4246fd315d4c5f2",
+        "state": "merged",
+        "merge_commit": "713f484cbe4fd16a66ec780308e96fa1a972d9fe",
+        "checks": [
+          {
+            "name": "lean",
+            "run": 42274055010,
+            "conclusion": "success"
+          },
+          {
+            "name": "build",
+            "run": 42274055029,
+            "conclusion": "success"
+          },
+          {
+            "name": "phase-iii-targeted",
+            "run": 42274055062,
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "number": 55,
+        "title": "Phase XI integration: I-11 and I-3 scope tests, quadratic SAT bound, finite toroidal proof",
+        "head": "e2a3818d99b262e99c59382cab848fe9203158a8",
+        "state": "merged",
+        "merge_commit": "89058ccc00bfc578601965ea3b63309bf445635a",
+        "checks": [
+          {
+            "name": "lean",
+            "run": 42290102943,
+            "conclusion": "in_progress"
+          },
+          {
+            "name": "build",
+            "run": 42290103032,
+            "conclusion": "success"
+          },
+          {
+            "name": "phase-iii-targeted",
+            "run": 42290102926,
+            "conclusion": "success"
+          }
+        ]
+      }
+    ],
+    "staged": {
+      "sha": "df8824ca659b2e931eb4302251569d6c6c6140b3",
+      "lean_tree": "6f307fc9ff234fe054f7a8293d27ccb97c6d2508",
+      "source": "author-reported local Lean 4.23.0 exact-head run",
+      "build_jobs": 7386,
+      "axiom_audit": "passed, standard permitted Lean axioms",
+      "reference_tests": "371+371 concrete cases, zero failures",
+      "verified_at": "2026-11-12",
+      "pr": 73,
+      "note": "Source verification occurred in the author's independent development session. GitHub-hosted runners have not supplied a successful equivalent check; do not label this as verified on main."
+    }
   }
 }
