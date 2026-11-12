@@ -9,6 +9,13 @@ The percentages count manuscript statements whose exact form is kernel-checked. 
 measure progress toward proving P ≠ NP. The central theorem, `CrossingSAT.SATLowerBound`, is
 unproved, and the page assigns no percentage to it.
 
+**Current amended inventory (12 November 2026):** 79 Exact, 1 Restricted, 4 Refuted,
+7 Open. II-10's original two-phase writer proof was incorporated in PR #73, based on
+reported exact-head local Lean 4.23.0 build and permitted-axiom audit on `df8824c`.
+The reported verification is **not** a passing hosted GitHub Actions job: issue #59
+records runs that failed before executing steps. Exact conditional lemmas do not
+establish their unproved premises.
+
 ## Sources
 
 | File | Role |
@@ -52,7 +59,7 @@ directory or to the inventory.
   `verification.main` (commit, `git rev-parse <commit>:lean`, run ID, completion time). Add the
   result to `supporting` with its PR and exact-head checks, then regenerate. A supporting
   result never changes the 91-claim coverage.
-* A proof of the same manuscript statement goes in `formalizations` with its audited declaration and previous status. The finite toroidal module from PR #49 was integrated in #55.
+* A proof of the same manuscript statement goes in `formalizations` with its audited declaration and previous status. The II-10 record must retain the corrected empty-input boundary `c·max(n,1)^k` and its external verification provenance, distinct from prior successful hosted-main CI. The finite toroidal module from PR #49 was integrated in #55.
 
 Declaration links are pinned to the verified commit only while `lean/` is identical to it.
 Otherwise they point to `main`, and the page warns that newer Lean code is not yet recorded as
