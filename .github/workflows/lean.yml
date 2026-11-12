@@ -85,6 +85,9 @@ jobs:
       - name: Phase XVII finite Boolean torus and II-10 control certificates
         working-directory: .
         run: python3 -m unittest discover -s pvnp/tests -p 'test_phase_xvii_*.py'
+      - name: Phase XVIII concrete first-halt prefix regression
+        working-directory: .
+        run: python3 -m unittest discover -s pvnp/tests -p 'test_phase_xviii_*.py'
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt
