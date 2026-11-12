@@ -73,6 +73,13 @@ jobs:
       - name: Run original two-phase transducer regression
         working-directory: .
         run: python3 -m unittest discover -s pvnp/tests -p 'test_two_phase_tape_writer.py'
+      - name: Phase XVI kernel check finite torus and separator obstruction
+        run: lake build PVNP.ToroidalCNFLock PVNP.SeparatorAmplitude
+      - name: Phase XVI finite computations and nine-claim status check
+        working-directory: .
+        run: |
+          python3 -m unittest discover -s pvnp/tests -p 'test_phase_xvi_*.py'
+          python3 pvnp/phase_xvi/status.py --check
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt

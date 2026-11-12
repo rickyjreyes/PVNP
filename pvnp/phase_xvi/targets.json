@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "as_of": "2026-11-10",
+  "baseline": {
+    "Exact": 78,
+    "Restricted": 2,
+    "Refuted": 4,
+    "Open": 7,
+    "total": 91
+  },
+  "percent_meaning": "Subjective research work estimates, not verified claim completion, likelihood of truth, proof coverage or CI pass; do not auto-increment on commits.",
+  "status_authority": "pvnp/proofs/manuscript-lean-inventory.md",
+  "targets": [
+    {
+      "id": "II-10",
+      "title": "Original polynomial-time writers",
+      "status": "Restricted",
+      "research_estimate_percent": 70,
+      "metric": "research",
+      "evidence": "Fixed-radius machines, two-phase decoder, and generic discrete equivalence compile on merged PR #66.",
+      "remaining_obligation": "Prove MTM.Outputs and polynomial first-halt bound for the unrestricted polynomial window and original input encoders."
+    },
+    {
+      "id": "I-31",
+      "title": "Uniform separator theorem",
+      "status": "Open",
+      "research_estimate_percent": 35,
+      "metric": "research",
+      "evidence": "SeparatorPrice.mesh_price, contrast_of_readout and binary_cut_price apply under explicit contrasts.",
+      "remaining_obligation": "Establish trajectory-uniform readout contrast and coercivity for the frozen continuum model, or find countermodel."
+    },
+    {
+      "id": "I-37",
+      "title": "General toroidal locking",
+      "status": "Open",
+      "research_estimate_percent": 25,
+      "metric": "research",
+      "evidence": "ToroidalDiagonal odd/even finite ring lemmas verified; Phase XVI arbitrary-CNF logical torus candidate awaits Lean build.",
+      "remaining_obligation": "Realize arbitrary CNF in an admissible WCT physical torus with sound/complete robust readout and charged costs."
+    },
+    {
+      "id": "I-32",
+      "title": "Encoding-independent interface theorem",
+      "status": "Open",
+      "research_estimate_percent": 20,
+      "metric": "research",
+      "evidence": "Binary-cut graph price and storage upper bounds exist; parity bypass remains an obstruction.",
+      "remaining_obligation": "Prove universal interface lower bound over admissible algorithms and encodings, or construct a counterexample."
+    },
+    {
+      "id": "I-3",
+      "title": "Physical SAT dynamics and readout",
+      "status": "Open",
+      "research_estimate_percent": 35,
+      "metric": "research",
+      "evidence": "PartIPsiSat energy threshold, rounding and noisy certificate readout are proved.",
+      "remaining_obligation": "Build actual formula-dependent physical trajectory with certified convergence, completeness and robust observations."
+    },
+    {
+      "id": "I-11",
+      "title": "Continuum physical-computation equivalence",
+      "status": "Restricted",
+      "research_estimate_percent": 45,
+      "metric": "research",
+      "evidence": "Uniform discrete P/NP class equivalences are proved with charged encoding; unrestricted physical encoder countermodel known.",
+      "remaining_obligation": "Prove both charged physical-to-TM simulation and language-independent physical TM realization with PDE approximation errors."
+    },
+    {
+      "id": "I-2",
+      "title": "Nonconstructible wavefield family",
+      "status": "Open",
+      "research_estimate_percent": 15,
+      "metric": "research",
+      "evidence": "Conditional symbolic separation template is proved under an unproved nonconstructibility premise.",
+      "remaining_obligation": "Construct and verify an admissible wavefield family with independently justified nonconstructibility and complexity correspondence."
+    },
+    {
+      "id": "I-16",
+      "title": "Universal SAT lower bound",
+      "status": "Open",
+      "research_estimate_percent": 15,
+      "metric": "research",
+      "evidence": "Quadratic and near-quadratic single-tape lower bounds exist; CL-1 transfers equivalence to P vs NP.",
+      "remaining_obligation": "Prove or refute the unconditional superpolynomial bound for all uniform SAT deciders; finite data cannot establish it."
+    },
+    {
+      "id": "III-22",
+      "title": "Mathematical interpretation and classification",
+      "status": "Open",
+      "research_estimate_percent": 90,
+      "metric": "editorial",
+      "evidence": "Original Part III section is identified as an arrow-of-time interpretive remark, not a mathematical assertion.",
+      "remaining_obligation": "Decide editorial treatment and scope; no mathematical theorem can be claimed without a separately quantified proposition."
+    }
+  ]
+}
