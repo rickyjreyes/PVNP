@@ -38,6 +38,11 @@ function blobHash(buf) {
 }
 function fail(msg) { throw new Error(msg); }
 
+// Git for Windows may check out textual sources and generated files using CRLF.
+// Normalize only line endings before comparing content or calculating a Git
+// blob ID; any other substantive difference remains a hard failure.
+function normalizeNewlines(text) { return text.replace(/\r\n/g, "\n"); }
+
 /* ---- Lean declaration index (namespace-aware, comment-stripped) ---- */
 const DECL = /^\s*(?:@\[[^\]]*\]\s*)*(?:(?:private|protected|noncomputable|partial|unsafe|nonrec|scoped)\s+)*(theorem|lemma|def|abbrev|structure|inductive|class|instance|opaque|axiom)\s+([^\s:({\[⦃]+)/;
 
@@ -138,8 +143,9 @@ function alternatives(token) {
 function generate(overrides = {}) {
   const reg = overrides.registry || JSON.parse(fs.readFileSync(path.join(__dirname, "results.json"), "utf8"));
   const repo = reg.repository;
-  const invBuf = overrides.inventory !== undefined ? Buffer.from(overrides.inventory, "utf8")
+  const invRaw = overrides.inventory !== undefined ? Buffer.from(overrides.inventory, "utf8")
     : fs.readFileSync(path.join(ROOT, reg.inventory_path));
+  const invBuf = Buffer.from(normalizeNewlines(invRaw.toString("utf8")), "utf8");
   const current = parseInventory(invBuf.toString("utf8"), "current inventory");
 
   if (!gitHas(reg.historical.commit))
@@ -353,7 +359,7 @@ if (require.main === module) {
     const text = serialize(generate());
     if (process.argv.includes("--check")) {
       const old = fs.existsSync(DATA_FILE) ? fs.readFileSync(DATA_FILE, "utf8") : "";
-      if (old !== text) {
+      if (normalizeNewlines(old) !== normalizeNewlines(text)) {
         console.error("pvnp/dashboard/data.js is stale. Run: node pvnp/dashboard/build.js");
         process.exit(1);
       }
@@ -368,4 +374,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { generate, serialize, stripComments, lookup, alternatives };
+module.exports = { generate, serialize, normalizeNewlines, stripComments, lookup, alternatives };
