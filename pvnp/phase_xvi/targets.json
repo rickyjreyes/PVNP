@@ -1,14 +1,15 @@
 {
   "schema": 1,
-  "as_of": "2026-11-10",
+  "as_of": "2026-11-11",
   "baseline": {
     "Exact": 78,
     "Restricted": 2,
     "Refuted": 4,
-    "Open": 7,
+    "Open": 6,
+    "Interpretive": 1,
     "total": 91
   },
-  "percent_meaning": "Provisional subjective research progress; not verified proof coverage, probability of truth or original-claim completion. Phase XVII candidates do not imply status promotion.",
+  "percent_meaning": "Subjective research/editorial progress, not verified proof coverage. III-22 is editorially classified as Interpretive with no independent mathematical proposition; no additional theorem has been proved.",
   "status_authority": "pvnp/proofs/manuscript-lean-inventory.md",
   "targets": [
     {
@@ -86,11 +87,11 @@
     {
       "id": "III-22",
       "title": "Mathematical interpretation and classification",
-      "status": "Open",
-      "research_estimate_percent": 90,
+      "status": "Interpretive",
+      "research_estimate_percent": 100,
       "metric": "editorial",
-      "evidence": "Original Part III section is identified as an arrow-of-time interpretive remark, not a mathematical assertion.",
-      "remaining_obligation": "Decide editorial treatment and scope; no mathematical theorem can be claimed without a separately quantified proposition."
+      "evidence": "The exact original Part III §8 remark explicitly states that no P/NP-retrocausality equivalence has been proved and retains the section as a research direction rather than a theorem. PR #67 proposes auxiliary model-relative order-theoretic lemmas that do not alter the original remark.",
+      "remaining_obligation": "None for this interpretive entry; any independent future theorem needs a separately defined physical model, hypotheses, quantifiers, and claim identifier."
     }
   ]
 }
