@@ -286,8 +286,8 @@ history:
       - "[SUPERSEDED 2026-11-02: bi-infinite-tape model, TMtoWCC] unrestricted bounded-tape moving-head trace, boundary safety, acceptance/rejection"
       - "[SUPERSEDED 2026-11-02 except the universal interpreter: polynomial simulations and P/NP equivalence proved] actual serialized ordinary TM interpreter, polynomial simulation proofs, P/NP language equivalence"
 
-  astra_completion_2026_11_02:
-    branch: "astra/complete-program-20261102 (built on PR #14 head 98d0ac20)"
+  lean_completion_2026_11_02:
+    provenance: "original checkpoint built on PR #14 head 98d0ac20; see commit history"
     verification: "local `lake build PVNP` PASS with pinned Lean v4.23.0 / Mathlib v4.23.0; axiom audit `lean/audit/AxiomAudit.lean` (36 declarations, only propext, Classical.choice, Quot.sound); confirm with current-head GitHub Actions before citing as CI-verified"
     issue_11:
       classification: PROVED (for the frozen 1-D radius-one finite quiescent WCC model on Z and ordinary single-tape TMs)
@@ -327,7 +327,7 @@ history:
       frozen_model: "pvnp/proofs/physical-model-freeze.md"
       open: ["M1 two-way rail-preserving WCT-Phys/TM simulation", "M2 forced 2^Ω(n) distinguishable intermediate states for every decider", "M3 PDE well-posedness and L_n-uniform coercivity"]
     issue_12:
-      classification: "PARTIAL — completion gate met (every principal Part III statement matched to a Lean theorem, scoped counterexample, conditional statement, or documented obligation; see pvnp/proofs/astra-completion-report.md, Part III map). Remaining formalization items: L_check in P_TM (CNF-evaluating TM), 3-D Fubini lift of prop:highfreq. Physical-class separation OPEN."
+      classification: "PARTIAL — completion gate met (every principal Part III statement matched to a Lean theorem, scoped counterexample, conditional statement, or documented obligation; see pvnp/proofs/lean-completion-report-20261102.md, Part III map). Remaining formalization items: L_check in P_TM (CNF-evaluating TM), 3-D Fubini lift of prop:highfreq. Physical-class separation OPEN."
       new_proved:
         - "PartIIIAnalytic.curvature_cost_le (lem:h2bound), capacity_law (thm:capacity, conditional premise explicit)"
         - "PartIIIAnalytic.laplacian_const, zero_cost_counterexample (prop:zero_cost, Mathlib Laplacian on R^d)"
@@ -341,7 +341,7 @@ history:
       - "no physical P_WCC ≠ NP_WCC"
       - "no universal SAT lower bound in any physical model"
 
-  astra_second_tranche_2026_11_02:
+  lean_second_tranche_2026_11_02:
     verification: "local lake build PVNP PASS; axiom audit 50 declarations, all [propext, Classical.choice, Quot.sound]"
     issue_11_12_p_subset_np:
       module: PVNP/PSubsetNP.lean
