@@ -59,6 +59,8 @@ The original manuscripts, independent supplements, negative results, and Lean ch
 - [**Lean formalization**](lean/README.md) provides kernel-checkable supporting results for all three papers; it does not prove the still-open WCC separations.
 
 
+**Offline PDF and rights release review (no GitHub Actions):** `bash scripts/review_public_release_offline.sh --all` runs the consolidated PDF rebuild, independent PDF content/page checks, asset/history audit and approval-status report. It cannot grant a license or approve publication.
+
 **Reproduce all release checks locally:** `bash scripts/verify_public_release.sh` is the strict release preflight and invokes the combined PDF, Lean, axiom, manuscript and dashboard checks; `bash scripts/run_release_verification.sh --all` runs the underlying release-verification suite. The complete gate has **not** yet passed because the local PDF toolchain (`pdflatex` / `pdfinfo`) was unavailable. Require a successful final gate or an explicitly approved source-only publication scope before release. The individual source PDFs are retained only under ignored `.release-verification/` for review; a single consolidated PDF is the publication output.
 
 ## Build the one-PDF release
