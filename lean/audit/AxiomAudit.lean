@@ -702,6 +702,7 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhasePolynomialWriter.originalInputCode_fp
 #print axioms PVNP.TwoPhasePolynomialWriter.originalWM
 #print axioms PVNP.TwoPhasePolynomialWriter.originalWM_decides
+#print axioms PVNP.TwoPhasePolynomialWriter.originalWM_first_answer
 #print axioms PVNP.TwoPhasePolynomialWriter.P_Turing_subset_P_disc_original
 #print axioms PVNP.TwoPhasePolynomialWriter.originalWM_mem_P_disc
 #print axioms PVNP.TwoPhasePolynomialWriter.P_Turing_subset_P_disc_by_original

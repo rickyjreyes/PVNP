@@ -351,6 +351,19 @@ theorem originalWM_decides (M : MTM) (p : Polynomial ℕ) {Lang : Set (List Bool
       (2 * (c * max x.length 1 ^ k)) x Lang :=
   TwoPhaseUniform.original_uniform_decides M p _ _ hTime hCorrect hRadius x
 
+/-- **First-answer equality `T_{W_M}(x) = 2·T_M(x)`** for the unconditional machine, with no
+shape assumed for the time bound: if `M` first halts on `x` at time `T ≤ L(|x|)`, the first
+non-`run` output of `W_M` appears at update `2T` exactly and is `1` iff `M` halts in `q_acc`.
+In particular the manuscript's original bound `T_M(x) ≤ c·|x|^k` is covered. -/
+theorem originalWM_first_answer (M : MTM) (p : Polynomial ℕ) {x : List Bool} {T : ℕ}
+    (hf : M.FirstHalt x T) (hT : T ≤ p.eval x.length) :
+    (originalWM M p).dec x.length ((originalWM M p).cfg x (2 * T)) =
+        some (decide ((M.run (M.init x) T).q = M.qacc)) ∧
+      ∀ s < 2 * T, (originalWM M p).dec x.length ((originalWM M p).cfg x s) = none := by
+  obtain ⟨hout, hbefore⟩ := runtime M (p.eval x.length) hf hT
+  exact ⟨(TwoPhaseUniform.original_output M p _ _ x (2 * T)).trans hout,
+    fun s hs => (TwoPhaseUniform.original_output M p _ _ x s).trans (hbefore s hs)⟩
+
 /-- A radius polynomial dominating `c·max(n,1)^k`. -/
 noncomputable def radiusPoly (c k : ℕ) : Polynomial ℕ := C c * (X + 1) ^ k
 
