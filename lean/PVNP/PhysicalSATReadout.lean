@@ -48,6 +48,22 @@ If final readout contrast is delta, and the two initial readings differ by
 at most eps, one trajectory still changes by at least (delta-eps)/2.
 
 No claim is possible when eps is already as large as delta. -/
+/-- If each displayed outcome has absolute calibration error at most rho,
+the true physical detector separation loses at most 2rho of margin. -/
+theorem noisy_margin_implies_contrast
+    (obsYes obsNo physYes physNo threshold margin rho : ℝ)
+    (hyes : threshold + margin ≤ obsYes)
+    (hno : obsNo ≤ threshold - margin)
+    (hyerr : |obsYes - physYes| ≤ rho)
+    (hnerr : |obsNo - physNo| ≤ rho) :
+    2 * (margin - rho) ≤ |physYes - physNo| := by
+  have hy := (abs_le.mp hyerr).2
+  have hn := (abs_le.mp hnerr).1
+  have h : 2 * (margin - rho) ≤ physYes - physNo := by linarith
+  exact h.trans (le_abs_self _)
+
+/-- Initial detector contrast is not necessarily zero, even if
+the actual readout begins at the same nominal baseline. -/
 theorem two_outcomes_with_initial_skew
     (a₀ b₀ aT bT delta eps : ℝ)
     (hinit : |a₀ - b₀| ≤ eps)
@@ -150,6 +166,53 @@ theorem sat_pair_readout_resource_disjunction
     hL hγ hq hreal (run Fyes) (run Fno)
     (hsol Fyes) (hsol Fno) hT heps hblind hΓyes hΓno hinit hsep hByes hBno
 
+/-- Measured SAT correctness yields a physical contrast bound only after
+subtracting explicit readout error. This theorem uses the same frozen WCT
+PDE and one fixed detector for both SAT outcomes; no algorithm-independent
+SAT complexity lower bound is asserted. -/
+theorem noisy_sat_pair_readout_resource_disjunction
+    (hL : 0 < L) (hγ : 0 < γ)
+    {χv : ℓ2} (hq : L1q L (co L χv))
+    (hreal : rev (co L χv) = co L χv)
+    (run : CNF3 → ℝ → ℓ2)
+    (hsol : ∀ F, IsSolution L κ β γ (run F))
+    (observe : CNF3 → ℝ)
+    (Fyes Fno : CNF3) (hsat : Sat Fyes) (hunsat : ¬ Sat Fno)
+    {T margin rho eps threshold Byes Bno : ℝ}
+    (hT : 0 < T) (hmargin : 0 < margin)
+    (hrho : 0 ≤ rho) (heps : 0 ≤ eps)
+    (hblind : eps ≤ 2 * (margin - rho))
+    (hΓyes : 0 < Gam L κ β γ (aW L (co L χv))
+      (bW L (co L χv)) (run Fyes 0))
+    (hΓno : 0 < Gam L κ β γ (aW L (co L χv))
+      (bW L (co L χv)) (run Fno 0))
+    (hcorrect_yes : ∀ F, Sat F → threshold + margin ≤ observe F)
+    (hcorrect_no : ∀ F, ¬ Sat F → observe F ≤ threshold - margin)
+    (hnoise : ∀ F,
+      |observe F - Jdet L χv (run F T)| ≤ rho)
+    (hinit : |Jdet L χv (run Fyes 0) -
+        Jdet L χv (run Fno 0)| ≤ eps)
+    (hByes : (∫ t in (0 : ℝ)..T, ‖Dc L (run Fyes t)‖ ^ 2) ≤ Byes)
+    (hBno : (∫ t in (0 : ℝ)..T, ‖Dc L (run Fno t)‖ ^ 2) ≤ Bno) :
+    ((2 * (margin - rho) - eps) / 2) ^ 4 ≤
+      Gam L κ β γ (aW L (co L χv))
+        (bW L (co L χv)) (run Fyes 0) ^ 4 * T ^ 3 * Byes ∨
+    ((2 * (margin - rho) - eps) / 2) ^ 4 ≤
+      Gam L κ β γ (aW L (co L χv))
+        (bW L (co L χv)) (run Fno 0) ^ 4 * T ^ 3 * Bno := by
+  have hsep : 2 * (margin - rho) ≤
+      |Jdet L χv (run Fyes T) - Jdet L χv (run Fno T)| :=
+    noisy_margin_implies_contrast
+      (observe Fyes) (observe Fno)
+      (Jdet L χv (run Fyes T)) (Jdet L χv (run Fno T))
+      threshold margin rho
+      (hcorrect_yes Fyes hsat) (hcorrect_no Fno hunsat)
+      (hnoise Fyes) (hnoise Fno)
+  exact skewed_binary_readout_resource_disjunction
+    (L := L) (κ := κ) (β := β) (γ := γ)
+    hL hγ hq hreal (run Fyes) (run Fno)
+    (hsol Fyes) (hsol Fno) hT heps hblind hΓyes hΓno hinit hsep hByes hBno
+
 /-- If each trajectory's flux coefficient is bounded by the same G and both
 budgets are nonnegative, the disjunction implies a lower bound on their
 *combined* squared-Laplacian expenditure.
@@ -166,18 +229,22 @@ theorem combined_budget_of_disjunction
     (h : d ^ 4 ≤ Γu ^ 4 * T ^ 3 * Bu ∨
          d ^ 4 ≤ Γv ^ 4 * T ^ 3 * Bv) :
     d ^ 4 ≤ G ^ 4 * T ^ 3 * (Bu + Bv) := by
-  have hpowu : Γu ^ 4 ≤ G ^ 4 := by gcongr
-  have hpowv : Γv ^ 4 ≤ G ^ 4 := by gcongr
+  have hpowu : Γu ^ 4 ≤ G ^ 4 := pow_le_pow_left₀ hΓu hu 4
+  have hpowv : Γv ^ 4 ≤ G ^ 4 := pow_le_pow_left₀ hΓv hv 4
   rcases h with h | h
   · calc
       d ^ 4 ≤ Γu ^ 4 * T ^ 3 * Bu := h
-      _ ≤ G ^ 4 * T ^ 3 * Bu := by gcongr
+      _ ≤ G ^ 4 * T ^ 3 * Bu := by
+        exact mul_le_mul_of_nonneg_right
+          (mul_le_mul_of_nonneg_right hpowu (by positivity)) hBu
       _ ≤ G ^ 4 * T ^ 3 * (Bu + Bv) := by
         have hp : 0 ≤ G ^ 4 * T ^ 3 := by positivity
         nlinarith [mul_nonneg hp hBv]
   · calc
       d ^ 4 ≤ Γv ^ 4 * T ^ 3 * Bv := h
-      _ ≤ G ^ 4 * T ^ 3 * Bv := by gcongr
+      _ ≤ G ^ 4 * T ^ 3 * Bv := by
+        exact mul_le_mul_of_nonneg_right
+          (mul_le_mul_of_nonneg_right hpowv (by positivity)) hBv
       _ ≤ G ^ 4 * T ^ 3 * (Bu + Bv) := by
         have hp : 0 ≤ G ^ 4 * T ^ 3 := by positivity
         nlinarith [mul_nonneg hp hBu]
