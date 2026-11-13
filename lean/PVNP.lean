@@ -241,3 +241,9 @@ import PVNP.WCTSATScaling
 import PVNP.WCTSATBlind
 import PVNP.WCTLocalSATEnergy
 import PVNP.WCTDistributedSAT
+-- Part I I-3 adversarial test: satisfiable 3-CNF with a nonglobal sign-blind energy well.
+import PVNP.SATFalseWell
+-- Part II: exact finite-set Fourier spectral tail bound from the actual torus Laplacian weights.
+import PVNP.TorusSpectralTail
+-- Part III: conserved-data time-uniform Laplacian and regularized curvature envelope on frozen PDE.
+import PVNP.WCTRegularizedCeiling
