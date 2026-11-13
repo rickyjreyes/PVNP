@@ -773,3 +773,12 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.PhysicalReadoutCapacity.two_outcomes_require_change
 #print axioms PVNP.PhysicalReadoutCapacity.binary_readout_resource_disjunction
 #print axioms PVNP.PhysicalReadoutCapacity.no_binary_readout_below_both_budgets
+
+-- Conditional WCT SAT physical readout. These do not prove a SAT time lower bound.
+#print axioms PVNP.PhysicalSATReadout.margin_implies_contrast
+#print axioms PVNP.PhysicalSATReadout.noisy_margin_implies_contrast
+#print axioms PVNP.PhysicalSATReadout.two_outcomes_with_initial_skew
+#print axioms PVNP.PhysicalSATReadout.skewed_binary_readout_resource_disjunction
+#print axioms PVNP.PhysicalSATReadout.sat_pair_readout_resource_disjunction
+#print axioms PVNP.PhysicalSATReadout.noisy_sat_pair_readout_resource_disjunction
+#print axioms PVNP.PhysicalSATReadout.combined_budget_of_disjunction
