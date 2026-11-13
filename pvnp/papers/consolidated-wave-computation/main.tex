@@ -4,7 +4,16 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb,booktabs,array,enumitem}
 \usepackage{pdfpages}
-\usepackage{xcolor}
+% pdfpages 0.6h may forward the graphicx key artifact, which some
+% mixed-version MiKTeX graphicx installations do not yet define.
+% This volume does not enable PDF tagging. Provide a no-op fallback only
+% if graphicx lacks the key; up-to-date graphics packages are unaffected.
+\makeatletter
+\@ifundefined{KV@Gin@artifact}{%
+  \define@key{Gin}{artifact}[true]{}%
+}{}
+\makeatother
+\usepackage{xcolor>
 \usepackage[colorlinks=true,linkcolor=blue!55!black,urlcolor=blue!55!black]{hyperref}
 \usepackage{microtype}
 \setlength{\parindent}{0pt}
