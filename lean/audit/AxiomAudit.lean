@@ -862,3 +862,16 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.WCTLocalSATEnergy.sat_ground_energy_requires_causal_coverage
 #print axioms PVNP.WCTLocalSATEnergy.no_sat_energy_decider_below_cone
 #print axioms PVNP.WCTLocalSATEnergy.last_site_sat_energy_linear_bound
+
+-- Phase XXI: n-bit distributed 3-CNF, SAT truth, and charged light-cone lower bounds.
+#print axioms PVNP.WCTDistributedSAT.sourceFormula_length
+#print axioms PVNP.WCTDistributedSAT.formulaOfBits_sat_iff
+#print axioms PVNP.WCTDistributedSAT.sourceFormula_sat_iff
+#print axioms PVNP.WCTDistributedSAT.allTrue_sat
+#print axioms PVNP.WCTDistributedSAT.oneFalse_unsat
+#print axioms PVNP.WCTDistributedSAT.sources_agree_before
+#print axioms PVNP.WCTDistributedSAT.no_distributed_sat_decider_below_cone
+#print axioms PVNP.WCTDistributedSAT.distributed_sat_requires_causal_coverage
+#print axioms PVNP.WCTDistributedSAT.distributed_energy_requires_causal_coverage
+#print axioms PVNP.WCTDistributedSAT.distributed_ground_energy_requires_causal_coverage
+#print axioms PVNP.WCTDistributedSAT.distributed_energy_last_site_linear
