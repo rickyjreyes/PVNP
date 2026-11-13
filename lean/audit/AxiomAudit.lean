@@ -890,3 +890,9 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 -- Part II: quantitative high-frequency tail from the actual torus Fourier weights.
 #print axioms PVNP.TorusSpectralTail.finite_high_frequency_mass_bound
 #print axioms PVNP.TorusSpectralTail.finite_tail_mass_from_curvature_budget
+
+-- Part III: conservation-derived frozen-torus regularized curvature majorant.
+#print axioms PVNP.WCTRegularizedCeiling.lapBudget_nonneg
+#print axioms PVNP.WCTRegularizedCeiling.frozen_torus_laplacian_ceiling
+#print axioms PVNP.WCTRegularizedCeiling.frozen_torus_laplacian_squared_ceiling
+#print axioms PVNP.WCTRegularizedCeiling.regularized_laplacian_envelope_ceiling
