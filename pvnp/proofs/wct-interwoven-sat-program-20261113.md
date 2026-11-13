@@ -233,7 +233,22 @@ PDE alone.
   on bounded-degree expanders with odd charge every resolution refutation has size `2^{Ω(m)}`
   (Urquhart 1987; Ben-Sasson–Wigderson 2001). Expansion, frustration and a large configuration
   space are compatible with polynomial-time decision.
-* *Transport* (Phase C): the readout bound is at best inverse-polynomial.
+* *Transport* (Phase C): the readout bound is at best inverse-polynomial, and a blind SAT-correct
+  device meets it with one budget for every formula (`WCTSATBlind.blind_device`).
+
+**The seven candidate routes.** Each was examined against the barrier above: a route that yields a
+superpolynomial bound for every admissible solver must, in particular, defeat the charged
+zero-mode devices, i.e. prove `P_TM ≠ NP_TM`.
+
+| Route | What is established | Why it does not give a universal bound |
+|---|---|---|
+| Treewidth and separators | The uniform separator price (I-31) is refuted for the frozen class (`SeparatorFrozen.no_uniform_separator_price`); interface growth (I-32) is equivalent to `P_TM ≠ NP_TM` in the charged constant class (`ExpanderInterface.expanderGrowth_SAT_iff`) | Large separators of the interaction graph do not force large interfaces or budgets in the field, and families decidable in polynomial time (e.g. bounded treewidth by dynamic programming, a standard fact not formalized here) have polynomial-resource devices (`zero_charges_P`) |
+| Coupling frustration | Sign-sensitive coupling frustrates XOR-type clauses and hides satisfiability (`naive_Emin`); the sign-blind repair removes the effect (`sat_iff_EminSB_eq_zero`) | Frustration changes the energy landscape, not the cost of deciding: frustrated parity systems (Tseitin) are decided by component parities |
+| Spectral gaps and relaxation time | The frozen flow is conservative and time-reversible, so it has no relaxation at all and cannot converge to a stable lock from outside it (`Torus.no_locking`) | A relaxation-time bound needs a dissipative model outside the frozen class, and in any class containing the zero-mode devices it would again prove `P_TM ≠ NP_TM` |
+| Measurement precision | The readout error and margin are charged (`ZeroDev.res` contains `1/margin`; `device_pair_budget` uses `m − ρ`) | Fixed precision `3/(2L)` suffices for every `P_TM` language |
+| State-preparation complexity | The encoder's machine time is charged (`ZeroDev.res`) | In the zero-mode class the statement is exactly `P_TM ≠ NP_TM` (`zeroSuperpoly_SAT_iff`) |
+| Curvature expenditure | `device_pair_budget` gives an inverse-polynomial lower bound under blindness | Preloading (`preloaded_device`) and blind devices (`blind_device`) keep the budget constant in the input size |
+| Bounded-degree adversarial families | Tseitin formulas on bounded-degree expanders need resolution refutations of size `2^{Ω(m)}` (cited, not formalized) | Their satisfiability is a polynomial-time parity condition (`TseitinSAT.tseitin_mem_SAT_dense_iff_comp`) |
 
 ## Phase F: transfer to classical computation
 
