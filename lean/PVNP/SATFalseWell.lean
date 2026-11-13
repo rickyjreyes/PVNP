@@ -54,7 +54,7 @@ def trapFormula : CNF3 := [cMain, c01, c01, c12, c12, c20, c20]
 theorem trapFormula_sat : Sat trapFormula := by
   refine ⟨fun _ => true, ?_⟩
   intro cl hcl
-  simp only [trapFormula, List.mem_cons, List.mem_singleton] at hcl
+  simp only [trapFormula, List.mem_cons, List.not_mem_nil, or_false] at hcl
   rcases hcl with rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
     decide
 
