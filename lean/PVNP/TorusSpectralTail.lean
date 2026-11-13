@@ -31,7 +31,7 @@ open PVNP.Torus Finset
 /-- On a finite set of modes all having squared frequency at least K²,
 the squared Laplacian spectral weight pays at least K⁴ times their mass. -/
 theorem finite_high_frequency_mass_bound
-    (L K : ℝ) (v : ℓ2) (S : Finset Z2) (hK : 0 < K)
+    (L K : ℝ) (v : ℓ2) (S : Finset Z2)
     (hS : ∀ k ∈ S, K ^ 2 ≤ qf L k) :
     K ^ 4 * (∑ k ∈ S, ‖co L v k‖ ^ 2) ≤
       ∑ k ∈ S, (qf L k) ^ 2 * ‖co L v k‖ ^ 2 := by
@@ -53,7 +53,7 @@ theorem finite_tail_mass_from_curvature_budget
     (hS : ∀ k ∈ S, K ^ 2 ≤ qf L k)
     (hD : (∑ k ∈ S, (qf L k) ^ 2 * ‖co L v k‖ ^ 2) ≤ D ^ 2) :
     (∑ k ∈ S, ‖co L v k‖ ^ 2) ≤ D ^ 2 / K ^ 4 := by
-  have htail := finite_high_frequency_mass_bound L K v S hK hS
+  have htail := finite_high_frequency_mass_bound L K v S hS
   apply (le_div_iff₀ (pow_pos hK 4)).2
   nlinarith [htail, hD]
 
