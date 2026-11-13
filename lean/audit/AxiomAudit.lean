@@ -782,3 +782,62 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.PhysicalSATReadout.sat_pair_readout_resource_disjunction
 #print axioms PVNP.PhysicalSATReadout.noisy_sat_pair_readout_resource_disjunction
 #print axioms PVNP.PhysicalSATReadout.combined_budget_of_disjunction
+
+-- Interwoven-Ψ SAT energy model (Phase B). Energy landscapes only: no dynamics, no time bound.
+#print axioms PVNP.InterwovenSAT.sat_iff_zero_energySB
+#print axioms PVNP.InterwovenSAT.unsat_energySB_gap
+#print axioms PVNP.InterwovenSAT.sat_iff_energySB_lt_eighth
+#print axioms PVNP.InterwovenSAT.measure_satisfies
+#print axioms PVNP.InterwovenSAT.xor_energy_pos
+#print axioms PVNP.InterwovenSAT.xor_energy_ge_quarter
+#print axioms PVNP.InterwovenSAT.xor_energy_at_I
+#print axioms PVNP.InterwovenSAT.single_var_energy
+#print axioms PVNP.InterwovenSAT.naive_ground_energy_blind
+#print axioms PVNP.InterwovenSAT.naive_zero_energy_fails
+#print axioms PVNP.InterwovenSAT.naive_threshold_fails
+#print axioms PVNP.InterwovenSAT.min_formulation_vacuous
+#print axioms PVNP.InterwovenSAT.satisfying_not_ground
+#print axioms PVNP.InterwovenSAT.sat_iff_EminSB_eq_zero
+#print axioms PVNP.InterwovenSAT.unsat_iff_EminSB_ge
+#print axioms PVNP.InterwovenSAT.naive_Emin
+#print axioms PVNP.InterwovenSAT.sat_of_locks
+#print axioms PVNP.InterwovenSAT.locks_iff_sat_iff
+#print axioms PVNP.InterwovenSAT.unsat_gap_general
+#print axioms PVNP.InterwovenSAT.toroidal_locking_iff_unsat
+#print axioms PVNP.InterwovenSAT.naive_toroidal_locking_fails
+
+-- Frozen-torus SAT device bound and preloaded-answer countermodel (Phase C). No SAT lower bound.
+#print axioms PVNP.WCTSATDevice.Gam_nonneg
+#print axioms PVNP.WCTSATDevice.Jdet_const_of_Gam_eq_zero
+#print axioms PVNP.WCTSATDevice.change_budget
+#print axioms PVNP.WCTSATDevice.device_pair_budget
+#print axioms PVNP.WCTSATDevice.budget_mono
+#print axioms PVNP.WCTSATDevice.Gam_le_of_bounds
+#print axioms PVNP.WCTSATDevice.device_pair_budget_of_preparation
+#print axioms PVNP.WCTSATDevice.co_mode
+#print axioms PVNP.WCTSATDevice.fc_const
+#print axioms PVNP.WCTSATDevice.zeroMode_isSolution
+#print axioms PVNP.WCTSATDevice.Dc_zeroMode
+#print axioms PVNP.WCTSATDevice.budget_zeroMode
+#print axioms PVNP.WCTSATDevice.mass_zeroMode
+#print axioms PVNP.WCTSATDevice.Jdet_mode_zero
+#print axioms PVNP.WCTSATDevice.rev_dco
+#print axioms PVNP.WCTSATDevice.aW_dco_pos
+#print axioms PVNP.WCTSATDevice.Jdet_zeroMode_detector
+#print axioms PVNP.WCTSATDevice.Gam_zeroMode_pos
+#print axioms PVNP.WCTSATDevice.preloaded_device
+#print axioms PVNP.WCTSATDevice.preloaded_skew_eq_contrast
+#print axioms PVNP.WCTSATDevice.oneClause_sat
+#print axioms PVNP.WCTSATDevice.blindness_necessary
+
+-- Superpolynomial-resource barrier (Phase D): such a bound for SAT proves P_TM ≠ NP_TM.
+#print axioms PVNP.WCTSATScaling.not_superpoly_of_poly
+#print axioms PVNP.WCTSATScaling.superpoly_implies_not_mem_P
+#print axioms PVNP.WCTSATScaling.superpoly_SAT_implies_P_ne_NP
+#print axioms PVNP.WCTSATScaling.zdecides_iff
+#print axioms PVNP.WCTSATScaling.ZeroDev.res_le
+#print axioms PVNP.WCTSATScaling.zero_charges_P
+#print axioms PVNP.WCTSATScaling.zdecides_mem_P
+#print axioms PVNP.WCTSATScaling.zeroSuperpoly_iff
+#print axioms PVNP.WCTSATScaling.zeroSuperpoly_SAT_iff
+#print axioms PVNP.WCTSATScaling.torus_superpoly_implies_P_ne_NP
