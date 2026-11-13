@@ -43,7 +43,7 @@ class OfflineReleaseTests(unittest.TestCase):
 
     def test_pdf_verifier_decodes_utf8_not_windows_cp1252(self):
         # 0x90 occurs inside multibyte UTF-8; Windows CP1252 cannot decode it.
-        text = "wave ψ and curvature —"
+        text = "wave ψₐ and curvature"
         with patch.object(pdfverify.subprocess, "check_output",
                           return_value=text.encode("utf-8")) as run:
             self.assertEqual(pdfverify.command("pdftotext", "-enc", "UTF-8",
