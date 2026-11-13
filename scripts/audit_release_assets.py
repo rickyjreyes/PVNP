@@ -38,6 +38,16 @@ def metadata_flags(metadata):
     return [line.split(":",1)[0].strip() for line in metadata.splitlines()
             if ":" in line and PRIVATE_META.search(line.split(":",1)[1])]
 
+def extract_pdf_text(pdf: Path) -> tuple[bool, str]:
+    """Return Poppler PDF text as UTF-8 without Windows locale decoding."""
+    result = subprocess.run(
+        ["pdftotext", "-enc", "UTF-8", str(pdf), "-"],
+        capture_output=True)
+    if result.returncode != 0:
+        return False, ""
+    return True, result.stdout.decode("utf-8")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--history", action="store_true")
@@ -58,15 +68,9 @@ def main():
                     record["metadata_fields_to_review"] = metadata_flags(
                         info.stdout.decode("utf-8"))
             if shutil.which("pdftotext"):
-                # Poppler emits UTF-8 when requested; decode explicitly rather
-                # than letting Python use CP1252 on Windows. Keep stderr apart
-                # from the scanned PDF text.
-                body = subprocess.run(
-                    ["pdftotext", "-enc", "UTF-8", str(p), "-"],
-                    capture_output=True)
-                record["pdf_text_checked"] = body.returncode == 0
-                if body.returncode == 0:
-                    pdf_text = body.stdout.decode("utf-8")
+                checked, pdf_text = extract_pdf_text(p)
+                record["pdf_text_checked"] = checked
+                if checked:
                     record["pdf_text_review_flag_counts"] = {
                         name: len(pattern.findall(pdf_text))
                         for name, pattern in PDF_TEXT_RISKS.items()
