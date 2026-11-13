@@ -245,3 +245,5 @@ import PVNP.WCTDistributedSAT
 import PVNP.SATFalseWell
 -- Part II: exact finite-set Fourier spectral tail bound from the actual torus Laplacian weights.
 import PVNP.TorusSpectralTail
+-- Part III: conserved-data time-uniform Laplacian and regularized curvature envelope on frozen PDE.
+import PVNP.WCTRegularizedCeiling
