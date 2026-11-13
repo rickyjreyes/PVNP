@@ -102,6 +102,8 @@ def main() -> None:
          "The consolidated volume does not contain current inventory totals")
     must("Original complete polynomial-time window and initial-configuration transducers." not in combined,
          "Current consolidated register contains outdated II-10 gate")
+    must("\\usepackage{xcolor}" in combined and "\\usepackage{xcolor>" not in combined,
+         "Malformed xcolor package line in the consolidated LaTeX preamble")
     must(combined.count("\\includepdf[") == 4, "Consolidated volume not binding four parts")
     for name in ("part-i", "part-ii", "part-iii", "supplement"):
         must("archive/" + name + ".pdf" in combined,
