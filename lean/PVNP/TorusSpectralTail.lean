@@ -88,8 +88,8 @@ theorem infinite_high_frequency_mass_bound
         K ^ 4 * ‖co L v k‖ ^ 2 ≤ (qf L k) ^ 2 * ‖co L v k‖ ^ 2 :=
           mul_le_mul_of_nonneg_right hq4 (sq_nonneg _)
         _ = ‖Dc L v k‖ ^ 2 := by
-          rw [Dc_apply, norm_mul, norm_neg, Complex.norm_real,
-            Real.norm_eq_abs, abs_of_nonneg hq, mul_pow]
+          simp only [Dc_apply, norm_mul, Complex.norm_real,
+            Real.norm_eq_abs, abs_neg, abs_of_nonneg hq, mul_pow]
     · simp only [if_neg hk, mul_zero]
       exact sq_nonneg _
   calc
