@@ -84,7 +84,7 @@ theorem formulaOfBits_sat_iff (bs : List Bool) :
     intro cl hcl
     change cl ∈ gPos :: bs.map localClause at hcl
     rcases List.mem_cons.mp hcl with h | h
-    · rw [h.symm, pos_clause_eval]
+    · rw [h, pos_clause_eval]
       rfl
     · rcases List.mem_map.mp h with ⟨b, hb, hbc⟩
       have hc : cl = gPos := by
