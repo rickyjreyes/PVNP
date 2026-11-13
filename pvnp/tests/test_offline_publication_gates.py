@@ -41,6 +41,30 @@ class OfflineReleaseTests(unittest.TestCase):
         self.assertTrue(assets.PDF_TEXT_RISKS["email_address"].search("contact@example.org"))
         self.assertTrue(assets.PDF_TEXT_RISKS["home_directory_path"].search("C:\\Users\\example"))
 
+    def test_asset_scanner_extracts_utf8_pdf_text_on_windows(self):
+        # U+2090 contains UTF-8 byte 0x90, which Windows CP1252 cannot decode.
+        text = "Author contact@example.org: ψₐ"
+        reply = assets.subprocess.CompletedProcess(
+            args=["pdftotext"], returncode=0, stdout=text.encode("utf-8"),
+            stderr=b"MiKTeX notice")
+        with patch.object(assets.subprocess, "run", return_value=reply) as run:
+            ok, extracted = assets.extract_pdf_text(Path("sample.pdf"))
+        self.assertTrue(ok)
+        self.assertEqual(extracted, text)
+        self.assertEqual(run.call_args.args[0],
+                         ["pdftotext", "-enc", "UTF-8", "sample.pdf", "-"])
+        self.assertTrue(run.call_args.kwargs["capture_output"])
+        self.assertEqual(len(assets.PDF_TEXT_RISKS["email_address"].findall(extracted)), 1)
+
+    def test_asset_scanner_rejects_failed_pdf_text_extraction(self):
+        reply = assets.subprocess.CompletedProcess(
+            args=["pdftotext"], returncode=1, stdout=b"",
+            stderr=b"PDF text extraction failed")
+        with patch.object(assets.subprocess, "run", return_value=reply):
+            ok, extracted = assets.extract_pdf_text(Path("sample.pdf"))
+        self.assertFalse(ok)
+        self.assertEqual(extracted, "")
+
     def test_pdf_verifier_decodes_utf8_not_windows_cp1252(self):
         # 0x90 occurs inside multibyte UTF-8; Windows CP1252 cannot decode it.
         text = "wave ψₐ and curvature"
