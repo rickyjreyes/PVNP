@@ -841,3 +841,15 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.WCTSATScaling.zeroSuperpoly_iff
 #print axioms PVNP.WCTSATScaling.zeroSuperpoly_SAT_iff
 #print axioms PVNP.WCTSATScaling.torus_superpoly_implies_P_ne_NP
+
+-- Blind frozen-torus SAT device with one fixed budget (Phase XX). Its encoder is a SAT decider.
+#print axioms PVNP.WCTSATBlind.co_twoMode
+#print axioms PVNP.WCTSATBlind.pr_dco_tc
+#print axioms PVNP.WCTSATBlind.inner_eq_tsum
+#print axioms PVNP.WCTSATBlind.Jdet_twoMode
+#print axioms PVNP.WCTSATBlind.qf_e1v
+#print axioms PVNP.WCTSATBlind.Jdot_twoMode
+#print axioms PVNP.WCTSATBlind.flux_condition_of_nonpos
+#print axioms PVNP.WCTSATBlind.exists_pos_ne_of_hasDerivAt
+#print axioms PVNP.WCTSATBlind.blind_pair_exists
+#print axioms PVNP.WCTSATBlind.blind_device

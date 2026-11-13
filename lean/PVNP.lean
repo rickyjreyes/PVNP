@@ -236,3 +236,6 @@ import PVNP.WCTSATDevice
 -- A superpolynomial physical resource bound for SAT over any class containing the charged
 -- zero-mode devices proves P_TM ≠ NP_TM; in the zero-mode class it is equivalent to it.
 import PVNP.WCTSATScaling
+-- A blind (equal initial readings) SAT-correct frozen-torus device whose curvature budget is one
+-- constant for every formula: two-mode readings and fluxes computed exactly.
+import PVNP.WCTSATBlind

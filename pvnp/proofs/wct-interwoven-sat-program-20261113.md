@@ -184,13 +184,15 @@ SAT easy; it shows that a transport lower bound has to charge the encoder or ass
 least an inverse polynomial and `G`, `T` are polynomially bounded, this is an inverse-polynomial
 lower bound; it never grows with the formula size by itself.
 
-**Missing lemma (not formalized).** A blind SAT-correct device with constant budget: one exact
-solution whose reading changes, `J(ψ(T)) ≠ J(ψ(0))`, paired with a zero-mode state of the same
-initial reading. For a two-mode state `a e₀ + b e_{e₁}` the flux identity gives
-`J'(0) = (κ² − (κ − q)²) Im(a b̄)/L` with `q = (2π/L)²` (hand computation; the nonlinearity drops
-out of the flux identity), which is nonzero for suitable `a, b`; the regression
-`test_wct_sat_device.py` checks the non-constancy numerically. With a SAT-deciding encoder this
-device uses the same two trajectories for every formula, so its budget does not grow at all.
+**Blindness does not force growth either** (`PVNP.WCTSATBlind`, PR #92). For the two-mode
+states `a e₀ + b e_{e₁}` the detector reads `J = (|a|² + |b|² + Re(ā b))/L` (`Jdet_twoMode`) and
+the flux identity gives `J' = ((κ − q)² − κ²) Im(ā b)/L`, `q = (2π/L)²` (`Jdot_twoMode`; the
+nonlinearity does not contribute). The states `b = ±i` (with `a = 1`) therefore read the same and
+have opposite fluxes when `(κ − q)² ≠ κ²`, for example for every `κ ≤ 0`. Their exact solutions
+separate at some `T > 0` (`blind_pair_exists`), which gives a SAT-correct device with initial
+skew `0` for every pair of formulas whose curvature budget is bounded by one constant for every
+formula (`blind_device`). The encoder is again a SAT decider; `test_wct_sat_device.py` checks the
+flux formula numerically.
 
 ## Phase D: superpolynomial resources (`PVNP.WCTSATScaling`)
 
