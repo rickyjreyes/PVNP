@@ -97,3 +97,42 @@ Do not merge or upgrade a manuscript claim on the strength of an
 unverified candidate. After the exact-head checks pass, classify the new
 theorems as *supporting results*, without changing any of the existing
 four Open manuscript claims.
+
+
+## Extended explicit CNF encoding (same PR)
+
+`lean/PVNP/WCTDistributedSAT.lean` strengthens the earlier two-formula
+selector to a *syntactically explicit, linearly sized family*.
+
+For each spatial input `c : Fin n → Bool`, define `sourceFormula c`
+with exactly `n+1` triple-literal 3-CNF clauses. Its first clause
+forces `x₀=true`; the clause corresponding to each input bit `c i`
+requires `x₀` if `c i=true`, and `¬x₀` otherwise.
+
+Hence, with no SAT decision oracle in formula construction,
+
+```text
+Sat (sourceFormula c) ↔ ∀ i, c i = true.
+```
+
+A pair of raw input configurations differing at exactly any position
+`j` (one all-true, the other false at `j`) has opposite SAT truth.
+The complete preprocessed/local-computed/readout pipeline cannot
+distinguish them unless
+
+```text
+j.val < totalReach stages + m.
+```
+
+This is also proved for the sign-blind energy predicate
+`∃ Ψ, Admissible Ψ ∧ energySB (sourceFormula c) lam mu Ψ < 1/8`
+and the ground energy predicate `EminSB (sourceFormula c) lam mu = 0`.
+
+The same model restrictions remain: the source is a raw spatial input;
+every stage is local and explicitly charged, the output only observes a
+prefix, and the formula is a fixed mathematical interpretation rather
+than a spatial PDE encoding. The family remains algorithmically easy
+(AND of input bits), so the result is linear, not superpolynomial.
+
+The exact-head Lean build and axiom audit must pass before labeling
+these declarations kernel-verified.
