@@ -239,3 +239,5 @@ import PVNP.WCTSATScaling
 -- A blind (equal initial readings) SAT-correct frozen-torus device whose curvature budget is one
 -- constant for every formula: two-mode readings and fluxes computed exactly.
 import PVNP.WCTSATBlind
+import PVNP.WCTLocalSATEnergy
+import PVNP.WCTDistributedSAT
