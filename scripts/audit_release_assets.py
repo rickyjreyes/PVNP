@@ -38,6 +38,16 @@ def metadata_flags(metadata):
     return [line.split(":",1)[0].strip() for line in metadata.splitlines()
             if ":" in line and PRIVATE_META.search(line.split(":",1)[1])]
 
+def extract_pdf_text(pdf: Path) -> tuple[bool, str]:
+    """Return Poppler PDF text as UTF-8 without Windows locale decoding."""
+    result = subprocess.run(
+        ["pdftotext", "-enc", "UTF-8", str(pdf), "-"],
+        capture_output=True)
+    if result.returncode != 0:
+        return False, ""
+    return True, result.stdout.decode("utf-8")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--history", action="store_true")
@@ -50,16 +60,19 @@ def main():
             record = {"path": path, "sha256": hashlib.sha256(p.read_bytes()).hexdigest(),
                       "size": p.stat().st_size, "metadata_checked": False}
             if shutil.which("pdfinfo"):
-                info = subprocess.run(["pdfinfo", str(p)], capture_output=True, text=True)
+                # Read stdout as bytes to avoid locale-dependent Windows CP1252
+                # decoding in subprocess reader threads.
+                info = subprocess.run(["pdfinfo", str(p)], capture_output=True)
                 record["metadata_checked"] = info.returncode == 0
                 if info.returncode == 0:
-                    record["metadata_fields_to_review"] = metadata_flags(info.stdout)
+                    record["metadata_fields_to_review"] = metadata_flags(
+                        info.stdout.decode("utf-8"))
             if shutil.which("pdftotext"):
-                body = subprocess.run(["pdftotext", str(p), "-"], capture_output=True, text=True)
-                record["pdf_text_checked"] = body.returncode == 0
-                if body.returncode == 0:
+                checked, pdf_text = extract_pdf_text(p)
+                record["pdf_text_checked"] = checked
+                if checked:
                     record["pdf_text_review_flag_counts"] = {
-                        name: len(pattern.findall(body.stdout))
+                        name: len(pattern.findall(pdf_text))
                         for name, pattern in PDF_TEXT_RISKS.items()
                     }
             pdfs.append(record)
