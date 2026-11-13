@@ -18,9 +18,10 @@ Both statements are finite-sum consequences of the Fourier spectral
 weighting; no imaginary exact cutoff or linearity of the nonlinear
 evolution is presumed.
 
-This is NOT a theorem of polynomial-time numerical simulation, and
-does not assert that all Fourier tails over an infinite set are small
-without the additional summability / limiting argument.
+The second pair of theorems below supplies the complete infinite-set
+bound by using the existing summability of ℓ² coefficient energy and
+of the Laplacian Fourier coefficients. No polynomial-time numerical
+simulation or exact preservation of finite Fourier support is assumed.
 -/
 
 namespace PVNP.TorusSpectralTail
