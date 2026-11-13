@@ -30,12 +30,19 @@ of WCT Fourier modes. In combination with the existing
 `TorusFlux.normD_eq_integral`, the same weight is the classical
 spatial Laplacian norm for sufficiently regular fields.
 
-**Important limits:** these two statements do not yet justify
-passing to the *entire infinite high-frequency tail*; that requires
-summability and an appropriate monotone-limit argument. Nor do they
-show that the PDE evolution can be numerically computed in polynomial
-time, or that an approximately bandlimited state is an exactly
-bandlimited solution.
+**Infinite-tail completion:** The further declarations
+`infinite_high_frequency_mass_bound` and
+`infinite_tail_mass_from_curvature_budget` bound the total infinite
+spectral tail using `Torus.summable_co_sq`, `summable_sq (Dc L v)`,
+`Torus.Dc_apply` and `Torus.norm_sq_eq`. They prove
+`K⁴ ∑'_{qf≥K²} |co|² ≤ ‖Dc L v‖²` and therefore
+`∑'_{qf≥K²} |co|² ≤ D²/K⁴` whenever
+`‖Dc L v‖² ≤ D²`. These are genuine infinite Fourier sums,
+not a sharp cutoff on the nonlinear state.
+
+**Remaining limits:** They do not prove polynomial-time numerical
+simulation of the nonlinear PDE, or that an approximately bandlimited
+state is an exactly bandlimited solution.
 
 The larger physical-to-Turing simulation in Part II remains a
 separate mathematical obligation. No theorem in this PR presupposes
