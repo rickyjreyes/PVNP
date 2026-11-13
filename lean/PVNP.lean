@@ -223,3 +223,6 @@ import PVNP.TorusNoLocking
 -- Phase XVIII, I-16 and I-2: conj:wcc_depth for dense SAT is P_TM ≠ NP_TM; explicit states are
 -- always constructible.
 import PVNP.DepthBarrier
+
+-- WCT-specific SAT readout: charged, approximate initial blindness and noisy final margins.
+import PVNP.PhysicalSATReadout
