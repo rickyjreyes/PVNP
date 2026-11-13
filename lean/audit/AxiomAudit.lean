@@ -886,3 +886,7 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.SATFalseWell.false_phase_energy
 #print axioms PVNP.SATFalseWell.true_phase_energy
 #print axioms PVNP.SATFalseWell.signblind_false_local_well
+
+-- Part II: quantitative high-frequency tail from the actual torus Fourier weights.
+#print axioms PVNP.TorusSpectralTail.finite_high_frequency_mass_bound
+#print axioms PVNP.TorusSpectralTail.finite_tail_mass_from_curvature_budget
