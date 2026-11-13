@@ -767,3 +767,9 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.DepthBarrier.explicit_state_constructible
 #print axioms PVNP.DepthBarrier.no_separation_of_all_constructible
 #print axioms PVNP.DepthBarrier.explicit_no_separation
+
+-- Physical readout capacity: conditional, PDE-derived, two-outcome contrast.
+#print axioms PVNP.PhysicalReadoutCapacity.detector_contrast_budget
+#print axioms PVNP.PhysicalReadoutCapacity.two_outcomes_require_change
+#print axioms PVNP.PhysicalReadoutCapacity.binary_readout_resource_disjunction
+#print axioms PVNP.PhysicalReadoutCapacity.no_binary_readout_below_both_budgets
