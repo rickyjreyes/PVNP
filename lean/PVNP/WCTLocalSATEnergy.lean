@@ -156,6 +156,7 @@ theorem last_site_sat_energy_linear_bound
     n ≤ totalReach stages + m := by
   have hreach := sat_energy_requires_causal_coverage
     stages n m ⟨n - 1, by omega⟩ hm decode hlam hmu hcorrect
+  change n - 1 < totalReach stages + m at hreach
   omega
 
 end PVNP.WCTLocalSATEnergy
