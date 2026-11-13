@@ -9,7 +9,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED = {"Exact": 79, "Restricted": 1, "Refuted": 5, "Open": 6, "total": 91}
+EXPECTED = {"Exact": 79, "Restricted": 2, "Refuted": 5, "Open": 4, "Interpretive": 1, "total": 91}
 
 
 def read(path: str) -> str:
@@ -34,12 +34,19 @@ def main() -> None:
     actual = [t for t in registry.get("targets", []) if t.get("id") == "II-10"]
     require(len(actual) == 1 and actual[0].get("status") == "Exact",
             "original II-10 entry not uniquely Exact")
-    require("| **Total** | **91** | **79** | **1** | **5** | **6** |" in inventory,
+    require("| **Total** | **91** | **79** | **2** | **5** | **4** | **1** |" in inventory,
             "authoritative manuscript totals diverge")
     refuted = [t for t in registry.get("targets", []) if t.get("id") == "I-31"]
     require(len(refuted) == 1 and refuted[0].get("status") == "Refuted"
             and "no_uniform_separator_price" in inventory,
             "I-31 is not recorded as refuted with its counterexample")
+    restricted = [t for t in registry.get("targets", []) if t.get("id") == "I-37"]
+    require(len(restricted) == 1 and restricted[0].get("status") == "Restricted"
+            and "toroidal_locking_iff_unsat" in inventory,
+            "I-37 is not recorded as Restricted with its locking theorem")
+    interpretive = [t for t in registry.get("targets", []) if t.get("id") == "III-22"]
+    require(len(interpretive) == 1 and interpretive[0].get("status") == "Interpretive",
+            "III-22 is not recorded as Interpretive")
     require("| I-31 |" in inventory and "| II-10 |" in inventory,
             "missing original claim record")
     require("originalWM_first_answer" in inventory, "missing original first-answer theorem")

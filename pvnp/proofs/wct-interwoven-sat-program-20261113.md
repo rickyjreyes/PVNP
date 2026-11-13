@@ -267,10 +267,10 @@ CookLevin.Gen.satLowerBound_iff_P_ne_NP ─> superpoly_SAT_implies_P_ne_NP, zero
 
 ## Smallest remaining obligations
 
-The inventory is not changed by the results PR. The proposed classification (I-37 from Open to
-Restricted) is made, with its tooling, in a separate classification PR.
+The results PR (#90) changes no status. The classification PR (#91) moves I-37 from Open to
+Restricted and III-22 from Open to Interpretive, with the tooling for the new status.
 
-| Claim | Proposed status | Smallest missing obligation |
+| Claim | Status | Smallest missing obligation |
 |---|---|---|
 | I-37 | Restricted | a physical (spatial-torus) ψ–electron realization of the flux constraints, with dynamics that reach the locks; the frozen dynamics cannot (`Torus.no_locking`) |
 | I-3 | Open | a formula-dependent, non-conservative dynamics that drives `E^{sb}` below `1/8` from a state prepared by an encoder that does not itself decide SAT, with charged time; the static criterion and the readout are proved |

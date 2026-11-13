@@ -9,8 +9,10 @@ The percentages count manuscript statements whose exact form is kernel-checked. 
 measure progress toward proving P ≠ NP. The central theorem, `CrossingSAT.SATLowerBound`, is
 unproved, and the page assigns no percentage to it.
 
-**Current amended inventory (12 November 2026):** 79 Exact, 1 Restricted, 5 Refuted,
-6 Open (79/1/4/7 before PR #78 refuted I-31 for the frozen trajectory class). II-10's original two-phase writer proof was incorporated in PR #73, based on
+**Current amended inventory (13 November 2026):** 79 Exact, 2 Restricted, 5 Refuted,
+4 Open, 1 Interpretive (79/1/5/6 before PR #90 proved I-37 with its locking constraints defined
+and III-22 was classified as Interpretive; 79/1/4/7 before PR #78 refuted I-31 for the frozen
+trajectory class). II-10's original two-phase writer proof was incorporated in PR #73, based on
 reported exact-head local Lean 4.23.0 build and permitted-axiom audit on `df8824c`.
 The reported verification is **not** a passing hosted GitHub Actions job: issue #59
 records runs that failed before executing steps. Exact conditional lemmas do not

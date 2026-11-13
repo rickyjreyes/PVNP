@@ -202,11 +202,15 @@ function generate(overrides = {}) {
   /* Amendments: the status changes between the snapshots must be exactly the registered amendments. */
   const histById = new Map(historical.claims.map(c => [c.id, c]));
   const changed = current.claims.filter(c => histById.get(c.id).status !== c.status).map(c => c.id).sort();
-  const registered = [...reg.amendments, ...reg.formalizations].map(a => a.id).sort();
+  const reclassifications = reg.reclassifications || [];
+  const registered = [...reg.amendments, ...reg.formalizations, ...reclassifications].map(a => a.id).sort();
   if (JSON.stringify(changed) !== JSON.stringify(registered))
     fail(`status changes since the historical snapshot (${changed.join(", ")}) differ from registered amendments (${registered.join(", ")})`);
   const proofById = new Map(reg.formalizations.map(f => [f.id, f]));
   const amendById = new Map(reg.amendments.map(a => [a.id, a]));
+  /* An editorial reclassification moves an entry that asserts no theorem to Interpretive. It keeps
+     the statement, names no proof, and must record its reason. */
+  const reclassById = new Map(reclassifications.map(r => [r.id, r]));
 
   /* Conditional annotations. */
   const cond = reg.conditional;
@@ -249,15 +253,23 @@ function generate(overrides = {}) {
       const proof = proofById.get(c.id);
       const theorem = exact(proof.decl, c.id);
       /* The row text must be the original one, unless the registry records why it was restated.
-         A formalization ends in Exact (a proof) or, with `to: "Refuted"`, in a counterexample. */
+         A formalization ends in Exact (a proof), with `to: "Refuted"` in a counterexample, or with
+         `to: "Restricted"` in a proof for a narrower model than the manuscript states. */
       const restated = typeof proof.restated === "string" && proof.restated.length > 40;
       const to = proof.to || "Exact";
-      if (!["Exact", "Refuted"].includes(to) || h.status !== proof.from || c.status !== to ||
+      if (!["Exact", "Refuted", "Restricted"].includes(to) || h.status !== proof.from || c.status !== to ||
           (h.claim !== c.claim && !restated) ||
           !audited.has(theorem.full) || !Object.values(out.refs).flat().some(r => r.name === proof.decl))
         fail(`${c.id}: formalization must preserve the statement and link its audited theorem`);
       out.formalized = { pr: proof.pr, decl: proof.decl, from: proof.from, to };
       if (restated) out.formalized.restated = proof.restated;
+    }
+    if (reclassById.has(c.id)) {
+      const r = reclassById.get(c.id);
+      if (r.to !== "Interpretive" || h.status !== r.from || c.status !== r.to || h.claim !== c.claim ||
+          typeof r.reason !== "string" || r.reason.length < 40 || typeof r.pr !== "number")
+        fail(`${c.id}: an editorial reclassification must keep the statement, end in Interpretive and record its reason`);
+      out.reclassified = { pr: r.pr, from: r.from, to: r.to, reason: r.reason };
     }
     if (amendById.has(c.id)) {
       const a = amendById.get(c.id);

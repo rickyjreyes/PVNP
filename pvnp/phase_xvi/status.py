@@ -2,6 +2,8 @@
 
 Estimates are not proof coverage, probabilities or machine-verified claims.
 The original 91-claim inventory is the authoritative classification source.
+Since 13 November 2026 it has a fifth status, Interpretive (III-22), for an
+entry that asserts no theorem.
 """
 import argparse
 import json
@@ -10,7 +12,7 @@ import re
 
 TARGET_IDS = ("II-10", "I-31", "I-37", "I-32", "I-3", "I-11",
               "I-2", "I-16", "III-22")
-COUNT_BASELINE = {"Exact": 79, "Restricted": 1, "Refuted": 5, "Open": 6}
+COUNT_BASELINE = {"Exact": 79, "Restricted": 2, "Refuted": 5, "Open": 4, "Interpretive": 1}
 
 
 def parse_inventory(path: pathlib.Path) -> dict[str, str]:
@@ -22,7 +24,7 @@ def parse_inventory(path: pathlib.Path) -> dict[str, str]:
         claim_id = item.group(1)
         # Do not split on every pipe: TeX math in the inventory includes
         # escaped vertical bars inside a status description.
-        matches = re.findall(r"[|][ ]*(Exact|Restricted|Refuted|Open)(?![A-Za-z])", line)
+        matches = re.findall(r"[|][ ]*(Exact|Restricted|Refuted|Open|Interpretive)(?![A-Za-z])", line)
         if not matches:
             raise ValueError(f"Missing status for {claim_id}")
         status = matches[-1]

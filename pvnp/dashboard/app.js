@@ -3,7 +3,7 @@
  * individual claim rows and checked against the inventory's own coverage table before display. */
 (function (root) {
   "use strict";
-  const STATUSES = ["Exact", "Restricted", "Refuted", "Open"];
+  const STATUSES = ["Exact", "Restricted", "Refuted", "Open", "Interpretive"];
   const PARTS = ["I", "II", "III"];
 
   /* ---------- pure helpers (also used by check.js under Node) ---------- */
@@ -15,7 +15,7 @@
     return c.conditional && (view === "current" || !c.historical) ? c.conditional : null;
   }
   function summarize(claims, view) {
-    const blank = () => ({ total: 0, counts: { Exact: 0, Restricted: 0, Refuted: 0, Open: 0 } });
+    const blank = () => ({ total: 0, counts: { Exact: 0, Restricted: 0, Refuted: 0, Open: 0, Interpretive: 0 } });
     const all = blank(), parts = { I: blank(), II: blank(), III: blank() };
     for (const c of claims) {
       const s = statusIn(c, view);
@@ -123,7 +123,7 @@
         ? `${percent(c.Exact, T)} kernel-checked as stated. ${cc.open} of these are implications with an unproved premise and ${cc.model} rest on explicit model hypotheses.`
         : `${percent(c.Exact, T)} kernel-checked as originally stated.`),
       metric("Resolved by proof or refutation", `${c.Exact + c.Refuted} / ${T}`, `${percent(c.Exact + c.Refuted, T)} · Exact plus Refuted`),
-      metric("Not exactly proved", `${T - c.Exact}`, `${c.Refuted} refuted · ${c.Restricted} restricted · ${c.Open} open`));
+      metric("Not exactly proved", `${T - c.Exact}`, `${c.Refuted} refuted · ${c.Restricted} restricted · ${c.Open} open · ${c.Interpretive} interpretive`));
     byId("status-chips").replaceChildren(...STATUSES.map(st =>
       el("span", { class: "chip" }, el("span", { class: "dot " + st }), `${st} ${c[st]}`)));
     const bad = reconcile(d);
@@ -159,8 +159,8 @@
     };
     byId("amendments").replaceChildren(
       el("p", null, `Original snapshot: ${d.historical.table.counts.Exact} Exact, ${d.historical.table.counts.Restricted} Restricted, ${d.historical.table.counts.Refuted} Refuted, ${d.historical.table.counts.Open} Open. `,
-        `Current: ${d.inventory.table.counts.Exact} Exact, ${d.inventory.table.counts.Restricted} Restricted, ${d.inventory.table.counts.Refuted} Refuted, ${d.inventory.table.counts.Open} Open. `,
-        `The ${amended.length} claims below changed status because their manuscript statements were corrected. Lean proves the corrected forms; the original forms stay refuted. PR #54 also proved the original conditional statement II-24. Its classical separation premise remains open. PR #73 proved II-10 for the original two-phase machine of the manuscript, and PR #78 refuted the separator-price hypothesis I-31 for the frozen trajectory class.`),
+        `Current: ${d.inventory.table.counts.Exact} Exact, ${d.inventory.table.counts.Restricted} Restricted, ${d.inventory.table.counts.Refuted} Refuted, ${d.inventory.table.counts.Open} Open, ${d.inventory.table.counts.Interpretive} Interpretive. `,
+        `The ${amended.length} claims below changed status because their manuscript statements were corrected. Lean proves the corrected forms; the original forms stay refuted. PR #54 also proved the original conditional statement II-24. Its classical separation premise remains open. PR #73 proved II-10 for the original two-phase machine of the manuscript, PR #78 refuted the separator-price hypothesis I-31 for the frozen trajectory class, PR #90 proved I-37 with its locking constraints defined (Restricted), and the remark III-22 is classified as Interpretive because it asserts no theorem.`),
       el("div", { class: "rows" }, amended.map(c => el("div", { class: "row" },
         el("div", { class: "row-head" },
           el("span", { class: "row-title" }, `${c.id} · `, inline(c.title)),
@@ -248,11 +248,17 @@
     }
     if (c.formalized && view === "current")
       body.append(el("p", { class: "small" },
-        el("strong", null, c.formalized.to === "Refuted" ? "Refuted later. " : "Proved later. "),
+        el("strong", null, c.formalized.to === "Refuted" ? "Refuted later. "
+          : c.formalized.to === "Restricted" ? "Proved later for a narrower model. " : "Proved later. "),
         `Originally ${c.formalized.from}. ${c.formalized.to === "Refuted" ? "Counterexample" : "Theorem"} `,
         el("code", null, c.formalized.decl), ", ",
         link(`${d.repository}/pull/${c.formalized.pr}`, `PR #${c.formalized.pr}`), ".",
         c.formalized.restated ? " " + c.formalized.restated : false));
+    if (c.reclassified && view === "current")
+      body.append(el("p", { class: "small" },
+        el("strong", null, "Reclassified as Interpretive. "),
+        `Originally ${c.reclassified.from}. ${c.reclassified.reason} `,
+        link(`${d.repository}/pull/${c.reclassified.pr}`, `PR #${c.reclassified.pr}`), "."));
     body.append(el("p", { class: "small" }, link(r.source, view === "historical" && c.historical ? "Row in the original inventory" : "Row in the current inventory")));
     return el("details", { class: "claim", id: "claim-" + c.id }, summary, body);
   }
