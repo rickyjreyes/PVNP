@@ -50,16 +50,25 @@ def main():
             record = {"path": path, "sha256": hashlib.sha256(p.read_bytes()).hexdigest(),
                       "size": p.stat().st_size, "metadata_checked": False}
             if shutil.which("pdfinfo"):
-                info = subprocess.run(["pdfinfo", str(p)], capture_output=True, text=True)
+                # Read stdout as bytes to avoid locale-dependent Windows CP1252
+                # decoding in subprocess reader threads.
+                info = subprocess.run(["pdfinfo", str(p)], capture_output=True)
                 record["metadata_checked"] = info.returncode == 0
                 if info.returncode == 0:
-                    record["metadata_fields_to_review"] = metadata_flags(info.stdout)
+                    record["metadata_fields_to_review"] = metadata_flags(
+                        info.stdout.decode("utf-8"))
             if shutil.which("pdftotext"):
-                body = subprocess.run(["pdftotext", str(p), "-"], capture_output=True, text=True)
+                # Poppler emits UTF-8 when requested; decode explicitly rather
+                # than letting Python use CP1252 on Windows. Keep stderr apart
+                # from the scanned PDF text.
+                body = subprocess.run(
+                    ["pdftotext", "-enc", "UTF-8", str(p), "-"],
+                    capture_output=True)
                 record["pdf_text_checked"] = body.returncode == 0
                 if body.returncode == 0:
+                    pdf_text = body.stdout.decode("utf-8")
                     record["pdf_text_review_flag_counts"] = {
-                        name: len(pattern.findall(body.stdout))
+                        name: len(pattern.findall(pdf_text))
                         for name, pattern in PDF_TEXT_RISKS.items()
                     }
             pdfs.append(record)
