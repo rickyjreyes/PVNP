@@ -241,3 +241,5 @@ import PVNP.WCTSATScaling
 import PVNP.WCTSATBlind
 import PVNP.WCTLocalSATEnergy
 import PVNP.WCTDistributedSAT
+-- Part I I-3 adversarial test: satisfiable 3-CNF with a nonglobal sign-blind energy well.
+import PVNP.SATFalseWell
