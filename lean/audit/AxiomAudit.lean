@@ -896,3 +896,7 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.WCTRegularizedCeiling.frozen_torus_laplacian_ceiling
 #print axioms PVNP.WCTRegularizedCeiling.frozen_torus_laplacian_squared_ceiling
 #print axioms PVNP.WCTRegularizedCeiling.regularized_laplacian_envelope_ceiling
+
+-- Part II: complete infinite torus Fourier tail control via H² and summability.
+#print axioms PVNP.TorusSpectralTail.infinite_high_frequency_mass_bound
+#print axioms PVNP.TorusSpectralTail.infinite_tail_mass_from_curvature_budget
