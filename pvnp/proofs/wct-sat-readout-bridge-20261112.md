@@ -1,8 +1,8 @@
 # WCT physical SAT readout: a conditional robust bridge
 
-**Base:** Draft PR #88, `research/wct-physical-readout-capacity-20261112`
+**Base:** PR #88 (merged), `PVNP.PhysicalReadoutCapacity`
 **Extension:** `lean/PVNP/PhysicalSATReadout.lean`
-**Status:** Mathematical and Lean proof candidates; **not kernel-certified** until the pinned 4.23.0 build succeeds.
+**Status:** kernel-checked with the pinned Lean 4.23.0 (13 November 2026; see Verification).
 **Inventory:** 79 Exact / 1 Restricted / 5 Refuted / 6 Open remains unchanged.
 
 ## What the new theorem proves
@@ -59,9 +59,23 @@ The module is imported from `lean/PVNP.lean` and all seven declarations are name
 * **No superpolynomial conclusion.** With constant `m>ρ+ε/2`, polynomially bounded `G,T` and polynomial total budget, the inequality is consistent: it provides at most an inverse-polynomial lower bound on budget. To prove superpolynomial SAT cost one needs a separate, algorithm-independent obstruction forcing `G,T,B` or some charged preparation/readout resource to scale superpolynomially. In particular, the number of interwoven `ψ_i` fields does not itself supply that result.
 * **Same-length hard pairs.** The theorem applies to arbitrary SAT/UNSAT formulas; it does not assert a hard pair at each input length or a superpolynomial lower bound across lengths.
 
+## Hypotheses removed during verification (13 November 2026)
+
+The compiled module reported five hypotheses that the proofs never use. Each was removed, which
+strengthens the theorem it belonged to:
+
+| Theorem | Removed | Why it is not needed |
+|---|---|---|
+| `skewed_binary_readout_resource_disjunction` | `0 ≤ eps` | implied by `|J_u(0) − J_v(0)| ≤ eps` |
+| `sat_pair_readout_resource_disjunction` | `0 < margin`, `0 ≤ eps` | the bound holds for every margin; `eps ≥ 0` is implied by the skew bound |
+| `noisy_sat_pair_readout_resource_disjunction` | `0 < margin`, `0 ≤ ρ`, `0 ≤ eps` | same; `ρ ≥ 0` is implied by `|observe F − J| ≤ ρ` |
+| `combined_budget_of_disjunction` | `0 ≤ G` | implied by `0 ≤ Γ_u ≤ G` |
+
+A positive margin remains part of the physical model; the theorems are simply true without it.
+
 ## Verification
 
-The following are **required before changing this PR to ready-for-review**. They have not been run successfully for this exact new branch:
+Run on the verified head with the pinned Lean 4.23.0 and Mathlib; results are recorded in the PR.
 
 ```bash
 cd lean

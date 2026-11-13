@@ -95,7 +95,7 @@ theorem skewed_binary_readout_resource_disjunction
     (u v : ℝ → ℓ2)
     (hu : IsSolution L κ β γ u) (hv : IsSolution L κ β γ v)
     {T delta eps Bu Bv : ℝ}
-    (hT : 0 < T) (heps : 0 ≤ eps) (hskew : eps ≤ delta)
+    (hT : 0 < T) (hskew : eps ≤ delta)
     (hΓu : 0 < Gam L κ β γ (aW L (co L χv)) (bW L (co L χv)) (u 0))
     (hΓv : 0 < Gam L κ β γ (aW L (co L χv)) (bW L (co L χv)) (v 0))
     (hinit : |Jdet L χv (u 0) - Jdet L χv (v 0)| ≤ eps)
@@ -135,8 +135,7 @@ theorem sat_pair_readout_resource_disjunction
     (hsol : ∀ F, IsSolution L κ β γ (run F))
     (Fyes Fno : CNF3) (hsat : Sat Fyes) (hunsat : ¬ Sat Fno)
     {T margin eps threshold Byes Bno : ℝ}
-    (hT : 0 < T) (hmargin : 0 < margin)
-    (heps : 0 ≤ eps) (hblind : eps ≤ 2 * margin)
+    (hT : 0 < T) (hblind : eps ≤ 2 * margin)
     (hΓyes : 0 < Gam L κ β γ (aW L (co L χv))
       (bW L (co L χv)) (run Fyes 0))
     (hΓno : 0 < Gam L κ β γ (aW L (co L χv))
@@ -161,7 +160,7 @@ theorem sat_pair_readout_resource_disjunction
   exact skewed_binary_readout_resource_disjunction
     (L := L) (κ := κ) (β := β) (γ := γ)
     hL hγ hq hreal (run Fyes) (run Fno)
-    (hsol Fyes) (hsol Fno) hT heps hblind hΓyes hΓno hinit hsep hByes hBno
+    (hsol Fyes) (hsol Fno) hT hblind hΓyes hΓno hinit hsep hByes hBno
 
 /-- Measured SAT correctness yields a physical contrast bound only after
 subtracting explicit readout error. This theorem uses the same frozen WCT
@@ -176,8 +175,7 @@ theorem noisy_sat_pair_readout_resource_disjunction
     (observe : CNF3 → ℝ)
     (Fyes Fno : CNF3) (hsat : Sat Fyes) (hunsat : ¬ Sat Fno)
     {T margin rho eps threshold Byes Bno : ℝ}
-    (hT : 0 < T) (hmargin : 0 < margin)
-    (hrho : 0 ≤ rho) (heps : 0 ≤ eps)
+    (hT : 0 < T)
     (hblind : eps ≤ 2 * (margin - rho))
     (hΓyes : 0 < Gam L κ β γ (aW L (co L χv))
       (bW L (co L χv)) (run Fyes 0))
@@ -208,18 +206,19 @@ theorem noisy_sat_pair_readout_resource_disjunction
   exact skewed_binary_readout_resource_disjunction
     (L := L) (κ := κ) (β := β) (γ := γ)
     hL hγ hq hreal (run Fyes) (run Fno)
-    (hsol Fyes) (hsol Fno) hT heps hblind hΓyes hΓno hinit hsep hByes hBno
+    (hsol Fyes) (hsol Fno) hT hblind hΓyes hΓno hinit hsep hByes hBno
 
 /-- If each trajectory's flux coefficient is bounded by the same G and both
 budgets are nonnegative, the disjunction implies a lower bound on their
 *combined* squared-Laplacian expenditure.
 
-The coefficient G remains an explicit physical assumption, and the bound
+The coefficient G remains an explicit physical assumption (its nonnegativity
+follows from `0 ≤ Γu ≤ G`), and the bound
 is only inverse-polynomial when margin, time and G are polynomially bounded
 in the usual direction. -/
 theorem combined_budget_of_disjunction
     {d G T Γu Γv Bu Bv : ℝ}
-    (hT : 0 < T) (hG : 0 ≤ G)
+    (hT : 0 < T)
     (hΓu : 0 ≤ Γu) (hΓv : 0 ≤ Γv)
     (hu : Γu ≤ G) (hv : Γv ≤ G)
     (hBu : 0 ≤ Bu) (hBv : 0 ≤ Bv)
