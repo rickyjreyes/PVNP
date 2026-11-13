@@ -226,3 +226,13 @@ import PVNP.DepthBarrier
 
 -- WCT-specific SAT readout: charged, approximate initial blindness and noisy final margins.
 import PVNP.PhysicalSATReadout
+
+-- Interwoven-Ψ SAT: logical, coupling and curvature energies on the phase torus; when the
+-- SAT ⟺ zero-ground-energy correspondence survives added terms; I-37 with locking defined.
+import PVNP.InterwovenSAT
+-- Frozen-torus SAT device: device-form readout bound without Γ > 0, flux constant bounded by
+-- prepared mass and energy, preloaded-answer countermodel, necessity of initial blindness.
+import PVNP.WCTSATDevice
+-- A superpolynomial physical resource bound for SAT over any class containing the charged
+-- zero-mode devices proves P_TM ≠ NP_TM; in the zero-mode class it is equivalent to it.
+import PVNP.WCTSATScaling
