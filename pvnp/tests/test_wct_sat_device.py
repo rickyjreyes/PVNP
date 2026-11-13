@@ -5,8 +5,8 @@ A small pseudo-spectral (Strang split-step) solver for
 on the torus [0, L]^2 with L = 2*pi, field = L^-1 sum_k c_k e^{i k.x}.
 
 These are numerical sanity checks. They do not verify the Lean proofs; the
-two-mode flux check is numerical evidence for the lemma that the note lists as
-not formalized.
+two-mode flux formula checked here is proved in `lean/PVNP/WCTSATBlind.lean`
+(`Jdot_twoMode`).
 """
 import cmath
 import math

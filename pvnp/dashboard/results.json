@@ -115,7 +115,9 @@
     {"title": "Zero-mode resource statement is P ≠ NP", "decl": "WCTSATScaling.zeroSuperpoly_SAT_iff", "pr": 90,
      "statement": "In the class of charged zero-mode torus devices, superpolynomial resources for every dense-SAT decider is equivalent to P_TM ≠ NP_TM."},
     {"title": "Physical lower bounds transfer to classical", "decl": "WCTSATScaling.superpoly_SAT_implies_P_ne_NP", "pr": 90,
-     "statement": "In every device class that has a polynomial-resource device for each language of P_TM, a superpolynomial resource lower bound for dense SAT implies P_TM ≠ NP_TM."}
+     "statement": "In every device class that has a polynomial-resource device for each language of P_TM, a superpolynomial resource lower bound for dense SAT implies P_TM ≠ NP_TM."},
+    {"title": "Blind device with one budget", "decl": "WCTSATBlind.blind_device", "pr": 92,
+     "statement": "A SAT-correct frozen-torus device with equal initial readings for all formulas and a curvature budget bounded by one constant for every formula. Its encoder is a SAT decider."}
   ],
   "pending": [],
   "open": [

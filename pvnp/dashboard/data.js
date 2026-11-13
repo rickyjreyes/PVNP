@@ -100,7 +100,7 @@ window.PVNP_DATA = {
   }
  },
  "lean": {
-  "tree": "cc33c2ac9cead73be1f5e9ea45246b78be0f478e",
+  "tree": "ba21085dd726a259355cb38efdd1d41cdc900ecf",
   "matches_verified": false,
   "links_ref": "main"
  },
@@ -3447,6 +3447,16 @@ window.PVNP_DATA = {
    "file": "lean/PVNP/WCTSATScaling.lean",
    "line": 90,
    "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/WCTSATScaling.lean#L90",
+   "audited": true
+  },
+  {
+   "title": "Blind device with one budget",
+   "decl": "WCTSATBlind.blind_device",
+   "pr": 92,
+   "statement": "A SAT-correct frozen-torus device with equal initial readings for all formulas and a curvature budget bounded by one constant for every formula. Its encoder is a SAT decider.",
+   "file": "lean/PVNP/WCTSATBlind.lean",
+   "line": 218,
+   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/WCTSATBlind.lean#L218",
    "audited": true
   }
  ],

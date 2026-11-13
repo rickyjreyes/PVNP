@@ -103,7 +103,7 @@ jobs:
       - name: Phase XVIII kernel-check the I-32, I-37/I-3/III-22 and I-16/I-2 barrier modules
         run: lake build PVNP.ExpanderInterfaceBarrier PVNP.TorusNoLocking PVNP.DepthBarrier
       - name: Kernel-check the WCT SAT readout, interwoven-Ψ model, torus SAT device and resource barrier
-        run: lake build PVNP.PhysicalReadoutCapacity PVNP.PhysicalSATReadout PVNP.InterwovenSAT PVNP.WCTSATDevice PVNP.WCTSATScaling
+        run: lake build PVNP.PhysicalReadoutCapacity PVNP.PhysicalSATReadout PVNP.InterwovenSAT PVNP.WCTSATDevice PVNP.WCTSATScaling PVNP.WCTSATBlind
       - name: Run SAT readout, interwoven-Ψ and torus device regressions
         working-directory: .
         run: |
@@ -118,6 +118,8 @@ jobs:
           grep -Fq '#print axioms PVNP.InterwovenSAT.locks_iff_sat_iff' audit/AxiomAudit.lean
           grep -Fq '#print axioms PVNP.WCTSATDevice.blindness_necessary' audit/AxiomAudit.lean
           grep -Fq '#print axioms PVNP.WCTSATScaling.zeroSuperpoly_SAT_iff' audit/AxiomAudit.lean
+          grep -Fq 'import PVNP.WCTSATBlind' PVNP.lean
+          grep -Fq '#print axioms PVNP.WCTSATBlind.blind_device' audit/AxiomAudit.lean
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt

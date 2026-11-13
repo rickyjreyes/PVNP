@@ -184,13 +184,15 @@ SAT easy; it shows that a transport lower bound has to charge the encoder or ass
 least an inverse polynomial and `G`, `T` are polynomially bounded, this is an inverse-polynomial
 lower bound; it never grows with the formula size by itself.
 
-**Missing lemma (not formalized).** A blind SAT-correct device with constant budget: one exact
-solution whose reading changes, `J(ψ(T)) ≠ J(ψ(0))`, paired with a zero-mode state of the same
-initial reading. For a two-mode state `a e₀ + b e_{e₁}` the flux identity gives
-`J'(0) = (κ² − (κ − q)²) Im(a b̄)/L` with `q = (2π/L)²` (hand computation; the nonlinearity drops
-out of the flux identity), which is nonzero for suitable `a, b`; the regression
-`test_wct_sat_device.py` checks the non-constancy numerically. With a SAT-deciding encoder this
-device uses the same two trajectories for every formula, so its budget does not grow at all.
+**Blindness does not force growth either** (`PVNP.WCTSATBlind`, PR #92). For the two-mode
+states `a e₀ + b e_{e₁}` the detector reads `J = (|a|² + |b|² + Re(ā b))/L` (`Jdet_twoMode`) and
+the flux identity gives `J' = ((κ − q)² − κ²) Im(ā b)/L`, `q = (2π/L)²` (`Jdot_twoMode`; the
+nonlinearity does not contribute). The states `b = ±i` (with `a = 1`) therefore read the same and
+have opposite fluxes when `(κ − q)² ≠ κ²`, for example for every `κ ≤ 0`. Their exact solutions
+separate at some `T > 0` (`blind_pair_exists`), which gives a SAT-correct device with initial
+skew `0` for every pair of formulas whose curvature budget is bounded by one constant for every
+formula (`blind_device`). The encoder is again a SAT decider; `test_wct_sat_device.py` checks the
+flux formula numerically.
 
 ## Phase D: superpolynomial resources (`PVNP.WCTSATScaling`)
 
@@ -231,7 +233,22 @@ PDE alone.
   on bounded-degree expanders with odd charge every resolution refutation has size `2^{Ω(m)}`
   (Urquhart 1987; Ben-Sasson–Wigderson 2001). Expansion, frustration and a large configuration
   space are compatible with polynomial-time decision.
-* *Transport* (Phase C): the readout bound is at best inverse-polynomial.
+* *Transport* (Phase C): the readout bound is at best inverse-polynomial, and a blind SAT-correct
+  device meets it with one budget for every formula (`WCTSATBlind.blind_device`).
+
+**The seven candidate routes.** Each was examined against the barrier above: a route that yields a
+superpolynomial bound for every admissible solver must, in particular, defeat the charged
+zero-mode devices, i.e. prove `P_TM ≠ NP_TM`.
+
+| Route | What is established | Why it does not give a universal bound |
+|---|---|---|
+| Treewidth and separators | The uniform separator price (I-31) is refuted for the frozen class (`SeparatorFrozen.no_uniform_separator_price`); interface growth (I-32) is equivalent to `P_TM ≠ NP_TM` in the charged constant class (`ExpanderInterface.expanderGrowth_SAT_iff`) | Large separators of the interaction graph do not force large interfaces or budgets in the field, and families decidable in polynomial time (e.g. bounded treewidth by dynamic programming, a standard fact not formalized here) have polynomial-resource devices (`zero_charges_P`) |
+| Coupling frustration | Sign-sensitive coupling frustrates XOR-type clauses and hides satisfiability (`naive_Emin`); the sign-blind repair removes the effect (`sat_iff_EminSB_eq_zero`) | Frustration changes the energy landscape, not the cost of deciding: frustrated parity systems (Tseitin) are decided by component parities |
+| Spectral gaps and relaxation time | The frozen flow is conservative and time-reversible, so it has no relaxation at all and cannot converge to a stable lock from outside it (`Torus.no_locking`) | A relaxation-time bound needs a dissipative model outside the frozen class, and in any class containing the zero-mode devices it would again prove `P_TM ≠ NP_TM` |
+| Measurement precision | The readout error and margin are charged (`ZeroDev.res` contains `1/margin`; `device_pair_budget` uses `m − ρ`) | Fixed precision `3/(2L)` suffices for every `P_TM` language |
+| State-preparation complexity | The encoder's machine time is charged (`ZeroDev.res`) | In the zero-mode class the statement is exactly `P_TM ≠ NP_TM` (`zeroSuperpoly_SAT_iff`) |
+| Curvature expenditure | `device_pair_budget` gives an inverse-polynomial lower bound under blindness | Preloading (`preloaded_device`) and blind devices (`blind_device`) keep the budget constant in the input size |
+| Bounded-degree adversarial families | Tseitin formulas on bounded-degree expanders need resolution refutations of size `2^{Ω(m)}` (cited, not formalized) | Their satisfiability is a polynomial-time parity condition (`TseitinSAT.tseitin_mem_SAT_dense_iff_comp`) |
 
 ## Phase F: transfer to classical computation
 
