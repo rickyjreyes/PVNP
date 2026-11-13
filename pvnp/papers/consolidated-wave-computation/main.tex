@@ -66,7 +66,7 @@ The repository includes uniform Cook--Levin reductions and a characterization of
 remains an open conjectural target. The uniform separator-price hypothesis is refuted for frozen growing-torus trajectories; the encoding-independent expander and universal complexity lower-bound claims remain open.
 
 \section{Maintained formalization ledger and verification}
-The 91-claim inventory recorded 78 Exact, 2 Restricted, 4 Refuted and 7 Open on 7 November 2026. After original II-10 was completed on 12 November, the totals became 79 Exact, 1 Restricted, 4 Refuted and 7 Open. The I-31 counterexample subsequently established the current 79 Exact, 1 Restricted, 5 Refuted and 6 Open. The Exact category includes proved conditional implications whose premises are not established; it does not mean classical P is unequal to NP. See the continuously maintained \href{https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md}{manuscript formalization inventory} and \href{https://github.com/rickyjreyes/PVNP/tree/main/lean}{Lean source tree}.
+The 91-claim inventory recorded 78 Exact, 2 Restricted, 4 Refuted and 7 Open on 7 November 2026. After original II-10 was completed on 12 November, the totals became 79 Exact, 1 Restricted, 4 Refuted and 7 Open. The I-31 counterexample subsequently established 79 Exact, 1 Restricted, 5 Refuted and 6 Open. On 13 November 2026 I-37 was proved with its locking constraints defined (Restricted) and the remark III-22 was classified as Interpretive, giving the current 79 Exact, 2 Restricted, 5 Refuted, 4 Open and 1 Interpretive. The Exact category includes proved conditional implications whose premises are not established; it does not mean classical P is unequal to NP. See the continuously maintained \href{https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md}{manuscript formalization inventory} and \href{https://github.com/rickyjreyes/PVNP/tree/main/lean}{Lean source tree}.
 
 \begin{center}\small
 \begin{tabular}{@{}p{0.33\linewidth}p{0.58\linewidth}@{}}\toprule
@@ -131,8 +131,8 @@ I-3 & Open & Formula-dependent physical dynamics and robust readout, beyond logi
 I-11 & Restricted & A charged, robust continuum physical-to-discrete resource bridge.\\
 I-16 & Open & An unrestricted superpolynomial SAT time lower bound against every correct decider.\\
 I-32 & Open & An encoding-independent exponential interface lower bound for every decider.\\
-I-37 & Open & Sound and complete arbitrary-formula toroidal physical locking.\\
-III-22 & Open & Interpretive arrow-of-time remark, not a formal theorem.\\
+I-37 & Restricted & A spatial-torus physical realization whose dynamics reach the locks; the equivalence is proved on the configuration torus.\\
+III-22 & Interpretive & Arrow-of-time remark; asserts no theorem, so no proof obligation.\\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -141,9 +141,8 @@ claims I-25--I-28 remain in the audit and have been
 withdrawn from theorem status in the revised text.
 I-31 is also refuted for the frozen growing-torus trajectory
 class, not for all fixed-domain or hard-language variants.
-The current inventory is 79 Exact, 1 Restricted,
-5 Refuted and 6 Open. No universal classical or physical
-separation follows.
+The current inventory is 79 Exact, 2 Restricted, 5 Refuted, 4 Open and 1 Interpretive.
+No universal classical or physical separation follows.
 
 \paragraph{Addendum, 12 November 2026.}
 II-10 is no longer unresolved.  The original complete
@@ -163,6 +162,18 @@ curvature functional bounded while their decision interface grows
 with the torus side
 (\nolinkurl{SeparatorFrozen.no_uniform_separator_price}).  The
 inventory is then 79 Exact, 1 Restricted, 5 Refuted and 6 Open.
+
+\paragraph{Addendum, 13 November 2026.}
+I-37 is proved with its locking constraints defined on the
+configuration torus of an interwoven field (clause penalties and the
+coupling and curvature of the squared field): nonexistence of a locking
+configuration is equivalent to unsatisfiability
+(\nolinkurl{InterwovenSAT.toroidal_locking_iff_unsat}), while
+sign-sensitive constraints fail on a satisfiable formula.  The physical
+realization stays open, so I-37 is Restricted.  III-22 asserts no
+theorem and is classified as Interpretive.  The inventory is now
+79 Exact, 2 Restricted, 5 Refuted, 4 Open and 1 Interpretive.  No
+universal classical or physical separation follows.
 
 \section{Reproduction and source maintenance}
 The authoritative historical LaTeX sources remain under the four original manuscript directories in the repository. The single-release build first compiles them into temporary PDFs, binds them behind this overview, and installs only one primary consolidated PDF. Run \texttt{bash scripts/build\_pdfs.sh} to regenerate it. For the Lean formalization, use the pinned toolchain and run \texttt{lake build PVNP} followed by the standard axiom audit from within the \texttt{lean} directory.

@@ -1,11 +1,12 @@
 {
   "schema": 1,
-  "as_of": "2026-11-12",
+  "as_of": "2026-11-13",
   "baseline": {
     "Exact": 79,
-    "Restricted": 1,
+    "Restricted": 2,
     "Refuted": 5,
-    "Open": 6,
+    "Open": 4,
+    "Interpretive": 1,
     "total": 91
   },
   "percent_meaning": "Subjective research progress, not independent Lean proof coverage, probability, or permission to promote manuscript status; status promotions require exact-head full kernel and axiom audit.",
@@ -32,11 +33,11 @@
     {
       "id": "I-37",
       "title": "General toroidal locking",
-      "status": "Open",
-      "research_estimate_percent": 32,
+      "status": "Restricted",
+      "research_estimate_percent": 70,
       "metric": "research",
-      "evidence": "Obstruction (TorusNoLocking): the frozen flow is time-reversible (isSolution_reverse); a solution converging to a nonempty, Lyapunov-stable, conjugation-invariant lock set starts in it (no_locking), which covers the phase orbit of every binary-phase state (no_locking_phaseOrbit). Earlier: finite formula-dependent logical tori.",
-      "remaining_obligation": "Define the locking constraints. Any robust realization needs dissipative or forced dynamics outside the frozen model, with a bidirectional locking correspondence, convergence and charged construction/readout bounds."
+      "evidence": "InterwovenSAT.toroidal_locking_iff_unsat (PR #90): with locking configurations defined as points of the configuration torus |ψᵢ| = 1 where clause penalties and sign-blind coupling/curvature vanish, no locking configuration ⟺ unsatisfiable, for every formula. locks_iff_sat_iff gives the exact criterion for any added energy C ≥ 0; naive_toroidal_locking_fails shows sign-sensitive flux terms fail on F_xor. TorusNoLocking: the frozen flow cannot reach a stable lock from outside it.",
+      "remaining_obligation": "A physical (spatial-torus) ψ–electron realization of the flux constraints together with non-conservative dynamics that reach the locks, with charged preparation and readout; the frozen model cannot provide the convergence."
     },
     {
       "id": "I-32",
@@ -44,17 +45,17 @@
       "status": "Open",
       "research_estimate_percent": 20,
       "metric": "research",
-      "evidence": "ExpanderInterface.expanderGrowth_SAT_iff: in the charged constant-device class the hypothesis for dense SAT is equivalent to P_TM ≠ NP_TM; expanderGrowth_implies_P_ne_NP for any class containing those devices; false for every language in P_TM. Binary-cut graph price and storage upper bounds exist.",
+      "evidence": "ExpanderInterface.expanderGrowth_SAT_iff: in the charged constant-device class the hypothesis for dense SAT is equivalent to P_TM ≠ NP_TM; WCTSATScaling.superpoly_SAT_implies_P_ne_NP (PR #90): any superpolynomial physical-resource lower bound for SAT over a class containing the charged zero-mode torus devices implies P_TM ≠ NP_TM. False for every language in P_TM.",
       "remaining_obligation": "Cannot be proved without proving P_TM ≠ NP_TM; in the constant-device class it cannot be refuted without P_TM = NP_TM."
     },
     {
       "id": "I-3",
       "title": "Physical SAT dynamics and readout",
       "status": "Open",
-      "research_estimate_percent": 35,
+      "research_estimate_percent": 45,
       "metric": "research",
-      "evidence": "PartIPsiSat energy threshold, rounding and noisy certificate readout are proved. Torus.no_locking_phaseOrbit: the frozen dynamics cannot converge into a stable binary-phase lock from outside it.",
-      "remaining_obligation": "Formula-dependent dissipative dynamics with certified convergence, completeness and robust observations; the frozen model cannot provide the convergence."
+      "evidence": "InterwovenSAT (PR #90): with unit amplitudes and sign-blind gradient terms, SAT ⟺ ground energy 0 and UNSAT ⟺ ground energy ≥ 1/8 (sat_iff_EminSB_eq_zero, unsat_iff_EminSB_ge); the sign readout below 1/8 satisfies F (measure_satisfies). With the literal sign-sensitive gradient the criterion fails (naive_Emin, satisfying_not_ground). Torus.no_locking_phaseOrbit: the frozen dynamics cannot converge into a binary-phase lock.",
+      "remaining_obligation": "A formula-dependent non-conservative dynamics that drives the sign-blind energy below 1/8 from a state prepared by an encoder that does not itself decide SAT, with charged time and robust readout."
     },
     {
       "id": "I-11",
@@ -62,7 +63,7 @@
       "status": "Restricted",
       "research_estimate_percent": 45,
       "metric": "research",
-      "evidence": "Uniform discrete P/NP class equivalences are proved with charged encoding; unrestricted physical encoder countermodel known.",
+      "evidence": "P_disc = P_TM exactly in the uniform discrete model; PhysicalAudit.unrestricted_phys_ne_P_TM for arbitrary encoders. WCTSATScaling.superpoly_SAT_implies_P_ne_NP and torus_superpoly_implies_P_ne_NP (PR #90): physical lower bounds transfer to classical ones without simulation in any class containing the charged zero-mode devices.",
       "remaining_obligation": "Prove both charged physical-to-TM simulation and language-independent physical TM realization with PDE approximation errors."
     },
     {
@@ -80,17 +81,17 @@
       "status": "Open",
       "research_estimate_percent": 15,
       "metric": "research",
-      "evidence": "DepthBarrier.wccDepth_SAT_iff, wccdDepth_SAT_iff, uniform_depth_SAT_iff: for dense SAT the conjecture is exactly P_TM ≠ NP_TM. Quadratic single-tape bounds at every budget exist.",
+      "evidence": "DepthBarrier.wccDepth_SAT_iff, wccdDepth_SAT_iff, uniform_depth_SAT_iff: for dense SAT the conjecture is exactly P_TM ≠ NP_TM. WCTSATScaling.zeroSuperpoly_SAT_iff (PR #90): the same for the charged zero-mode devices of the frozen torus model.",
       "remaining_obligation": "This is the classical P versus NP question; it is not resolved here, and finite data cannot establish it."
     },
     {
       "id": "III-22",
       "title": "Mathematical interpretation and classification",
-      "status": "Open",
-      "research_estimate_percent": 90,
+      "status": "Interpretive",
+      "research_estimate_percent": 100,
       "metric": "editorial",
-      "evidence": "The remark states that no equivalence is proved. Torus.backward_eq_forward_conj and flow_neg give the exact frozen-model form of its sentence on inverse dynamics.",
-      "remaining_obligation": "Editorial: treat the remark as interpretation; no further theorem is claimed."
+      "evidence": "The §8 remark states that no equivalence P^phys = NP^phys ⟺ retrocausality is proved and keeps the section as a research direction; it asserts no theorem and is classified Interpretive (13 November 2026). Torus.backward_eq_forward_conj and flow_neg give the exact frozen-model form of its sentence on inverse dynamics, as supporting material.",
+      "remaining_obligation": "None for the interpretive entry. Any future theorem about time reversal and complexity needs its own model, quantifiers and claim identifier."
     }
   ]
 }

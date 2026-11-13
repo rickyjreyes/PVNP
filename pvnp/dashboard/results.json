@@ -2,18 +2,23 @@
   "$comment": "Curated, versioned registry for the PVNP formalization dashboard. Claim statuses and every claim total come from pvnp/proofs/manuscript-lean-inventory.md, never from this file. This file records only (1) provenance of the historical snapshot and of the seven amended statements, (2) editorial notes on conditional Exact claims, (3) supporting results that are not manuscript claims, (4) open obligations, and (5) CI evidence. After editing, run: node pvnp/dashboard/build.js",
   "repository": "https://github.com/rickyjreyes/PVNP",
   "inventory_path": "pvnp/proofs/manuscript-lean-inventory.md",
-  "inventory_date": "2026-11-12",
+  "inventory_date": "2026-11-13",
   "historical": {
     "commit": "eaf8fa02720ee2e520e2c4b62046e75702cd3752",
     "label": "Original October 27 manuscript statements",
     "description": "Last inventory revision before the November 6 manuscript corrections (PRs #45, #46 and #47). The same file is on main up to dd7138b, the PR #43 merge.",
-    "expected": {"Exact": 70, "Restricted": 2, "Refuted": 11, "Open": 8}
+    "expected": {"Exact": 70, "Restricted": 2, "Refuted": 11, "Open": 8, "Interpretive": 0}
   },
   "formalizations": [
     {"id": "II-24", "pr": 54, "decl": "PartIIManuscript.conditional_np_safety", "from": "Open"},
     {"id": "II-10", "pr": 73, "decl": "TwoPhasePolynomialWriter.originalWM_decides", "from": "Restricted",
      "restated": "The time bound in this row was corrected from 2cn^k to 2c·max(n,1)^k by PR #45 (see II-17). The proof covers both forms: originalWM_first_answer gives T_{W_M}(x) = 2T_M(x) for every first-halt time inside the window."},
-    {"id": "I-31", "pr": 78, "decl": "SeparatorFrozen.no_uniform_separator_price", "from": "Open", "to": "Refuted"}
+    {"id": "I-31", "pr": 78, "decl": "SeparatorFrozen.no_uniform_separator_price", "from": "Open", "to": "Refuted"},
+    {"id": "I-37", "pr": 90, "decl": "InterwovenSAT.toroidal_locking_iff_unsat", "from": "Open", "to": "Restricted"}
+  ],
+  "reclassifications": [
+    {"id": "III-22", "pr": 91, "from": "Open", "to": "Interpretive",
+     "reason": "The §8 remark states that no equivalence between P^phys = NP^phys and retrocausality is proved and keeps the section as a research direction; it asserts no theorem, so no proof obligation is attached. Its frozen-model sentence on inverse dynamics is proved as supporting material (Torus.flow_neg)."}
   ],
   "amendments": [
     {"id": "II-7", "pr": 45, "counterexamples": ["invariant_literal_fails"],
@@ -90,7 +95,27 @@
      "statement": "On valid packed matrix instances, a single-layer circuit of size at most 1+4n·2^n decides membership, so this hard-input family cannot yield circuit lower bounds."},
     {"title": "Uniform SAT decision transfer", "decl": "CookLevin.Gen.satLowerBound_iff_P_ne_NP", "pr": 53, "statement": "The uniform construction proves SAT_dense ∉ P_TM if and only if P_TM ≠ NP_TM. The separation itself remains open."},
     {"title": "Negated toroidal seam", "decl": "ToroidalDiagonal.odd_encRing_not_SAT", "pr": 49, "statement": "The dense encoding of a finite equality ring with a negated seam is unsatisfiable at every ring length. The seam bit determines the answer on this family."},
-    {"title": "Ordinary toroidal seam", "decl": "ToroidalDiagonal.even_encRing_mem_SAT", "pr": 49, "statement": "The dense encoding of the same ring with an ordinary seam has a constant satisfying assignment."}
+    {"title": "Ordinary toroidal seam", "decl": "ToroidalDiagonal.even_encRing_mem_SAT", "pr": 49, "statement": "The dense encoding of the same ring with an ordinary seam has a constant satisfying assignment."},
+    {"title": "Detector contrast budget", "decl": "PhysicalReadoutCapacity.detector_contrast_budget", "pr": 88,
+     "statement": "Along an exact solution of the frozen torus equation, a detected change δ of the localized mass costs δ⁴ ≤ Γ⁴T³B, with B the integrated squared Laplacian."},
+    {"title": "Noisy SAT pair readout", "decl": "PhysicalSATReadout.noisy_sat_pair_readout_resource_disjunction", "pr": 89,
+     "statement": "A SAT-correct frozen-torus readout with margin m, readout error ρ and initial skew ε ≤ 2(m − ρ) forces (m − ρ − ε/2)⁴ ≤ Γ⁴T³B on the SAT or the UNSAT trajectory."},
+    {"title": "Device form of the SAT readout bound", "decl": "WCTSATDevice.device_pair_budget", "pr": 90,
+     "statement": "For one detector, threshold, time and readout error, (m − ρ − ε/2)⁴ ≤ G⁴T³(B_SAT + B_UNSAT) whenever both flux constants are at most G; no positivity of the flux constant is needed."},
+    {"title": "Preloaded-answer device", "decl": "WCTSATDevice.preloaded_device", "pr": 90,
+     "statement": "Exact zero-mode solutions whose amplitude encodes the SAT bit are read correctly with a fixed margin at every time and spend zero curvature budget. The encoder is a SAT decider."},
+    {"title": "Initial blindness is necessary", "decl": "WCTSATDevice.blindness_necessary", "pr": 90,
+     "statement": "Without the initial-skew hypothesis the SAT pair readout bound is false: the preloaded device meets every other hypothesis with zero budgets."},
+    {"title": "Exact criterion for added energies", "decl": "InterwovenSAT.locks_iff_sat_iff", "pr": 90,
+     "statement": "For any added energy C ≥ 0, SAT ⟺ a zero-energy unit field exists, for every formula, iff C vanishes on some satisfying configuration of every satisfiable formula."},
+    {"title": "Naive interwoven energy is blind to SAT", "decl": "InterwovenSAT.naive_Emin", "pr": 90,
+     "statement": "With sign-sensitive coupling or curvature (4μ + 2λ ≥ 1/12), a satisfiable and an unsatisfiable formula both have ground energy 1/4."},
+    {"title": "SAT ⟺ zero ground energy (sign-blind)", "decl": "InterwovenSAT.sat_iff_EminSB_eq_zero", "pr": 90,
+     "statement": "With coupling and curvature applied to Ψ², a formula is satisfiable iff its ground energy over unit fields is 0; it is unsatisfiable iff the ground energy is at least 1/8."},
+    {"title": "Zero-mode resource statement is P ≠ NP", "decl": "WCTSATScaling.zeroSuperpoly_SAT_iff", "pr": 90,
+     "statement": "In the class of charged zero-mode torus devices, superpolynomial resources for every dense-SAT decider is equivalent to P_TM ≠ NP_TM."},
+    {"title": "Physical lower bounds transfer to classical", "decl": "WCTSATScaling.superpoly_SAT_implies_P_ne_NP", "pr": 90,
+     "statement": "In every device class that has a polynomial-resource device for each language of P_TM, a superpolynomial resource lower bound for dense SAT implies P_TM ≠ NP_TM."}
   ],
   "pending": [],
   "open": [
@@ -119,6 +144,15 @@
         "CookLevin.Gen.satLowerBound_iff_P_ne_NP"
       ],
       "formal": "Equivalence proved; separation open"
+    },
+    {
+      "title": "Superpolynomial physical resources for SAT",
+      "statement": "Every admissible uniformly encoded frozen-WCT SAT decider uses more than n^k resources on infinitely many lengths, for every k. In the charged zero-mode class this is equivalent to P_TM ≠ NP_TM; in every class containing those devices it implies it.",
+      "decls": [
+        "WCTSATScaling.SuperpolyResources",
+        "WCTSATScaling.zeroSuperpoly_SAT_iff"
+      ],
+      "formal": "Stated as a Prop; equivalence proved; separation open"
     }
   ],
   "verification": {

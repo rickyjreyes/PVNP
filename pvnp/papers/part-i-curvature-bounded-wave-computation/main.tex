@@ -2786,6 +2786,23 @@ invariant under complex conjugation already starts in that set
 (\nolinkurl{Torus.no_locking}).  This covers the phase orbit of every
 binary-phase state.  A robust locking realization therefore needs
 dissipative or forced dynamics.
+\emph{Addendum, 13 November 2026.}  Define the structure on the
+configuration torus $|\psi_i|=1$ of an interwoven field, one unit
+amplitude per variable: the phase-locking constraints are the clause
+penalties of the $\psi$-SAT energy, and the flux constraints are the
+coupling and curvature energies of the squared field $\psi_i^2$ on the
+clause interaction graph.  A locking configuration is a point at which
+all of them vanish.  With these definitions, nonexistence of a locking
+configuration is equivalent to unsatisfiability, for every formula
+(\nolinkurl{InterwovenSAT.toroidal_locking_iff_unsat}).  With
+sign-sensitive flux constraints (coupling of $\psi_i$ itself) the
+equivalence fails for a satisfiable two-variable formula whose clauses
+need opposite phases (\nolinkurl{InterwovenSAT.naive_toroidal_locking_fails}).
+For any nonnegative flux energy the equivalence holds exactly when the
+energy vanishes on some satisfying configuration of every satisfiable
+formula (\nolinkurl{InterwovenSAT.locks_iff_sat_iff}).  The statement is
+proved for this configuration-space structure, not for a spatial
+$\psi$--electron field, and it says nothing about reaching a lock.
 \subsection{Discrete Equivalence with Classical $P$ and $NP$}
 \label{sec:discrete-equivalence}
 The following statements concern \emph{uniform finite-state local-update}

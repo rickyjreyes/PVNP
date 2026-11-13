@@ -6,7 +6,9 @@
  */
 "use strict";
 
-const STATUSES = ["Exact", "Restricted", "Refuted", "Open"];
+/* "Interpretive" (13 November 2026) marks a register entry with no mathematical assertion.
+   Inventories written before it have no Interpretive column; that column then counts as 0. */
+const STATUSES = ["Exact", "Restricted", "Refuted", "Open", "Interpretive"];
 const PARTS = ["I", "II", "III"];
 
 function cells(line) {
@@ -16,6 +18,11 @@ function cells(line) {
 /* Markdown escapes a literal bar inside a table cell as "\|". */
 function unescapeCell(s) {
   return s.replace(/\\\|/g, "|");
+}
+
+/* A coverage row without an Interpretive column (older inventories) has Interpretive 0. */
+function withInterpretive(row) {
+  return row.length === STATUSES.length ? [...row, 0] : row;
 }
 
 function emptyTally() {
@@ -38,7 +45,7 @@ function parseInventory(markdown, label = "inventory") {
       const id = c[0], part = id.split("-")[0];
       if (seen.has(id)) throw new Error(`${label}: duplicate claim ID ${id}`);
       seen.add(id);
-      const m = c[4].match(/^(Exact|Restricted|Refuted|Open)\b/);
+      const m = c[4].match(/^(Exact|Restricted|Refuted|Open|Interpretive)\b/);
       if (!m) throw new Error(`${label}: unrecognized status for ${id}: ${c[4].slice(0, 40)}`);
       claims.push({
         id, part, number: Number(id.split("-")[1]),
@@ -47,15 +54,15 @@ function parseInventory(markdown, label = "inventory") {
       });
     } else if (/^\|\s*Part (?:I|II|III)\s*\|/.test(line)) {
       const c = cells(line), part = c[0].replace("Part ", "");
-      if (c.length !== 6 || !c.slice(1).every(s => /^\d+$/.test(s)))
+      if (![6, 7].includes(c.length) || !c.slice(1).every(s => /^\d+$/.test(s)))
         throw new Error(`${label}: invalid coverage row for Part ${part}`);
       if (table[part]) throw new Error(`${label}: duplicate coverage row for Part ${part}`);
-      table[part] = c.slice(1).map(Number);
+      table[part] = withInterpretive(c.slice(1).map(Number));
     } else if (/^\|\s*\*\*Total\*\*\s*\|/.test(line)) {
       const c = cells(line).map(s => s.replace(/\*/g, ""));
-      if (c.length !== 6 || !c.slice(1).every(s => /^\d+$/.test(s)))
+      if (![6, 7].includes(c.length) || !c.slice(1).every(s => /^\d+$/.test(s)))
         throw new Error(`${label}: invalid Total coverage row`);
-      total = c.slice(1).map(Number);
+      total = withInterpretive(c.slice(1).map(Number));
     }
   }
   if (PARTS.some(p => !table[p]) || !total) throw new Error(`${label}: missing coverage table`);

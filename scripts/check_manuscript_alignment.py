@@ -32,7 +32,7 @@ def main() -> None:
         encoding="utf8"
     )
 
-    must("| **Total** | **91** | **79** | **1** | **5** | **6** |" in inventory,
+    must("| **Total** | **91** | **79** | **2** | **5** | **4** | **1** |" in inventory,
          "Canonical claim inventory unexpectedly changed")
     for number in (25, 26, 27, 28):
         must(re.search(r"Withdrawn[^\n]*I-" + str(number) + r"\b", p1) is not None,
@@ -69,7 +69,17 @@ def main() -> None:
          and "no_uniform_separator_price" in p1 and "layer_price" in p1,
          "Part I lacks the dated I-31 addendum naming the counterexample and the corrected price")
     must("5 Refuted and 6 Open" in combined,
-         "Consolidated volume lacks the current counts after the I-31 refutation")
+         "Consolidated volume lacks the dated counts after the I-31 refutation")
+    # I-37 is Restricted and III-22 Interpretive since 13 Nov 2026 (dated addenda).
+    must("Addendum, 13 November 2026" in p1 and "toroidal_locking_iff_unsat" in p1
+         and "naive_toroidal_locking_fails" in p1,
+         "Part I lacks the dated I-37 addendum naming the locking theorem and its failure case")
+    must("Addendum, 13 November 2026" in p3 and "Interpretive" in p3,
+         "Part III lacks the dated III-22 Interpretive classification")
+    must("Addendum, 13 November 2026" in combined and "toroidal_locking_iff_unsat" in combined,
+         "Consolidated volume lacks the dated I-37/III-22 addendum")
+    must("I-37 & Open" not in combined and "III-22 & Open" not in combined,
+         "Consolidated volume still labels I-37 or III-22 Open")
     must("Current formalization status (7 November 2026)" in p2,
          "Missing current Part II status section")
     must("Current Lean formalization status (7 November 2026)" in p1,
@@ -98,7 +108,7 @@ def main() -> None:
          "Consolidated volume still labels the settled II-10 claim Restricted")
     must("I-31 & Open" not in combined,
          "Consolidated volume still labels frozen-model I-31 as unresolved")
-    must("79 Exact, 1 Restricted, 5 Refuted" in combined and "6 Open" in combined,
+    must("79 Exact, 2 Restricted, 5 Refuted, 4 Open and 1 Interpretive" in combined,
          "The consolidated volume does not contain current inventory totals")
     must("Original complete polynomial-time window and initial-configuration transducers." not in combined,
          "Current consolidated register contains outdated II-10 gate")
