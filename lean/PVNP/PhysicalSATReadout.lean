@@ -43,11 +43,6 @@ theorem margin_implies_contrast
   have h : 2 * margin ≤ yes - no := by linarith
   exact h.trans (le_abs_self _)
 
-/-- A finite amount of detector information may already be present at time 0.
-If final readout contrast is delta, and the two initial readings differ by
-at most eps, one trajectory still changes by at least (delta-eps)/2.
-
-No claim is possible when eps is already as large as delta. -/
 /-- If each displayed outcome has absolute calibration error at most rho,
 the true physical detector separation loses at most 2rho of margin. -/
 theorem noisy_margin_implies_contrast
@@ -62,8 +57,10 @@ theorem noisy_margin_implies_contrast
   have h : 2 * (margin - rho) ≤ physYes - physNo := by linarith
   exact h.trans (le_abs_self _)
 
-/-- Initial detector contrast is not necessarily zero, even if
-the actual readout begins at the same nominal baseline. -/
+/-- If final detector contrast is delta but the two initial readings
+differ by at most eps, at least one trajectory changes by (delta-eps)/2.
+The lower bound is vacuous when eps >= delta: a preloaded answer is a
+concrete obstruction to an unconditional transport lower bound. -/
 theorem two_outcomes_with_initial_skew
     (a₀ b₀ aT bT delta eps : ℝ)
     (hinit : |a₀ - b₀| ≤ eps)
