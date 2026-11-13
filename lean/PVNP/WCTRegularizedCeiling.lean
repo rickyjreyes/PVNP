@@ -73,6 +73,6 @@ theorem regularized_laplacian_envelope_ceiling
     ‖Dc L (u t)‖ ^ 2 / (4 * ε ^ 2) ≤
       (lapBudget L κ β γ (u 0)) ^ 2 / (4 * ε ^ 2) := by
   have hsq := frozen_torus_laplacian_squared_ceiling hL hγ hu t
-  gcongr
+  exact div_le_div_of_nonneg_right hsq (by positivity)
 
 end PVNP.WCTRegularizedCeiling
