@@ -240,3 +240,4 @@ import PVNP.WCTSATScaling
 -- constant for every formula: two-mode readings and fluxes computed exactly.
 import PVNP.WCTSATBlind
 import PVNP.WCTLocalSATEnergy
+import PVNP.WCTDistributedSAT
