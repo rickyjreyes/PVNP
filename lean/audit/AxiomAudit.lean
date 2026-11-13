@@ -875,3 +875,14 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.WCTDistributedSAT.distributed_energy_requires_causal_coverage
 #print axioms PVNP.WCTDistributedSAT.distributed_ground_energy_requires_causal_coverage
 #print axioms PVNP.WCTDistributedSAT.distributed_energy_last_site_linear
+-- Part I I-3: explicit satisfiable 3-CNF with a nonglobal sign-blind local well.
+#print axioms PVNP.SATFalseWell.trapFormula_sat
+#print axioms PVNP.SATFalseWell.sPos_nonneg
+#print axioms PVNP.SATFalseWell.Elogic_trapFormula
+#print axioms PVNP.SATFalseWell.trapEnergy_local_lower
+#print axioms PVNP.SATFalseWell.trapEnergy_false
+#print axioms PVNP.SATFalseWell.trapEnergy_true
+#print axioms PVNP.SATFalseWell.false_score_is_local_min
+#print axioms PVNP.SATFalseWell.false_phase_energy
+#print axioms PVNP.SATFalseWell.true_phase_energy
+#print axioms PVNP.SATFalseWell.signblind_false_local_well
