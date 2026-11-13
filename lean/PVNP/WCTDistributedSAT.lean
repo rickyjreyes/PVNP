@@ -30,7 +30,7 @@ raw spatial input, not a free nonlocal encoder to the measured output.
 namespace PVNP.WCTDistributedSAT
 
 open PVNP.PartII PVNP.PartIPsiSat PVNP.InterwovenSAT
-open PVNP.MultiStageCausality PVNP.RadiusCausality
+open PVNP.MultiStageCausality PVNP.RadiusCausality PVNP.LocalityLowerBound
 open PVNP.WCTLocalSATEnergy
 
 /-- A fixed positive unit clause, or its negative, selected locally
@@ -85,14 +85,12 @@ theorem formulaOfBits_sat_iff (bs : List Bool) :
     change cl ∈ gPos :: bs.map localClause at hcl
     rcases List.mem_cons.mp hcl with h | h
     · rw [h, pos_clause_eval]
-      rfl
     · rcases List.mem_map.mp h with ⟨b, hb, hbc⟩
       have hc : cl = gPos := by
         calc
           cl = localClause b := hbc.symm
           _ = gPos := by simp [localClause, hall b hb]
       rw [hc, pos_clause_eval]
-      rfl
 
 /-- Unlike the former two-formula selector, every source bit
 has its own syntactic clause in this n+1 clause CNF family. -/
