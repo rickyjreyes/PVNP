@@ -32,7 +32,7 @@ def main() -> None:
         encoding="utf8"
     )
 
-    must("| **Total** | **91** | **79** | **2** | **5** | **4** | **1** |" in inventory,
+    must("| **Total** | **91** | **80** | **2** | **5** | **3** | **1** |" in inventory,
          "Canonical claim inventory unexpectedly changed")
     for number in (25, 26, 27, 28):
         must(re.search(r"Withdrawn[^\n]*I-" + str(number) + r"\b", p1) is not None,
@@ -108,8 +108,16 @@ def main() -> None:
          "Consolidated volume still labels the settled II-10 claim Restricted")
     must("I-31 & Open" not in combined,
          "Consolidated volume still labels frozen-model I-31 as unresolved")
-    must("79 Exact, 2 Restricted, 5 Refuted, 4 Open and 1 Interpretive" in combined,
+    must("80 Exact, 2 Restricted, 5 Refuted, 3 Open and 1 Interpretive" in combined,
          "The consolidated volume does not contain current inventory totals")
+    # I-37 is Exact and I-3 Restricted since 14 Nov 2026 (dated addenda).
+    must("Addendum, 14 November 2026" in p1 and "SpatialLocking.sat_iff_locked" in p1
+         and "SATDynamics.energy_monotone_trapped" in p1,
+         "Part I lacks the dated I-37/I-3 addenda naming the spatial locking and trapping theorems")
+    must("Addendum, 14 November 2026" in combined and "SpatialLocking.sat_iff_locked" in combined,
+         "Consolidated volume lacks the dated I-37/I-3 addendum")
+    must("I-37 & Restricted" not in combined and "I-3 & Open" not in combined,
+         "Consolidated volume still lists I-37 as Restricted or I-3 as Open")
     must("Original complete polynomial-time window and initial-configuration transducers." not in combined,
          "Current consolidated register contains outdated II-10 gate")
     must("\\usepackage{xcolor}" in combined and "\\usepackage{xcolor>" not in combined,

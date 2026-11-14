@@ -126,12 +126,11 @@ of a future proof.
 \begin{center}\small
 \begin{tabular}{@{}p{0.12\linewidth}p{0.21\linewidth}p{0.56\linewidth}@{}}\toprule
 Claim & Status & Missing requirement\\\midrule
-I-2 & Open & Verifiable wavefield with independently proved nonconstructibility.\\
-I-3 & Open & Formula-dependent physical dynamics and robust readout, beyond logical-energy certificates.\\
-I-11 & Restricted & A charged, robust continuum physical-to-discrete resource bridge.\\
+I-2 & Open & A proof of $P_{\mathrm{TM}}\neq NP_{\mathrm{TM}}$: every non-vacuous reading is exactly that separation.\\
+I-3 & Restricted & Non-monotone dynamics from formula-dependent polynomial-time preparations; energy descent from formula-independent preparations is refuted.\\
+I-11 & Restricted & A certified polynomial-time approximation of the nonlinear evolution; robust readout is proved.\\
 I-16 & Open & An unrestricted superpolynomial SAT time lower bound against every correct decider.\\
 I-32 & Open & An encoding-independent exponential interface lower bound for every decider.\\
-I-37 & Restricted & A spatial-torus physical realization whose dynamics reach the locks; the equivalence is proved on the configuration torus.\\
 III-22 & Interpretive & Arrow-of-time remark; asserts no theorem, so no proof obligation.\\
 \bottomrule
 \end{tabular}
@@ -141,7 +140,7 @@ claims I-25--I-28 remain in the audit and have been
 withdrawn from theorem status in the revised text.
 I-31 is also refuted for the frozen growing-torus trajectory
 class, not for all fixed-domain or hard-language variants.
-The current inventory is 79 Exact, 2 Restricted, 5 Refuted, 4 Open and 1 Interpretive.
+The current inventory is 80 Exact, 2 Restricted, 5 Refuted, 3 Open and 1 Interpretive.
 No universal classical or physical separation follows.
 
 \paragraph{Addendum, 12 November 2026.}
@@ -174,6 +173,21 @@ realization stays open, so I-37 is Restricted.  III-22 asserts no
 theorem and is classified as Interpretive.  The inventory is now
 79 Exact, 2 Restricted, 5 Refuted, 4 Open and 1 Interpretive.  No
 universal classical or physical separation follows.
+
+\paragraph{Addendum, 14 November 2026.}
+I-37 is proved on the spatial torus of the frozen equation: a locking
+configuration of a multi-component field exists if and only if the
+formula is satisfiable (\nolinkurl{SpatialLocking.sat_iff_locked}); the
+locks are exact solutions of the frozen flow and are never approached
+from outside (\nolinkurl{SpatialLocking.no_attracting_locks}).  I-37 is
+Exact and leaves the unresolved register.  I-3 is Restricted: the static
+criterion and an exhaustive device are proved, and energy descent is
+refuted as a test (\nolinkurl{SATDynamics.energy_monotone_trapped}).
+I-2, I-16 and I-32 stay Open: every non-vacuous reading of I-2 is
+exactly $P_{\mathrm{TM}}\neq NP_{\mathrm{TM}}$, equivalent to I-16 for
+dense SAT (\nolinkurl{NonconstructibleFamily.npFamily_iff_wccDepth}).
+The inventory is now 80 Exact, 2 Restricted, 5 Refuted, 3 Open and
+1 Interpretive.  No universal classical or physical separation follows.
 
 \section{Reproduction and source maintenance}
 The authoritative historical LaTeX sources remain under the four original manuscript directories in the repository. The single-release build first compiles them into temporary PDFs, binds them behind this overview, and installs only one primary consolidated PDF. Run \texttt{bash scripts/build\_pdfs.sh} to regenerate it. For the Lean formalization, use the pinned toolchain and run \texttt{lake build PVNP} followed by the standard axiom audit from within the \texttt{lean} directory.

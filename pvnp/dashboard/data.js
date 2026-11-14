@@ -5,18 +5,18 @@ window.PVNP_DATA = {
  "repository": "https://github.com/rickyjreyes/PVNP",
  "inventory": {
   "path": "pvnp/proofs/manuscript-lean-inventory.md",
-  "date": "2026-11-13",
-  "blob": "2d6aab90b7317c0cca6a9f5dbaf427fba919116e",
+  "date": "2026-11-14",
+  "blob": "50a3cd7051310fa659de1f6a27c6365e0ea56330",
   "url": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md",
   "table": {
    "parts": {
     "I": {
      "total": 41,
      "counts": {
-      "Exact": 30,
+      "Exact": 31,
       "Restricted": 2,
       "Refuted": 5,
-      "Open": 4,
+      "Open": 3,
       "Interpretive": 0
      }
     },
@@ -42,10 +42,10 @@ window.PVNP_DATA = {
     }
    },
    "counts": {
-    "Exact": 79,
+    "Exact": 80,
     "Restricted": 2,
     "Refuted": 5,
-    "Open": 4,
+    "Open": 3,
     "Interpretive": 1
    },
    "total": 91
@@ -100,7 +100,7 @@ window.PVNP_DATA = {
   }
  },
  "lean": {
-  "tree": "ba21085dd726a259355cb38efdd1d41cdc900ecf",
+  "tree": "2cf55187bd8e1ad4692ebce6a32612b9bc8924a5",
   "matches_verified": false,
   "links_ref": "main"
  },
@@ -127,7 +127,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L66",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L67",
    "conditional": {
     "kind": "open",
     "note": "Verified: (1) curvature cost above every polynomial-time bound together with (2) verifiability implies ψ* ∈ NP \\ P (state version). Not proved: premise (1)."
@@ -138,10 +138,45 @@ window.PVNP_DATA = {
    "part": "I",
    "title": "Conj. \"Symbolic Separation Program\" §4",
    "claim": "∃ verifiable non-constructible ψ* under WCT rails",
-   "lean": "`DepthBarrier.explicit_no_separation`, `DepthBarrier.explicit_state_constructible` (Phase XVIII)",
+   "lean": "`NonconstructibleFamily.unrestricted_family_separation`, `NonconstructibleFamily.npFamily_separation_iff`, `NonconstructibleFamily.npFamily_SAT_iff`, `NonconstructibleFamily.wavefield_separation_iff`, `NonconstructibleFamily.npFamily_iff_wccDepth` (Phase XXII); `DepthBarrier.explicit_no_separation`, `DepthBarrier.explicit_state_constructible` (Phase XVIII)",
    "status": "Open",
-   "details": "Open (conjecture). In the explicit-state reading it is false: a fixed machine of `def:tm` writes any word in |s|+1 transitions on every input, so `NPst \\ Pst = ∅` for every verifier. A non-trivial reading needs a state notion (input-indexed families or physical fields with a preparation model) that the manuscript does not fix.",
+   "details": "Open (conjecture). Every reading is settled or is exactly the classical separation. Explicit states: false, since a fixed machine of `def:tm` writes any word in |s|+1 transitions on every input, so `NPst \\ Pst = ∅` for every verifier. Input-indexed families `x ↦ ψ_x` with unrestricted verification: true for the vacuous reason that a diagonal language outside P_TM is verified by the trivial predicate. NP-verified families, and physical wavefield families prepared by charged zero-mode torus devices: `NPst \\ Pst ≠ ∅` iff P_TM ≠ NP_TM, which is `conj:wcc_depth` (I-16) for dense SAT. Missing: P_TM ≠ NP_TM.",
    "refs": {
+    "NonconstructibleFamily.unrestricted_family_separation": [
+     {
+      "name": "NonconstructibleFamily.unrestricted_family_separation",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/NonconstructibleFamily.lean#L74",
+      "audited": true
+     }
+    ],
+    "NonconstructibleFamily.npFamily_separation_iff": [
+     {
+      "name": "NonconstructibleFamily.npFamily_separation_iff",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/NonconstructibleFamily.lean#L87",
+      "audited": true
+     }
+    ],
+    "NonconstructibleFamily.npFamily_SAT_iff": [
+     {
+      "name": "NonconstructibleFamily.npFamily_SAT_iff",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/NonconstructibleFamily.lean#L101",
+      "audited": true
+     }
+    ],
+    "NonconstructibleFamily.wavefield_separation_iff": [
+     {
+      "name": "NonconstructibleFamily.wavefield_separation_iff",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/NonconstructibleFamily.lean#L170",
+      "audited": true
+     }
+    ],
+    "NonconstructibleFamily.npFamily_iff_wccDepth": [
+     {
+      "name": "NonconstructibleFamily.npFamily_iff_wccDepth",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/NonconstructibleFamily.lean#L188",
+      "audited": true
+     }
+    ],
     "DepthBarrier.explicit_no_separation": [
      {
       "name": "DepthBarrier.explicit_no_separation",
@@ -157,7 +192,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L67",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L68",
    "historical": {
     "title": "Conj. \"Symbolic Separation Program\" §4",
     "claim": "∃ verifiable non-constructible ψ* under WCT rails",
@@ -173,10 +208,52 @@ window.PVNP_DATA = {
    "part": "I",
    "title": "§2.3/§4.1 phase-locking criterion \"SAT ⟺ ∃xᵢ: ∇φ→0, |ψ|²→max\"",
    "claim": "informal limits, encoding unspecified",
-   "lean": "`InterwovenSAT.sat_iff_EminSB_eq_zero`, `InterwovenSAT.measure_satisfies`, `InterwovenSAT.naive_Emin`, `InterwovenSAT.satisfying_not_ground` (Phase XX); `PartIPsiSat.roundPhase_satisfies`, `PartIPsiSat.eventually_satisfies_of_energy_tendsto`, `PhaseLockScope.bare_phase_lock_not_sat`, `Torus.no_locking_phaseOrbit`, `Torus.no_locking_realStates` (Phase XVIII)",
-   "status": "Open",
-   "details": "Open. Static criterion in the interwoven encoding: with unit amplitudes and sign-blind gradient terms, SAT ⟺ the ground energy is 0, and UNSAT ⟺ it is at least 1/8; the sign readout of any field below 1/8 satisfies the formula. With the literal (sign-sensitive) phase gradient the criterion fails: the satisfiable `F_xor` and the unsatisfiable `G` have the same ground energy 1/4, and satisfying assignments are not ground states. The frozen dynamics cannot supply the convergence (time reversibility). Missing: a formula-dependent non-conservative dynamics that drives the sign-blind energy below 1/8 from a state prepared by an encoder that does not itself decide SAT, with charged time.",
+   "lean": "`SATDynamics.sat_iff_corner_sweep`, `SATDynamics.energy_monotone_trapped`, `SATDynamics.corner_trapped`, `SATDynamics.no_corner_preparation_decides`, `SATDynamics.efficient_device_and_simulation_imply_P_eq_NP`, `SATFalseWell.signblind_false_local_well` (Phase XXII); `InterwovenSAT.sat_iff_EminSB_eq_zero`, `InterwovenSAT.measure_satisfies`, `InterwovenSAT.naive_Emin`, `InterwovenSAT.satisfying_not_ground` (Phase XX); `PartIPsiSat.roundPhase_satisfies`, `PartIPsiSat.eventually_satisfies_of_energy_tendsto`, `PhaseLockScope.bare_phase_lock_not_sat`, `Torus.no_locking_phaseOrbit`, `Torus.no_locking_realStates` (Phase XVIII)",
+   "status": "Restricted",
+   "details": "Restricted (Phase XXII). As a static criterion in the sign-blind interwoven encoding it holds: SAT ⟺ ground energy 0, UNSAT ⟺ ground energy at least 1/8, and the sign readout of any field below 1/8 satisfies the formula; preparing the `2^n` corner fields and reading `E < 1/8` decides SAT for every formula (`sat_iff_corner_sweep`). As a dynamical test it fails: the bare lock (gradient and intensity only) does not detect SAT; with the literal sign-sensitive gradient the satisfiable `F_xor` and the unsatisfiable `G` have the same ground energy 1/4; a satisfiable formula has a false well that traps every energy-nonincreasing evolution of unit fields for all time (`energy_monotone_trapped`), so for every formula-independent corner preparation some satisfiable formula is never read as satisfiable by energy descent (`no_corner_preparation_decides`); the frozen dynamics cannot supply the convergence (time reversibility). Not covered: non-monotone dynamics from formula-dependent polynomial-time preparations. With polynomial resources and a resource-preserving simulation such a device would put SAT in P_TM.",
    "refs": {
+    "SATDynamics.sat_iff_corner_sweep": [
+     {
+      "name": "SATDynamics.sat_iff_corner_sweep",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SATDynamicsObstruction.lean#L332",
+      "audited": true
+     }
+    ],
+    "SATDynamics.energy_monotone_trapped": [
+     {
+      "name": "SATDynamics.energy_monotone_trapped",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SATDynamicsObstruction.lean#L75",
+      "audited": true
+     }
+    ],
+    "SATDynamics.corner_trapped": [
+     {
+      "name": "SATDynamics.corner_trapped",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SATDynamicsObstruction.lean#L264",
+      "audited": true
+     }
+    ],
+    "SATDynamics.no_corner_preparation_decides": [
+     {
+      "name": "SATDynamics.no_corner_preparation_decides",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SATDynamicsObstruction.lean#L296",
+      "audited": true
+     }
+    ],
+    "SATDynamics.efficient_device_and_simulation_imply_P_eq_NP": [
+     {
+      "name": "SATDynamics.efficient_device_and_simulation_imply_P_eq_NP",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SATDynamicsObstruction.lean#L359",
+      "audited": true
+     }
+    ],
+    "SATFalseWell.signblind_false_local_well": [
+     {
+      "name": "SATFalseWell.signblind_false_local_well",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SATFalseWell.lean#L151",
+      "audited": true
+     }
+    ],
     "InterwovenSAT.sat_iff_EminSB_eq_zero": [
      {
       "name": "InterwovenSAT.sat_iff_EminSB_eq_zero",
@@ -241,7 +318,13 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L68",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L69",
+   "formalized": {
+    "pr": 95,
+    "decl": "SATDynamics.sat_iff_corner_sweep",
+    "from": "Open",
+    "to": "Restricted"
+   },
    "historical": {
     "title": "§2.3/§4.1 phase-locking criterion \"SAT ⟺ ∃xᵢ: ∇φ→0, |ψ|²→max\"",
     "claim": "informal limits, encoding unspecified",
@@ -269,7 +352,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L69",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L70",
    "conditional": {
     "kind": "open",
     "note": "Verified: verifiable and not constructible implies ψ* ∈ NP \\ P and P ≠ NP (state version). Not proved: premise (2), non-constructibility."
@@ -318,7 +401,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L70",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L71",
    "conditional": {
     "kind": "open",
     "note": "Verified: the class identifications, whose premises are proved for the discrete model, and the implication from a separation to P ≠ NP. Not proved: any such separation."
@@ -348,7 +431,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L71"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L72"
   },
   {
    "id": "I-7",
@@ -367,7 +450,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L72"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L73"
   },
   {
    "id": "I-8",
@@ -393,7 +476,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L73"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L74"
   },
   {
    "id": "I-9",
@@ -412,7 +495,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L74",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L75",
    "conditional": {
     "kind": "open",
     "note": "Verified: a verifier together with every decider exceeding a rail infinitely often implies P^phys ≠ NP^phys. Not proved: the hardness premise for any language."
@@ -449,7 +532,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L75",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L76",
    "conditional": {
     "kind": "open",
     "note": "Verified: under common-successor mixing of the observable transition relation, no nonconstant symbolic readout is invariant. Not proved: the mixing hypothesis, which curvature collapse is not shown to imply."
@@ -485,9 +568,9 @@ window.PVNP_DATA = {
    "part": "I",
    "title": "Remark `rem:infinite-compute`",
    "claim": "within the rail, P_WCC = P_Turing",
-   "lean": "`P_WCC_eq_P_TM`; `PartIIUniform.P_disc_eq_P_TM` (new), `PhysicalAudit.unrestricted_phys_ne_P_TM`, `WCTSATScaling.superpoly_SAT_implies_P_ne_NP`, `WCTSATScaling.torus_superpoly_implies_P_ne_NP` (Phase XX)",
+   "lean": "`P_WCC_eq_P_TM`; `PartIIUniform.P_disc_eq_P_TM` (new), `PhysicalAudit.unrestricted_phys_ne_P_TM`, `WCTSATScaling.superpoly_SAT_implies_P_ne_NP`, `WCTSATScaling.torus_superpoly_implies_P_ne_NP` (Phase XX), `ContinuumPrecision.zeroDev_languages_eq_P_TM`, `ContinuumPrecision.decision_robust`, `ContinuumPrecision.precision_suffices`, `ContinuumPrecision.approx_readout` (Phase XXII)",
    "status": "Restricted",
-   "details": "Restricted. The discrete uniform equality is exact. The constant-field class with arbitrary encoders contains a diagonal language outside P_TM. Charged physical encoders, robust measurement and polynomial numerical simulation still require a bridge. Phase XX: transfer from a physical lower bound to a classical one needs no simulation in any class containing the charged zero-mode torus devices; the converse transfer still needs the missing bridge.",
+   "details": "Restricted. The discrete uniform equality is exact. The constant-field class with arbitrary encoders contains a diagonal language outside P_TM. Phase XX: transfer from a physical lower bound to a classical one needs no simulation in any class containing the charged zero-mode torus devices. Phase XXII: that charged class decides exactly P_TM (`zeroDev_languages_eq_P_TM`), and robust measurement is proved: the detector is Lipschitz on bounded sets, and initial data known to precision δ with log(1/δ) = LF·T + log(4RC_χ/m) fix the decision of a margin-m readout at time T (`precision_suffices`); an approximate trajectory with residual ε stays within a Gronwall bound of the solution and fixes the readout (`approx_readout`). Missing: a polynomial-time finite-dimensional scheme with a certified residual (truncation of the solution, time discretization, arithmetic cost) for the full device class.",
    "refs": {
     "P_WCC_eq_P_TM": [
      {
@@ -523,9 +606,37 @@ window.PVNP_DATA = {
       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/WCTSATScaling.lean#L213",
       "audited": true
      }
+    ],
+    "ContinuumPrecision.zeroDev_languages_eq_P_TM": [
+     {
+      "name": "ContinuumPrecision.zeroDev_languages_eq_P_TM",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ContinuumPrecision.lean#L49",
+      "audited": true
+     }
+    ],
+    "ContinuumPrecision.decision_robust": [
+     {
+      "name": "ContinuumPrecision.decision_robust",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ContinuumPrecision.lean#L121",
+      "audited": true
+     }
+    ],
+    "ContinuumPrecision.precision_suffices": [
+     {
+      "name": "ContinuumPrecision.precision_suffices",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ContinuumPrecision.lean#L136",
+      "audited": true
+     }
+    ],
+    "ContinuumPrecision.approx_readout": [
+     {
+      "name": "ContinuumPrecision.approx_readout",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ContinuumPrecision.lean#L208",
+      "audited": true
+     }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L76",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L77",
    "historical": {
     "title": "Remark `rem:infinite-compute`",
     "claim": "within the rail, P_WCC = P_Turing",
@@ -582,7 +693,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L77",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L78",
    "conditional": {
     "kind": "open",
     "note": "Verified: in the restricted charged-encoder frozen model, P_TM = NP_TM gives a constant-cost dense SAT implementation, so a barrier there would entail P_TM ≠ NP_TM. Not proved: P_TM = NP_TM or P_TM ≠ NP_TM."
@@ -666,7 +777,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L78",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L79",
    "amended": {
     "pr": 46,
     "scope": "Quiescence assumption added and the linear bound replaced by |supp C_t| ≤ |supp C_0|(2rt+1)^d. Locality alone does not give superpolynomial time.",
@@ -746,7 +857,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L79"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L80"
   },
   {
    "id": "I-15",
@@ -765,16 +876,16 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L80"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L81"
   },
   {
    "id": "I-16",
    "part": "I",
    "title": "Conj. `conj:wcc_depth`",
    "claim": "every uniform discrete WCC decider of 3-SAT is superpolynomial i.o.",
-   "lean": "`PartISeparation.WCCDepth` (statement), `PartISeparation.WCCDepth_iff_not_P_TM`, `DepthBarrier.wccDepth_SAT_iff`, `DepthBarrier.wccdDepth_SAT_iff`, `DepthBarrier.uniform_depth_SAT_iff` (Phase XVIII), `CrossingSATMatrix.quadratic_every_budget`, `FiniteHorizon.fast_through_horizon`, `WCTSATScaling.zeroSuperpoly_SAT_iff` (Phase XX)",
+   "lean": "`PartISeparation.WCCDepth` (statement), `PartISeparation.WCCDepth_iff_not_P_TM`, `DepthBarrier.wccDepth_SAT_iff`, `DepthBarrier.wccdDepth_SAT_iff`, `DepthBarrier.uniform_depth_SAT_iff` (Phase XVIII), `CrossingSATMatrix.quadratic_every_budget`, `FiniteHorizon.fast_through_horizon`, `WCTSATScaling.zeroSuperpoly_SAT_iff` (Phase XX), `NonconstructibleFamily.npFamily_iff_wccDepth` (Phase XXII)",
    "status": "Open",
-   "details": "Open. For dense SAT the conjecture is exactly P_TM ≠ NP_TM in the radius-one, `ℤ^(1+d)` and uniform models. For every sufficiently large budget H and every fixed correct one-tape decider there is a rejected input of length at most H requiring quadratic time in H. Superpolynomial time for one fixed machine remains open. Phase XX: the same holds for the charged zero-mode devices of the frozen torus model, with machine time, evolution time, curvature budget, mass and inverse margin charged.",
+   "details": "Open. For dense SAT the conjecture is exactly P_TM ≠ NP_TM in the radius-one, `ℤ^(1+d)` and uniform models. For every sufficiently large budget H and every fixed correct one-tape decider there is a rejected input of length at most H requiring quadratic time in H. Superpolynomial time for one fixed machine remains open. Phase XX: the same holds for the charged zero-mode devices of the frozen torus model, with machine time, evolution time, curvature budget, mass and inverse margin charged. Phase XXII: equivalent to the NP-verified reading of I-2 (`npFamily_iff_wccDepth`). Diagonalization, crossing sequences (quadratic, one tape), causal-cone bounds (linear) and the physical-resource routes (I-31 refuted; the charged zero-mode class equals P_TM) give no superpolynomial bound, and no route here is shown to avoid the relativization, natural-proofs or algebrization barriers.",
    "refs": {
     "PartISeparation.WCCDepth": [
      {
@@ -831,9 +942,16 @@ window.PVNP_DATA = {
       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/WCTSATScaling.lean#L205",
       "audited": true
      }
+    ],
+    "NonconstructibleFamily.npFamily_iff_wccDepth": [
+     {
+      "name": "NonconstructibleFamily.npFamily_iff_wccDepth",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/NonconstructibleFamily.lean#L188",
+      "audited": true
+     }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L81",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L82",
    "historical": {
     "title": "Conj. `conj:wcc_depth`",
     "claim": "every uniform discrete WCC decider of 3-SAT is superpolynomial i.o.",
@@ -876,7 +994,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L82"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L83"
   },
   {
    "id": "I-18",
@@ -902,7 +1020,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L83",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L84",
    "conditional": {
     "kind": "open",
     "note": "Verified: the conjecture implies dense CNF-SAT ∈ NP_WCC \\ P_WCC, hence P_WCC ⊊ NP_WCC. Not proved: the conjecture."
@@ -925,7 +1043,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L84",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L85",
    "conditional": {
     "kind": "open",
     "note": "Verified: the conjecture implies P ≠ NP. Not proved: the conjecture."
@@ -955,7 +1073,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L85",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L86",
    "amended": {
     "pr": 47,
     "scope": "Now a negative description-size obstruction, K_D(s) ≤ |s|+c. The original state-as-short-witness inference is withdrawn; this is not a lower bound or a separation.",
@@ -999,7 +1117,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L86",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L87",
    "conditional": {
     "kind": "open",
     "note": "Verified: substituting an area lower bound and a coercivity bound yields the curvature-cost bound. Not proved: the two input lower bounds for deciders."
@@ -1029,7 +1147,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L87"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L88"
   },
   {
    "id": "I-23",
@@ -1055,7 +1173,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L88"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L89"
   },
   {
    "id": "I-24",
@@ -1074,7 +1192,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L89",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L90",
    "conditional": {
     "kind": "open",
     "note": "Verified: a verifier and the absence of an admissible decider give L ∈ NP^phys \\ P^phys. Not proved: the absence of a decider for any language."
@@ -1104,7 +1222,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L90"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L91"
   },
   {
    "id": "I-26",
@@ -1131,7 +1249,7 @@ window.PVNP_DATA = {
     ]
    },
    "same_as": "I-25",
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L91"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L92"
   },
   {
    "id": "I-27",
@@ -1150,7 +1268,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L92"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L93"
   },
   {
    "id": "I-28",
@@ -1169,7 +1287,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L93"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L94"
   },
   {
    "id": "I-29",
@@ -1195,7 +1313,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L94"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L95"
   },
   {
    "id": "I-30",
@@ -1214,7 +1332,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L95"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L96"
   },
   {
    "id": "I-31",
@@ -1282,7 +1400,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L96",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L97",
    "formalized": {
     "pr": 78,
     "decl": "SeparatorFrozen.no_uniform_separator_price",
@@ -1304,9 +1422,9 @@ window.PVNP_DATA = {
    "part": "I",
    "title": "Hyp. `prop:locked-expander-full`",
    "claim": "encoding-uniform interface growth 2^{γn}",
-   "lean": "`ExpanderInterface.expanderGrowth_SAT_iff`, `ExpanderInterface.expanderGrowth_implies_P_ne_NP`, `ExpanderInterface.expanderGrowth_const_iff`, `ExpanderInterface.sep_const` (Phase XVIII); `SeparatorPrice.binary_cut_price`, `CurvatureBarrier.graphStorageCost_le_n_mul_d_sq`, `WCTSATScaling.superpoly_SAT_implies_P_ne_NP` (Phase XX)",
+   "lean": "`ExpanderInterface.expanderGrowth_SAT_iff`, `ExpanderInterface.expanderGrowth_implies_P_ne_NP`, `ExpanderInterface.expanderGrowth_const_iff`, `ExpanderInterface.sep_const` (Phase XVIII); `SeparatorPrice.binary_cut_price`, `CurvatureBarrier.graphStorageCost_le_n_mul_d_sq`, `WCTSATScaling.superpoly_SAT_implies_P_ne_NP` (Phase XX); `NonconstructibleFamily.npFamily_iff_expanderGrowth` (Phase XXII)",
    "status": "Open",
-   "details": "Open. The charged constant devices of the frozen model have no decision interface. Hence, for dense SAT in the class of charged constant devices, the hypothesis is equivalent to P_TM ≠ NP_TM, and in any device class containing them it implies P_TM ≠ NP_TM; for every language in P_TM it is false. Bounded-degree binary graph storage costs at most a constant times the cut size. Phase XX: any superpolynomial physical-resource lower bound for SAT over such a class implies P_TM ≠ NP_TM.",
+   "details": "Open. The charged constant devices of the frozen model have no decision interface. Hence, for dense SAT in the class of charged constant devices, the hypothesis is equivalent to P_TM ≠ NP_TM, and in any device class containing them it implies P_TM ≠ NP_TM; for every language in P_TM it is false. Bounded-degree binary graph storage costs at most a constant times the cut size. Phase XX: any superpolynomial physical-resource lower bound for SAT over such a class implies P_TM ≠ NP_TM. Phase XXII: for dense SAT in the charged constant class it is equivalent to the NP-verified reading of I-2 and to I-16. The manuscript turns interface growth into an energy bound through `lem:separator-price` (I-31), which is refuted for the frozen class, so a proof of I-32 would not by itself give that bound.",
    "refs": {
     "ExpanderInterface.expanderGrowth_SAT_iff": [
      {
@@ -1356,9 +1474,16 @@ window.PVNP_DATA = {
       "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/WCTSATScaling.lean#L90",
       "audited": true
      }
+    ],
+    "NonconstructibleFamily.npFamily_iff_expanderGrowth": [
+     {
+      "name": "NonconstructibleFamily.npFamily_iff_expanderGrowth",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/NonconstructibleFamily.lean#L193",
+      "audited": true
+     }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L97",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L98",
    "historical": {
     "title": "Hyp. `prop:locked-expander-full`",
     "claim": "encoding-uniform interface growth 2^{γn}",
@@ -1386,7 +1511,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L98",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L99",
    "conditional": {
     "kind": "open",
     "note": "Verified: the price inequality and the area-growth hypothesis, both quantified over every decider, give C_Θ(L,n) ≥ κ₀c₀2^{γn}. Not proved: either hypothesis for a concrete language."
@@ -1416,7 +1541,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L99"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L100"
   },
   {
    "id": "I-35",
@@ -1440,7 +1565,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L100",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L101",
    "conditional": {
     "kind": "open",
     "note": "Verified: under the same-class identifications, a separation gives P ≠ NP. Not proved: the separation."
@@ -1463,17 +1588,59 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L101"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L102"
   },
   {
    "id": "I-37",
    "part": "I",
    "title": "§12.3 \"nonexistence of a toroidal locking configuration ⟺ unsatisfiability\"",
    "claim": "informal",
-   "lean": "`InterwovenSAT.toroidal_locking_iff_unsat`, `InterwovenSAT.locks_iff_sat_iff`, `InterwovenSAT.naive_toroidal_locking_fails` (Phase XX); `Torus.no_locking`, `Torus.unstable_or_unreachable`, `Torus.isSolution_reverse`, `Torus.no_locking_phaseOrbit` (Phase XVIII); `ToroidalDiagonal.even_encRing_mem_SAT`, `ToroidalDiagonal.odd_encRing_not_SAT`",
-   "status": "Restricted",
-   "details": "Restricted. With the locking configurations defined as the points of the configuration torus `|ψᵢ| = 1` at which the clause penalties and the flux terms vanish, the claim is proved for sign-blind flux terms (coupling and curvature of `Ψ²`), for every formula and all coefficients `λ, μ ≥ 0`; it fails for sign-sensitive terms (the satisfiable `F_xor` has no locking configuration). For any added energy `C ≥ 0` the equivalence holds iff `C` vanishes on some satisfying configuration of every satisfiable formula. Gap: the manuscript's ψ–electron structure is a physical field on a spatial torus whose constraints it does not define, and the frozen dynamics cannot reach a stable lock from outside it (time reversibility). Both seam signs are settled for the finite equality ring.",
+   "lean": "`SpatialLocking.sat_iff_locked`, `SpatialLocking.no_locked_iff_unsat`, `SpatialLocking.locked_iff`, `SpatialLocking.locked_frozen_flow`, `SpatialLocking.frozen_flow_preserves_locks`, `SpatialLocking.no_attracting_locks` (Phase XXII); `InterwovenSAT.toroidal_locking_iff_unsat`, `InterwovenSAT.locks_iff_sat_iff`, `InterwovenSAT.naive_toroidal_locking_fails` (Phase XX); `Torus.no_locking`, `Torus.unstable_or_unreachable`, `Torus.isSolution_reverse`, `Torus.no_locking_phaseOrbit` (Phase XVIII); `ToroidalDiagonal.even_encRing_mem_SAT`, `ToroidalDiagonal.odd_encRing_not_SAT`",
+   "status": "Exact",
+   "details": "Exact (Phase XXII). The structure is realized on the spatial torus `T_L²` of the frozen equation: a field `Ψ = (ψ₀, ψ₁, …)` of frozen-torus `H²` states, `ψ₀` the reference (ψ–electron) component and `ψ_{i+1}` carrying variable `i`. A locking configuration has `|ψᵢ| = 1` at every point, zero local density of the clause penalties plus the sign-blind coupling and curvature of the relative field `ψ_{i+1}·conj ψ₀` at every point, and zero gradient energy. For every formula, every `L > 0` and all `λ, μ ≥ 0` such a configuration exists iff the formula is satisfiable. The locks are the constant fields with satisfying relative phases; under the frozen flow they stay locked with vanishing Laplacian for all times, and for `κ ≤ 0, β ≤ 0 < γ` no frozen trajectory approaches one from outside (the zero mode is the strict Hamiltonian minimizer at fixed mass). The sentence asks for constraints that correspond to the satisfaction of all clauses: sign-sensitive coupling does not (it fails on the satisfiable `F_xor`), and `locks_iff_sat_iff` characterizes the flux energies for which the equivalence holds. \"ψ–electron\" occurs only in this sentence and is read as the reference component. Both seam signs are settled for the finite equality ring.",
    "refs": {
+    "SpatialLocking.sat_iff_locked": [
+     {
+      "name": "SpatialLocking.sat_iff_locked",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SpatialToroidalLocking.lean#L190",
+      "audited": true
+     }
+    ],
+    "SpatialLocking.no_locked_iff_unsat": [
+     {
+      "name": "SpatialLocking.no_locked_iff_unsat",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SpatialToroidalLocking.lean#L211",
+      "audited": true
+     }
+    ],
+    "SpatialLocking.locked_iff": [
+     {
+      "name": "SpatialLocking.locked_iff",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SpatialToroidalLocking.lean#L217",
+      "audited": true
+     }
+    ],
+    "SpatialLocking.locked_frozen_flow": [
+     {
+      "name": "SpatialLocking.locked_frozen_flow",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SpatialToroidalLocking.lean#L264",
+      "audited": true
+     }
+    ],
+    "SpatialLocking.frozen_flow_preserves_locks": [
+     {
+      "name": "SpatialLocking.frozen_flow_preserves_locks",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SpatialToroidalLocking.lean#L283",
+      "audited": true
+     }
+    ],
+    "SpatialLocking.no_attracting_locks": [
+     {
+      "name": "SpatialLocking.no_attracting_locks",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SpatialToroidalLocking.lean#L516",
+      "audited": true
+     }
+    ],
     "InterwovenSAT.toroidal_locking_iff_unsat": [
      {
       "name": "InterwovenSAT.toroidal_locking_iff_unsat",
@@ -1538,12 +1705,12 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L102",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L103",
    "formalized": {
-    "pr": 90,
-    "decl": "InterwovenSAT.toroidal_locking_iff_unsat",
+    "pr": 95,
+    "decl": "SpatialLocking.sat_iff_locked",
     "from": "Open",
-    "to": "Restricted"
+    "to": "Exact"
    },
    "historical": {
     "title": "§12.3 \"nonexistence of a toroidal locking configuration ⟺ unsatisfiability\"",
@@ -1593,7 +1760,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L103"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L104"
   },
   {
    "id": "I-39",
@@ -1633,7 +1800,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L104"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L105"
   },
   {
    "id": "I-40",
@@ -1652,7 +1819,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L105"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L106"
   },
   {
    "id": "I-41",
@@ -1678,7 +1845,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L106",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L107",
    "conditional": {
     "kind": "open",
     "note": "Verified: physical NP membership plus asymptotic hardness against every decider gives a physical separation; the fixed-n impossibility remark is unconditional. Not proved: the hardness premise."
@@ -1701,7 +1868,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L132"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L133"
   },
   {
    "id": "II-2",
@@ -1727,7 +1894,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L133"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L134"
   },
   {
    "id": "II-3",
@@ -1746,7 +1913,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L134"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L135"
   },
   {
    "id": "II-4",
@@ -1772,7 +1939,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L135"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L136"
   },
   {
    "id": "II-5",
@@ -1791,7 +1958,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L136"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L137"
   },
   {
    "id": "II-6",
@@ -1810,7 +1977,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L137"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L138"
   },
   {
    "id": "II-7",
@@ -1843,7 +2010,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L138",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L139",
    "amended": {
     "pr": 45,
     "scope": "Quantifier range corrected from all t ≥ 0 to 0 ≤ t ≤ L(n). The corrected theorem was already kernel-checked; the manuscript now states it.",
@@ -1922,7 +2089,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L139",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L140",
    "amended": {
     "pr": 45,
     "scope": "Same correction: C_{2t} encodes the configuration for 0 ≤ t ≤ L(n), and the two-step identity holds while the head stays in Λ_n.",
@@ -2001,7 +2168,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L140"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L141"
   },
   {
    "id": "II-10",
@@ -2069,7 +2236,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L141",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L142",
    "formalized": {
     "pr": 73,
     "decl": "TwoPhasePolynomialWriter.originalWM_decides",
@@ -2161,7 +2328,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L142"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L143"
   },
   {
    "id": "II-12",
@@ -2187,7 +2354,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L143",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L144",
    "historical": {
     "title": "Cor. `cor:pwcc_equals_pturing`",
     "claim": "P_WCC = P_Turing",
@@ -2237,7 +2404,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L144"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L145"
   },
   {
    "id": "II-14",
@@ -2256,7 +2423,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L145"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L146"
   },
   {
    "id": "II-15",
@@ -2282,7 +2449,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L146"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L147"
   },
   {
    "id": "II-16",
@@ -2301,7 +2468,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L147",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L148",
    "conditional": {
     "kind": "open",
     "note": "Verified: a language in NP^disc \\ P^disc implies P ≠ NP. Not proved: the existence of such a language, which the proved class equalities make equivalent to P ≠ NP."
@@ -2345,7 +2512,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L148",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L149",
    "amended": {
     "pr": 45,
     "scope": "Time bound corrected from c·n^k to c·max(n,1)^k. With the original bound, n = 0 forced T_M(0) = 0 and P_Turing degenerated to {∅, Σ*}.",
@@ -2419,7 +2586,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L149",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L150",
    "conditional": {
     "kind": "model",
     "note": "Verified from the manuscript's physical identities, stated as explicit hypotheses. The identities are modelling assumptions, not Lean theorems."
@@ -2449,7 +2616,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L150"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L151"
   },
   {
    "id": "II-20",
@@ -2468,7 +2635,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L151"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L152"
   },
   {
    "id": "II-21",
@@ -2487,7 +2654,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L152",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L153",
    "conditional": {
     "kind": "model",
     "note": "Verified with the independent-lane premise as an explicit hypothesis. The premise is a modelling assumption."
@@ -2510,7 +2677,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L153"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L154"
   },
   {
    "id": "II-23",
@@ -2536,7 +2703,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L154",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L155",
    "conditional": {
     "kind": "model",
     "note": "Verified under the explicit counting premise T_W ≤ N_updates + 1 and the capacity premises, which are modelling assumptions."
@@ -2566,7 +2733,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L155",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L156",
    "conditional": {
     "kind": "open",
     "note": "Assumes polynomial physical resources, the capacity law, uniform simulation with counted update rounds, and P_Turing ≠ NP_Turing."
@@ -2618,7 +2785,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L156"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L157"
   },
   {
    "id": "II-26",
@@ -2665,7 +2832,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L157"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L158"
   },
   {
    "id": "II-27",
@@ -2684,7 +2851,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L158",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L159",
    "conditional": {
     "kind": "model",
     "note": "Verified through phys_step_ceiling, under the same capacity and counting premises as II-23."
@@ -2714,7 +2881,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L159"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L160"
   },
   {
    "id": "III-1",
@@ -2733,7 +2900,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L198"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L199"
   },
   {
    "id": "III-2",
@@ -2753,7 +2920,7 @@ window.PVNP_DATA = {
     ]
    },
    "same_as": "III-1",
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L199"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L200"
   },
   {
    "id": "III-3",
@@ -2772,7 +2939,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L200",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L201",
    "conditional": {
     "kind": "model",
     "note": "Verified: additivity of stored energy and a per-cell minimum c₀ give E_store ≥ n·c₀. Assumed: additivity and the per-cell bound."
@@ -2795,7 +2962,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L201"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L202"
   },
   {
    "id": "III-5",
@@ -2814,7 +2981,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L202"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L203"
   },
   {
    "id": "III-6",
@@ -2840,7 +3007,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L203"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L204"
   },
   {
    "id": "III-7",
@@ -2873,7 +3040,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L204"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L205"
   },
   {
    "id": "III-8",
@@ -2892,7 +3059,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L205"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L206"
   },
   {
    "id": "III-9",
@@ -2911,7 +3078,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L206"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L207"
   },
   {
    "id": "III-10",
@@ -2930,7 +3097,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L207"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L208"
   },
   {
    "id": "III-11",
@@ -2949,7 +3116,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L208",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L209",
    "conditional": {
     "kind": "model",
     "note": "Verified: an area lower bound A and the coercivity κ·area ≤ cost give C_Θ ≥ κA. Assumed: both bounds."
@@ -2972,7 +3139,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L209"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L210"
   },
   {
    "id": "III-13",
@@ -2991,7 +3158,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L210"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L211"
   },
   {
    "id": "III-14",
@@ -3017,7 +3184,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L211"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L212"
   },
   {
    "id": "III-15",
@@ -3043,7 +3210,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L212"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L213"
   },
   {
    "id": "III-16",
@@ -3062,7 +3229,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L213"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L214"
   },
   {
    "id": "III-17",
@@ -3081,7 +3248,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L214"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L215"
   },
   {
    "id": "III-18",
@@ -3100,7 +3267,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L215"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L216"
   },
   {
    "id": "III-19",
@@ -3119,7 +3286,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L216"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L217"
   },
   {
    "id": "III-20",
@@ -3145,7 +3312,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L217"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L218"
   },
   {
    "id": "III-21",
@@ -3164,7 +3331,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L218"
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L219"
   },
   {
    "id": "III-22",
@@ -3190,7 +3357,7 @@ window.PVNP_DATA = {
      }
     ]
    },
-   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L219",
+   "source": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md?plain=1#L220",
    "reclassified": {
     "pr": 91,
     "from": "Open",
@@ -3457,6 +3624,46 @@ window.PVNP_DATA = {
    "file": "lean/PVNP/WCTSATBlind.lean",
    "line": 218,
    "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/WCTSATBlind.lean#L218",
+   "audited": true
+  },
+  {
+   "title": "No attracting locks",
+   "decl": "SpatialLocking.no_attracting_locks",
+   "pr": 95,
+   "statement": "For κ ≤ 0, β ≤ 0 < γ: if frozen solutions approach a locking configuration on the spatial torus along any sequence of times, they started in one. The frozen flow never brings a non-locked field to a lock.",
+   "file": "lean/PVNP/SpatialToroidalLocking.lean",
+   "line": 516,
+   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SpatialToroidalLocking.lean#L516",
+   "audited": true
+  },
+  {
+   "title": "False well traps energy descent",
+   "decl": "SATDynamics.energy_monotone_trapped",
+   "pr": 95,
+   "statement": "On a satisfiable 3-CNF, every continuous evolution of unit fields along which the sign-blind energy does not increase, started in the false-assignment box below energy 17/16, stays there with energy at least 1 for all time.",
+   "file": "lean/PVNP/SATDynamicsObstruction.lean",
+   "line": 75,
+   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SATDynamicsObstruction.lean#L75",
+   "audited": true
+  },
+  {
+   "title": "Physical wavefield families",
+   "decl": "NonconstructibleFamily.wavefield_separation_iff",
+   "pr": 95,
+   "statement": "Families of frozen-torus fields prepared by charged zero-mode devices and verified by NP membership of their amplitude-bit language: a verifiable non-constructible family exists iff P_TM ≠ NP_TM.",
+   "file": "lean/PVNP/NonconstructibleFamily.lean",
+   "line": 170,
+   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/NonconstructibleFamily.lean#L170",
+   "audited": true
+  },
+  {
+   "title": "Finite precision fixes the readout",
+   "decl": "ContinuumPrecision.precision_suffices",
+   "pr": 95,
+   "statement": "Frozen-torus data known to precision δ = m/(4RC_χe^{LF·T}) fix the decision of a margin-m detector readout at time T, with log(1/δ) = LF·T + log(4RC_χ/m).",
+   "file": "lean/PVNP/ContinuumPrecision.lean",
+   "line": 136,
+   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ContinuumPrecision.lean#L136",
    "audited": true
   }
  ],
