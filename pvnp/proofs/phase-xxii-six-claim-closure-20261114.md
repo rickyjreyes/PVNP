@@ -12,7 +12,7 @@ by a proof or a counterexample.
 | `SpatialToroidalLocking.lean` | I-37 | `SpatialLocking.sat_iff_locked`, `no_locked_iff_unsat`, `locked_iff`, `locked_frozen_flow`, `frozen_flow_preserves_locks`, `ham_ge`, `eq_mode_of_ham_eq`, `no_attracting_locks` |
 | `SATDynamicsObstruction.lean` | I-3 | `SATDynamics.energy_monotone_trapped`, `energySB_flip`, `sat_flipF`, `corner_trapped`, `no_corner_preparation_decides`, `sat_iff_corner_sweep`, `corner_sweep_card`, `efficient_device_and_simulation_imply_P_eq_NP` |
 | `NonconstructibleFamily.lean` | I-2 (with I-16, I-32 links) | `NonconstructibleFamily.familyModel_Pst`, `unrestricted_family_separation`, `npFamily_separation_iff`, `npFamily_SAT_iff`, `wavefield_constructible_iff`, `wavefield_separation_iff`, `npFamily_iff_wccDepth`, `npFamily_iff_expanderGrowth` |
-| `ContinuumPrecision.lean` | I-11 | `ContinuumPrecision.zeroDev_languages_eq_P_TM`, `Jdet_lipschitz`, `readout_precision`, `decision_robust`, `precision_suffices` |
+| `ContinuumPrecision.lean` | I-11 | `ContinuumPrecision.zeroDev_languages_eq_P_TM`, `Jdet_lipschitz`, `readout_precision`, `decision_robust`, `precision_suffices`, `approx_trajectory_close`, `approx_readout` |
 
 No `sorry`, `admit`, `native_decide` or new axiom is used; the axiom audit allows only
 `propext`, `Classical.choice` and `Quot.sound`.
@@ -23,7 +23,7 @@ No `sorry`, `admit`, `native_decide` or new axiom is used; the axiom audit allow
 |---|---|---|---|
 | I-37 | Restricted (70%) | **Exact** | Realized on the spatial torus `T_L²` with frozen-WCT fields; SAT ⟺ a locking configuration exists; locks are exact, curvature-free solutions of the frozen flow and are never approached from outside. |
 | I-3 | Open (45%) | **Restricted** | The static criterion holds (sign-blind encoding); as a dynamical test it is refuted for every energy-nonincreasing evolution from every formula-independent corner; an exhaustive (exponential) device is correct; an efficient one is the P vs NP question. |
-| I-11 | Restricted (45%) | Restricted | The charged zero-mode torus class decides exactly `P_TM`; the readout decision is robust at precision `δ` with `log(1/δ) = LF·T + O(1)`. Certified simulation of the nonlinear PDE remains the gap. |
+| I-11 | Restricted (45%) | Restricted | The charged zero-mode torus class decides exactly `P_TM`; the readout decision is robust at precision `δ` with `log(1/δ) = LF·T + O(1)`; any approximate trajectory with certified residual `ε` gives the readout to within a Gronwall bound. A polynomial-time scheme with certified residual remains the gap. |
 | I-2 | Open (15%) | Open | Every reading is false (explicit states), vacuous (unrestricted verification) or *exactly* `P_TM ≠ NP_TM` (NP-verified families, also physical wavefield families on the frozen torus). |
 | I-32 | Open (20%) | Open | Equivalent to I-2 (reading C) and to I-16 for dense SAT in the charged constant class; its manuscript consequence via I-31 is broken because I-31 is refuted. |
 | I-16 | Open (15%) | Open | For dense SAT it is exactly `P_TM ≠ NP_TM`, equivalent to I-2 (reading C). No strategy available here overcomes the known barriers. |
@@ -181,15 +181,24 @@ zero-mode torus devices (`WCTSATScaling.superpoly_SAT_implies_P_ne_NP`).
    `δ = m / (4 R C_χ e^{LF·T})` fix the decision of a device with margin `m`, and
    `log(1/δ) = LF·T + log(4 R C_χ / m)`: the number of bits grows linearly in the evolution time.
 
-**Closure status: RESTRICTED** (unchanged). Robust measurement — one of the three missing
-ingredients recorded before this phase — is now a theorem, and the charged encoder ingredient is
-exact on the zero-mode class.
+3. *Stability of approximate trajectories* (`approx_trajectory_close`, `approx_readout`). Let
+   `W` be any approximate trajectory in the interaction picture (`W' = G(t, W)` is the frozen
+   equation) with residual `‖W'(t) − G(t, W(t))‖ ≤ ε`, initial error `‖W(0) − u(0)‖ ≤ δ`, and
+   `‖W(t)‖ ≤ R` on `[0, T)`. Then `‖e^{tA}W(t) − u(t)‖ ≤ δ e^{LF·t} + (ε/LF)(e^{LF·t} − 1)` (Mathlib's
+   approximate-trajectory Gronwall inequality with the Lipschitz bound of `G` on the ball), and
+   the detector reading is accurate to `C_χ (‖W(T)‖ + R)` times that bound. This is the stability
+   half of a certified simulation: any scheme whose residual is certified below the margin's
+   threshold decides correctly.
 
-**Remaining obstruction.** `P_phys ⊆ P_TM` for the full frozen-PDE class needs a certified
-approximation of the infinite-dimensional nonlinear evolution: a Galerkin truncation of the
-*solution* (not only of the data) with an error bound in the norm in which the detector is
-Lipschitz, a time discretization, and the bit cost of exact arithmetic, all polynomial in the input
-length. The results here do not control the tail of the nonlinearity in the `H²`-weighted space
+**Closure status: RESTRICTED** (unchanged). Robust measurement — one of the three missing
+ingredients recorded before this phase — is now a theorem, the charged encoder ingredient is
+exact on the zero-mode class, and stability of approximate trajectories is proved.
+
+**Remaining obstruction.** `P_phys ⊆ P_TM` for the full frozen-PDE class needs consistency with
+polynomial cost: a finite-dimensional scheme (a Galerkin truncation of the *solution*, not only of
+the data, and a time discretization) whose residual `‖W' − G(t, W)‖` is certified small in the norm
+in which the detector is Lipschitz, computed with exact-arithmetic bit costs polynomial in the
+input length. By 3. nothing else is needed. The results here do not control the tail of the nonlinearity in the `H²`-weighted space
 beyond the conserved quantities; such control needs propagation of higher (for example analytic)
 regularity, which is not proved. No countermodel is known either; the zero-mode class is
 contained in `P_TM` (`WCTSATScaling.zdecides_mem_P`).
@@ -300,7 +309,7 @@ formalized.
 
 * `lake build PVNP` (Lean 4.23.0, pinned Mathlib): 7,405 jobs, success; the four new modules build
   without warnings.
-* Axiom audit (`lean/audit/AxiomAudit.lean` + `audit/check_axioms.py`): 866 declarations, only
+* Axiom audit (`lean/audit/AxiomAudit.lean` + `audit/check_axioms.py`): 868 declarations, only
   `propext`, `Classical.choice`, `Quot.sound`.
 * Python regressions (`pvnp/tests`, 76 tests), `pvnp/phase_xvi/status.py --check`,
   `scripts/check_manuscript_alignment.py`, `scripts/check_public_release_docs.py`: pass.

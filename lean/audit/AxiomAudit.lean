@@ -986,3 +986,5 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.ContinuumPrecision.readout_precision
 #print axioms PVNP.ContinuumPrecision.decision_robust
 #print axioms PVNP.ContinuumPrecision.precision_suffices
+#print axioms PVNP.ContinuumPrecision.approx_trajectory_close
+#print axioms PVNP.ContinuumPrecision.approx_readout
