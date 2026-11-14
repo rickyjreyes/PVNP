@@ -255,3 +255,6 @@ import PVNP.SATDynamicsObstruction
 import PVNP.NonconstructibleFamily
 -- Phase XXII, I-11: zero-mode class equality and finite-precision robustness of the readout.
 import PVNP.ContinuumPrecision
+
+import PVNP.SATForcedBarrier
+import PVNP.TorusGalerkinCertificate

@@ -9,7 +9,7 @@ The percentages count manuscript statements whose exact form is kernel-checked. 
 measure progress toward proving P ≠ NP. The central theorem, `CrossingSAT.SATLowerBound`, is
 unproved, and the page assigns no percentage to it.
 
-**Current amended inventory (14 November 2026):** 80 Exact, 2 Restricted, 5 Refuted,
+**Current amended inventory (14 November 2026):** 79 Exact, 3 Restricted, 5 Refuted,
 3 Open, 1 Interpretive (79/2/5/4/1 before PR #95 proved I-37 on the spatial torus and refuted the
 energy-descent reading of I-3, which became Restricted; 79/1/5/6 before PR #90 proved I-37 with its
 locking constraints defined and III-22 was classified as Interpretive; 79/1/4/7 before PR #78 refuted I-31 for the frozen
@@ -67,3 +67,5 @@ directory or to the inventory.
 Declaration links are pinned to the verified commit only while `lean/` is identical to it.
 Otherwise they point to `main`, and the page warns that newer Lean code is not yet recorded as
 verified.
+
+**Phase XXIII scope correction (14 November 2026):** I-37 is Restricted for the original ψ-electron claim. Its revised constant-component specification is proved, but its correspondence to the original structure is not. The earlier Phase XXII Exact classification is superseded. See `pvnp/proofs/phase-xxiii-progress.md`.
