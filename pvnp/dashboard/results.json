@@ -2,7 +2,7 @@
   "$comment": "Curated, versioned registry for the PVNP formalization dashboard. Claim statuses and every claim total come from pvnp/proofs/manuscript-lean-inventory.md, never from this file. This file records only (1) provenance of the historical snapshot and of the seven amended statements, (2) editorial notes on conditional Exact claims, (3) supporting results that are not manuscript claims, (4) open obligations, and (5) CI evidence. After editing, run: node pvnp/dashboard/build.js",
   "repository": "https://github.com/rickyjreyes/PVNP",
   "inventory_path": "pvnp/proofs/manuscript-lean-inventory.md",
-  "inventory_date": "2026-11-13",
+  "inventory_date": "2026-11-14",
   "historical": {
     "commit": "eaf8fa02720ee2e520e2c4b62046e75702cd3752",
     "label": "Original October 27 manuscript statements",
@@ -14,7 +14,8 @@
     {"id": "II-10", "pr": 73, "decl": "TwoPhasePolynomialWriter.originalWM_decides", "from": "Restricted",
      "restated": "The time bound in this row was corrected from 2cn^k to 2c·max(n,1)^k by PR #45 (see II-17). The proof covers both forms: originalWM_first_answer gives T_{W_M}(x) = 2T_M(x) for every first-halt time inside the window."},
     {"id": "I-31", "pr": 78, "decl": "SeparatorFrozen.no_uniform_separator_price", "from": "Open", "to": "Refuted"},
-    {"id": "I-37", "pr": 90, "decl": "InterwovenSAT.toroidal_locking_iff_unsat", "from": "Open", "to": "Restricted"}
+    {"id": "I-37", "pr": 95, "decl": "SpatialLocking.sat_iff_locked", "from": "Open", "to": "Exact"},
+    {"id": "I-3", "pr": 95, "decl": "SATDynamics.sat_iff_corner_sweep", "from": "Open", "to": "Restricted"}
   ],
   "reclassifications": [
     {"id": "III-22", "pr": 91, "from": "Open", "to": "Interpretive",
@@ -117,7 +118,15 @@
     {"title": "Physical lower bounds transfer to classical", "decl": "WCTSATScaling.superpoly_SAT_implies_P_ne_NP", "pr": 90,
      "statement": "In every device class that has a polynomial-resource device for each language of P_TM, a superpolynomial resource lower bound for dense SAT implies P_TM ≠ NP_TM."},
     {"title": "Blind device with one budget", "decl": "WCTSATBlind.blind_device", "pr": 92,
-     "statement": "A SAT-correct frozen-torus device with equal initial readings for all formulas and a curvature budget bounded by one constant for every formula. Its encoder is a SAT decider."}
+     "statement": "A SAT-correct frozen-torus device with equal initial readings for all formulas and a curvature budget bounded by one constant for every formula. Its encoder is a SAT decider."},
+    {"title": "No attracting locks", "decl": "SpatialLocking.no_attracting_locks", "pr": 95,
+     "statement": "For κ ≤ 0, β ≤ 0 < γ: if frozen solutions approach a locking configuration on the spatial torus along any sequence of times, they started in one. The frozen flow never brings a non-locked field to a lock."},
+    {"title": "False well traps energy descent", "decl": "SATDynamics.energy_monotone_trapped", "pr": 95,
+     "statement": "On a satisfiable 3-CNF, every continuous evolution of unit fields along which the sign-blind energy does not increase, started in the false-assignment box below energy 17/16, stays there with energy at least 1 for all time."},
+    {"title": "Physical wavefield families", "decl": "NonconstructibleFamily.wavefield_separation_iff", "pr": 95,
+     "statement": "Families of frozen-torus fields prepared by charged zero-mode devices and verified by NP membership of their amplitude-bit language: a verifiable non-constructible family exists iff P_TM ≠ NP_TM."},
+    {"title": "Finite precision fixes the readout", "decl": "ContinuumPrecision.precision_suffices", "pr": 95,
+     "statement": "Frozen-torus data known to precision δ = m/(4RC_χe^{LF·T}) fix the decision of a margin-m detector readout at time T, with log(1/δ) = LF·T + log(4RC_χ/m)."}
   ],
   "pending": [],
   "open": [

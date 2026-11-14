@@ -9,7 +9,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED = {"Exact": 79, "Restricted": 2, "Refuted": 5, "Open": 4, "Interpretive": 1, "total": 91}
+EXPECTED = {"Exact": 80, "Restricted": 2, "Refuted": 5, "Open": 3, "Interpretive": 1, "total": 91}
 
 
 def read(path: str) -> str:
@@ -34,16 +34,21 @@ def main() -> None:
     actual = [t for t in registry.get("targets", []) if t.get("id") == "II-10"]
     require(len(actual) == 1 and actual[0].get("status") == "Exact",
             "original II-10 entry not uniquely Exact")
-    require("| **Total** | **91** | **79** | **2** | **5** | **4** | **1** |" in inventory,
+    require("| **Total** | **91** | **80** | **2** | **5** | **3** | **1** |" in inventory,
             "authoritative manuscript totals diverge")
     refuted = [t for t in registry.get("targets", []) if t.get("id") == "I-31"]
     require(len(refuted) == 1 and refuted[0].get("status") == "Refuted"
             and "no_uniform_separator_price" in inventory,
             "I-31 is not recorded as refuted with its counterexample")
-    restricted = [t for t in registry.get("targets", []) if t.get("id") == "I-37"]
-    require(len(restricted) == 1 and restricted[0].get("status") == "Restricted"
+    locking = [t for t in registry.get("targets", []) if t.get("id") == "I-37"]
+    require(len(locking) == 1 and locking[0].get("status") == "Exact"
+            and "SpatialLocking.sat_iff_locked" in inventory
             and "toroidal_locking_iff_unsat" in inventory,
-            "I-37 is not recorded as Restricted with its locking theorem")
+            "I-37 is not recorded as Exact with its spatial-torus locking theorem")
+    dynamics = [t for t in registry.get("targets", []) if t.get("id") == "I-3"]
+    require(len(dynamics) == 1 and dynamics[0].get("status") == "Restricted"
+            and "SATDynamics.energy_monotone_trapped" in inventory,
+            "I-3 is not recorded as Restricted with its dynamics counterexample")
     interpretive = [t for t in registry.get("targets", []) if t.get("id") == "III-22"]
     require(len(interpretive) == 1 and interpretive[0].get("status") == "Interpretive",
             "III-22 is not recorded as Interpretive")

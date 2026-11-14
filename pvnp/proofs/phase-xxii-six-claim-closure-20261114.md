@@ -28,8 +28,9 @@ No `sorry`, `admit`, `native_decide` or new axiom is used; the axiom audit allow
 | I-32 | Open (20%) | Open | Equivalent to I-2 (reading C) and to I-16 for dense SAT in the charged constant class; its manuscript consequence via I-31 is broken because I-31 is refuted. |
 | I-16 | Open (15%) | Open | For dense SAT it is exactly `P_TM ≠ NP_TM`, equivalent to I-2 (reading C). No strategy available here overcomes the known barriers. |
 
-The classification changes (I-37, I-3) are applied in the companion classification PR, after
-this module PR is merged at a verified head. The ledger becomes **80 Exact, 2 Restricted,
+The modules were merged in PR #95 (merge commit `df8bd7f`) after the hosted `lean` job (full build
+and axiom audit), the PDF `build` and `phase-iii-targeted` passed at its exact head `e23e749`. The
+classification changes (I-37, I-3) are applied in the companion classification PR. The ledger becomes **80 Exact, 2 Restricted,
 5 Refuted, 3 Open, 1 Interpretive** (91). Classical `P ≠ NP` is not proved, and no statement
 here is a lower bound for all physical or classical SAT algorithms.
 
