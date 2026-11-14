@@ -900,3 +900,91 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 -- Part II: complete infinite torus Fourier tail control via H² and summability.
 #print axioms PVNP.TorusSpectralTail.infinite_high_frequency_mass_bound
 #print axioms PVNP.TorusSpectralTail.infinite_tail_mass_from_curvature_budget
+
+-- Phase XXII, I-37: locking configurations of a field on the spatial torus T_L².
+#print axioms PVNP.SpatialLocking.rel_admissible
+#print axioms PVNP.SpatialLocking.qf_pos
+#print axioms PVNP.SpatialLocking.summable_grad2
+#print axioms PVNP.SpatialLocking.grad2_nonneg
+#print axioms PVNP.SpatialLocking.grad2_mode_zero
+#print axioms PVNP.SpatialLocking.eq_mode_of_grad2_eq_zero
+#print axioms PVNP.SpatialLocking.pt_mode
+#print axioms PVNP.SpatialLocking.dens_nonneg
+#print axioms PVNP.SpatialLocking.rel_bitField
+#print axioms PVNP.SpatialLocking.norm_bitField
+#print axioms PVNP.SpatialLocking.sat_iff_locked
+#print axioms PVNP.SpatialLocking.no_locked_iff_unsat
+#print axioms PVNP.SpatialLocking.locked_iff
+#print axioms PVNP.SpatialLocking.rel_phase
+#print axioms PVNP.SpatialLocking.locked_frozen_flow
+#print axioms PVNP.SpatialLocking.frozen_flow_preserves_locks
+#print axioms PVNP.SpatialLocking.summable_mass
+#print axioms PVNP.SpatialLocking.norm_Ac_sq
+#print axioms PVNP.SpatialLocking.kin_eq
+#print axioms PVNP.SpatialLocking.summable_kin
+#print axioms PVNP.SpatialLocking.eq_mode_of_coeff
+#print axioms PVNP.SpatialLocking.kin_ge
+#print axioms PVNP.SpatialLocking.eq_mode_of_kin_eq
+#print axioms PVNP.SpatialLocking.box_real_univ
+#print axioms PVNP.SpatialLocking.bound_field
+#print axioms PVNP.SpatialLocking.pot_ge
+#print axioms PVNP.SpatialLocking.ham_ge
+#print axioms PVNP.SpatialLocking.eq_mode_of_ham_eq
+#print axioms PVNP.SpatialLocking.ham_mode
+#print axioms PVNP.SpatialLocking.approach_zeroMode
+#print axioms PVNP.SpatialLocking.mode_apply_zero
+#print axioms PVNP.SpatialLocking.no_attracting_locks
+
+-- Phase XXII, I-3: the false well traps every energy-monotone evolution.
+#print axioms PVNP.SATDynamics.sPos_eq
+#print axioms PVNP.SATDynamics.energy_lower_in_box
+#print axioms PVNP.SATDynamics.energy_monotone_trapped
+#print axioms PVNP.SATDynamics.false_corner_in_box
+#print axioms PVNP.SATDynamics.false_corner_energy
+#print axioms PVNP.SATDynamics.flipLit_flipLit
+#print axioms PVNP.SATDynamics.flipF_flipF
+#print axioms PVNP.SATDynamics.flipField_flipField
+#print axioms PVNP.SATDynamics.admissible_flipField
+#print axioms PVNP.SATDynamics.sq_flipField
+#print axioms PVNP.SATDynamics.score_flip
+#print axioms PVNP.SATDynamics.clausePen_flip
+#print axioms PVNP.SATDynamics.Elog_flip
+#print axioms PVNP.SATDynamics.edges_flipF
+#print axioms PVNP.SATDynamics.hyperedges_flipF
+#print axioms PVNP.SATDynamics.vars_flipF
+#print axioms PVNP.SATDynamics.glap_flipF
+#print axioms PVNP.SATDynamics.energySB_flip
+#print axioms PVNP.SATDynamics.litVal_flip
+#print axioms PVNP.SATDynamics.sat_flipF
+#print axioms PVNP.SATDynamics.flipField_false_corner
+#print axioms PVNP.SATDynamics.corner_trapped
+#print axioms PVNP.SATDynamics.no_corner_preparation_decides
+#print axioms PVNP.SATDynamics.le_foldr_max
+#print axioms PVNP.SATDynamics.var_lt_nvar
+#print axioms PVNP.SATDynamics.sat_iff_corner_sweep
+#print axioms PVNP.SATDynamics.corner_sweep_card
+#print axioms PVNP.SATDynamics.efficient_device_and_simulation_imply_P_eq_NP
+
+-- Phase XXII, I-2: readings of the symbolic separation conjecture; links to I-16 and I-32.
+#print axioms PVNP.NonconstructibleFamily.familyModel_Pst
+#print axioms PVNP.NonconstructibleFamily.familyModel_NPst
+#print axioms PVNP.NonconstructibleFamily.unrestricted_family_separation
+#print axioms PVNP.NonconstructibleFamily.npFamily_separation_iff
+#print axioms PVNP.NonconstructibleFamily.npFamily_SAT_iff
+#print axioms PVNP.NonconstructibleFamily.mode_zero_apply
+#print axioms PVNP.NonconstructibleFamily.zeroMode_zero
+#print axioms PVNP.NonconstructibleFamily.wavefield_injective
+#print axioms PVNP.NonconstructibleFamily.wavefield_constructible_iff
+#print axioms PVNP.NonconstructibleFamily.wavefield_separation_iff
+#print axioms PVNP.NonconstructibleFamily.npFamily_iff_wccDepth
+#print axioms PVNP.NonconstructibleFamily.npFamily_iff_expanderGrowth
+
+-- Phase XXII, I-11: zero-mode class equality and readout precision.
+#print axioms PVNP.ContinuumPrecision.zeroDev_languages_eq_P_TM
+#print axioms PVNP.ContinuumPrecision.Cdet_nonneg
+#print axioms PVNP.ContinuumPrecision.Jdet_lipschitz
+#print axioms PVNP.ContinuumPrecision.readout_precision
+#print axioms PVNP.ContinuumPrecision.decision_robust
+#print axioms PVNP.ContinuumPrecision.precision_suffices
+#print axioms PVNP.ContinuumPrecision.approx_trajectory_close
+#print axioms PVNP.ContinuumPrecision.approx_readout

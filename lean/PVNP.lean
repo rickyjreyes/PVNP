@@ -247,3 +247,11 @@ import PVNP.SATFalseWell
 import PVNP.TorusSpectralTail
 -- Part III: conserved-data time-uniform Laplacian and regularized curvature envelope on frozen PDE.
 import PVNP.WCTRegularizedCeiling
+-- Phase XXII, I-37: spatial-torus locking realization, conservative locks, no attracting locks.
+import PVNP.SpatialToroidalLocking
+-- Phase XXII, I-3: false-well trapping for every energy-monotone evolution, corner counterexamples.
+import PVNP.SATDynamicsObstruction
+-- Phase XXII, I-2: every reading of the symbolic separation conjecture, with I-16/I-32 links.
+import PVNP.NonconstructibleFamily
+-- Phase XXII, I-11: zero-mode class equality and finite-precision robustness of the readout.
+import PVNP.ContinuumPrecision

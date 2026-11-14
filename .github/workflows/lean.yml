@@ -120,6 +120,20 @@ jobs:
           grep -Fq '#print axioms PVNP.WCTSATScaling.zeroSuperpoly_SAT_iff' audit/AxiomAudit.lean
           grep -Fq 'import PVNP.WCTSATBlind' PVNP.lean
           grep -Fq '#print axioms PVNP.WCTSATBlind.blind_device' audit/AxiomAudit.lean
+      - name: Phase XXII kernel-check the six-claim closure modules (I-37, I-3, I-2, I-11)
+        run: lake build PVNP.SpatialToroidalLocking PVNP.SATDynamicsObstruction PVNP.NonconstructibleFamily PVNP.ContinuumPrecision
+      - name: Phase XXII closure guard
+        run: |
+          grep -Fq 'import PVNP.SpatialToroidalLocking' PVNP.lean
+          grep -Fq 'import PVNP.SATDynamicsObstruction' PVNP.lean
+          grep -Fq 'import PVNP.NonconstructibleFamily' PVNP.lean
+          grep -Fq 'import PVNP.ContinuumPrecision' PVNP.lean
+          grep -Fq '#print axioms PVNP.SpatialLocking.sat_iff_locked' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.SpatialLocking.no_attracting_locks' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.SATDynamics.energy_monotone_trapped' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.SATDynamics.no_corner_preparation_decides' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.NonconstructibleFamily.wavefield_separation_iff' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.ContinuumPrecision.precision_suffices' audit/AxiomAudit.lean
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt
