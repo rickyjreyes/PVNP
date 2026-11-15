@@ -200,6 +200,25 @@ existence, invariance and dynamic acquisition remains explicit.
 
 ## Verification
 
-Verification results are recorded below after running the gates. New declarations
-are imported by `PVNP.lean` and registered individually in `audit/AxiomAudit.lean`.
-Only `propext`, `Classical.choice` and `Quot.sound` are permitted.
+Verified on 15 November 2026 with Lean 4.23.0. Source commit
+`1fb0e12812540b5b7739dac016da0f88073176df` has Lean tree
+`b7128fab64b40b0127c69c43bd6d6ad133d5b5dd`.
+
+- `lake build PVNP`: passed, 7,408 build jobs, including all three new modules.
+- `lake env lean audit/AxiomAudit.lean` followed by `audit/check_axioms.py`:
+  passed for all 895 registered declarations, including all 27 new theorems.
+  Only `propext`, `Classical.choice` and `Quot.sound` occur. No `sorryAx`,
+  custom axioms, `sorry` or `admit` are used in the new proofs.
+- `python3 -m unittest discover -s pvnp/tests`: 76 tests passed.
+- `node pvnp/dashboard/check.js`: all 13 groups passed; generated data check passed.
+- Status registry, manuscript alignment, release-document alignment and
+  `git diff --check`: passed.
+- Hosted PDF build [43663952200](https://github.com/rickyjreyes/PVNP/actions/runs/43663952200)
+  and dashboard [43663952204](https://github.com/rickyjreyes/PVNP/actions/runs/43663952204)
+  passed on that same source commit.
+
+The final documentation-only commit records this evidence without changing the
+verified Lean tree. PR #97 records the final exact-head verification and merge
+decision. Build success establishes formal correctness of these statements under
+their explicit hypotheses; it does not discharge the missing physical realization,
+effective numerical algorithm, or universal computational lower bound.
