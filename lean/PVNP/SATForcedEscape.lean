@@ -30,8 +30,9 @@ theorem escape_end : escapeField 1 = fieldOf fun _ => true := by
   funext i
   simp [escapeField, fieldOf]
 
-theorem escape_curvature (F : CNF3) (t : ℝ) : Ecurv F (sq (escapeField t)) = 0 :=
-  Ecurv_const F _
+theorem escape_curvature (F : CNF3) (t : ℝ) : Ecurv F (sq (escapeField t)) = 0 := by
+  unfold PVNP.InterwovenSAT.sq escapeField
+  exact Ecurv_const F _
 
 theorem escape_energy (lam mu t : ℝ) :
     energySB trapFormula lam mu (escapeField t) =
