@@ -72,23 +72,27 @@ theorem clipped_uniform_consistency {L κ β γ R : ℝ} (hL : 0 < L)
     ∀ᶠ S : Finset Z2 in atTop, ∀ t ∈ J,
       ‖clipped S L κ β γ R t (w t) - Gf L κ β γ t (w t)‖ < ε := by
   have hLF := LF_nonneg L β γ R
-  let d := ε / (2 * (LF L β γ R + 1))
-  have hd : 0 < d := div_pos hε (by positivity)
-  have hg : Continuous fun t => Gf L κ β γ t (w t) :=
-    (continuous_Gf hL).comp (continuous_id.prodMk hw)
+  have hpos : 0 < LF L β γ R + 1 := by linarith
+  obtain ⟨d, hd_def⟩ : ∃ d : ℝ, d = ε / (2 * (LF L β γ R + 1)) := ⟨_, rfl⟩
+  have hd : 0 < d := by rw [hd_def]; exact div_pos hε (by positivity)
+  have hdval : LF L β γ R * d + d = ε / 2 := by
+    have h2 : (2 * (LF L β γ R + 1)) * d = ε := by
+      rw [hd_def]; exact mul_div_cancel₀ ε (by positivity)
+    linarith
+  have hpair : Continuous fun t : ℝ => ((t, w t) : ℝ × ℓ2) := continuous_id.prodMk hw
+  -- Elaborate the composite first: matching `.comp` against the lambda directly forces a
+  -- higher-order unification that times out.
+  have hg0 := (continuous_Gf (κ := κ) (β := β) (γ := γ) hL).comp hpair
+  have hg : Continuous fun t => Gf L κ β γ t (w t) := hg0
   filter_upwards [compact_uniform_tail (hJ.image hw) hd,
     compact_uniform_tail (hJ.image hg) hd] with S hs hgS
   intro t ht
   rw [clipped_eq_galerkin S L κ β γ R t (hR t ht)]
-  have h := consistency_bound hL S t (hR t ht)
+  have h := consistency_bound (κ := κ) (β := β) (γ := γ) hL S t (hR t ht)
   have h1 := hs (w t) (mem_image_of_mem w ht)
   have h2 := hgS (Gf L κ β γ t (w t)) (mem_image_of_mem _ ht)
-  have hdval : (LF L β γ R + 1) * d = ε / 2 := by
-    dsimp [d]
-    field_simp
-    <;> ring
   have hmul := mul_le_mul_of_nonneg_left h1.le hLF
-  nlinarith
+  linarith
 
 variable {L κ β γ : ℝ}
 
@@ -151,9 +155,8 @@ theorem clipped_trajectory_support {R : ℝ} {S : Finset Z2} {W : ℝ → ℓ2}
     {k : Z2} (hk : k ∉ S) (h0 : W 0 k = 0) (t : ℝ) : W t k = 0 := by
   have hd : ∀ t, HasDerivAt (fun s => W s k) 0 t := by
     intro s
-    have h := ((evalL k).restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt s (hW s)
-    simpa only [ContinuousLinearMap.restrictScalars_apply, evalL_apply,
-      clipped_support S L κ β γ R s (W s) hk] using h
+    have h := hasDerivAt_apply (hW s) k
+    rwa [clipped_support S L κ β γ R s (W s) hk] at h
   exact (is_const_of_deriv_eq_zero (fun s => (hd s).differentiableAt)
     (fun s => (hd s).deriv) t 0).trans h0
 
@@ -217,7 +220,7 @@ theorem exists_convergent_clipped (hL : 0 < L) {R : ℝ} (hR : 0 ≤ R)
     have hK : 0 ≤ K := mul_nonneg zero_le_two (LF_nonneg L β γ R)
     have hC : 0 < C := by dsimp [C]; positivity
     have hd : 0 < d := div_pos hε (by positivity)
-    have hdC : d * C = ε / 2 := by dsimp [d]; field_simp; ring
+    have hdC : d * C = ε / 2 := by dsimp [d]; field_simp
     have hc : Continuous w := continuous_iff_continuousAt.2 fun t => (hw t).continuousAt
     have hi : ∀ᶠ S : Finset Z2 in atTop, ‖trunc S (w 0) - w 0‖ < d := by
       have h : Tendsto (fun S : Finset Z2 => ‖trunc S (w 0) - w 0‖) atTop (𝓝 0) := by
@@ -231,7 +234,7 @@ theorem exists_convergent_clipped (hL : 0 < L) {R : ℝ} (hR : 0 ≤ R)
       (fun s hst => (hs s ⟨hst.1, hst.2.le⟩).le)
       (show ‖W S 0 - w 0‖ ≤ d by rw [hW0]; exact hi.le) t ht
     have hm := gronwall_diagonal_mono hd.le hK ht.2
-    rw [gronwall_diagonal_scale] at hm
+    have hsc := gronwall_diagonal_scale d K T
     have ha := le_abs_self (gronwallBound 1 K 1 T)
     have hb : gronwallBound 1 K 1 T < C := by dsimp [C]; linarith
     have hm' := mul_lt_mul_of_pos_left hb hd
