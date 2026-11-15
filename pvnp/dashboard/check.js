@@ -151,8 +151,8 @@ test("conditional annotations", () => {
 
 /* 6. Phase X supporting results: 11 statements, kernel-checked on main, linked, audited. */
 test("Phase X supporting results", () => {
-  assert.equal(d.supporting.length, 29);
-  assert.equal(new Set(d.supporting.map(s => s.decl)).size, 29);
+  assert.equal(d.supporting.length, 35);
+  assert.equal(new Set(d.supporting.map(s => s.decl)).size, 35);
   const sha = d.verification.main.sha;
   for (const s of d.supporting) {
     assert.equal(s.audited, true, s.decl);

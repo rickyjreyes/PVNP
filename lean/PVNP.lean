@@ -258,3 +258,4 @@ import PVNP.ContinuumPrecision
 
 import PVNP.SATForcedBarrier
 import PVNP.TorusGalerkinCertificate
+import PVNP.SATForcedEscape

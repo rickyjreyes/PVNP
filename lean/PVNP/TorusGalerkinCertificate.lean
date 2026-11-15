@@ -25,7 +25,7 @@ theorem trunc_norm_le (S : Finset Z2) (v : ℓ2) : ‖trunc S v‖ ≤ ‖v‖ :
 theorem trunc_sub (S : Finset Z2) (v w : ℓ2) :
     trunc S (v - w) = trunc S v - trunc S w := by
   ext k
-  simp only [trunc_apply, lp.sub_apply]
+  simp only [trunc_apply, lp.coeFn_sub, Pi.sub_apply]
   split_ifs <;> simp
 
 /-- Explicit finite-dimensional vector field, with zero derivative outside S. -/
@@ -59,7 +59,7 @@ theorem consistency_bound {L κ β γ R : ℝ} (hL : 0 < L)
         ‖trunc S (Gf L κ β γ t v) - Gf L κ β γ t v‖ := by
   calc
     _ ≤ ‖galerkin S L κ β γ t v - trunc S (Gf L κ β γ t v)‖ +
-        ‖trunc S (Gf L κ β γ t v) - Gf L κ β γ t v‖ := norm_sub_le _ _ _
+        ‖trunc S (Gf L κ β γ t v) - Gf L κ β γ t v‖ := norm_sub_le_norm_sub_add_norm_sub _ _ _
     _ ≤ LF L β γ R * ‖trunc S v - v‖ +
         ‖trunc S (Gf L κ β γ t v) - Gf L κ β γ t v‖ := by
       apply add_le_add_right
@@ -73,10 +73,10 @@ theorem galerkin_consistent {L κ β γ : ℝ} (hL : 0 < L) (t : ℝ) (v : ℓ2)
     Tendsto (fun S : Finset Z2 => ‖galerkin S L κ β γ t v - Gf L κ β γ t v‖)
       atTop (𝓝 0) := by
   have h₁ : Tendsto (fun S : Finset Z2 => ‖trunc S v - v‖) atTop (𝓝 0) := by
-    simpa using ((tendsto_trunc v).sub tendsto_const_nhds).norm
+    simpa using ((tendsto_trunc v).sub (show Tendsto (fun _ : Finset Z2 => v) atTop (𝓝 v) from tendsto_const_nhds)).norm
   have h₂ : Tendsto (fun S : Finset Z2 =>
       ‖trunc S (Gf L κ β γ t v) - Gf L κ β γ t v‖) atTop (𝓝 0) := by
-    simpa using ((tendsto_trunc (Gf L κ β γ t v)).sub tendsto_const_nhds).norm
+    simpa using ((tendsto_trunc (Gf L κ β γ t v)).sub (show Tendsto (fun _ : Finset Z2 => Gf L κ β γ t v) atTop (𝓝 (Gf L κ β γ t v)) from tendsto_const_nhds)).norm
   exact squeeze_zero (fun _ => norm_nonneg _) (fun S => consistency_bound hL S t le_rfl)
     (by simpa using (h₁.const_mul (LF L β γ ‖v‖)).add h₂)
 
@@ -87,7 +87,7 @@ theorem residual_certificate (S : Finset Z2) (L κ β γ t : ℝ)
     (hnumeric : ‖dv - trunc S (Gf L κ β γ t v)‖ ≤ η)
     (htail : ‖trunc S (Gf L κ β γ t v) - Gf L κ β γ t v‖ ≤ τ) :
     ‖dv - Gf L κ β γ t v‖ ≤ η + τ :=
-  (norm_sub_le dv (trunc S (Gf L κ β γ t v)) _).trans (add_le_add hnumeric htail)
+  (norm_sub_le_norm_sub_add_norm_sub dv (trunc S (Gf L κ β γ t v)) _).trans (add_le_add hnumeric htail)
 
 /-- A unit H² datum can sit entirely outside any proposed finite mode set. -/
 theorem no_uniform_H2_cutoff (S : Finset Z2) :
@@ -116,7 +116,7 @@ theorem higher_regularity_tail (L : ℝ) (S : Finset Z2) (v : ℓ2) {K B : ℝ}
     ‖trunc S v - v‖ ^ 2 ≤ B / K ^ 2 := by
   have hp : ∀ k, K ^ 2 * ‖(trunc S v - v) k‖ ^ 2 ≤ wt L k ^ 2 * ‖v k‖ ^ 2 := by
     intro k
-    simp only [lp.sub_apply, trunc_apply]
+    simp only [lp.coeFn_sub, Pi.sub_apply, trunc_apply]
     by_cases hk : k ∈ S
     · simp only [if_pos hk, sub_self, norm_zero, zero_pow (by decide : 2 ≠ 0), mul_zero]
       positivity

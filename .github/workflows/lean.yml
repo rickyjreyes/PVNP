@@ -135,7 +135,7 @@ jobs:
           grep -Fq '#print axioms PVNP.NonconstructibleFamily.wavefield_separation_iff' audit/AxiomAudit.lean
           grep -Fq '#print axioms PVNP.ContinuumPrecision.precision_suffices' audit/AxiomAudit.lean
       - name: Phase XXIII forced barrier and Fourier certificate modules
-        run: lake build PVNP.SATForcedBarrier PVNP.TorusGalerkinCertificate
+        run: lake build PVNP.SATForcedBarrier PVNP.SATForcedEscape PVNP.TorusGalerkinCertificate
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt

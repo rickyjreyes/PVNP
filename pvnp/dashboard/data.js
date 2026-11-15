@@ -6,7 +6,7 @@ window.PVNP_DATA = {
  "inventory": {
   "path": "pvnp/proofs/manuscript-lean-inventory.md",
   "date": "2026-11-14",
-  "blob": "4db0131e8c8787aef95a1b2437b2c3272fd7ef8c",
+  "blob": "750085dc7af4cb2c3705b3651810bb5dbdc68a0e",
   "url": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md",
   "table": {
    "parts": {
@@ -100,7 +100,7 @@ window.PVNP_DATA = {
   }
  },
  "lean": {
-  "tree": "uncommitted changes",
+  "tree": "dc7fe2d9c093b39af080cdadcc263b9c7c7161f7",
   "matches_verified": false,
   "links_ref": "main"
  },
@@ -210,7 +210,7 @@ window.PVNP_DATA = {
    "claim": "informal limits, encoding unspecified",
    "lean": "`SATDynamics.sat_iff_corner_sweep`, `SATDynamics.energy_monotone_trapped`, `SATDynamics.corner_trapped`, `SATDynamics.no_corner_preparation_decides`, `SATDynamics.efficient_device_and_simulation_imply_P_eq_NP`, `SATFalseWell.signblind_false_local_well` (Phase XXII); `InterwovenSAT.sat_iff_EminSB_eq_zero`, `InterwovenSAT.measure_satisfies`, `InterwovenSAT.naive_Emin`, `InterwovenSAT.satisfying_not_ground` (Phase XX); `PartIPsiSat.roundPhase_satisfies`, `PartIPsiSat.eventually_satisfies_of_energy_tendsto`, `PhaseLockScope.bare_phase_lock_not_sat`, `Torus.no_locking_phaseOrbit`, `Torus.no_locking_realStates` (Phase XVIII)",
    "status": "Restricted",
-   "details": "Restricted (Phase XXII). As a static criterion in the sign-blind interwoven encoding it holds: SAT ⟺ ground energy 0, UNSAT ⟺ ground energy at least 1/8, and the sign readout of any field below 1/8 satisfies the formula; preparing the `2^n` corner fields and reading `E < 1/8` decides SAT for every formula (`sat_iff_corner_sweep`). As a dynamical test it fails: the bare lock (gradient and intensity only) does not detect SAT; with the literal sign-sensitive gradient the satisfiable `F_xor` and the unsatisfiable `G` have the same ground energy 1/4; a satisfiable formula has a false well that traps every energy-nonincreasing evolution of unit fields for all time (`energy_monotone_trapped`), so for every formula-independent corner preparation some satisfiable formula is never read as satisfiable by energy descent (`no_corner_preparation_decides`); the frozen dynamics cannot supply the convergence (time reversibility). Not covered: non-monotone dynamics from formula-dependent polynomial-time preparations. With polynomial resources and a resource-preserving simulation such a device would put SAT in P_TM.  Phase XXIII: `SATDynamics.readout_requires_energy_excursion` requires a peak-energy increase of at least 1/16 for any continuous admissible forced trajectory from the false corner reaching readout; no monotonicity assumption.",
+   "details": "Restricted (Phase XXII). As a static criterion in the sign-blind interwoven encoding it holds: SAT ⟺ ground energy 0, UNSAT ⟺ ground energy at least 1/8, and the sign readout of any field below 1/8 satisfies the formula; preparing the `2^n` corner fields and reading `E < 1/8` decides SAT for every formula (`sat_iff_corner_sweep`). As a dynamical test it fails: the bare lock (gradient and intensity only) does not detect SAT; with the literal sign-sensitive gradient the satisfiable `F_xor` and the unsatisfiable `G` have the same ground energy 1/4; a satisfiable formula has a false well that traps every energy-nonincreasing evolution of unit fields for all time (`energy_monotone_trapped`), so for every formula-independent corner preparation some satisfiable formula is never read as satisfiable by energy descent (`no_corner_preparation_decides`); the frozen dynamics cannot supply the convergence (time reversibility). Not covered: non-monotone dynamics from formula-dependent polynomial-time preparations. With polynomial resources and a resource-preserving simulation such a device would put SAT in P_TM.  Phase XXIII: `SATDynamics.readout_requires_energy_excursion` requires a peak-energy increase of at least 1/16 for any continuous admissible forced trajectory from the false corner reaching readout; no monotonicity assumption.  `SATDynamics.escape_energy_bound` and `readout_requires_sharp_peak` match at peak 32/25 on the fixed false-well instance; the prescribed path reaches zero energy at time one with zero graph curvature.",
    "refs": {
     "SATDynamics.sat_iff_corner_sweep": [
      {
@@ -3664,6 +3664,66 @@ window.PVNP_DATA = {
    "file": "lean/PVNP/ContinuumPrecision.lean",
    "line": 136,
    "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/ContinuumPrecision.lean#L136",
+   "audited": true
+  },
+  {
+   "title": "Forced SAT escape cost",
+   "decl": "SATDynamics.every_corner_requires_excursion",
+   "pr": 97,
+   "statement": "Every fixed corner has a satisfiable flipped instance requiring at least 1/16 peak energy increase for successful continuous admissible readout.",
+   "file": "lean/PVNP/SATForcedBarrier.lean",
+   "line": 107,
+   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SATForcedBarrier.lean#L107",
+   "audited": true
+  },
+  {
+   "title": "Finite Fourier consistency",
+   "decl": "TorusGalerkin.galerkin_consistent",
+   "pr": 97,
+   "statement": "Finite Fourier vector fields converge pointwise with separate input and nonlinear-output tails. Trajectory convergence and polynomial simulation remain open.",
+   "file": "lean/PVNP/TorusGalerkinCertificate.lean",
+   "line": 72,
+   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/TorusGalerkinCertificate.lean#L72",
+   "audited": true
+  },
+  {
+   "title": "Residual certificate composition",
+   "decl": "TorusGalerkin.certified_readout",
+   "pr": 97,
+   "statement": "Numeric residual plus nonlinear Fourier tail yields an a posteriori Gronwall detector bound; producing the certificates remains an obligation.",
+   "file": "lean/PVNP/TorusGalerkinCertificate.lean",
+   "line": 134,
+   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/TorusGalerkinCertificate.lean#L134",
+   "audited": true
+  },
+  {
+   "title": "No uniform H2 cutoff",
+   "decl": "TorusGalerkin.no_uniform_H2_cutoff",
+   "pr": 97,
+   "statement": "For every finite mode set a unit H2 datum has projection error one. This does not rule out other representations or weaker-norm simulation.",
+   "file": "lean/PVNP/TorusGalerkinCertificate.lean",
+   "line": 93,
+   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/TorusGalerkinCertificate.lean#L93",
+   "audited": true
+  },
+  {
+   "title": "Higher regularity tail",
+   "decl": "TorusGalerkin.higher_regularity_tail",
+   "pr": 97,
+   "statement": "A squared H4 budget B and omitted-mode weight at least K imply squared H2 error at most B/K². Effective propagation of that budget remains open.",
+   "file": "lean/PVNP/TorusGalerkinCertificate.lean",
+   "line": 112,
+   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/TorusGalerkinCertificate.lean#L112",
+   "audited": true
+  },
+  {
+   "title": "Sharp controlled escape",
+   "decl": "SATDynamics.readout_requires_sharp_peak",
+   "pr": 97,
+   "statement": "Every successful continuous escape from the false corner crosses energy 32/25. An explicit time-one common-phase path matches that upper bound and reaches energy zero, with zero graph curvature. This is for one fixed instance.",
+   "file": "lean/PVNP/SATForcedEscape.lean",
+   "line": 105,
+   "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/SATForcedEscape.lean#L105",
    "audited": true
   }
  ],

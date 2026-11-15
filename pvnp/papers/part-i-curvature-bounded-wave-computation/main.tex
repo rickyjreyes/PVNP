@@ -2847,6 +2847,13 @@ Existence of a satisfying lock does not provide its preparation algorithm.
 For I-3, continuous forcing from the false corner must raise the normalized
 encoding energy by at least $1/16$ before successful readout
 (\nolinkurl{SATDynamics.readout_requires_energy_excursion}).
+A sharper sum-of-squares argument gives the exact optimal peak $32/25$:
+every successful continuous escape crosses that energy, and the explicit
+common-phase command $\psi_i(t)=e^{i\pi(1-t)}$ reaches zero energy at
+time one without exceeding it, with zero graph curvature
+(\nolinkurl{SATDynamics.readout_requires_sharp_peak},
+\nolinkurl{SATDynamics.escape_energy_bound}). This is a controlled path
+for the fixed false-well instance, not a general SAT solver.
 For I-11, finite Fourier vector fields converge pointwise, with separate
 input and nonlinear-output tail errors
 (\nolinkurl{TorusGalerkin.galerkin_consistent}). An $H^2$ norm bound alone

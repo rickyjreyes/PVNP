@@ -48,6 +48,38 @@ work, control power or stochastic escape probability. It is a necessary cost,
 not a sufficient escape protocol. It applies to this preparation and this false
 well; it is not universal over preparations or algorithms.
 
+### Constructive escape with a matching optimal barrier
+
+`SATForcedEscape.lean` supplies `escape_admissible`, `escape_continuous`,
+`escape_start`, `escape_end`, `escape_curvature`, `escape_energy`,
+`escape_energy_bound`, `escape_readout`, `trapEnergy_decomposition`,
+`trapEnergy_mean_lower`, `trapEnergy_before_saddle`, `trapEnergy_saddle`,
+and `readout_requires_sharp_peak`, all in `PVNP.SATDynamics`.
+
+The prescribed common phase command is Ψ_i(t)=exp(iπ(1−t)). It starts at the
+false corner, has unit modulus throughout, and reaches the true corner at time
+one. Its squared components are equal, so graph curvature and sign-blind coupling
+vanish. For s=(1+cos(π(1−t)))/2 its energy is (1−s)²(1+5s), bounded by 32/25 via
+
+    32/25 − (1−s)²(1+5s) = (s−1/5)²(7−5s).
+
+The terminal energy is zero. This is a controlled escape for the fixed seven-clause
+instance, not a solver for arbitrary SAT or a frozen-PDE realization theorem.
+
+The lower bound matches it. Set S=x+y+z. The exact cyclic sum-of-squares identity is
+
+    trapEnergy(x,y,z) = (1−S/3)²(1+5S/3)
+      + Σ_cyclic (1/2−23S/54+2x/3+7z/9)(x−y)².
+
+For nonnegative scores and S≤3/5, the coefficients are positive. Energy is at
+least one before this surface and at least 32/25 on S=3/5. Every successful
+continuous path from the false corner crosses this surface by the intermediate
+value theorem. Nonnegative coupling terms can only increase energy. Therefore
+**every successful path crosses energy 32/25 and the explicit path never exceeds
+it**. The optimal peak increase is 7/25 above initial energy one on this fixed
+instance. The weaker 1/16 theorem is retained. No SI energy conversion or finite-bit
+controller cost follows from these statements.
+
 Still missing: a formula-dependent controlled evolution with SAT and UNSAT
 correctness and explicit preparation, time, physical energy, curvature, precision
 and readout costs. The prior `sat_iff_corner_sweep` proves exhaustive correctness,

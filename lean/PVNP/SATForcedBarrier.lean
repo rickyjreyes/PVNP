@@ -130,6 +130,6 @@ theorem every_corner_requires_excursion (a : ℕ → Bool) {lam mu : ℝ}
     rw [h0, ← flipField_false_corner a, flipField_flipField]
   obtain ⟨t, ht, he⟩ := readout_requires_energy_excursion hlam hmu
     (fun t => admissible_flipField (a := a) (hadm t)) hΦc hT hΦ0 (by rwa [hE])
-  exact ⟨t, ht, by simpa only [hE] using he⟩
+  exact ⟨t, ht, by rw [← hE t, ← hE 0]; exact he⟩
 
 end PVNP.SATDynamics
