@@ -86,5 +86,5 @@ The draft head `0762634` failed hosted CI. Fixes in the completion commit:
 - `exists_convergent_clipped`: a redundant `ring` after `field_simp` was removed, and the final
   chain uses `gronwall_diagonal_scale` at `T` explicitly.
 
-Local results on the completion commit (Lean 4.23.0): `lake build PVNP` passed, 7,409 jobs; 76 Python regressions, 13 dashboard check groups, the status registry, manuscript-alignment and release-document checks passed; local axiom audit of the 912 registered declarations still running at this commit (the hosted `lean` job runs the same audit).
+Local results on the completion commit (Lean 4.23.0): `lake build PVNP` passed, 7,409 jobs; 76 Python regressions, 13 dashboard check groups, the status registry, manuscript-alignment and release-document checks passed; `lake env lean audit/AxiomAudit.lean` with `audit/check_axioms.py` passed for all 912 registered declarations (including the 17 Phase XXIV theorems), using only `propext`, `Classical.choice` and `Quot.sound`. The Lean tree is that of commit `d560ac5`; later commits change only documentation and generated dashboard data.
 No classification or progress estimate changes.
