@@ -131,6 +131,7 @@ I-3 & Restricted & Non-monotone dynamics from formula-dependent polynomial-time 
 I-11 & Restricted & A certified polynomial-time approximation of the nonlinear evolution; robust readout is proved.\\
 I-16 & Open & An unrestricted superpolynomial SAT time lower bound against every correct decider.\\
 I-32 & Open & An encoding-independent exponential interface lower bound for every decider.\\
+I-37 & Restricted & Identify the revised constant reference component with the original, independently specified $\psi$--electron structure.\\
 III-22 & Interpretive & Arrow-of-time remark; asserts no theorem, so no proof obligation.\\
 \bottomrule
 \end{tabular}
@@ -140,7 +141,7 @@ claims I-25--I-28 remain in the audit and have been
 withdrawn from theorem status in the revised text.
 I-31 is also refuted for the frozen growing-torus trajectory
 class, not for all fixed-domain or hard-language variants.
-The current inventory is 80 Exact, 2 Restricted, 5 Refuted, 3 Open and 1 Interpretive.
+The current inventory is 79 Exact, 3 Restricted, 5 Refuted, 3 Open and 1 Interpretive.
 No universal classical or physical separation follows.
 
 \paragraph{Addendum, 12 November 2026.}
@@ -188,6 +189,15 @@ exactly $P_{\mathrm{TM}}\neq NP_{\mathrm{TM}}$, equivalent to I-16 for
 dense SAT (\nolinkurl{NonconstructibleFamily.npFamily_iff_wccDepth}).
 The inventory is now 80 Exact, 2 Restricted, 5 Refuted, 3 Open and
 1 Interpretive.  No universal classical or physical separation follows.
+
+\paragraph{Phase XXIII scope audit, 14 November 2026.}
+The previous I-37 promotion is superseded at original scope: its reference
+component is a constant spatial field, with no independent electron
+identification. The revised theorem remains valid. The current inventory is
+79 Exact, 3 Restricted, 5 Refuted, 3 Open and 1 Interpretive.
+New supporting results quantify forced escape energy for I-3 and finite
+Fourier consistency for I-11; no polynomial simulation or SAT lower bound
+is claimed. See the Phase XXIII proof note for exact statements and checks.
 
 \section{Reproduction and source maintenance}
 The authoritative historical LaTeX sources remain under the four original manuscript directories in the repository. The single-release build first compiles them into temporary PDFs, binds them behind this overview, and installs only one primary consolidated PDF. Run \texttt{bash scripts/build\_pdfs.sh} to regenerate it. For the Lean formalization, use the pinned toolchain and run \texttt{lake build PVNP} followed by the standard axiom audit from within the \texttt{lean} directory.

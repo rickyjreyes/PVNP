@@ -988,3 +988,32 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.ContinuumPrecision.precision_suffices
 #print axioms PVNP.ContinuumPrecision.approx_trajectory_close
 #print axioms PVNP.ContinuumPrecision.approx_readout
+
+-- Phase XXIII: forced barrier and finite Fourier certificates
+#print axioms PVNP.SATDynamics.energy_cap_trapped
+#print axioms PVNP.SATDynamics.readout_requires_energy_excursion
+#print axioms PVNP.SATDynamics.bounded_forcing_cannot_readout
+#print axioms PVNP.TorusGalerkin.trunc_norm_le
+#print axioms PVNP.TorusGalerkin.trunc_sub
+#print axioms PVNP.TorusGalerkin.galerkin_support
+#print axioms PVNP.TorusGalerkin.galerkin_lipschitz
+#print axioms PVNP.TorusGalerkin.consistency_bound
+#print axioms PVNP.TorusGalerkin.galerkin_consistent
+#print axioms PVNP.TorusGalerkin.residual_certificate
+#print axioms PVNP.TorusGalerkin.no_uniform_H2_cutoff
+#print axioms PVNP.TorusGalerkin.higher_regularity_tail
+#print axioms PVNP.TorusGalerkin.certified_readout
+#print axioms PVNP.SATDynamics.every_corner_requires_excursion
+#print axioms PVNP.SATDynamics.escape_admissible
+#print axioms PVNP.SATDynamics.escape_continuous
+#print axioms PVNP.SATDynamics.escape_start
+#print axioms PVNP.SATDynamics.escape_end
+#print axioms PVNP.SATDynamics.escape_curvature
+#print axioms PVNP.SATDynamics.escape_energy
+#print axioms PVNP.SATDynamics.escape_energy_bound
+#print axioms PVNP.SATDynamics.escape_readout
+#print axioms PVNP.SATDynamics.trapEnergy_decomposition
+#print axioms PVNP.SATDynamics.trapEnergy_mean_lower
+#print axioms PVNP.SATDynamics.trapEnergy_before_saddle
+#print axioms PVNP.SATDynamics.trapEnergy_saddle
+#print axioms PVNP.SATDynamics.readout_requires_sharp_peak

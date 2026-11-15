@@ -2,8 +2,8 @@
   "schema": 1,
   "as_of": "2026-11-14",
   "baseline": {
-    "Exact": 80,
-    "Restricted": 2,
+    "Exact": 79,
+    "Restricted": 3,
     "Refuted": 5,
     "Open": 3,
     "Interpretive": 1,
@@ -33,11 +33,11 @@
     {
       "id": "I-37",
       "title": "General toroidal locking",
-      "status": "Exact",
-      "research_estimate_percent": 100,
+      "status": "Restricted",
+      "research_estimate_percent": 70,
       "metric": "research",
       "evidence": "SpatialLocking.sat_iff_locked (PR #95): on the spatial torus T_L² of the frozen equation, a multi-component frozen-WCT field with |ψᵢ| = 1 everywhere, zero local sign-blind clause/coupling/curvature density of the relative field ψ_{i+1}·conj ψ₀ and zero gradient energy exists iff the formula is satisfiable, for every formula, L > 0 and λ, μ ≥ 0. Locks are exact curvature-free solutions of the frozen flow (frozen_flow_preserves_locks), and for κ ≤ 0, β ≤ 0 < γ no frozen trajectory approaches one from outside (no_attracting_locks). InterwovenSAT.locks_iff_sat_iff characterizes the flux energies for which the equivalence holds; sign-sensitive coupling, which does not correspond to clause satisfaction, fails (naive_toroidal_locking_fails).",
-      "remaining_obligation": "None mathematical. Reaching a lock is not part of the claim: the frozen flow never approaches one from outside, and energy descent from formula-independent preparations is trapped by false wells (I-3). \"ψ–electron\" is undefined in the manuscript and is read as the reference component."
+      "remaining_obligation": "The revised reference-component specification is proved. The original ψ-electron structure is undefined; identification with a constant H² reference field is a modelling choice, not a theorem. Dynamic acquisition is separate and not proved."
     },
     {
       "id": "I-32",
@@ -54,8 +54,8 @@
       "status": "Restricted",
       "research_estimate_percent": 70,
       "metric": "research",
-      "evidence": "Static criterion in the sign-blind interwoven encoding: SAT ⟺ ground energy 0, UNSAT ⟺ ground energy ≥ 1/8, and the sign readout below 1/8 satisfies F (InterwovenSAT, PR #90); the 2^n corner sweep decides SAT for every formula (SATDynamics.sat_iff_corner_sweep, PR #95). Refuted as a dynamical test: the bare lock does not detect SAT; the sign-sensitive gradient fails; the PR #94 false well traps every energy-nonincreasing evolution of unit fields (SATDynamics.energy_monotone_trapped), so every formula-independent corner preparation fails on a satisfiable formula (no_corner_preparation_decides).",
-      "remaining_obligation": "Only non-monotone dynamics from formula-dependent polynomial-time preparations remain; with polynomial resources and a resource-preserving simulation any such SAT decider gives P_TM = NP_TM (efficient_device_and_simulation_imply_P_eq_NP), so this is the P versus NP question, not a separate obligation of the criterion."
+      "evidence": "Static criterion in the sign-blind interwoven encoding: SAT ⟺ ground energy 0, UNSAT ⟺ ground energy ≥ 1/8, and the sign readout below 1/8 satisfies F (InterwovenSAT, PR #90); the 2^n corner sweep decides SAT for every formula (SATDynamics.sat_iff_corner_sweep, PR #95). Refuted as a dynamical test: the bare lock does not detect SAT; the sign-sensitive gradient fails; the PR #94 false well traps every energy-nonincreasing evolution of unit fields (SATDynamics.energy_monotone_trapped), so every formula-independent corner preparation fails on a satisfiable formula (no_corner_preparation_decides). Phase XXIII: readout_requires_energy_excursion and bounded_forcing_cannot_readout quantify a 1/16 peak-energy barrier without monotonicity. SATForcedEscape gives a time-one common-phase escape with zero graph curvature and peak at most 32/25; readout_requires_sharp_peak proves the matching lower bound for this fixed instance.",
+      "remaining_obligation": "Construct and certify a formula-dependent controlled SAT/UNSAT evolution, including preparation, time, physical energy, curvature, precision and readout costs. The existing exponential corner sweep is not such a continuous device. Polynomial efficiency plus simulation would imply P_TM = NP_TM."
     },
     {
       "id": "I-11",
@@ -63,8 +63,8 @@
       "status": "Restricted",
       "research_estimate_percent": 55,
       "metric": "research",
-      "evidence": "P_disc = P_TM exactly in the uniform discrete model; PhysicalAudit.unrestricted_phys_ne_P_TM for arbitrary encoders. PR #90: physical lower bounds transfer to classical ones without simulation in any class containing the charged zero-mode devices. PR #95: that class decides exactly P_TM (ContinuumPrecision.zeroDev_languages_eq_P_TM); the detector is Lipschitz on bounded sets and data precision δ with log(1/δ) = LF·T + log(4RC_χ/m) fixes a margin-m readout decision (precision_suffices); an approximate trajectory with residual ε stays within a Gronwall bound of the solution and fixes the readout (approx_readout).",
-      "remaining_obligation": "A polynomial-time finite-dimensional scheme for the nonlinear frozen evolution with a certified residual in the detector's norm (truncation of the solution, time discretization, arithmetic cost); by approx_readout nothing else is needed. Needs propagation of higher regularity, not proved."
+      "evidence": "P_disc = P_TM exactly in the uniform discrete model; PhysicalAudit.unrestricted_phys_ne_P_TM for arbitrary encoders. PR #90: physical lower bounds transfer to classical ones without simulation in any class containing the charged zero-mode devices. PR #95: that class decides exactly P_TM (ContinuumPrecision.zeroDev_languages_eq_P_TM); the detector is Lipschitz on bounded sets and data precision δ with log(1/δ) = LF·T + log(4RC_χ/m) fixes a margin-m readout decision (precision_suffices); an approximate trajectory with residual ε stays within a Gronwall bound of the solution and fixes the readout (approx_readout). Phase XXIII: TorusGalerkin gives a finite Fourier vector field, local Lipschitz and pointwise consistency bounds, a numeric-plus-tail residual certificate, and no_uniform_H2_cutoff.",
+      "remaining_obligation": "Construct the finite-dimensional trajectory and prove convergence with an effective nonlinear tail bound, certified time discretization, and counted bit complexity. H² ball bounds alone give no uniform H² cutoff. This does not disprove simulation in weaker norms or adaptive representations."
     },
     {
       "id": "I-2",

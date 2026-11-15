@@ -41,11 +41,11 @@ const claim = id => d.claims.find(c => c.id === id);
 test("current totals", () => {
   const s = app.summarize(d.claims, "current");
   assert.equal(s.total, 91);
-  assert.deepEqual({ ...s.counts }, { Exact: 80, Restricted: 2, Refuted: 5, Open: 3, Interpretive: 1 });
-  assert.equal(app.percent(s.counts.Exact, s.total), "87.9%");
-  assert.equal(s.counts.Exact + s.counts.Refuted, 85);
-  assert.equal(app.percent(85, 91), "93.4%");
-  const parts = { I: [41, 31, 2, 5, 3, 0, "75.6%"], II: [28, 28, 0, 0, 0, 0, "100.0%"], III: [22, 21, 0, 0, 0, 1, "95.5%"] };
+  assert.deepEqual({ ...s.counts }, { Exact: 79, Restricted: 3, Refuted: 5, Open: 3, Interpretive: 1 });
+  assert.equal(app.percent(s.counts.Exact, s.total), "86.8%");
+  assert.equal(s.counts.Exact + s.counts.Refuted, 84);
+  assert.equal(app.percent(84, 91), "92.3%");
+  const parts = { I: [41, 30, 3, 5, 3, 0, "73.2%"], II: [28, 28, 0, 0, 0, 0, "100.0%"], III: [22, 21, 0, 0, 0, 1, "95.5%"] };
   for (const [p, [t, e, r, f, o, i, pct]] of Object.entries(parts)) {
     const g = s.parts[p];
     assert.deepEqual([g.total, g.counts.Exact, g.counts.Restricted, g.counts.Refuted, g.counts.Open, g.counts.Interpretive],
@@ -97,11 +97,11 @@ test("amended claims: Exact now, Refuted originally, counterexamples retained", 
     assert.ok(Object.values(claim("II-10").refs).flat().some(r => r.name === "TwoPhasePolynomialWriter." + n && r.audited), "II-10 links audited " + n);
   const open = v => d.claims.filter(c => app.statusIn(c, v) === "Open").map(c => c.id);
   assert.deepEqual(open("current"), open("historical").filter(id => !["II-24", "I-31", "I-37", "I-3", "III-22"].includes(id)));
-  /* I-37: Restricted in PR #90 (configuration torus); Exact in PR #95 (spatial torus of the frozen equation). */
-  assert.equal(claim("I-37").status, "Exact", "I-37");
+  /* I-37: Phase XXIII original-scope audit retains the revised spatial theorem. */
+  assert.equal(claim("I-37").status, "Restricted", "I-37");
   assert.equal(claim("I-37").historical.status, "Open", "I-37 original");
   assert.deepEqual(claim("I-37").formalized,
-    { pr: 95, decl: "SpatialLocking.sat_iff_locked", from: "Open", to: "Exact" });
+    { pr: 95, decl: "SpatialLocking.sat_iff_locked", from: "Open", to: "Restricted" });
   for (const n of ["sat_iff_locked", "locked_iff", "frozen_flow_preserves_locks", "no_attracting_locks"])
     assert.ok(Object.values(claim("I-37").refs).flat().some(r => r.name === "SpatialLocking." + n && r.audited), "I-37 links audited " + n);
   for (const n of ["toroidal_locking_iff_unsat", "locks_iff_sat_iff", "naive_toroidal_locking_fails"])
@@ -151,8 +151,8 @@ test("conditional annotations", () => {
 
 /* 6. Phase X supporting results: 11 statements, kernel-checked on main, linked, audited. */
 test("Phase X supporting results", () => {
-  assert.equal(d.supporting.length, 29);
-  assert.equal(new Set(d.supporting.map(s => s.decl)).size, 29);
+  assert.equal(d.supporting.length, 35);
+  assert.equal(new Set(d.supporting.map(s => s.decl)).size, 35);
   const sha = d.verification.main.sha;
   for (const s of d.supporting) {
     assert.equal(s.audited, true, s.decl);
@@ -174,7 +174,7 @@ test("finite toroidal scope", () => {
     const theorem = d.supporting.find(s => s.decl === `ToroidalDiagonal.${name}`);
     assert.ok(theorem.audited && theorem.file.endsWith("ToroidalDiagonal.lean"), name);
   }
-  assert.equal(claim("I-37").status, "Exact");
+  assert.equal(claim("I-37").status, "Restricted");
 });
 
 /* 8. Open obligations carry no percentage; SATLowerBound is the central one. */
@@ -258,4 +258,4 @@ test("parser and generator guards", () => {
 if (!d.lean.matches_verified)
   console.warn("Note: lean/ differs from the last recorded verified commit; declaration links point to main.");
 if (process.exitCode) console.error(`${passed} test groups passed; failures above.`);
-else console.log(`Dashboard check PASS (${passed} groups): 91 claims; 80 Exact (87.9%), 2 Restricted, 5 Refuted, 3 Open, 1 Interpretive; 85 resolved (93.4%); original 70/2/11/8; SATLowerBound open.`);
+else console.log(`Dashboard check PASS (${passed} groups): 91 claims; 79 Exact (86.8%), 3 Restricted, 5 Refuted, 3 Open, 1 Interpretive; 84 resolved (92.3%); original 70/2/11/8; SATLowerBound open.`);
