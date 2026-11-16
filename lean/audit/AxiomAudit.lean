@@ -1017,3 +1017,22 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.SATDynamics.trapEnergy_before_saddle
 #print axioms PVNP.SATDynamics.trapEnergy_saddle
 #print axioms PVNP.SATDynamics.readout_requires_sharp_peak
+
+-- Phase XXIV: finite Fourier trajectory convergence
+#print axioms PVNP.TorusGalerkin.trunc_lipschitz
+#print axioms PVNP.TorusGalerkin.compact_uniform_tail
+#print axioms PVNP.TorusGalerkin.clipped_support
+#print axioms PVNP.TorusGalerkin.clipped_lipschitz
+#print axioms PVNP.TorusGalerkin.clipped_bound
+#print axioms PVNP.TorusGalerkin.clipped_continuous_time
+#print axioms PVNP.TorusGalerkin.clipped_eq_galerkin
+#print axioms PVNP.TorusGalerkin.clipped_uniform_consistency
+#print axioms PVNP.TorusGalerkin.exists_local_clipped
+#print axioms PVNP.TorusGalerkin.exists_global_clipped
+#print axioms PVNP.TorusGalerkin.clipped_trajectory_support
+#print axioms PVNP.TorusGalerkin.gronwall_diagonal_scale
+#print axioms PVNP.TorusGalerkin.gronwall_diagonal_mono
+#print axioms PVNP.TorusGalerkin.clipped_trajectory_error
+#print axioms PVNP.TorusGalerkin.exists_convergent_clipped
+#print axioms PVNP.TorusGalerkin.exists_convergent_galerkin
+#print axioms PVNP.TorusGalerkin.frozen_galerkin_approximation
