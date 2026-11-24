@@ -122,4 +122,53 @@ theorem weak_readout_error {L κ β γ R K T : ℝ} (hL : 0 < L)
     (mul_le_mul_of_nonneg_left hsum (Cdet_nonneg hL χ)) he
     (norm_nonneg _) (mul_nonneg (Cdet_nonneg hL χ) (by positivity)))
 
+
+/-- Simplify the Gronwall expression for a residual proportional to the
+initial error. No division by a vanishing Lipschitz constant is needed. -/
+theorem gronwall_proportional_le (d A t : ℝ) (hd : 0 ≤ d) (hA : 0 ≤ A) :
+    gronwallBound d A (A*d) t ≤ 2*d*Real.exp (A*t) := by
+  unfold gronwallBound
+  by_cases h : A = 0
+  · subst A
+    simp <;> linarith
+  · rw [if_neg h]
+    have he : A*d/A = d := by field_simp
+    rw [he]
+    linarith
+
+/-- Unconditional existence of the cutoff-independent Galerkin readout
+approximation for an exact interaction-picture trajectory. -/
+theorem exists_certified_galerkin_readout {L κ β γ B K T : ℝ}
+    (hL : 0 < L) (hγ : 0 < γ) (hK : 0 < K) (hT : 0 ≤ T)
+    (S : Finset Z2) (hcut : ∀ k ∉ S, K ≤ wt L k)
+    {χ : ℓ2} (hreal : rev (co L χ) = co L χ) {w : ℝ → ℓ2}
+    (hw : ∀ t, HasDerivAt w (Gf L κ β γ t (w t)) t)
+    (hB : ‖w 0‖ ≤ B) :
+    ∃ W : ℝ → ℓ2, W 0 = trunc S (w 0) ∧
+      (∀ t, Supported S (W t)) ∧
+      (∀ t, HasDerivAt W (galerkin S L κ β γ t (W t)) t) ∧
+      |Jdet L χ (U L κ T (W T)) - Jdet L χ (U L κ T (w T))| ≤
+        Cdet L χ * (4 * (uniformRadius L κ β γ B)^2 *
+          Real.exp (LF L β γ (uniformRadius L κ β γ B)*T) / K) := by
+  let R := uniformRadius L κ β γ B
+  have hR : 0 ≤ R := uniformRadius_nonneg L κ β γ B
+  obtain ⟨W,h0,hs,hd,hb⟩ := exists_uniform_galerkin
+    (κ := κ) (β := β) hL hγ S hB
+  have hbw : ∀ t, ‖w t‖ ≤ R := by
+    intro t
+    obtain ⟨hm,he⟩ := conserved hL hw t
+    have h := norm_le_apriori (κ := κ) (β := β) hL hγ (U L κ t (w t))
+    rw [norm_U, mass_U, hm, he] at h
+    exact h.trans (initial_radius_upper hL hγ hB)
+  refine ⟨W,h0,hs,hd,?_⟩
+  have h := weak_readout_error hL hR hK hT S hcut hreal h0 hd hw hs hb hbw
+  have hg := gronwall_proportional_le (R/K) (LF L β γ R) T
+    (div_nonneg hR hK.le) (LF_nonneg L β γ R)
+  rw [show LF L β γ R * R/K = LF L β γ R * (R/K) by ring] at h
+  calc
+    _ ≤ Cdet L χ * (2*R) * (2*(R/K)*Real.exp (LF L β γ R*T)) :=
+      h.trans (mul_le_mul_of_nonneg_left hg
+        (mul_nonneg (Cdet_nonneg hL χ) (by positivity)))
+    _ = _ := by dsimp [R]; ring
+
 end PVNP.TorusGalerkin
