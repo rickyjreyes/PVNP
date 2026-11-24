@@ -41,3 +41,33 @@ the support and residual identities. The square-envelope/count and
 arithmetic-cost arguments above are mathematical, not yet formalized.
 All new theorem roots are in AxiomAudit.lean. The pinned build and
 audit have not yet passed; #99 and its original classification stay open.
+
+
+## Quantitative time-slab extension
+
+For a fixed finite trial support S, choose upper bounds M on the free frequencies
+omega(k)=(kappa-qf(L,k))^2 for k in S and N on the same frequencies for
+k in nonlinearSupport(S). The free-group increment bound is
+||U(s)v-U(t)v|| <= M |s-t| ||v||.
+Splitting the interaction-picture vector field difference at the intermediate
+nonlinearity Fnl(U(t)v) yields
+||Gf(s,v)-Gf(t,v)|| <= LF(R) R (M+N) |s-t|
+on the radius-R trial ball. For a slab W(t)=x+(t-a)d, combining this with
+the spatial Lipschitz bound yields
+||d-Gf(t,W(t))|| <= eta + LF(R) (||d||+R(M+N)) |t-a|,
+provided ||x|| and ||W(t)|| are <= R and the left-end residual <= eta.
+The left-end residual includes off-cutoff nonlinear terms and numerical
+evaluation errors, not merely the projected ODE defect.
+
+Thus a uniform residual target rho > eta can be certified with
+h <= (rho-eta)/(LF(R)(||d||+R(M+N))) when the denominator is positive.
+If it is zero the displayed bound imposes no step-size restriction.
+A sufficient radius certificate is ||x||+h||d|| <= R.
+The time-modulus and affine residual inequalities are candidate Lean
+proofs in CertifiedIntegrator.lean, imported and registered for audit.
+The step-size corollaries above are mathematical consequences, not
+separately mechanized. No claim of polynomial integration cost: eta may
+already be larger than rho due to spectral truncation, and the global
+Gronwall amplification, input-indexed cutoffs and finite-bit enclosure
+costs still need certification. The fixed finite support hypothesis
+does not apply to the true infinite-dimensional trajectory.
