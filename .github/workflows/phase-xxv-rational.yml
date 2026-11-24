@@ -1,0 +1,17 @@
+name: Phase XXV rational evaluator
+on:
+  pull_request:
+    paths:
+      - 'pvnp/phase_xxv/**'
+      - 'pvnp/tests/test_phase_xxv_rational_fourier.py'
+      - '.github/workflows/phase-xxv-rational.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  rational-evaluator:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact rational enclosure regressions
+        run: python3 -m unittest discover -s pvnp/tests -p test_phase_xxv_rational_fourier.py -v
