@@ -1069,3 +1069,17 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TorusGalerkin.weak_Fnl_sub_le
 #print axioms PVNP.TorusGalerkin.weak_Gf_sub_le
 #print axioms PVNP.TorusGalerkin.weak_consistency_bound
+
+-- Finite Galerkin conservation and global existence
+#print axioms PVNP.TorusGalerkin.trunc_co
+#print axioms PVNP.TorusGalerkin.trunc_comm_U
+#print axioms PVNP.TorusGalerkin.trunc_smul
+#print axioms PVNP.TorusGalerkin.supported_inner_Lc
+#print axioms PVNP.TorusGalerkin.supported_inner_Ac
+#print axioms PVNP.TorusGalerkin.projected_inner_Lc_self
+#print axioms PVNP.TorusGalerkin.U_galerkin
+#print axioms PVNP.TorusGalerkin.galerkin_mass_deriv
+#print axioms PVNP.TorusGalerkin.galerkin_ham_deriv
+#print axioms PVNP.TorusGalerkin.galerkin_conserved
+#print axioms PVNP.TorusGalerkin.galerkin_apriori
+#print axioms PVNP.TorusGalerkin.exists_global_galerkin
