@@ -126,4 +126,58 @@ theorem stable_sideband_bound {h g : ℝ} {x y : ℝ → ℝ}
       exact add_le_add (mul_le_mul_of_nonneg_right (le_max_right _ _) (sq_nonneg _))
         (mul_le_mul_of_nonneg_right (le_max_left _ _) (sq_nonneg _))
 
+
+/-- All nonzero q have positive-definite sideband energy under
+these sufficient background conditions. This is linear stability,
+not global nonlinear stability. -/
+theorem stable_background_coefficients {κ q a β γ : ℝ}
+    (hκ : κ ≤ 0) (hq : 0 < q) (hc : β ≤ 2*γ*a^2) :
+    0 < H κ q ∧ 0 < H κ q + 2*c a β γ := by
+  have hh : 0 < H κ q := by
+    unfold H
+    nlinarith [mul_nonpos_of_nonpos_of_nonneg hκ hq.le, sq_pos_of_pos hq]
+  have hg : 0 ≤ c a β γ := by
+    unfold c
+    exact mul_nonneg (sq_nonneg _) (by linarith)
+  exact ⟨hh,by linarith⟩
+
+theorem unstable_sideband_iff {h g : ℝ} (hh : 0 < h) :
+    0 < -h*(h+2*g) ↔ h+2*g < 0 := by
+  rw [neg_mul, neg_pos]
+  exact mul_neg_iff_of_pos_left hh
+
+/-- Exact quadratic detector expansion for a real directional
+perturbation. It uses the original physical Jdet. -/
+theorem detector_directional_expansion {L : ℝ} (hL : 0 < L)
+    {χ : ℓ2} (hreal : rev (co L χ) = co L χ) (u v : ℓ2) (e : ℝ) :
+    Jdet L χ (u+(e : ℂ) • v) =
+      Jdet L χ u +
+        e * (2*(inner ℂ (Lc L u) (Lc L (mulH L χ v))).re) +
+        e^2 * Jdet L χ v := by
+  have hc : (inner ℂ (Lc L v) (Lc L (mulH L χ u))).re =
+      (inner ℂ (Lc L u) (Lc L (mulH L χ v))).re := by
+    rw [inner_mulH_symm hL hreal v u]
+    rw [← inner_conj_symm (𝕜 := ℂ) (Lc L (mulH L χ v)) (Lc L u),
+      Complex.conj_re]
+  simp only [Jdet_eq_re hL hreal, mulH_add_right hL, mulH_smul_right hL,
+    map_add, map_smul, inner_add_left, inner_add_right,
+    inner_smul_left, inner_smul_right, Complex.conj_ofReal,
+    Complex.add_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im]
+  rw [hc]
+  ring
+
+theorem detector_directional_deriv {L : ℝ} (hL : 0 < L)
+    {χ : ℓ2} (hreal : rev (co L χ) = co L χ) (u v : ℓ2) :
+    HasDerivAt (fun e : ℝ => Jdet L χ (u+(e : ℂ) • v))
+      (2*(inner ℂ (Lc L u) (Lc L (mulH L χ v))).re) 0 := by
+  let d := 2*(inner ℂ (Lc L u) (Lc L (mulH L χ v))).re
+  have h := (((hasDerivAt_id (0 : ℝ)).mul_const d).add
+    (((hasDerivAt_id (0 : ℝ)).pow 2).mul_const (Jdet L χ v))).const_add (Jdet L χ u)
+  convert h using 1
+  · funext e
+    rw [detector_directional_expansion hL hreal]
+    dsimp [d]
+    ring
+  · simp [d]
+
 end PVNP.SidebandAmplification
