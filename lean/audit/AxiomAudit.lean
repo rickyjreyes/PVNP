@@ -1036,3 +1036,18 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TorusGalerkin.exists_convergent_clipped
 #print axioms PVNP.TorusGalerkin.exists_convergent_galerkin
 #print axioms PVNP.TorusGalerkin.frozen_galerkin_approximation
+
+-- Phase XXV: exact finite residual evaluation
+#print axioms PVNP.TorusGalerkin.trunc_supported
+#print axioms PVNP.TorusGalerkin.supported_trunc_eq
+#print axioms PVNP.TorusGalerkin.support_mono
+#print axioms PVNP.TorusGalerkin.support_U
+#print axioms PVNP.TorusGalerkin.support_smul
+#print axioms PVNP.TorusGalerkin.support_add
+#print axioms PVNP.TorusGalerkin.support_conj
+#print axioms PVNP.TorusGalerkin.support_mulH
+#print axioms PVNP.TorusGalerkin.support_Fnl
+#print axioms PVNP.TorusGalerkin.support_Gf
+#print axioms PVNP.TorusGalerkin.finite_nonlinear_field
+#print axioms PVNP.TorusGalerkin.finite_residual_sq
+#print axioms PVNP.TorusGalerkin.finite_pr
