@@ -116,3 +116,48 @@ than logarithmic, this proof alone may require exponentially many
 modes; polynomial precision bits do not imply polynomial mode count.
 This is a sufficient error estimate, not a complexity lower bound.
 No P_phys=P_TM or SAT separation claim follows.
+
+
+## Conservation and global weak comparison extension
+
+The projected flow uses W'=P_S Gf(t,W), with W=P_S W. The projection
+commutes with U and acts orthogonally in the mass and kinetic Fourier
+pairings. In differentiating mass, P_S on the second operand can be
+removed because the first operand is supported. In differentiating
+the kinetic energy, the same removal applies to the Ac pairing.
+For the potential term, U(t)W'=-i P_S Fnl(U(t)W), and the inner
+product of Fnl with P_S Fnl in the physical mass pairing equals the
+squared norm of P_S Fnl, which is real. Its product with -i has zero
+real part. The remaining kinetic/potential mixed terms cancel by
+complex conjugate symmetry, exactly as in the unprojected energy proof.
+
+Thus the same mass and Hamiltonian as the full PDE are conserved.
+The existing coercive bound Rap on the initial projected mass and
+Hamiltonian controls the entire trajectory. The clipped global
+existence construction now admits the original clopen continuation
+argument, with support preserved and the radius cutoff inactive.
+GalerkinConservation.lean contains twelve candidate theorem roots.
+
+WeakGlobalComparison.lean formalizes the weak differential comparison
+by applying the existing bounded-set Gronwall theorem to Lc(W) and
+Lc(w). Lc is injective; weakLift is a set-theoretic inverse on its
+image. The induced field is Lipschitz only on the image of the H2
+ball. No continuity or algorithm for weakLift is required. The actual
+projected residual is at most LF(R)R/K, because W already lies in
+the support, and the initial error is at most R/K. The seven new
+theorem roots culminate in the precise gronwallBound statement.
+
+To choose a single radius uniformly in S from an input H2 bound B,
+the initial projected mass is <= B², kinetic energy <= (|kappa|+1)² B²,
+and potential energy is bounded above using the Sobolev algebra
+estimate and the polynomial nonlinearity. This remaining explicit
+uniform-radius estimate and the final detector/bit-cost integration
+are not yet implemented in this patch. In particular the exponential
+stability factor remains, and no polynomial full-class simulation
+or universal SAT lower bound is established.
+
+Hosted full build at b7b8ff7 failed in FiniteNonlinearResidual.lean
+on the rewrite of tsum of the zero function; replaced by simp after
+the function equality. Other modules depending on it were not checked
+in that build. The new conservation and global comparison modules
+are candidates pending full kernel verification and axiom audit.
