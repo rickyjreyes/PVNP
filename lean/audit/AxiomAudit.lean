@@ -1137,3 +1137,8 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.SidebandAmplification.eigenvector
 #print axioms PVNP.SidebandAmplification.explicit_growing_sideband
 #print axioms PVNP.SidebandAmplification.exponential_solution
+#print axioms PVNP.SidebandAmplification.rotated_fnl_deriv
+#print axioms PVNP.SidebandAmplification.actual_field_first_variation
+#print axioms PVNP.SidebandAmplification.sideband_energy_deriv
+#print axioms PVNP.SidebandAmplification.sideband_energy_conserved
+#print axioms PVNP.SidebandAmplification.stable_sideband_bound
