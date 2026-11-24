@@ -1131,3 +1131,9 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.RestrictedResourceBudget.interval_decision_total
 #print axioms PVNP.RestrictedResourceBudget.expanded_interval_width
 #print axioms PVNP.RestrictedResourceBudget.expanded_interval_sound
+
+-- Sideband amplification algebra
+#print axioms PVNP.SidebandAmplification.growing_rate
+#print axioms PVNP.SidebandAmplification.eigenvector
+#print axioms PVNP.SidebandAmplification.explicit_growing_sideband
+#print axioms PVNP.SidebandAmplification.exponential_solution
