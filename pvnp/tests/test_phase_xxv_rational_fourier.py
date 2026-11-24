@@ -100,5 +100,20 @@ class RationalFourierTests(unittest.TestCase):
             Arithmetic(32,max_taylor_degree=5).exp_i((F(1),F(1)))
 
 
+    def test_automatic_cutoff_and_promise_totality(self):
+        initial={(0,0):(F(1,16),F(0))}
+        detector={(0,0):(F(1),F(0))}
+        exact=F(1,512)
+        margin=F(1,100)
+        params=dict(initial=initial,detector=detector,L=2,kappa=0,
+                    beta=F(1,1000),gamma=F(1,1000),T=0,margin=margin)
+        for direction in [-1,1]:
+            a=certified_decision(threshold=exact+direction*margin,**params)
+            self.assertIs(a["decision"],direction==-1)
+            self.assert_enclosed(a["interval"],exact)
+            self.assertLess(a["interval"][1]-a["interval"][0],margin)
+            self.assertEqual(a["modes"],(2*a["cutoff"]+1)**2)
+
+
 if __name__ == "__main__":
     unittest.main()
