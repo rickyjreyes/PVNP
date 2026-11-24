@@ -1083,3 +1083,12 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TorusGalerkin.galerkin_conserved
 #print axioms PVNP.TorusGalerkin.galerkin_apriori
 #print axioms PVNP.TorusGalerkin.exists_global_galerkin
+
+-- Effective global weak comparison
+#print axioms PVNP.TorusGalerkin.Lc_injective
+#print axioms PVNP.TorusGalerkin.weakLift_Lc
+#print axioms PVNP.TorusGalerkin.weakField_Lc
+#print axioms PVNP.TorusGalerkin.weakField_lipschitz
+#print axioms PVNP.TorusGalerkin.weak_trajectory_error
+#print axioms PVNP.TorusGalerkin.weak_galerkin_residual
+#print axioms PVNP.TorusGalerkin.weak_galerkin_global_error
