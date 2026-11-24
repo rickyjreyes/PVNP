@@ -171,4 +171,26 @@ theorem exists_certified_galerkin_readout {L κ β γ B K T : ℝ}
         (mul_nonneg (Cdet_nonneg hL χ) (by positivity)))
     _ = _ := by dsimp [R]; ring
 
+
+/-- A sufficient resource threshold for a robust positive or negative
+detector decision. The error budget is half the original margin. -/
+theorem detector_margin_from_cutoff {j jS C R A T K m : ℝ}
+    (hK : 0 < K) (hm : 0 < m)
+    (herr : |jS-j| ≤ C*(4*R^2*Real.exp (A*T)/K))
+    (hcut : 8*C*R^2*Real.exp (A*T) ≤ m*K) :
+    |jS-j| ≤ m/2 := by
+  have hh : C*(4*R^2*Real.exp (A*T)/K) ≤ m/2 := by
+    rw [show C*(4*R^2*Real.exp (A*T)/K) =
+      (4*C*R^2*Real.exp (A*T))/K by ring]
+    apply (div_le_iff₀ hK).2
+    linarith
+  exact herr.trans hh
+
+theorem detector_decision_preserved {j jS θ m : ℝ} (hm : 0 < m)
+    (herr : |jS-j| ≤ m/2) :
+    (θ+m ≤ j → θ < jS) ∧ (j ≤ θ-m → jS < θ) := by
+  have h1 := le_abs_self (jS-j)
+  have h2 := neg_abs_le (jS-j)
+  constructor <;> intro h <;> linarith
+
 end PVNP.TorusGalerkin
