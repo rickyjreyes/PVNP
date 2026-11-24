@@ -267,3 +267,5 @@ import PVNP.FiniteNonlinearResidual
 import PVNP.CertifiedIntegrator
 
 import PVNP.WeakNormApproximation
+
+import PVNP.GalerkinConservation
