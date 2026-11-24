@@ -386,3 +386,58 @@ telescoping orientation. The fixes use the proper product orientation
 matching the existing H2 proof, without altering theorem statements.
 The 11 rational regressions passed at e59a2e8 (run 45473531101).
 The new automatic cutoff and separated-promise test await retest.
+
+
+## Actual nonlinearity variation, stable sidebands, and detector conditioning
+
+The rotated nonlinearity has a genuine directional derivative along
+real epsilon, not a complex-linear derivative:
+d/de [fnl(a+e z)-g(a²)(a+e z)] at e=0 = c(z+conj z).
+The new actual_field_first_variation theorem applies it to the
+reconstructed field of the maintained Fnl using its existing constant
+mode mode(L,0,L*a) and arbitrary H² perturbation. The derivative is
+pointwise in space; a full Frechet derivative of the evolution map is
+not asserted by this Lean theorem.
+
+For h=H and g=c the signed quadratic sideband energy
+(h+2g)x²+h y² is conserved by the linearized system.
+If h>0 and h+2g>0, it bounds x²+y² uniformly in time with ratio
+max(h,h+2g)/min(h,h+2g). In particular all q>0 have this positive
+energy when kappa<=0 and beta<=2 gamma a². For h>0 the unstable
+region is exactly h+2g<0. These are statements about linearized
+sidebands, not nonlinear orbital stability or an input-uniform
+simulation theorem. The neutral boundary may exhibit secular growth.
+
+There is also a direct detector conditioning obstruction. For the
+three-mode symmetric Galerkin system S={0,+k,-k}, the rotating
+finite-dimensional ODE is polynomial in real coordinates. Its smooth
+flow is differentiable in initial data for each fixed finite time
+(the conserved radius supplies existence); the derivative solves the
+variational equation. In the explicit unstable example L=2*pi,
+k=(1,0), kappa=0, a=1, beta=2, gamma=1/2, perturb the constant initial
+physical field by e(1+i) cos(x1). The exact variational field in the
+rotating frame is exp(t)(1+i)cos(x1). Choose the fixed real detector
+chi(x)=cos(x1). The global phase does not affect J. Differentiating
+J=integral chi |u|² at e=0 gives
+  dJ/de = 2 exp(t) integral cos²(x1) = L² exp(t).
+The unweighted initial L² perturbation direction has norm L, and
+the weighted H² norm is 2L (q=1). Therefore the local detector
+condition number in this direction is L exp(t) in L² or
+(L/2) exp(t) in H². For each fixed t, sufficiently small nonzero e
+yields at least half this amplification by the derivative limit.
+This rules out a uniform polynomial-in-time readout Lipschitz
+constant for this Galerkin subclass, not a polynomial-time algorithm.
+The argument is analytical; the smooth finite-flow derivative and
+the specific cosine integral bridge have not been kernel-verified.
+It does not imply an exponentially small decision margin, and the
+precision-bit cost of resolving exp(-t) is only linear in t.
+
+SidebandAmplification.lean adds nine candidate roots: scalar and
+actual-field directional derivatives, energy conservation and
+positive energy bound, sufficient stable background condition,
+unstable sign equivalence, and exact quadratic detector expansion
+and derivative. The latter two use the original Jdet identity, not
+a surrogate receiver. A rational regression compares actual Fourier
+field evaluations for symmetric positive and negative perturbations
+against the derivative formula at nonzero mode. Full verification
+of these additions is pending.
