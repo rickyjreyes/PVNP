@@ -176,4 +176,74 @@ theorem galerkin_euler_defect {L κ β γ R M N : ℝ} (hL : 0 < L)
     _ ≤ D*h*h := hmv
     _ = _ := by dsimp [D,A]; ring
 
+
+/-- Rounded Euler iterates compared to the actual Galerkin trajectory.
+The update defect is a norm bound on the implemented step (including
+field evaluation and rounding); it is needed only inside the radius.
+The conclusion certifies that no iterate leaves that radius. -/
+theorem rounded_galerkin_euler {L κ β γ R M Q h ξ δ b : ℝ}
+    (hL : 0 < L) (hR : 0 ≤ R) (hM : 0 ≤ M) (hQ : 0 ≤ Q)
+    (hh : 0 ≤ h) (hξ : 0 ≤ ξ) (hδ : 0 ≤ δ) (hb : 0 ≤ b)
+    (S : Finset Z2) (hm : ∀ k ∈ S, om L κ k ≤ M)
+    (hq : ∀ k ∈ nonlinearSupport S, om L κ k ≤ Q)
+    (N : ℕ) {W : ℝ → ℓ2} {x : ℕ → ℓ2}
+    (hd : ∀ t, HasDerivAt W (galerkin S L κ β γ t (W t)) t)
+    (hW : ∀ t, ‖W t‖ ≤ R)
+    (h0 : ‖x 0-W 0‖ ≤ δ)
+    (hupdate : ∀ i < N, ‖x i‖ ≤ R+b →
+      ‖x (i+1) - (x i+h • galerkin S L κ β γ ((i:ℝ)*h) (x i))‖ ≤ ξ)
+    (hbudget : stepEnvelope δ (LF L β γ (R+b)) h
+      ((LF L β γ (R+b)*(LF L β γ (R+b)*(R+b))+
+        LF L β γ (R+b)*(R+b)*(M+Q))*h^2+ξ) N ≤ b) :
+    ∀ i ≤ N, ‖x i-W ((i:ℝ)*h)‖ ≤ stepEnvelope δ (LF L β γ (R+b)) h
+      ((LF L β γ (R+b)*(LF L β γ (R+b)*(R+b))+
+        LF L β γ (R+b)*(R+b)*(M+Q))*h^2+ξ) i ∧ ‖x i‖ ≤ R+b := by
+  let A := LF L β γ (R+b)
+  let D := A*(A*(R+b))+A*(R+b)*(M+Q)
+  let e : ℕ → ℝ := fun i => ‖x i-W ((i:ℝ)*h)‖
+  have hA : 0 ≤ A := LF_nonneg _ _ _ _
+  have hD : 0 ≤ D := by dsimp [D]; positivity
+  have hW' (t : ℝ) : ‖W t‖ ≤ R+b := (hW t).trans (by linarith)
+  have hxball (i : ℕ) (hi : e i ≤ b) : ‖x i‖ ≤ R+b := by
+    have he : x i = (x i-W ((i:ℝ)*h))+W ((i:ℝ)*h) := by abel
+    rw [he]
+    exact (norm_add_le _ _).trans (by dsimp [e] at hi; linarith [hW ((i:ℝ)*h)])
+  have hstep (i : ℕ) (hi : i < N) (he : e i ≤ b) :
+      e (i+1) ≤ (1+A*h)*e i+(D*h^2+ξ) := by
+    let t : ℝ := (i:ℝ)*h
+    let u := x i+h • galerkin S L κ β γ t (x i)
+    let v := W t+h • galerkin S L κ β γ t (W t)
+    have ht : ((i+1:ℕ):ℝ)*h = t+h := by push_cast; dsimp [t]; ring
+    have hu : ‖x (i+1)-u‖ ≤ ξ := hupdate i hi (hxball i he)
+    have hv : ‖v-W (t+h)‖ ≤ D*h^2 := by
+      rw [norm_sub_rev]
+      exact galerkin_euler_defect hL (add_nonneg hR hb) hM hQ S hm hq hd hW' t h hh
+    have huv : ‖u-v‖ ≤ (1+A*h)*e i := by
+      have hg := galerkin_lipschitz hL S t (hxball i he) (hW' t)
+      have heq : u-v = (x i-W t)+h •
+          (galerkin S L κ β γ t (x i)-galerkin S L κ β γ t (W t)) := by
+        dsimp [u,v]; rw [smul_sub]; abel
+      rw [heq]
+      calc
+        _ ≤ ‖x i-W t‖ + ‖h •
+          (galerkin S L κ β γ t (x i)-galerkin S L κ β γ t (W t))‖ :=
+            norm_add_le _ _
+        _ ≤ e i + h*(A*e i) := by
+          rw [norm_smul, Real.norm_eq_abs, abs_of_nonneg hh]
+          exact add_le_add_left (mul_le_mul_of_nonneg_left hg hh) _
+        _ = _ := by ring
+    dsimp [e]
+    rw [ht]
+    calc
+      _ ≤ ‖x (i+1)-u‖+‖u-W (t+h)‖ := norm_sub_le_norm_sub_add_norm_sub _ _ _
+      _ ≤ ‖x (i+1)-u‖+(‖u-v‖+‖v-W (t+h)‖) :=
+        add_le_add_left (norm_sub_le_norm_sub_add_norm_sub _ _ _) _
+      _ ≤ ξ+((1+A*h)*e i+D*h^2) := add_le_add hu (add_le_add huv hv)
+      _ = _ := by ring
+  have h := rounded_step_bootstrap (e := e) N hδ hA hh
+    (add_nonneg (mul_nonneg hD (sq_nonneg h)) hξ)
+    (by simpa [e] using h0) hstep hbudget
+  intro i hi
+  exact ⟨(h i hi).1,hxball i (h i hi).2⟩
+
 end PVNP.TorusGalerkin
