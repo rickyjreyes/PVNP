@@ -48,10 +48,12 @@ theorem finite_detector_dependence {L : ℝ} (hL : 0 < L)
   congr 1
   apply Finset.sum_congr rfl
   intro k hk
-  congr 2
-  apply Finset.sum_congr rfl
-  intro j hj
-  rw [heq k hk j hj]
+  have hinner : (∑ j ∈ S, co L χ (k-j)*co L v j) =
+      ∑ j ∈ S, co L χ' (k-j)*co L v j := by
+    apply Finset.sum_congr rfl
+    intro j hj
+    rw [heq k hk j hj]
+  rw [hinner]
 
 theorem finite_detector_free_sum {L : ℝ} (hL : 0 < L) (κ t : ℝ)
     {χ v : ℓ2} (hreal : rev (co L χ) = co L χ) (S : Finset Z2)
