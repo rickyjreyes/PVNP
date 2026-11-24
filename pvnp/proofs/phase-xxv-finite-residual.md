@@ -161,3 +161,38 @@ on the rewrite of tsum of the zero function; replaced by simp after
 the function equality. Other modules depending on it were not checked
 in that build. The new conservation and global comparison modules
 are candidates pending full kernel verification and axiom audit.
+
+
+## Cutoff-independent radius and end-to-end detector approximation
+
+For initial H2 norm <= B, put C_S=L^{-1} sqrt(SL L), and
+E_B=(|kappa|+1)^2 B^2+3|beta| C_S^2 B^4+5|gamma| C_S^4 B^6.
+The diagonal kinetic multiplier bound gives ||Ac v|| <=
+(|kappa|+1)||v||. The existing potential Taylor estimate at zero
+bounds the absolute potential by (3|beta| C_S^2 B^2+
+5|gamma| C_S^4 B^4) mass(v). Both v and P_S v have H2 norm <= B.
+For gamma>0 the radius R_B=Rap(kappa,beta,gamma,B^2,E_B)
+therefore bounds the exact and all projected trajectories globally.
+
+For omitted weights >= K>0, the global Galerkin L2 error is at most
+2 R_B exp(LF(R_B) T)/K. The physical detector consequently obeys
+|J_S-J| <= 4 Cdet R_B^2 exp(LF(R_B)T)/K.
+For margin m>0, a sufficient cutoff condition is
+m K >= 8 Cdet R_B^2 exp(LF(R_B)T), preserving either decision sign.
+UniformGalerkinRadius.lean implements thirteen candidate theorem
+roots from initial energy to detector decision, registered for audit.
+
+For a square cutoff of coordinate radius q on the integer lattice,
+K=1+(2*pi*(q+1)/L)^2 and the mode count is (2q+1)^2.
+If the input-indexed L, R_B, Cdet, 1/m and LF(R_B) are polynomial
+in n and LF(R_B) T=O(log n), the sufficient spectral dimension is
+polynomial. For this restricted regime, first-order time stepping
+can also use polynomially many steps, subject to a charged
+H2 stability/radius certificate and polynomial cost evaluation of
+the finite initial coefficients, detector, and physical parameters.
+A polynomial numerical time-stepping proof, finite-bit evaluation
+and all input-indexed encoding obligations remain open. In
+particular a uniform cutoff rate is not a polynomial full-class
+simulation, nor a lower bound on arbitrary simulation algorithms.
+All new Lean declarations remain candidates until the complete
+kernel build and transitive axiom audit pass.
