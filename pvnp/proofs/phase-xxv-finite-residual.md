@@ -326,3 +326,63 @@ The hosted Lean build at f7acd149 passed FiniteNonlinearResidual but
 failed in CertifiedIntegrator at the scalar norm rewrite. The new
 commit removes the redundant Complex.norm_real rewrite; full
 kernel verification of all dependent modules is still pending.
+
+
+## Restricted promise totality and polynomial resource majorants
+
+The previous one-quarter error allocation certified any returned sign
+but did not guarantee totality on every separated input. With detector
+interval width <= m/8, spatial error <= m/8 and numerical readout
+error <= m/8, the expanded interval has width <= 5m/8 < m. Since it
+contains the exact reading, a true separation of at least m forces
+one of the strict sign tests to succeed. The prototype now uses this
+allocation and automatically chooses q >= L sqrt(32 C R² E/m)/6
+when no cutoff is supplied, using a rational upper square root.
+The explicit resource caps still cause rejection if too small.
+
+RestrictedResourceBudget.lean provides six independent candidate
+scalar theorems. If a common majorant P>=1 bounds L,C,R,E and 1/m,
+q>=4 P^4 suffices: 1+(6(q+1)/L)^2 >=64 P^6 >=32 P^5,
+and 4 C R² E/K <= m/8. Thus O(P^8) modes suffice. Once the
+cutoff is selected, D is a polynomial in q and the parameter
+magnitudes including 1/L. A (possibly larger) common majorant P'
+of D,T,E,1/epsilon yields sufficient N>=3(P')^5. These are loose
+majorants, not lower bounds. The fixed-depth convolution circuit
+and interval arithmetic argument in the preceding section give
+a polynomial bit-cost route under these promises; no fully
+formal Turing-machine implementation is claimed.
+
+## Exponential amplification is not purely a Gronwall artifact
+
+A concrete linearized instability occurs for the frozen PDE itself.
+Let g(s)=-beta*s+gamma*s² and a>0. The constant background
+u0=a exp(-i (kappa²+g(a²)) t) is an exact plane-wave solution.
+Write u=exp(-i (kappa²+g(a²)) t)(a+z). The first variation of
+g(|a+z|²)(a+z)-g(a²)(a+z) is
+c(z+conj z), where c=a²(-beta+2 gamma a²).
+For z=(x+iy) cos(k dot x) with q=|k|², the shifted linear
+dispersion is H=(kappa-q)²-kappa²=q²-2 kappa q.
+Thus the linearized equation gives x'=H y and
+y'=-(H+2c)x. Its eigenvalue square is -H(H+2c).
+
+Take L=2*pi, k=(1,0), kappa=0, a=1, beta=2, gamma=1/2.
+Then H=1, c=-1, and x=y=exp(t) is an exact growing solution
+of the linearized sideband system. It also lies in the linearization
+of any symmetric Galerkin system retaining the zero and both
+sideband modes. Hence conservation of mass and Hamiltonian does
+not itself imply a polynomial-in-time Lipschitz bound for the flow.
+A uniform derivative bound on a finite-dimensional solution map
+containing this background must allow exponential amplification.
+This observation is not an exponential simulation-time lower bound:
+a different algorithm, higher-order method, or device subclass
+might bypass the first-order worst-case resource estimate.
+SidebandAmplification.lean contains four candidate algebra and
+linear ODE theorems. The full PDE Frechet derivative and nonlinear
+flow-map lower bound are not yet mechanized.
+
+The full CI at e59a2e8 reached WeakNormApproximation.lean and exposed
+the inverse inequality name, missing nonnegativity, and mismatched
+telescoping orientation. The fixes use the proper product orientation
+matching the existing H2 proof, without altering theorem statements.
+The 11 rational regressions passed at e59a2e8 (run 45473531101).
+The new automatic cutoff and separated-promise test await retest.
