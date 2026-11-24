@@ -53,25 +53,20 @@ def exp_upper(x, max_exponent):
 
 
 def certified_decision(initial, detector, L, kappa, beta, gamma, T, threshold,
-                       margin, cutoff, *, slack=F(1,16), max_modes=10000,
+                       margin, cutoff=None, *, slack=F(1,16), max_modes=10000,
                        max_steps=100000, max_bits=256, max_exponent=4096,
                        max_taylor_degree=10000):
     """Return a certificate with decision True/False/None.
 
     Both coefficient dictionaries are complete finite weighted states.
-    All scalar inputs are rational. The cutoff is a square |k_i|<=cutoff.
+    All scalar inputs are rational. The cutoff is a square |k_i|<=cutoff; None selects a sufficient radius.
     An inconclusive interval or resource cap cannot certify a decision.
     The claimed detector margin is a target tolerance, not assumed truth.
     """
     L,kappa,beta,gamma,T,threshold,margin,slack = map(
         F,(L,kappa,beta,gamma,T,threshold,margin,slack))
-    if L<=0 or gamma<=0 or T<0 or margin<=0 or slack<=0 or cutoff<0:
+    if L<=0 or gamma<=0 or T<0 or margin<=0 or slack<=0:
         raise ValueError("invalid parameter or resource bound")
-    if not isinstance(cutoff,int):
-        raise ValueError("integer cutoff required")
-    if (2*cutoff+1)**2 > max_modes:
-        raise BudgetExceeded("mode cap")
-    S = {(i,j) for i in range(-cutoff,cutoff+1) for j in range(-cutoff,cutoff+1)}
     zero=(F(0),F(0))
     for (i,j),(x,y) in detector.items():
         if detector.get((-i,-j),zero)!=(x,-y):
@@ -80,6 +75,14 @@ def certified_decision(initial, detector, L, kappa, beta, gamma, T, threshold,
     C = l1_bound(detector)/L
     A = lf_upper(L,beta,gamma,R+slack)
     E = exp_upper(A*T,max_exponent)
+    # Choose q so that K >= 32 C R² E / margin, without a real-number oracle.
+    if cutoff is None:
+        cutoff=ceil(L*sqrt_upper(32*C*R**2*E/margin)/6)
+    if not isinstance(cutoff,int) or cutoff<0:
+        raise ValueError("nonnegative integer cutoff required")
+    if (2*cutoff+1)**2 > max_modes:
+        raise BudgetExceeded("mode cap")
+    S = {(i,j) for i in range(-cutoff,cutoff+1) for j in range(-cutoff,cutoff+1)}
     # pi<4 provides conservative frequency upper bounds.
     def omega(q):
         return (abs(kappa)+2*(8*q/L)**2)**2
@@ -91,12 +94,12 @@ def certified_decision(initial, detector, L, kappa, beta, gamma, T, threshold,
     # At T=0 exact projection incurs no error if all modes were retained.
     if T==0 and set(initial)<=S:
         spatial=F(0)
-    if spatial > margin/4:
+    if spatial > margin/8:
         raise BudgetExceeded("spectral cutoff insufficient for target margin")
     if C==0:
         eps=slack
     else:
-        eps=min(slack, margin/(4*C*(2*R+slack)))
+        eps=min(slack, margin/(8*C*(2*R+slack)))
     N=0 if T==0 else max(1,ceil(3*D*T*T*E/eps))
     if N>max_steps:
         raise BudgetExceeded("step cap")
@@ -135,7 +138,7 @@ def certified_decision(initial, detector, L, kappa, beta, gamma, T, threshold,
                                max_taylor_degree=max_taylor_degree)
         except ArithmeticError:
             continue
-        if hi-lo<=margin/4:
+        if hi-lo<=margin/8:
             break
     else:
         raise BudgetExceeded("detector precision cap")
@@ -146,7 +149,7 @@ def certified_decision(initial, detector, L, kappa, beta, gamma, T, threshold,
             "interval": (lower,upper), "spatial_error": spatial,
             "numerical_state_error": numerical_state_error,
             "numerical_readout_error": numerical_readout,
-            "detector_interval": (lo,hi), "modes":len(S), "steps":N,
+            "detector_interval": (lo,hi), "modes":len(S), "cutoff":cutoff, "steps":N,
             "peak_precision_bits":peak_bits, "radius_upper":R,
             "amplification_upper":E, "step_error_budget":xi,
             "sum_measured_step_errors":accumulated}
