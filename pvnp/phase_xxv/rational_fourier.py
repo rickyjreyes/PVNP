@@ -157,3 +157,53 @@ def midpoint_step(state, support, L, kappa, beta, gamma, t, h, bits):
             coords.append(rounded)
         result[k] = tuple(coords)
     return result, error
+
+
+def detector_box(state, detector, L, kappa, t, bits):
+    """Enclose Jdet at U(t)state; detector uses weighted Fourier coordinates.
+
+    The detector dictionary is the COMPLETE finite detector. Missing
+    coefficients are zero, not unknown. The real-field symmetry is checked.
+    Only its coefficients at differences of occupied state modes are used.
+    """
+    a = Arithmetic(bits)
+    L = F(L)
+    if L <= 0:
+        raise ValueError("positive torus length required")
+    zero = (F(0), F(0))
+    for (k, j), (re, im) in detector.items():
+        if detector.get((-k, -j), zero) != (re, -im):
+            raise ValueError("detector must represent a real field")
+    invL = a.div(a.box(1), a.box(L))
+    qscale = a.mul(a.mul(a.box(2), a.pi()), invL)
+    qscale = a.mul(qscale, qscale)
+    weight_cache = {}
+
+    def frequency(k):
+        if k not in weight_cache:
+            q = a.mul(qscale, a.box(k[0]**2+k[1]**2))
+            weight_cache[k] = q, a.add(a.box(1), q)
+        return weight_cache[k]
+
+    u = {}
+    for k, z in state.items():
+        q, w = frequency(k)
+        d = a.sub(a.box(kappa), q)
+        angle = a.neg(a.mul(a.mul(d, d), a.box(t)))
+        u[k] = a.scale_c(a.cmul((a.box(z[0]), a.box(z[1])), a.exp_i(angle)),
+                         a.div(a.box(1), w))
+    chi = {}
+    total = a.box(0)
+    for k, z in u.items():
+        zbar = z[0], a.neg(z[1])
+        for j, y in u.items():
+            d = k[0]-j[0], k[1]-j[1]
+            if d not in detector:
+                continue
+            if d not in chi:
+                w = frequency(d)[1]
+                q = detector[d]
+                chi[d] = a.scale_c((a.box(q[0]), a.box(q[1])), a.div(a.box(1), w))
+            term = a.cmul(zbar, a.cmul(chi[d], y))[0]
+            total = a.add(total, term)
+    return a.mul(total, invL)
