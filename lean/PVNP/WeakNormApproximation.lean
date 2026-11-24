@@ -25,11 +25,11 @@ theorem weak_projection_tail (L : ℝ) (S : Finset Z2) (v : ℓ2) {K : ℝ}
     · simp [hk] <;> positivity
     · rw [if_neg hk, zero_sub, norm_neg]
       have hi : (wt L k)⁻¹ ≤ K⁻¹ :=
-        inv_le_inv_of_le hK (hcut k hk)
+        (inv_le_inv₀ (wt_pos L k) hK).2 (hcut k hk)
       have hd : ‖v k‖ / wt L k ≤ K⁻¹ * ‖v k‖ := by
         rw [div_eq_mul_inv, mul_comm (‖v k‖)]
         exact mul_le_mul_of_nonneg_right hi (norm_nonneg _)
-      exact (pow_le_pow_left₀ (by positivity) hd 2).trans_eq (by ring)
+      exact (pow_le_pow_left₀ (div_nonneg (norm_nonneg _) (wt_pos L k).le) hd 2).trans_eq (by ring)
   have h := tsum_le_tsum hp (summable_sq _) ((summable_sq v).mul_left ((K⁻¹)^2))
   rw [tsum_mul_left, ← norm_sq_eq v] at h
   apply norm_le_of_tsum_sq_le _ (by positivity)
@@ -111,20 +111,22 @@ theorem weak_conj_norm (L : ℝ) (v : ℓ2) : ‖Lc L (conjH v)‖ = ‖Lc L v�
 
 theorem weak_lip_mul {L : ℝ} (hL : 0 < L) {X Y X' Y' : ℓ2}
     {d a A b B : ℝ} (hd : 0 ≤ d) (ha : 0 ≤ a) (hb : 0 ≤ b)
-    (hX : ‖Lc L (X-X')‖ ≤ a*d) (hY' : ‖Y'‖ ≤ B)
-    (hY : ‖Lc L (Y-Y')‖ ≤ b*d) (hX' : ‖X‖ ≤ A) :
+    (hX : ‖Lc L (X-X')‖ ≤ a*d) (hX' : ‖X'‖ ≤ A)
+    (hY : ‖Lc L (Y-Y')‖ ≤ b*d) (hY' : ‖Y‖ ≤ B) :
     ‖Lc L (mulH L X Y - mulH L X' Y')‖ ≤ CA L * (a*B + A*b)*d := by
   have e : mulH L X Y - mulH L X' Y' =
-      mulH L (X-X') Y' + mulH L X (Y-Y') := by
+      mulH L (X-X') Y + mulH L X' (Y-Y') := by
     rw [mulH_sub_left hL, mulH_sub_right hL]; abel
   rw [e, map_add]
-  have h1 := weak_mul_bound hL Y' (X-X')
-  rw [weak_mulH_comm hL Y' (X-X')] at h1
-  have h2 := weak_mul_bound hL X (Y-Y')
+  have h1 := weak_mul_bound hL Y (X-X')
+  rw [weak_mulH_comm hL Y (X-X')] at h1
+  have h2 := weak_mul_bound hL X' (Y-Y')
   have hc := CA_nonneg hL
+  have hA : 0 ≤ A := (norm_nonneg _).trans hX'
+  have hB : 0 ≤ B := (norm_nonneg _).trans hY'
   calc
-    _ ≤ ‖Lc L (mulH L (X-X') Y')‖ + ‖Lc L (mulH L X (Y-Y'))‖ := norm_add_le _ _
-    _ ≤ CA L * ‖Y'‖ * ‖Lc L (X-X')‖ + CA L * ‖X‖ * ‖Lc L (Y-Y')‖ :=
+    _ ≤ ‖Lc L (mulH L (X-X') Y)‖ + ‖Lc L (mulH L X' (Y-Y'))‖ := norm_add_le _ _
+    _ ≤ CA L * ‖Y‖ * ‖Lc L (X-X')‖ + CA L * ‖X'‖ * ‖Lc L (Y-Y')‖ :=
       add_le_add h1 h2
     _ ≤ CA L * B * (a*d) + CA L * A * (b*d) := by gcongr
     _ = _ := by ring
@@ -140,7 +142,7 @@ theorem weak_Fnl_sub_le (hL : 0 < L) (β γ : ℝ) {u v : ℓ2} {R : ℝ} (hu : 
   have hcd : ‖Lc L (conjH u - conjH v)‖ ≤ 1 * d := by rw [← conjH_sub, weak_conj_norm, one_mul]
   have hd : ‖Lc L (u - v)‖ ≤ 1 * d := by rw [one_mul]
   -- P2 = u u
-  have p2 : ‖Lc L (mulH L u u - mulH L v v)‖ ≤ C * (1 * R + R * 1) * d := weak_lip_mul hL (norm_nonneg _) zero_le_one hR hd hv hd hu
+  have p2 : ‖Lc L (mulH L u u - mulH L v v)‖ ≤ C * (1 * R + R * 1) * d := weak_lip_mul hL (norm_nonneg _) zero_le_one zero_le_one hd hv hd hu
   have b2u : ‖mulH L u u‖ ≤ C * R * R := norm_mulH_le' hL hu hu
   have b2v : ‖mulH L v v‖ ≤ C * R * R := norm_mulH_le' hL hv hv
   -- cubic
