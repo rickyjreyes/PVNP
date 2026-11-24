@@ -1105,3 +1105,5 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TorusGalerkin.weak_readout_error
 #print axioms PVNP.TorusGalerkin.gronwall_proportional_le
 #print axioms PVNP.TorusGalerkin.exists_certified_galerkin_readout
+#print axioms PVNP.TorusGalerkin.detector_margin_from_cutoff
+#print axioms PVNP.TorusGalerkin.detector_decision_preserved
