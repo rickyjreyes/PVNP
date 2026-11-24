@@ -765,6 +765,7 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.DepthBarrier.wccdDepth_SAT_iff
 #print axioms PVNP.DepthBarrier.uniform_depth_SAT_iff
 #print axioms PVNP.DepthBarrier.explicit_state_constructible
+#print axioms PVNP.DepthBarrier.literalWriter_polyTime
 #print axioms PVNP.DepthBarrier.no_separation_of_all_constructible
 #print axioms PVNP.DepthBarrier.explicit_no_separation
 

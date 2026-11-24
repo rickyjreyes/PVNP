@@ -59,15 +59,27 @@ theorem explicit_state_constructible (s : List Bool) :
     ∃ M : MTM, ∀ z : List Bool, M.Outputs z s (s.length + 1) :=
   ⟨TwoPhaseFixedWord.literalMTM s, fun z => TwoPhaseFixedWord.literalMTM_outputs s z⟩
 
+/-- A literal writer has a genuine polynomial transition bound on every input.
+The polynomial is constant for each fixed machine; its coefficient depends on
+the hard-coded word. This does not assert a uniform bound for a family of
+different machines or charge for constructing their descriptions. -/
+theorem literalWriter_polyTime (w : List Bool) :
+    ∃ p : Polynomial ℕ, ∀ x : List Bool,
+      (TwoPhaseFixedWord.literalMTM w).Outputs x w (p.eval x.length) := by
+  refine ⟨Polynomial.C (w.length + 1), ?_⟩
+  intro x
+  simpa only [Polynomial.eval_C] using TwoPhaseFixedWord.literalMTM_outputs w x
+
 /-- The construction model of explicit states. A state is a word. A constructor is named by the
 word `w` it hard-codes and is the machine `literalMTM w` of `def:tm`; it produces `s` if it writes
-`s` on the trivial (empty) input within `|s| + 1` transitions. Verification is any predicate `V`.
+`s` on the trivial (empty) input within `|s| + 1` transitions. Polynomial-time status requires an actual polynomial transition bound on every input, established by `literalWriter_polyTime`. Verification is any predicate `V`.
 Restricting the constructors to literal writers only makes `Pst` smaller, so the conclusion below
 holds for every larger class of polynomial-time constructors. -/
 def explicitModel (V : List Bool → Prop) : ConstructionModel where
   State := List Bool
   Machine := List Bool
-  polyTime := fun _ => True
+  polyTime := fun w => ∃ p : Polynomial ℕ, ∀ x : List Bool,
+    (TwoPhaseFixedWord.literalMTM w).Outputs x w (p.eval x.length)
   produces := fun w s => (TwoPhaseFixedWord.literalMTM w).Outputs [] s (s.length + 1)
   verifiable := V
 
@@ -84,6 +96,6 @@ theorem no_separation_of_all_constructible (M : ConstructionModel)
 theorem explicit_no_separation (V : List Bool → Prop) :
     (explicitModel V).NPst \ (explicitModel V).Pst = ∅ :=
   no_separation_of_all_constructible _ fun s =>
-    ⟨s, trivial, TwoPhaseFixedWord.literalMTM_outputs s []⟩
+    ⟨s, literalWriter_polyTime s, TwoPhaseFixedWord.literalMTM_outputs s []⟩
 
 end PVNP.DepthBarrier
