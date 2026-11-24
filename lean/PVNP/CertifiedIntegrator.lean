@@ -35,9 +35,9 @@ theorem finite_U_increment (L κ h : ℝ) {S : Finset Z2} {v : ℓ2} {M : ℝ}
     · rw [hv k hk]
       simp
   have hh := tsum_le_tsum hp (summable_sq _) ((summable_sq v).mul_left ((M * |h|)^2))
-  rw [tsum_mul_left, ← norm_sq_eq, ← norm_sq_eq] at hh
-  have hpos : 0 ≤ M * |h| * ‖v‖ := by positivity
-  nlinarith [sq_nonneg (‖U L κ h v - v‖), sq_nonneg (M * |h| * ‖v‖)]
+  rw [tsum_mul_left, ← norm_sq_eq] at hh
+  apply norm_le_of_tsum_sq_le _ (by positivity)
+  simpa only [mul_pow] using hh
 
 theorem finite_U_time_modulus (L κ s t : ℝ) {S : Finset Z2} {v : ℓ2} {M : ℝ}
     (hM : 0 ≤ M) (hv : Supported S v) (hfreq : ∀ k ∈ S, om L κ k ≤ M) :
