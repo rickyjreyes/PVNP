@@ -261,3 +261,5 @@ import PVNP.TorusGalerkinCertificate
 import PVNP.SATForcedEscape
 
 import PVNP.TorusGalerkinTrajectory
+
+import PVNP.FiniteNonlinearResidual
