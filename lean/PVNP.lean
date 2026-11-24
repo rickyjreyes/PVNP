@@ -271,3 +271,5 @@ import PVNP.WeakNormApproximation
 import PVNP.GalerkinConservation
 
 import PVNP.WeakGlobalComparison
+
+import PVNP.UniformGalerkinRadius
