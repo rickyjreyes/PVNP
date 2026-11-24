@@ -277,3 +277,5 @@ import PVNP.UniformGalerkinRadius
 import PVNP.RoundedStepBudget
 
 import PVNP.FiniteDetector
+
+import PVNP.RestrictedResourceBudget
