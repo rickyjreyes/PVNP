@@ -91,7 +91,8 @@ theorem support_mulH {L : ℝ} (hL : 0 < L) {S T : Finset Z2} {v w : ℓ2}
           sub_add_cancel k j⟩
       simp [co, hv _ hsub]
     · simp [co, hw _ hj]
-  rw [hz, tsum_zero, mul_zero, mul_zero]
+  rw [hz]
+  simp
 
 /-- Both polynomial convolution branches have explicitly finite support. -/
 theorem support_Fnl {L : ℝ} (hL : 0 < L) (β γ : ℝ)
