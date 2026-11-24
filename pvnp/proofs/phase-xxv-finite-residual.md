@@ -268,3 +268,61 @@ The preceding hosted Lean build stopped at the zero-function
 tsum in FiniteNonlinearResidual.lean. This patch explicitly
 proves the pointwise summand is zero and invokes tsum_zero on a
 constant lambda, instead of relying on rewriting tsum 0.
+
+
+## Finite detector and complete finite-input decision prototype
+
+For a state with support S, the exact physical detector is
+J(v)=Re[L^{-1} sum_{k,j in S} conj(co(v,k)) co(chi,k-j) co(v,j)].
+At time T use ph(T,k)co(v,k) for each state coefficient.
+Only the detector coefficients on S-S matter, even for an infinite
+real H2 detector. Three candidate theorem roots in FiniteDetector.lean
+prove this using Jdet_eq_re, inner_Lc, co_mulH and finite_pr.
+The readout costs O(|S|^2) complex arithmetic terms and does not
+require evaluating an infinite convolution.
+
+The executable detector_box encloses this expression for a complete
+finite rational detector, checking its real-field symmetry. The
+certified_decision prototype accepts complete finite rational initial
+and detector dictionaries and explicit square cutoff, time, threshold,
+and target margin. Its radius uses an exact rational upper square root,
+the H2 coordinate L1 bound for the input, and C_S<=1/L+1/2.
+The detector constant is bounded by the detector coordinate L1 norm/L.
+Pi bounds 3<pi<4 give conservative cutoff and phase-frequency estimates.
+For A>=LF(R+b), E=2^ceil(2AT)>=exp(AT). The driver caps the exponent
+before allocating E. It uses the sufficient Euler step count from the
+previous section and checks each interval-based update defect against
+the uniform budget xi. The exact rational projected initial state has
+zero numerical initialization error. The analytical trajectory and
+spatial error budgets expand the final detector interval:
+ spatial <= 4 C R^2 E/K;
+ numerical state <= (D h T + N xi) E;
+ numerical readout <= C(2R+b) numerical state.
+Only an interval strictly on one side of the threshold returns a
+Boolean; overlap returns None. Resource or precision cap exhaustion
+raises BudgetExceeded. No truth value is asserted on failure.
+
+The executable restricts to fully specified finite rational inputs;
+it does not accept an arbitrary infinite input as an oracle. For a
+broader input class, charge the coefficient-access algorithm, an
+effective norm certificate, and its precision and encoding costs.
+For polynomially bounded scalar magnitudes and inverse L, polynomial
+mode count, polynomial input bit length, inverse-polynomial margin,
+and A T=O(log n), the sufficient bounds support a polynomial-time
+algorithm on this restricted promise class. In particular the Euler
+step count, Taylor degree, coefficient circuit size and required
+precision are polynomial; the determinant of this claim is the
+promise on the enlarged-radius amplification, not merely polynomial
+physical time. The implementation's caps must be chosen to dominate
+the proven resources and are not themselves a proof of totality.
+No unrestricted simulation, hardness lower bound, or executable Lean
+refinement has been established.
+
+The previous five rational Fourier regression tests passed hosted CI
+at fcc63fb (run 45471920038). Six additional tests cover the detector,
+difference support, real symmetry, square root, decision signs and
+abstention, and resource caps. Those new tests await verification.
+The hosted Lean build at f7acd149 passed FiniteNonlinearResidual but
+failed in CertifiedIntegrator at the scalar norm rewrite. The new
+commit removes the redundant Complex.norm_real rewrite; full
+kernel verification of all dependent modules is still pending.
