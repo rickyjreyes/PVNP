@@ -18,10 +18,10 @@ words allow.
 false. Every finite word is written by a fixed machine in linear time.
 
 **Reading B — input-indexed families with unrestricted verification**
-(`unrestricted_family_separation`): true, but for a reason with no complexity content. A family
-`x ↦ ψ_x ∈ {0, 1}` is constructible iff its language is in `P_TM` (`familyModel_Pst`), and a
-diagonal language outside `P_TM` (`PhysicalAudit.diagonal_not_mem_P_TM`) is "verified" by the
-trivial predicate.
+(`unrestricted_family_separation`): the diagonal language is separated if and only if the
+specified verifier accepts it. A family `x ↦ ψ_x ∈ {0, 1}` is constructible iff its language is
+in `P_TM` (`familyModel_Pst`). Acceptance is an explicit obligation; no unconditional verifier
+or NP membership is supplied.
 
 **Reading C — NP-verified families** (`npFamily_separation_iff`): the verifiable families are the
 languages with polynomial-size certificates (`NP_TM`), the constructible ones those decided in
@@ -34,7 +34,7 @@ constructible iff it is prepared by a charged zero-mode device of `WCTSATScaling
 amplitude-bit machine, exact frozen evolution), and verifiable iff its amplitude-bit language has
 polynomial-size certificates. Again `NPst \ Pst ≠ ∅ ⟺ P_TM ≠ NP_TM`.
 
-So the conjecture is false (A), vacuous (B), or exactly the classical separation (C, also for
+So the conjecture is false (A), dependent on an unspecified verifier (B), or exactly the classical separation (C, also for
 physical wavefield families). No reading gives an independent route to `P ≠ NP`.
 
 **Cross-connection with I-16 and I-32** (`npFamily_iff_wccDepth`, `npFamily_iff_expanderGrowth`):
@@ -69,14 +69,15 @@ theorem familyModel_Pst (V : Set (List Bool) → Prop) : (familyModel V).Pst = P
 
 theorem familyModel_NPst (V : Set (List Bool) → Prop) : (familyModel V).NPst = {S | V S} := rfl
 
-/-- **Reading B is vacuous.** With unrestricted verification the separation holds, witnessed by
-a diagonal family; no NP structure or physics is involved. -/
-theorem unrestricted_family_separation :
-    PhysicalAudit.diagonalLanguage ∈
-      (familyModel fun _ => True).NPst \ (familyModel fun _ => True).Pst := by
-  refine ⟨trivial, ?_⟩
+/-- **Reading B: explicit verifier obligation.** The diagonal family is separated exactly
+when the supplied verifier accepts it. No NP structure or physics is certified. -/
+theorem unrestricted_family_separation (V : Set (List Bool) → Prop) :
+    PhysicalAudit.diagonalLanguage ∈ (familyModel V).NPst \ (familyModel V).Pst ↔
+      V PhysicalAudit.diagonalLanguage := by
   rw [familyModel_Pst]
-  exact PhysicalAudit.diagonal_not_mem_P_TM
+  change (V PhysicalAudit.diagonalLanguage ∧ PhysicalAudit.diagonalLanguage ∉ P_TM) ↔
+    V PhysicalAudit.diagonalLanguage
+  exact ⟨fun h => h.1, fun h => ⟨h, PhysicalAudit.diagonal_not_mem_P_TM⟩⟩
 
 /-! ### Reading C: NP-verified families -/
 

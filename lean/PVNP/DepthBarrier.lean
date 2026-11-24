@@ -62,12 +62,14 @@ theorem explicit_state_constructible (s : List Bool) :
 /-- The construction model of explicit states. A state is a word. A constructor is named by the
 word `w` it hard-codes and is the machine `literalMTM w` of `def:tm`; it produces `s` if it writes
 `s` on the trivial (empty) input within `|s| + 1` transitions. Verification is any predicate `V`.
+Polynomial time is certified by an actual polynomial bound on the output time for every input.
 Restricting the constructors to literal writers only makes `Pst` smaller, so the conclusion below
 holds for every larger class of polynomial-time constructors. -/
 def explicitModel (V : List Bool → Prop) : ConstructionModel where
   State := List Bool
   Machine := List Bool
-  polyTime := fun _ => True
+  polyTime := fun w => ∃ p : Polynomial ℕ, ∀ z : List Bool,
+    ∃ t : ℕ, t ≤ p.eval z.length ∧ (TwoPhaseFixedWord.literalMTM w).Outputs z w t
   produces := fun w s => (TwoPhaseFixedWord.literalMTM w).Outputs [] s (s.length + 1)
   verifiable := V
 
@@ -84,6 +86,8 @@ theorem no_separation_of_all_constructible (M : ConstructionModel)
 theorem explicit_no_separation (V : List Bool → Prop) :
     (explicitModel V).NPst \ (explicitModel V).Pst = ∅ :=
   no_separation_of_all_constructible _ fun s =>
-    ⟨s, trivial, TwoPhaseFixedWord.literalMTM_outputs s []⟩
+    ⟨s, ⟨Polynomial.C (s.length + 1), fun z =>
+      ⟨s.length + 1, by simp, TwoPhaseFixedWord.literalMTM_outputs s z⟩⟩,
+      TwoPhaseFixedWord.literalMTM_outputs s []⟩
 
 end PVNP.DepthBarrier
