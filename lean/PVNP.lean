@@ -279,3 +279,5 @@ import PVNP.RoundedStepBudget
 import PVNP.FiniteDetector
 
 import PVNP.RestrictedResourceBudget
+
+import PVNP.SidebandAmplification
