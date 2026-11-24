@@ -107,7 +107,7 @@ theorem affine_slab_residual {L κ β γ R M N η : ℝ} (hL : 0 < L)
   have hy : ‖y‖ ≤ R := hball
   have hdist : ‖y - x‖ = |t-a| * ‖d‖ := by
     dsimp [y]
-    rw [add_sub_cancel_left, norm_smul, Complex.norm_real, Real.norm_eq_abs]
+    rw [add_sub_cancel_left, norm_smul, Real.norm_eq_abs]
   have hspace := norm_Gf_sub_le (κ := κ) (β := β) (γ := γ) hL t hy hr
   rw [hdist] at hspace
   have htime := finite_Gf_time_modulus (κ := κ) (β := β) (γ := γ)
