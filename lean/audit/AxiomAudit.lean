@@ -1107,3 +1107,14 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TorusGalerkin.exists_certified_galerkin_readout
 #print axioms PVNP.TorusGalerkin.detector_margin_from_cutoff
 #print axioms PVNP.TorusGalerkin.detector_decision_preserved
+
+-- Rounded Euler resource and radius certificates
+#print axioms PVNP.TorusGalerkin.stepEnvelope_nonneg
+#print axioms PVNP.TorusGalerkin.stepEnvelope_mono
+#print axioms PVNP.TorusGalerkin.stepEnvelope_succ
+#print axioms PVNP.TorusGalerkin.rounded_step_bootstrap
+#print axioms PVNP.TorusGalerkin.rounded_step_budget
+#print axioms PVNP.TorusGalerkin.galerkin_time_modulus
+#print axioms PVNP.TorusGalerkin.galerkin_speed
+#print axioms PVNP.TorusGalerkin.galerkin_euler_defect
+#print axioms PVNP.TorusGalerkin.rounded_galerkin_euler
