@@ -71,3 +71,48 @@ already be larger than rho due to spectral truncation, and the global
 Gronwall amplification, input-indexed cutoffs and finite-bit enclosure
 costs still need certification. The fixed finite support hypothesis
 does not apply to the true infinite-dimensional trajectory.
+
+
+## Effective weak-norm alternative
+
+Let ||v||_w=||Lc(L)v||, the physical L² norm of the H²-weighted
+coefficient state. If wt(L,k)>=K>0 on omitted modes, then
+||P_S v-v||_w <= ||v||/K. This follows coefficientwise from
+co(L,v,k)=v(k)/wt(L,k). No H4 budget is needed.
+The actual detector satisfies
+|J(v)-J(w)| <= Cdet (||v||_w+||w||_w)||v-w||_w.
+The actual multiplication operator has the bound
+||mulH(v,w)||_w <= CA ||v|| ||w||_w, by the existing L1 convolution
+estimate, and commutativity gives the other orientation.
+Telescoping the cubic and quintic chains yields
+||Gf(t,v)-Gf(t,w)||_w <= LF(R)||v-w||_w on the H2 radius-R ball.
+Consequently ||P_S Gf(t,P_S v)-Gf(t,v)||_w <= 2 LF(R) R/K.
+
+For an exact trajectory w and finite Galerkin trajectory W both
+bounded in H2 by R on [0,T], compare W'=P_S Gf(t,W) with w'=Gf(t,w)
+in the weak norm. Since W is supported in S,
+||W'-Gf(t,W)||_w <= LF(R)R/K.
+If W(0)=P_S w(0), the initial error is <= R/K.
+Applying the bounded-set weak-norm differential inequality gives
+||W(t)-w(t)||_w <= (R/K)e^(LF(R)t)
+ + (R/K)(e^(LF(R)t)-1) <= 2R e^(LF(R)t)/K
+(including LF=0 by direct comparison). This uses H2 bounds for both
+trajectories, not merely the exact PDE. To obtain a uniform bound
+for the Galerkin flow, prove its restricted Hamiltonian and mass
+conservation and apply the original coercivity inequality, or give
+a separate certified numerical radius bound. The weak differential
+comparison and Galerkin conservation have not yet been mechanized.
+The ten candidate weak-norm lemmas in WeakNormApproximation.lean
+are included in the root import and axiom audit; verification pending.
+
+For a square cutoff |k_i|<=m on a fixed torus, K can be taken
+as 1+(2*pi*(m+1)/L)^2. Thus the number of retained modes grows
+as O(1+L² K). For bounded radius and detector norm, this removes
+the qualitative spatial-tail obstruction, but the estimate can require
+K exponential in LF(R)T. If LF(R)T=O(log n) and all other
+magnitudes and inverse target margin are polynomially bounded in n,
+the sufficient cutoff is polynomial. If LF(R)T is polynomial rather
+than logarithmic, this proof alone may require exponentially many
+modes; polynomial precision bits do not imply polynomial mode count.
+This is a sufficient error estimate, not a complexity lower bound.
+No P_phys=P_TM or SAT separation claim follows.
