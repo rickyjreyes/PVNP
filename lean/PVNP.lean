@@ -275,3 +275,5 @@ import PVNP.WeakGlobalComparison
 import PVNP.UniformGalerkinRadius
 
 import PVNP.RoundedStepBudget
+
+import PVNP.FiniteDetector
