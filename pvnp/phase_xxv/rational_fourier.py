@@ -9,10 +9,11 @@ from math import ceil, floor
 
 
 class Arithmetic:
-    def __init__(self, bits):
+    def __init__(self, bits, max_taylor_degree=None):
         if bits < 1:
             raise ValueError("positive precision required")
         self.bits = bits
+        self.max_taylor_degree = max_taylor_degree
         self.scale = 1 << bits
 
     def box(self, lo, hi=None):
@@ -70,6 +71,8 @@ class Arithmetic:
         rad = (interval[1]-interval[0])/2
         # For degree 2r-1, remainder <= |x|^(2r)/(2r)! <= (x*x/r)^r.
         r = max(self.bits+2, ceil(2*x*x), 1)
+        if self.max_taylor_degree is not None and 2*r-1 > self.max_taylor_degree:
+            raise ArithmeticError("phase Taylor degree cap")
         term = F(1)
         re, im = F(1), F(0)
         for j in range(1, 2*r):
@@ -86,14 +89,14 @@ class Arithmetic:
         return self.box(max(-1, re-err), min(1, re+err)), self.box(max(-1, im-err), min(1, im+err))
 
 
-def field_box(state, support, L, kappa, beta, gamma, t, bits):
+def field_box(state, support, L, kappa, beta, gamma, t, bits, *, max_taylor_degree=None):
     """Enclose P_S Gf(t,state) for a dyadic/rational weighted coefficient state.
 
     state maps (integer,int) to (rational real,rational imaginary).
     Parameters and time are exact rational inputs. Missing modes are zero.
     Output is a mapping to rectangular complex intervals.
     """
-    a = Arithmetic(bits)
+    a = Arithmetic(bits, max_taylor_degree)
     S = set(support)
     if not set(state) <= S or F(L) <= 0:
         raise ValueError("invalid support or torus length")
@@ -137,14 +140,15 @@ def field_box(state, support, L, kappa, beta, gamma, t, bits):
     return out
 
 
-def midpoint_step(state, support, L, kappa, beta, gamma, t, h, bits):
+def midpoint_step(state, support, L, kappa, beta, gamma, t, h, bits, *, max_taylor_degree=None):
     """Return rounded Euler step and rational upper bound on its H²-coordinate defect.
 
     The L1 sum of rectangular component errors bounds the Euclidean norm.
     A caller must reject the step if this certificate exceeds its budget.
     """
-    a = Arithmetic(bits)
-    field = field_box(state, support, L, kappa, beta, gamma, t, bits)
+    a = Arithmetic(bits, max_taylor_degree)
+    field = field_box(state, support, L, kappa, beta, gamma, t, bits,
+                      max_taylor_degree=max_taylor_degree)
     result, error = {}, F(0)
     for k, z in field.items():
         old = state.get(k, (F(0), F(0)))
@@ -159,14 +163,14 @@ def midpoint_step(state, support, L, kappa, beta, gamma, t, h, bits):
     return result, error
 
 
-def detector_box(state, detector, L, kappa, t, bits):
+def detector_box(state, detector, L, kappa, t, bits, *, max_taylor_degree=None):
     """Enclose Jdet at U(t)state; detector uses weighted Fourier coordinates.
 
     The detector dictionary is the COMPLETE finite detector. Missing
     coefficients are zero, not unknown. The real-field symmetry is checked.
     Only its coefficients at differences of occupied state modes are used.
     """
-    a = Arithmetic(bits)
+    a = Arithmetic(bits, max_taylor_degree)
     L = F(L)
     if L <= 0:
         raise ValueError("positive torus length required")
