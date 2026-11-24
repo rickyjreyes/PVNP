@@ -265,3 +265,5 @@ import PVNP.TorusGalerkinTrajectory
 import PVNP.FiniteNonlinearResidual
 
 import PVNP.CertifiedIntegrator
+
+import PVNP.WeakNormApproximation
