@@ -1123,3 +1123,11 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TorusGalerkin.finite_detector_sum
 #print axioms PVNP.TorusGalerkin.finite_detector_dependence
 #print axioms PVNP.TorusGalerkin.finite_detector_free_sum
+
+-- Restricted resource envelopes and promise totality
+#print axioms PVNP.RestrictedResourceBudget.cutoff_weight_lower
+#print axioms PVNP.RestrictedResourceBudget.spatial_budget
+#print axioms PVNP.RestrictedResourceBudget.step_count_budget
+#print axioms PVNP.RestrictedResourceBudget.interval_decision_total
+#print axioms PVNP.RestrictedResourceBudget.expanded_interval_width
+#print axioms PVNP.RestrictedResourceBudget.expanded_interval_sound
