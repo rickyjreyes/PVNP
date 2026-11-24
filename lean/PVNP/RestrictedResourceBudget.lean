@@ -12,17 +12,17 @@ namespace PVNP.RestrictedResourceBudget
 
 theorem cutoff_weight_lower {P L q : ℝ} (hP : 1 ≤ P)
     (hL : 0 < L) (hLP : L ≤ P) (hq : 4*P^4 ≤ q) :
-    16*P^6 ≤ 1+(6*(q+1)/L)^2 := by
+    64*P^6 ≤ 1+(6*(q+1)/L)^2 := by
   have hp : 0 ≤ P := by linarith
   have hq0 : 0 ≤ q := (by positivity : 0 ≤ 4*P^4).trans hq
-  have hdiv : 4*P^3 ≤ 6*(q+1)/L := by
+  have hdiv : 8*P^3 ≤ 6*(q+1)/L := by
     apply (le_div_iff₀ hL).2
     calc
-      4*P^3*L ≤ 4*P^3*P := mul_le_mul_of_nonneg_left hLP (by positivity)
-      _ = 4*P^4 := by ring
-      _ ≤ q := hq
+      8*P^3*L ≤ 8*P^3*P := mul_le_mul_of_nonneg_left hLP (by positivity)
+      _ = 2*(4*P^4) := by ring
+      _ ≤ 2*q := mul_le_mul_of_nonneg_left hq (by norm_num)
       _ ≤ 6*(q+1) := by linarith
-  have hs := pow_le_pow_left₀ (by positivity : 0 ≤ 4*P^3) hdiv 2
+  have hs := pow_le_pow_left₀ (by positivity : 0 ≤ 8*P^3) hdiv 2
   nlinarith only [hs]
 
 theorem spatial_budget {P C R E K m : ℝ} (hP : 1 ≤ P)
