@@ -1051,3 +1051,9 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TorusGalerkin.finite_nonlinear_field
 #print axioms PVNP.TorusGalerkin.finite_residual_sq
 #print axioms PVNP.TorusGalerkin.finite_pr
+
+-- Phase XXV: time-slab certification
+#print axioms PVNP.TorusGalerkin.finite_U_increment
+#print axioms PVNP.TorusGalerkin.finite_U_time_modulus
+#print axioms PVNP.TorusGalerkin.finite_Gf_time_modulus
+#print axioms PVNP.TorusGalerkin.affine_slab_residual
