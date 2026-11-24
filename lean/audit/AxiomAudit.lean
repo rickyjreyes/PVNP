@@ -1092,3 +1092,14 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TorusGalerkin.weak_trajectory_error
 #print axioms PVNP.TorusGalerkin.weak_galerkin_residual
 #print axioms PVNP.TorusGalerkin.weak_galerkin_global_error
+
+-- Cutoff-independent radius and detector error
+#print axioms PVNP.TorusGalerkin.kinetic_norm_bound
+#print axioms PVNP.TorusGalerkin.potBudget_nonneg
+#print axioms PVNP.TorusGalerkin.potential_zero
+#print axioms PVNP.TorusGalerkin.potential_upper
+#print axioms PVNP.TorusGalerkin.initial_energy_upper
+#print axioms PVNP.TorusGalerkin.uniformRadius_nonneg
+#print axioms PVNP.TorusGalerkin.initial_radius_upper
+#print axioms PVNP.TorusGalerkin.exists_uniform_galerkin
+#print axioms PVNP.TorusGalerkin.weak_readout_error
