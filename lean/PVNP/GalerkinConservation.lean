@@ -129,4 +129,66 @@ theorem galerkin_apriori (hL : 0 < L) (hγ : 0 < γ) (S : Finset Z2)
   rw [norm_U, mass_U, hm, he] at h
   exact h
 
+theorem exists_global_galerkin (hL : 0 < L) (hγ : 0 < γ) (S₀ : Finset Z2) (u₀ : ℓ2) (hs₀ : Supported S₀ u₀) :
+    ∃ W : ℝ → ℓ2, W 0 = u₀ ∧ (∀ t, Supported S₀ (W t)) ∧
+      ∀ t, HasDerivAt W (galerkin S₀ L κ β γ t (W t)) t := by
+  set C₀ := Rap κ β γ (mass L u₀) (ham L κ β γ u₀) with hC₀
+  have hbd : ∀ e : ℓ2, mass L e = mass L u₀ → ham L κ β γ e = ham L κ β γ u₀ → ‖e‖ ≤ C₀ := by
+    intro e h1 h2
+    have h := norm_le_apriori (κ := κ) (β := β) hL hγ e
+    rwa [h1, h2] at h
+  have hC₀0 : 0 ≤ C₀ := Rap_nonneg _ _ _ _ _
+  obtain ⟨R, hR⟩ : ∃ R, R = C₀ + 1 := ⟨_, rfl⟩
+  have hR0 : 0 ≤ R := by rw [hR]; linarith
+  obtain ⟨W, hW0, hW⟩ := exists_global_clipped (κ := κ) (β := β) (γ := γ) hL S₀ hR0 u₀
+  have hsupport : ∀ t, Supported S₀ (W t) := by
+    intro t k hk
+    exact clipped_trajectory_support hW hk (by rw [hW0]; exact hs₀ k hk) t
+  have hWc : Continuous W := continuous_iff_continuousAt.2 fun t => (hW t).continuousAt
+  have hinner : ∀ s, ‖W s‖ ≤ R → HasDerivAt W (galerkin S₀ L κ β γ s (W s)) s := fun s hs => by
+    have h := hW s
+    rwa [clipped_eq_galerkin S₀ L κ β γ R s hs] at h
+  obtain ⟨S, hS⟩ : ∃ S : Set ℝ, S = {t | mass L (W t) = mass L u₀ ∧
+      ham L κ β γ (U L κ t (W t)) = ham L κ β γ u₀} := ⟨_, rfl⟩
+  have hSb : ∀ t ∈ S, ‖W t‖ ≤ C₀ := by
+    intro t ht
+    rw [hS] at ht
+    have h := hbd (U L κ t (W t)) (by rw [mass_U]; exact ht.1) ht.2
+    rwa [norm_U] at h
+  have hm : Continuous fun t => mass L (W t) := (continuous_mass L).comp hWc
+  have hE : Continuous fun t => ham L κ β γ (U L κ t (W t)) :=
+    (continuous_ham hL κ β γ).comp (continuous_U_path hWc)
+  have hclosed : IsClosed S := by
+    rw [hS]
+    exact (isClosed_eq hm continuous_const).inter (isClosed_eq hE continuous_const)
+  have hopen : IsOpen S := by
+    rw [Metric.isOpen_iff]
+    intro t ht
+    have htR : ‖W t‖ < R := by rw [hR]; linarith [hSb t ht]
+    obtain ⟨ε, hε, hball⟩ := Metric.mem_nhds_iff.1
+      ((continuous_norm.comp hWc).continuousAt.preimage_mem_nhds (gt_mem_nhds htR))
+    refine ⟨ε, hε, fun s hs => ?_⟩
+    have hder : ∀ x ∈ Metric.ball t ε, HasDerivAt W (galerkin S₀ L κ β γ x (W x)) x :=
+      fun x hx => hinner x (hball hx).le
+    have hpre : IsPreconnected (Metric.ball t ε) := (convex_ball t ε).isPreconnected
+    have h1 : mass L (W s) = mass L (W t) :=
+      Metric.isOpen_ball.is_const_of_deriv_eq_zero (f := fun x => mass L (W x)) hpre
+        (fun x hx => (galerkin_mass_deriv hL S₀ (hsupport x) (hder x hx)).differentiableAt.differentiableWithinAt)
+        (fun x hx => (galerkin_mass_deriv hL S₀ (hsupport x) (hder x hx)).deriv) hs (Metric.mem_ball_self hε)
+    have h2 : ham L κ β γ (U L κ s (W s)) = ham L κ β γ (U L κ t (W t)) :=
+      Metric.isOpen_ball.is_const_of_deriv_eq_zero
+        (f := fun x => ham L κ β γ (U L κ x (W x))) hpre
+        (fun x hx => (galerkin_ham_deriv hL S₀ (hsupport x) (hder x hx)).differentiableAt.differentiableWithinAt)
+        (fun x hx => (galerkin_ham_deriv hL S₀ (hsupport x) (hder x hx)).deriv) hs (Metric.mem_ball_self hε)
+    rw [hS] at ht ⊢
+    exact ⟨h1.trans ht.1, h2.trans ht.2⟩
+  have h0S : (0 : ℝ) ∈ S := by
+    rw [hS]
+    exact ⟨by rw [hW0], by rw [U_zero, hW0]⟩
+  have hSu : S = univ := IsClopen.eq_univ ⟨hclosed, hopen⟩ ⟨0, h0S⟩
+  refine ⟨W, hW0, hsupport, fun t => hinner t ?_⟩
+  have ht : t ∈ S := by rw [hSu]; exact mem_univ t
+  rw [hR]
+  linarith [hSb t ht]
+
 end PVNP.TorusGalerkin
