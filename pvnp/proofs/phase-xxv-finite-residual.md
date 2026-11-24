@@ -196,3 +196,75 @@ particular a uniform cutoff rate is not a polynomial full-class
 simulation, nor a lower bound on arbitrary simulation algorithms.
 All new Lean declarations remain candidates until the complete
 kernel build and transitive axiom audit pass.
+
+
+## Rounded Euler and finite-bit evaluator
+
+Take R=R_B and a positive radius slack b. Set A=LF(R+b),
+D=A^2(R+b)+A(R+b)(M+Q), where M and Q bound the frequencies on
+S and nonlinearSupport(S). On an exact Galerkin trajectory the speed
+is <= A(R+b); combining space and time moduli and applying the
+mean-value bound on a time slab gives the conservative local Euler
+defect <= D h^2. For approximate iterates x_i with per-step
+update defect <= xi in H2, the error e_i against the exact Galerkin
+trajectory satisfies e_(i+1) <= (1+A h)e_i+D h^2+xi whenever
+e_i <= b. The explicit envelope
+e_i <= (delta+i(D h^2+xi)) exp(A h i)
+follows by induction using 1+A h <= exp(A h).
+If the envelope at N is <= b, monotonicity and the recurrence
+bootstrap certify every iterate in the radius R+b. This is not
+an assumption of global numerical stability.
+
+For T>0, an upper bound E>=exp(A T), and target epsilon<=b,
+choose N>=max(1,3D T^2 E/epsilon), h=T/N,
+delta<=epsilon/(3E), xi<=epsilon/(3NE).
+Then the envelope is <=epsilon. The T=0 case only needs initial
+approximation. If A T=O(log n) and D,T,1/epsilon are polynomially
+bounded, so is the sufficient step count. It is A at the enlarged
+radius that must meet the amplification condition, not merely
+LF(R) at the exact radius. One can instead choose a smaller
+positive slack if its inverse is polynomial and the enlarged
+amplification remains logarithmic.
+
+RoundedStepBudget.lean implements nine candidate theorem roots:
+the scalar envelope, budget split, finite field time and speed,
+local defect, and radius-bootstrap Euler comparison. All are
+registered in the audit, pending kernel verification.
+
+The prototype pvnp/phase_xxv/rational_fourier.py implements the
+actual weighted torus field, not an unrelated ODE. It encloses
+pi by Machin's alternating arctan identity; for exp(i x) at a
+rational midpoint x, the Taylor remainder after degree 2r-1 is
+<= |x|^(2r)/(2r)! <= (x^2/r)^r <= 2^-r when r>=2x^2.
+The input interval radius is added using the unit Lipschitz
+constant of the phase. Every ordinary arithmetic primitive rounds
+outward to dyadics. Physical coefficients divide by wt, the
+cubic/quintic convolutions each use the exact L^-1 normalization,
+and the output is multiplied by wt, the reversed free phase,
+and -i. The step certificate sums the componentwise interval
+errors, bounding the Euclidean H2-coordinate error.
+
+For polynomially bounded phase magnitudes, r=max(p+2,ceil(2x^2))
+is polynomial in n and precision p. Rational Taylor intermediates
+have polynomial bit length (powers and factorials at degree 2r).
+Machin's rational partial sums also have polynomial bit length.
+The convolution circuit has polynomial size and fixed
+multiplicative depth for bounded-degree factors; sums introduce
+only polynomial amplification of interval widths. Positive L
+bounded away from zero by an inverse polynomial and wt>=1 give
+polynomial conditioning for divisions once precision is sufficient.
+Thus polynomially many bits suffice for inverse-polynomial step
+budgets under the stated magnitude/conditioning bounds. This
+analytical bit-cost argument is not yet a machine-checked
+complexity theorem or a formal executable refinement.
+The separate rational regression workflow is added; tests have
+not yet been observed passing. Remaining obligations include
+uniform input coefficient access, detector evaluation, explicit
+operation and precision budgets in Lean, and the unrestricted
+amplification regime. No full-class simulation or SAT lower
+bound follows.
+
+The preceding hosted Lean build stopped at the zero-function
+tsum in FiniteNonlinearResidual.lean. This patch explicitly
+proves the pointwise summand is zero and invokes tsum_zero on a
+constant lambda, instead of relying on rewriting tsum 0.
