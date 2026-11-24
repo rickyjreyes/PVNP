@@ -115,5 +115,24 @@ class RationalFourierTests(unittest.TestCase):
             self.assertEqual(a["modes"],(2*a["cutoff"]+1)**2)
 
 
+    def test_actual_nonlinearity_sideband_first_variation(self):
+        # Constant physical amplitude 1, torus length 6, symmetric
+        # weighted perturbation in the +/- first Fourier mode.
+        # g(1)=-3/2, c=-1, so -i D F(1)[1+i]=-3/2+7i/2.
+        eps=F(1,10000)
+        S={(0,0),(1,0),(-1,0)}
+        def sample(sign):
+            return field_box({(0,0):(6,0),
+                              (1,0):(sign*eps,sign*eps),
+                              (-1,0):(sign*eps,sign*eps)},
+                             S,6,0,2,F(1,2),0,48)[(1,0)]
+        plus,minus=sample(1),sample(-1)
+        a=Arithmetic(48)
+        for i,expected in enumerate((F(-3,2),F(7,2))):
+            slope=a.div(a.sub(plus[i],minus[i]),a.box(2*eps))
+            self.assertLess(max(abs(slope[0]-expected),abs(slope[1]-expected)),
+                            F(1,1000000))
+
+
 if __name__ == "__main__":
     unittest.main()
