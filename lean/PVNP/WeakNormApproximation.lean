@@ -22,8 +22,7 @@ theorem weak_projection_tail (L : ℝ) (S : Finset Z2) (v : ℓ2) {K : ℝ}
     intro k
     rw [Lc_apply, norm_co, lp.coeFn_sub, Pi.sub_apply, trunc_apply]
     by_cases hk : k ∈ S
-    · simp [hk]
-      positivity
+    · simp [hk] <;> positivity
     · rw [if_neg hk, zero_sub, norm_neg]
       have hi : (wt L k)⁻¹ ≤ K⁻¹ :=
         inv_le_inv_of_le hK (hcut k hk)
@@ -200,5 +199,31 @@ theorem weak_Gf_sub_le {L κ β γ R : ℝ} (hL : 0 < L) (t : ℝ)
   rw [Gf, Gf, ← smul_sub, ← map_sub, map_smul, norm_smul, norm_neg,
     Complex.norm_I, one_mul, Lc_U, norm_U]
   exact h
+
+
+/-- Uniform L² consistency on the entire H² ball, using no H⁴ bound. -/
+theorem weak_consistency_bound {L κ β γ R K : ℝ} (hL : 0 < L)
+    (hR : 0 ≤ R) (hK : 0 < K) (S : Finset Z2)
+    (hcut : ∀ k ∉ S, K ≤ wt L k) (t : ℝ)
+    {v : ℓ2} (hv : ‖v‖ ≤ R) :
+    ‖Lc L (galerkin S L κ β γ t v - Gf L κ β γ t v)‖ ≤
+      2 * LF L β γ R * R / K := by
+  let z := Gf L κ β γ t (trunc S v)
+  have htr : ‖trunc S v‖ ≤ R := (trunc_norm_le S v).trans hv
+  have hz : ‖z‖ ≤ LF L β γ R * R := norm_Gf_le hL hR t htr
+  have htail := (weak_projection_tail L S z hK hcut).trans
+    (div_le_div_of_nonneg_right hz hK.le)
+  have hspace := weak_Gf_sub_le (κ := κ) (β := β) (γ := γ) hL t htr hv
+  have htailv := (weak_projection_tail L S v hK hcut).trans
+    (div_le_div_of_nonneg_right hv hK.le)
+  have hh := hspace.trans (mul_le_mul_of_nonneg_left htailv (LF_nonneg L β γ R))
+  change ‖Lc L (trunc S z - Gf L κ β γ t v)‖ ≤ _
+  calc
+    _ = ‖Lc L (trunc S z - z) + Lc L (z - Gf L κ β γ t v)‖ := by
+      rw [← map_add]; congr 2 <;> abel
+    _ ≤ ‖Lc L (trunc S z - z)‖ + ‖Lc L (z - Gf L κ β γ t v)‖ :=
+      norm_add_le _ _
+    _ ≤ LF L β γ R * R / K + LF L β γ R * (R/K) := add_le_add htail hh
+    _ = _ := by ring
 
 end PVNP.TorusGalerkin
