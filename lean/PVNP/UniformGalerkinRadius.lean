@@ -38,7 +38,7 @@ theorem potential_zero (L β γ : ℝ) : pot L β γ 0 = 0 := by
   simp [pot, co_zero, field, nfun]
 
 /-- Taylor at zero gives a convenient, not sharp, polynomial energy budget. -/
-theorem potential_upper (hL : 0 < L) (β γ : ℝ) {v : ℓ2} {B : ℝ}
+theorem potential_upper {L : ℝ} (hL : 0 < L) (β γ : ℝ) {v : ℓ2} {B : ℝ}
     (hv : ‖v‖ ≤ B) : pot L β γ v ≤ potBudget L β γ B * B^2 := by
   have hB := (norm_nonneg v).trans hv
   have h := pot_taylor hL β γ (e := 0) (f := v)
@@ -55,7 +55,7 @@ theorem potential_upper (hL : 0 < L) (β γ : ℝ) {v : ℓ2} {B : ℝ}
 noncomputable def energyBudget (L κ β γ B : ℝ) : ℝ :=
   ((|κ|+1)*B)^2 + potBudget L β γ B * B^2
 
-theorem initial_energy_upper (hL : 0 < L) (κ β γ : ℝ) {v : ℓ2} {B : ℝ}
+theorem initial_energy_upper {L : ℝ} (hL : 0 < L) (κ β γ : ℝ) {v : ℓ2} {B : ℝ}
     (hv : ‖v‖ ≤ B) : ham L κ β γ v ≤ energyBudget L κ β γ B := by
   have h := (kinetic_norm_bound L κ v).trans
     (mul_le_mul_of_nonneg_left hv (by positivity : 0 ≤ |κ|+1))
@@ -69,7 +69,7 @@ noncomputable def uniformRadius (L κ β γ B : ℝ) : ℝ :=
 theorem uniformRadius_nonneg (L κ β γ B : ℝ) :
     0 ≤ uniformRadius L κ β γ B := Rap_nonneg _ _ _ _ _
 
-theorem initial_radius_upper (hL : 0 < L) (hγ : 0 < γ)
+theorem initial_radius_upper {L γ : ℝ} (hL : 0 < L) (hγ : 0 < γ)
     {κ β : ℝ} {v : ℓ2} {B : ℝ} (hv : ‖v‖ ≤ B) :
     Rap κ β γ (mass L v) (ham L κ β γ v) ≤ uniformRadius L κ β γ B := by
   have hm : mass L v ≤ B^2 := by
@@ -83,7 +83,7 @@ theorem initial_radius_upper (hL : 0 < L) (hγ : 0 < γ)
     (Real.sqrt_le_sqrt (add_le_add he (mul_le_mul_of_nonneg_left hm hc)))
 
 /-- An actual global Galerkin trajectory, bounded independently of S. -/
-theorem exists_uniform_galerkin {κ β : ℝ} (hL : 0 < L) (hγ : 0 < γ)
+theorem exists_uniform_galerkin {L κ β γ : ℝ} (hL : 0 < L) (hγ : 0 < γ)
     (S : Finset Z2) {u₀ : ℓ2} {B : ℝ} (hB : ‖u₀‖ ≤ B) :
     ∃ W : ℝ → ℓ2, W 0 = trunc S u₀ ∧
       (∀ t, Supported S (W t)) ∧
@@ -120,6 +120,6 @@ theorem weak_readout_error {L κ β γ R K T : ℝ} (hL : 0 < L)
     linarith [hbW T, hbw T]
   exact h.trans (mul_le_mul
     (mul_le_mul_of_nonneg_left hsum (Cdet_nonneg hL χ)) he
-    (norm_nonneg _) (by positivity [Cdet_nonneg hL χ]))
+    (norm_nonneg _) (mul_nonneg (Cdet_nonneg hL χ) (by positivity)))
 
 end PVNP.TorusGalerkin
