@@ -130,4 +130,75 @@ theorem weak_lip_mul {L : ℝ} (hL : 0 < L) {X Y X' Y' : ℓ2}
     _ ≤ CA L * B * (a*d) + CA L * A * (b*d) := by gcongr
     _ = _ := by ring
 
+theorem weak_Fnl_sub_le (hL : 0 < L) (β γ : ℝ) {u v : ℓ2} {R : ℝ} (hu : ‖u‖ ≤ R) (hv : ‖v‖ ≤ R) :
+    ‖Lc L (Fnl L β γ u - Fnl L β γ v)‖ ≤ LF L β γ R * ‖Lc L (u - v)‖ := by
+  have hR : 0 ≤ R := (norm_nonneg _).trans hu
+  have hc := CA_nonneg hL
+  set d := ‖Lc L (u - v)‖
+  set C := CA L
+  have hcu : ‖conjH u‖ ≤ R := by rw [norm_conjH]; exact hu
+  have hcv : ‖conjH v‖ ≤ R := by rw [norm_conjH]; exact hv
+  have hcd : ‖Lc L (conjH u - conjH v)‖ ≤ 1 * d := by rw [← conjH_sub, weak_conj_norm, one_mul]
+  have hd : ‖Lc L (u - v)‖ ≤ 1 * d := by rw [one_mul]
+  -- P2 = u u
+  have p2 : ‖Lc L (mulH L u u - mulH L v v)‖ ≤ C * (1 * R + R * 1) * d := weak_lip_mul hL (norm_nonneg _) zero_le_one hR hd hv hd hu
+  have b2u : ‖mulH L u u‖ ≤ C * R * R := norm_mulH_le' hL hu hu
+  have b2v : ‖mulH L v v‖ ≤ C * R * R := norm_mulH_le' hL hv hv
+  -- cubic
+  have p3 : ‖Lc L (mulH L (mulH L u u) (conjH u) - mulH L (mulH L v v) (conjH v))‖ ≤
+      C * (C * (1 * R + R * 1) * R + C * R * R * 1) * d :=
+    weak_lip_mul hL (norm_nonneg _) (by positivity) (by positivity) p2 b2v hcd hcu
+  -- quintic chain
+  have q3 : ‖Lc L (mulH L (mulH L u u) u - mulH L (mulH L v v) v)‖ ≤
+      C * (C * (1 * R + R * 1) * R + C * R * R * 1) * d :=
+    weak_lip_mul hL (norm_nonneg _) (by positivity) (by positivity) p2 b2v hd hu
+  have b3u : ‖mulH L (mulH L u u) u‖ ≤ C * (C * R * R) * R := norm_mulH_le' hL b2u hu
+  have b3v : ‖mulH L (mulH L v v) v‖ ≤ C * (C * R * R) * R := norm_mulH_le' hL b2v hv
+  have q4 : ‖Lc L (mulH L (mulH L (mulH L u u) u) (conjH u) -
+      mulH L (mulH L (mulH L v v) v) (conjH v))‖ ≤
+      C * (C * (C * (1 * R + R * 1) * R + C * R * R * 1) * R + C * (C * R * R) * R * 1) * d :=
+    weak_lip_mul hL (norm_nonneg _) (by positivity) (by positivity) q3 b3v hcd hcu
+  have b4v : ‖mulH L (mulH L (mulH L v v) v) (conjH v)‖ ≤ C * (C * (C * R * R) * R) * R :=
+    norm_mulH_le' hL b3v hcv
+  have b4u : ‖mulH L (mulH L (mulH L u u) u) (conjH u)‖ ≤ C * (C * (C * R * R) * R) * R :=
+    norm_mulH_le' hL b3u hcu
+  have q5 : ‖Lc L (mulH L (mulH L (mulH L (mulH L u u) u) (conjH u)) (conjH u) -
+      mulH L (mulH L (mulH L (mulH L v v) v) (conjH v)) (conjH v))‖ ≤
+      C * (C * (C * (C * (1 * R + R * 1) * R + C * R * R * 1) * R + C * (C * R * R) * R * 1) * R +
+        C * (C * (C * R * R) * R) * R * 1) * d :=
+    weak_lip_mul hL (norm_nonneg _) (by positivity) (by positivity) q4 b4v hcd hcu
+  have e : Fnl L β γ u - Fnl L β γ v =
+      (-(β : ℂ)) • (mulH L (mulH L u u) (conjH u) - mulH L (mulH L v v) (conjH v)) +
+      (γ : ℂ) • (mulH L (mulH L (mulH L (mulH L u u) u) (conjH u)) (conjH u) -
+        mulH L (mulH L (mulH L (mulH L v v) v) (conjH v)) (conjH v)) := by
+    unfold Fnl; rw [smul_sub, smul_sub]; abel
+  rw [e, map_add, map_smul, map_smul]
+  have hd0 : 0 ≤ d := norm_nonneg _
+  calc _ ≤ ‖(-(β : ℂ)) • Lc L (mulH L (mulH L u u) (conjH u) - mulH L (mulH L v v) (conjH v))‖ +
+        ‖(γ : ℂ) • Lc L (mulH L (mulH L (mulH L (mulH L u u) u) (conjH u)) (conjH u) -
+          mulH L (mulH L (mulH L (mulH L v v) v) (conjH v)) (conjH v))‖ := norm_add_le _ _
+    _ = |β| * ‖Lc L (mulH L (mulH L u u) (conjH u) - mulH L (mulH L v v) (conjH v))‖ +
+        |γ| * ‖Lc L (mulH L (mulH L (mulH L (mulH L u u) u) (conjH u)) (conjH u) -
+          mulH L (mulH L (mulH L (mulH L v v) v) (conjH v)) (conjH v))‖ := by
+        rw [norm_smul, norm_smul, norm_neg, Complex.norm_real, Complex.norm_real,
+          Real.norm_eq_abs, Real.norm_eq_abs]
+    _ ≤ |β| * (C * (C * (1 * R + R * 1) * R + C * R * R * 1) * d) +
+        |γ| * (C * (C * (C * (C * (1 * R + R * 1) * R + C * R * R * 1) * R +
+          C * (C * R * R) * R * 1) * R + C * (C * (C * R * R) * R) * R * 1) * d) := by
+        gcongr
+    _ = LF L β γ R * d := by unfold LF; ring
+
+
+theorem weak_Gf_sub_le {L κ β γ R : ℝ} (hL : 0 < L) (t : ℝ)
+    {a b : ℓ2} (ha : ‖a‖ ≤ R) (hb : ‖b‖ ≤ R) :
+    ‖Lc L (Gf L κ β γ t a - Gf L κ β γ t b)‖ ≤
+      LF L β γ R * ‖Lc L (a-b)‖ := by
+  have h := weak_Fnl_sub_le hL β γ
+    (u := U L κ t a) (v := U L κ t b) (R := R)
+    (by rwa [norm_U]) (by rwa [norm_U])
+  rw [← map_sub, Lc_U, norm_U] at h
+  rw [Gf, Gf, ← smul_sub, ← map_sub, map_smul, norm_smul, norm_neg,
+    Complex.norm_I, one_mul, Lc_U, norm_U]
+  exact h
+
 end PVNP.TorusGalerkin
