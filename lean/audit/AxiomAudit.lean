@@ -1057,3 +1057,15 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TorusGalerkin.finite_U_time_modulus
 #print axioms PVNP.TorusGalerkin.finite_Gf_time_modulus
 #print axioms PVNP.TorusGalerkin.affine_slab_residual
+
+-- Effective weak-norm consistency
+#print axioms PVNP.TorusGalerkin.weak_projection_tail
+#print axioms PVNP.TorusGalerkin.weak_detector_lipschitz
+#print axioms PVNP.TorusGalerkin.weak_detector_cutoff
+#print axioms PVNP.TorusGalerkin.weak_mulH_comm
+#print axioms PVNP.TorusGalerkin.weak_mul_bound
+#print axioms PVNP.TorusGalerkin.weak_conj_norm
+#print axioms PVNP.TorusGalerkin.weak_lip_mul
+#print axioms PVNP.TorusGalerkin.weak_Fnl_sub_le
+#print axioms PVNP.TorusGalerkin.weak_Gf_sub_le
+#print axioms PVNP.TorusGalerkin.weak_consistency_bound
