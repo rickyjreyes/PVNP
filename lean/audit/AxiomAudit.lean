@@ -1118,3 +1118,8 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TorusGalerkin.galerkin_speed
 #print axioms PVNP.TorusGalerkin.galerkin_euler_defect
 #print axioms PVNP.TorusGalerkin.rounded_galerkin_euler
+
+-- Exact finite detector
+#print axioms PVNP.TorusGalerkin.finite_detector_sum
+#print axioms PVNP.TorusGalerkin.finite_detector_dependence
+#print axioms PVNP.TorusGalerkin.finite_detector_free_sum
