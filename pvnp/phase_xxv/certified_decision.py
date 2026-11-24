@@ -125,7 +125,7 @@ def certified_decision(initial, detector, L, kappa, beta, gamma, T, threshold,
         x=y
         accumulated+=err
         peak_bits=max(peak_bits,bits)
-    numerical_state_error=(D*h*T+accumulated)*E
+    numerical_state_error=(D*h*T+N*xi)*E
     if numerical_state_error>slack:
         raise BudgetExceeded("radius certificate failed")
     numerical_readout=C*(2*R+slack)*numerical_state_error
@@ -148,4 +148,5 @@ def certified_decision(initial, detector, L, kappa, beta, gamma, T, threshold,
             "numerical_readout_error": numerical_readout,
             "detector_interval": (lo,hi), "modes":len(S), "steps":N,
             "peak_precision_bits":peak_bits, "radius_upper":R,
-            "amplification_upper":E, "step_error_budget":xi}
+            "amplification_upper":E, "step_error_budget":xi,
+            "sum_measured_step_errors":accumulated}
