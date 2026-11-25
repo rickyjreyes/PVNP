@@ -67,7 +67,10 @@ holds for every larger class of polynomial-time constructors. -/
 def explicitModel (V : List Bool → Prop) : ConstructionModel where
   State := List Bool
   Machine := List Bool
-  polyTime := fun _ => True
+  -- Degree-zero polynomial bound in input length: a single transition budget
+  -- must work for every input word. This is stronger than polynomial time.
+  polyTime := fun w => ∃ c : ℕ, ∀ z : List Bool,
+    (TwoPhaseFixedWord.literalMTM w).Outputs z w c
   produces := fun w s => (TwoPhaseFixedWord.literalMTM w).Outputs [] s (s.length + 1)
   verifiable := V
 
@@ -84,6 +87,7 @@ theorem no_separation_of_all_constructible (M : ConstructionModel)
 theorem explicit_no_separation (V : List Bool → Prop) :
     (explicitModel V).NPst \ (explicitModel V).Pst = ∅ :=
   no_separation_of_all_constructible _ fun s =>
-    ⟨s, trivial, TwoPhaseFixedWord.literalMTM_outputs s []⟩
+    ⟨s, ⟨s.length + 1, fun z => TwoPhaseFixedWord.literalMTM_outputs s z⟩,
+      TwoPhaseFixedWord.literalMTM_outputs s []⟩
 
 end PVNP.DepthBarrier
