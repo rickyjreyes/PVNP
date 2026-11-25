@@ -6,7 +6,7 @@ window.PVNP_DATA = {
  "inventory": {
   "path": "pvnp/proofs/manuscript-lean-inventory.md",
   "date": "2026-11-14",
-  "blob": "1dbe774551d2bad8efe55c8b2bea9bd456778638",
+  "blob": "a953b98ac7019c2c05e862449cd53f9ba7ebbac1",
   "url": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md",
   "table": {
    "parts": {
@@ -100,7 +100,7 @@ window.PVNP_DATA = {
   }
  },
  "lean": {
-  "tree": "f643da4ae3245704229e6924f5e5151489d40042",
+  "tree": "dc2b47e3470d2cc5c3e2aab833f7c0027ea03b22",
   "matches_verified": false,
   "links_ref": "main"
  },
@@ -180,7 +180,7 @@ window.PVNP_DATA = {
     "DepthBarrier.explicit_no_separation": [
      {
       "name": "DepthBarrier.explicit_no_separation",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/DepthBarrier.lean#L84",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/DepthBarrier.lean#L87",
       "audited": true
      }
     ],
