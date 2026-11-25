@@ -11,8 +11,8 @@ model, there exists a coherent target state in `NP_st \ P_st`." The manuscript f
 notion of state nor the preparation model. In the repository's `ConstructionModel`
 (`PartISeparation`) a model is a type of states, a type of constructors with a polynomial-time
 predicate, a production relation and a verification predicate; `Pst` are the constructible
-states and `NPst` the verifiable ones. This module settles every reading that the manuscript's
-words allow.
+states and `NPst` the verifiable ones. This module analyzes the explicit-state, binary-family and charged zero-mode
+models below. Other preparation and verification models remain open.
 
 **Reading A — explicit finite states** (`DepthBarrier.explicit_no_separation`, Phase XVIII):
 false. Every finite word is written by a fixed machine in linear time.
@@ -35,7 +35,7 @@ amplitude-bit machine, exact frozen evolution), and verifiable iff its amplitude
 polynomial-size certificates. Again `NPst \ Pst ≠ ∅ ⟺ P_TM ≠ NP_TM`.
 
 So the conjecture is false (A), vacuous (B), or exactly the classical separation (C, also for
-physical wavefield families). No reading gives an independent route to `P ≠ NP`.
+physical wavefield families). None of these specific formalized models gives an independent route to `P ≠ NP`.
 
 **Cross-connection with I-16 and I-32** (`npFamily_iff_wccDepth`, `npFamily_iff_expanderGrowth`):
 reading C of I-2 is equivalent to `conj:wcc_depth` (I-16) for dense SAT, and to the interface-growth

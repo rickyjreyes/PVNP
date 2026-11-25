@@ -73,7 +73,7 @@
       "research_estimate_percent": 15,
       "metric": "research",
       "evidence": "PR #95 (NonconstructibleFamily): explicit states — false (DepthBarrier.explicit_no_separation); input-indexed families with unrestricted verification — vacuously true via a diagonal language (unrestricted_family_separation); NP-verified families and physical wavefield families prepared by charged zero-mode torus devices — NPst \\ Pst ≠ ∅ iff P_TM ≠ NP_TM (npFamily_separation_iff, wavefield_separation_iff), equivalent to I-16 for dense SAT (npFamily_iff_wccDepth).",
-      "remaining_obligation": "Every non-vacuous reading is exactly P_TM ≠ NP_TM; that separation is not proved."
+      "remaining_obligation": "The analyzed NP-verified and charged zero-mode family models are equivalent to P_TM ≠ NP_TM; that separation and other preparation models remain open."
     },
     {
       "id": "I-16",
