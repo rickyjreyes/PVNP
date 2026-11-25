@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "as_of": "2026-11-14",
+  "baseline": {
+    "Exact": 79,
+    "Restricted": 3,
+    "Refuted": 5,
+    "Open": 3,
+    "Interpretive": 1,
+    "total": 91
+  },
+  "percent_meaning": "Subjective research progress, not independent Lean proof coverage, probability, or permission to promote manuscript status; status promotions require exact-head full kernel and axiom audit.",
+  "status_authority": "pvnp/proofs/manuscript-lean-inventory.md",
+  "targets": [
+    {
+      "id": "II-10",
+      "title": "Original polynomial-time writers",
+      "status": "Exact",
+      "research_estimate_percent": 100,
+      "metric": "research",
+      "evidence": "Kernel-verified at the original scope. For every polynomial p, machine M and input, the actual machines windowMTM p and inputMTM M p write originalWindowCode p x and originalInputCode M p x at their first halt within explicit polynomial transition bounds (windowMTM_outputs, inputMTM_outputs). Hence originalWindowCode_fp, originalInputCode_fp, the unconditional originalWM, originalWM_first_answer (T_W = 2 T_M), originalWM_decides and P_Turing_subset_P_disc_by_original. Gate scripts/verify_ii10_original_wm.sh passed on commit df8824c: Lean 4.23.0, lake build PVNP 7,386 jobs, 627 audited declarations with standard axioms only, 24 Python regression tests.",
+      "remaining_obligation": "None for the original claim. GitHub-hosted CI has not executed for this head (issue #59); the kernel evidence is the local exact-head gate."
+    },
+    {
+      "id": "I-31",
+      "title": "Uniform separator theorem",
+      "status": "Refuted",
+      "research_estimate_percent": 100,
+      "metric": "research",
+      "evidence": "Refuted for the frozen physical trajectory class. SeparatorFrozen.no_uniform_separator_price: on the torus of side L, the exact plane-wave solutions of fixed amplitude A have curvature functional at most 4π²|A|² + 16π⁴c²|A|²/L² (any curvature operator dominated by c|Δψ|, including Δ and the Part III Θ_ε), while the Euclidean length of the frontier of the decision region {Re ψ > 0} is at least L, at every time. These fields are used by an admissible decider (stripe_device_decides); the modulus readout fails the same way (no_uniform_price_modulus). Corrected statement: layer_price (sharp width-dependent price 4η²/w).",
+      "remaining_obligation": "None for the original hypothesis. A uniform price needs an extra hypothesis bounding transition widths (sharp interfaces), under which SeparatorPrice.mesh_price and SeparatorFrozen.layer_price apply."
+    },
+    {
+      "id": "I-37",
+      "title": "General toroidal locking",
+      "status": "Restricted",
+      "research_estimate_percent": 70,
+      "metric": "research",
+      "evidence": "SpatialLocking.sat_iff_locked (PR #95): on the spatial torus T_L² of the frozen equation, a multi-component frozen-WCT field with |ψᵢ| = 1 everywhere, zero local sign-blind clause/coupling/curvature density of the relative field ψ_{i+1}·conj ψ₀ and zero gradient energy exists iff the formula is satisfiable, for every formula, L > 0 and λ, μ ≥ 0. Locks are exact curvature-free solutions of the frozen flow (frozen_flow_preserves_locks), and for κ ≤ 0, β ≤ 0 < γ no frozen trajectory approaches one from outside (no_attracting_locks). InterwovenSAT.locks_iff_sat_iff characterizes the flux energies for which the equivalence holds; sign-sensitive coupling, which does not correspond to clause satisfaction, fails (naive_toroidal_locking_fails).",
+      "remaining_obligation": "The revised reference-component specification is proved. The original ψ-electron structure is undefined; identification with a constant H² reference field is a modelling choice, not a theorem. Dynamic acquisition is separate and not proved."
+    },
+    {
+      "id": "I-32",
+      "title": "Encoding-independent interface theorem",
+      "status": "Open",
+      "research_estimate_percent": 20,
+      "metric": "research",
+      "evidence": "ExpanderInterface.expanderGrowth_SAT_iff: in the charged constant-device class the hypothesis for dense SAT is equivalent to P_TM ≠ NP_TM; WCTSATScaling.superpoly_SAT_implies_P_ne_NP (PR #90): any superpolynomial physical-resource lower bound for SAT over a class containing the charged zero-mode torus devices implies P_TM ≠ NP_TM. False for every language in P_TM. PR #95: for dense SAT in the charged constant class it is equivalent to the NP-verified reading of I-2 and to I-16 (NonconstructibleFamily.npFamily_iff_expanderGrowth). Its manuscript use needs lem:separator-price (I-31), which is refuted for the frozen class.",
+      "remaining_obligation": "Cannot be proved without proving P_TM ≠ NP_TM; in the constant-device class it cannot be refuted without P_TM = NP_TM."
+    },
+    {
+      "id": "I-3",
+      "title": "Physical SAT dynamics and readout",
+      "status": "Restricted",
+      "research_estimate_percent": 70,
+      "metric": "research",
+      "evidence": "Static criterion in the sign-blind interwoven encoding: SAT ⟺ ground energy 0, UNSAT ⟺ ground energy ≥ 1/8, and the sign readout below 1/8 satisfies F (InterwovenSAT, PR #90); the 2^n corner sweep decides SAT for every formula (SATDynamics.sat_iff_corner_sweep, PR #95). Refuted as a dynamical test: the bare lock does not detect SAT; the sign-sensitive gradient fails; the PR #94 false well traps every energy-nonincreasing evolution of unit fields (SATDynamics.energy_monotone_trapped), so every formula-independent corner preparation fails on a satisfiable formula (no_corner_preparation_decides). Phase XXIII: readout_requires_energy_excursion and bounded_forcing_cannot_readout quantify a 1/16 peak-energy barrier without monotonicity. SATForcedEscape gives a time-one common-phase escape with zero graph curvature and peak at most 32/25; readout_requires_sharp_peak proves the matching lower bound for this fixed instance.",
+      "remaining_obligation": "Construct and certify a formula-dependent controlled SAT/UNSAT evolution, including preparation, time, physical energy, curvature, precision and readout costs. The existing exponential corner sweep is not such a continuous device. Polynomial efficiency plus simulation would imply P_TM = NP_TM."
+    },
+    {
+      "id": "I-11",
+      "title": "Continuum physical-computation equivalence",
+      "status": "Restricted",
+      "research_estimate_percent": 55,
+      "metric": "research",
+      "evidence": "P_disc = P_TM exactly in the uniform discrete model; PhysicalAudit.unrestricted_phys_ne_P_TM for arbitrary encoders. PR #90: physical lower bounds transfer to classical ones without simulation in any class containing the charged zero-mode devices. PR #95: that class decides exactly P_TM (ContinuumPrecision.zeroDev_languages_eq_P_TM); the detector is Lipschitz on bounded sets and data precision δ with log(1/δ) = LF·T + log(4RC_χ/m) fixes a margin-m readout decision (precision_suffices); an approximate trajectory with residual ε stays within a Gronwall bound of the solution and fixes the readout (approx_readout). Phase XXIII: TorusGalerkin gives a finite Fourier vector field, local Lipschitz and pointwise consistency bounds, a numeric-plus-tail residual certificate, and no_uniform_H2_cutoff. Phase XXIV (PR #98): frozen_galerkin_approximation gives, for each solution, T and ε, an actual finite Fourier ODE trajectory with uniform H² error below ε on [0, T]; the mode set is not computable from the proof.",
+      "remaining_obligation": "An effective (computable) tail bound along the trajectory, certified time discretization and counted bit complexity. The finite trajectory and its qualitative uniform convergence are proved (frozen_galerkin_approximation). H² ball bounds alone give no uniform H² cutoff; this does not disprove simulation in weaker norms or adaptive representations."
+    },
+    {
+      "id": "I-2",
+      "title": "Nonconstructible wavefield family",
+      "status": "Open",
+      "research_estimate_percent": 15,
+      "metric": "research",
+      "evidence": "PR #95 (NonconstructibleFamily): explicit states — false (DepthBarrier.explicit_no_separation); input-indexed families with unrestricted verification — vacuously true via a diagonal language (unrestricted_family_separation); NP-verified families and physical wavefield families prepared by charged zero-mode torus devices — NPst \\ Pst ≠ ∅ iff P_TM ≠ NP_TM (npFamily_separation_iff, wavefield_separation_iff), equivalent to I-16 for dense SAT (npFamily_iff_wccDepth).",
+      "remaining_obligation": "The analyzed NP-verified and charged zero-mode family models are equivalent to P_TM ≠ NP_TM; that separation and other preparation models remain open."
+    },
+    {
+      "id": "I-16",
+      "title": "Universal SAT lower bound",
+      "status": "Open",
+      "research_estimate_percent": 15,
+      "metric": "research",
+      "evidence": "DepthBarrier.wccDepth_SAT_iff, wccdDepth_SAT_iff, uniform_depth_SAT_iff: for dense SAT the conjecture is exactly P_TM ≠ NP_TM. WCTSATScaling.zeroSuperpoly_SAT_iff (PR #90): the same for the charged zero-mode devices of the frozen torus model. PR #95: equivalent to the NP-verified reading of I-2 (NonconstructibleFamily.npFamily_iff_wccDepth). The strongest unconditional bound here is quadratic for one-tape deciders (CrossingSATMatrix.quadratic_every_budget).",
+      "remaining_obligation": "This is the classical P versus NP question; it is not resolved here, and finite data cannot establish it."
+    },
+    {
+      "id": "III-22",
+      "title": "Mathematical interpretation and classification",
+      "status": "Interpretive",
+      "research_estimate_percent": 100,
+      "metric": "editorial",
+      "evidence": "The §8 remark states that no equivalence P^phys = NP^phys ⟺ retrocausality is proved and keeps the section as a research direction; it asserts no theorem and is classified Interpretive (13 November 2026). Torus.backward_eq_forward_conj and flow_neg give the exact frozen-model form of its sentence on inverse dynamics, as supporting material.",
+      "remaining_obligation": "None for the interpretive entry. Any future theorem about time reversal and complexity needs its own model, quantifiers and claim identifier."
+    }
+  ]
+}

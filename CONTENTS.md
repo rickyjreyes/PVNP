@@ -26,7 +26,7 @@ The original repository PDFs were generated from revised LaTeX, not necessarily 
 
 ## Formalization boundary
 
-The amended 91-claim inventory currently records **78 Exact, 2 Restricted, 4 Refuted, 7 Open**. An Exact conditional implication does not prove its unverified premises. Neither classical P versus NP nor physical WCC separation is proved. Recent Phase XII/XIII integration awaits full kernel CI, and a PDF build cannot replace Lean verification.
+The amended 91-claim inventory currently records **79 Exact, 3 Restricted, 5 Refuted, 3 Open, 1 Interpretive** (78/2/4/7 before 12 November 2026, when II-10 became Exact and I-31 was refuted; 79/1/5/6 before 13 November 2026, when I-37 became Restricted and III-22 Interpretive; 79/2/5/4/1 before 14 November 2026, when I-37 became Exact and I-3 Restricted). An Exact conditional implication does not prove its unverified premises. Neither classical P versus NP nor physical WCC separation is proved. Recent Phase XII/XIII integration awaits full kernel CI, and a PDF build cannot replace Lean verification.
 
 ## Verified Phase VI and Phase VIII results (November 2026)
 
@@ -78,3 +78,5 @@ The supplement is kept outside Parts I–III and does not modify any original-pr
 [Indexed 3-CNF reduction, all-protocol finite-alphabet cut bound, noise-aware packing and scope](pvnp/proofs/split-3sat-reliable-channel.md) · [Lean semantics and transcript theorem](lean/PVNP/SplitSATCapacity.lean) · [Exhaustive checks](pvnp/tests/test_split_three_sat.py).
 
 [Finite-band robust WCT readout: conserved mass, spectral dimension and noise packing](pvnp/proofs/bandlimited-noisy-wave-packing.md) — separate analytic resource theorem, not a universal SAT lower bound.
+
+**Phase XXIII scope correction (14 November 2026):** I-37 is Restricted for the original ψ-electron claim. Its revised constant-component specification is proved, but its correspondence to the original structure is not. The earlier Phase XXII Exact classification is superseded. See `pvnp/proofs/phase-xxiii-progress.md`.

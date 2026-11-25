@@ -11,7 +11,7 @@ const build = require("./build.js");
 const app = require("./app.js");
 
 const ROOT = path.resolve(__dirname, "..", "..");
-const read = rel => fs.readFileSync(path.join(ROOT, rel), "utf8");
+const read = rel => build.normalizeNewlines(fs.readFileSync(path.join(ROOT, rel), "utf8"));
 let passed = 0;
 function test(name, fn) {
   try { fn(); passed++; }
@@ -20,6 +20,16 @@ function test(name, fn) {
 
 /* 1. data.js is a fresh build of the versioned sources, and loads as the browser loads it. */
 const fresh = build.serialize(build.generate());
+test("Windows CRLF is accepted but source changes are not", () => {
+  assert.equal(build.normalizeNewlines(fresh.replace(/\n/g, "\r\n")), fresh);
+  assert.notEqual(build.normalizeNewlines(fresh + "modified"), fresh);
+  const md = read("pvnp/proofs/manuscript-lean-inventory.md");
+  assert.equal(
+    build.generate({ inventory: md.replace(/\n/g, "\r\n") }).inventory.blob,
+    build.generate({ inventory: md }).inventory.blob,
+    "inventory Git blob must not depend on the Windows checkout line endings"
+  );
+});
 test("data.js is up to date", () =>
   assert.equal(read("pvnp/dashboard/data.js"), fresh, "data.js is stale: run node pvnp/dashboard/build.js"));
 const sandbox = { window: {} };
@@ -31,14 +41,15 @@ const claim = id => d.claims.find(c => c.id === id);
 test("current totals", () => {
   const s = app.summarize(d.claims, "current");
   assert.equal(s.total, 91);
-  assert.deepEqual({ ...s.counts }, { Exact: 78, Restricted: 2, Refuted: 4, Open: 7 });
-  assert.equal(app.percent(s.counts.Exact, s.total), "85.7%");
-  assert.equal(s.counts.Exact + s.counts.Refuted, 82);
-  assert.equal(app.percent(82, 91), "90.1%");
-  const parts = { I: [41, 30, 1, 4, 6, "73.2%"], II: [28, 27, 1, 0, 0, "96.4%"], III: [22, 21, 0, 0, 1, "95.5%"] };
-  for (const [p, [t, e, r, f, o, pct]] of Object.entries(parts)) {
+  assert.deepEqual({ ...s.counts }, { Exact: 79, Restricted: 3, Refuted: 5, Open: 3, Interpretive: 1 });
+  assert.equal(app.percent(s.counts.Exact, s.total), "86.8%");
+  assert.equal(s.counts.Exact + s.counts.Refuted, 84);
+  assert.equal(app.percent(84, 91), "92.3%");
+  const parts = { I: [41, 30, 3, 5, 3, 0, "73.2%"], II: [28, 28, 0, 0, 0, 0, "100.0%"], III: [22, 21, 0, 0, 0, 1, "95.5%"] };
+  for (const [p, [t, e, r, f, o, i, pct]] of Object.entries(parts)) {
     const g = s.parts[p];
-    assert.deepEqual([g.total, g.counts.Exact, g.counts.Restricted, g.counts.Refuted, g.counts.Open], [t, e, r, f, o], "Part " + p);
+    assert.deepEqual([g.total, g.counts.Exact, g.counts.Restricted, g.counts.Refuted, g.counts.Open, g.counts.Interpretive],
+      [t, e, r, f, o, i], "Part " + p);
     assert.equal(app.percent(g.counts.Exact, g.total), pct, "Part " + p + " percentage");
   }
   assert.deepEqual(app.reconcile(d), []);
@@ -47,7 +58,7 @@ test("current totals", () => {
 /* 3. Historical snapshot is derived from git history and preserved. */
 test("original snapshot 70/2/11/8", () => {
   const s = app.summarize(d.claims, "historical");
-  assert.deepEqual({ ...s.counts }, { Exact: 70, Restricted: 2, Refuted: 11, Open: 8 });
+  assert.deepEqual({ ...s.counts }, { Exact: 70, Restricted: 2, Refuted: 11, Open: 8, Interpretive: 0 });
   assert.deepEqual([s.parts.I.counts.Exact, s.parts.I.counts.Refuted], [26, 8]);
   assert.deepEqual([s.parts.II.counts.Exact, s.parts.II.counts.Refuted], [23, 3]);
   assert.deepEqual([s.parts.III.counts.Exact, s.parts.III.counts.Refuted], [21, 0]);
@@ -73,10 +84,49 @@ test("amended claims: Exact now, Refuted originally, counterexamples retained", 
     assert.equal(claim(id).status, "Refuted", id);
     assert.equal(app.statusIn(claim(id), "historical"), "Refuted", id + " original");
   }
-  for (const id of ["I-11", "II-10"]) assert.equal(claim(id).status, "Restricted", id);
+  assert.equal(claim("I-11").status, "Restricted", "I-11");
+  /* II-10: proved for the original two-phase machine in PR #73; the row text had been corrected by PR #45. */
+  assert.equal(claim("II-10").status, "Exact", "II-10");
+  assert.equal(claim("II-10").historical.status, "Restricted", "II-10 original");
+  assert.equal(claim("II-10").formalized.pr, 73);
+  assert.equal(claim("II-10").formalized.decl, "TwoPhasePolynomialWriter.originalWM_decides");
+  assert.equal(claim("II-10").formalized.from, "Restricted");
+  assert.equal(claim("II-10").formalized.to, "Exact");
+  assert.ok(claim("II-10").formalized.restated.length > 40);
+  for (const n of ["originalWindowCode_fp", "originalInputCode_fp", "originalWM_first_answer"])
+    assert.ok(Object.values(claim("II-10").refs).flat().some(r => r.name === "TwoPhasePolynomialWriter." + n && r.audited), "II-10 links audited " + n);
   const open = v => d.claims.filter(c => app.statusIn(c, v) === "Open").map(c => c.id);
-  assert.deepEqual(open("current"), open("historical").filter(id => id !== "II-24"));
-  assert.deepEqual(claim("II-24").formalized, { pr: 54, decl: "PartIIManuscript.conditional_np_safety", from: "Open" });
+  assert.deepEqual(open("current"), open("historical").filter(id => !["II-24", "I-31", "I-37", "I-3", "III-22"].includes(id)));
+  /* I-37: Phase XXIII original-scope audit retains the revised spatial theorem. */
+  assert.equal(claim("I-37").status, "Restricted", "I-37");
+  assert.equal(claim("I-37").historical.status, "Open", "I-37 original");
+  assert.deepEqual(claim("I-37").formalized,
+    { pr: 95, decl: "SpatialLocking.sat_iff_locked", from: "Open", to: "Restricted" });
+  for (const n of ["sat_iff_locked", "locked_iff", "frozen_flow_preserves_locks", "no_attracting_locks"])
+    assert.ok(Object.values(claim("I-37").refs).flat().some(r => r.name === "SpatialLocking." + n && r.audited), "I-37 links audited " + n);
+  for (const n of ["toroidal_locking_iff_unsat", "locks_iff_sat_iff", "naive_toroidal_locking_fails"])
+    assert.ok(Object.values(claim("I-37").refs).flat().some(r => r.name === "InterwovenSAT." + n && r.audited), "I-37 links audited " + n);
+  /* I-3: Restricted in PR #95: static criterion and exhaustive device proved, energy descent refuted. */
+  assert.equal(claim("I-3").status, "Restricted", "I-3");
+  assert.equal(claim("I-3").historical.status, "Open", "I-3 original");
+  assert.deepEqual(claim("I-3").formalized,
+    { pr: 95, decl: "SATDynamics.sat_iff_corner_sweep", from: "Open", to: "Restricted" });
+  for (const n of ["energy_monotone_trapped", "no_corner_preparation_decides"])
+    assert.ok(Object.values(claim("I-3").refs).flat().some(r => r.name === "SATDynamics." + n && r.audited), "I-3 links audited " + n);
+  /* III-22: an editorial reclassification; the remark asserts no theorem. */
+  assert.equal(claim("III-22").status, "Interpretive", "III-22");
+  assert.equal(claim("III-22").historical.status, "Open", "III-22 original");
+  assert.equal(claim("III-22").reclassified.from, "Open");
+  assert.equal(claim("III-22").reclassified.to, "Interpretive");
+  assert.equal(claim("III-22").formalized, undefined, "III-22 names no proof");
+  /* I-31: refuted for the frozen trajectory class in PR #78; the hypothesis text is unchanged. */
+  assert.equal(claim("I-31").status, "Refuted", "I-31");
+  assert.equal(claim("I-31").historical.status, "Open", "I-31 original");
+  assert.deepEqual(claim("I-31").formalized,
+    { pr: 78, decl: "SeparatorFrozen.no_uniform_separator_price", from: "Open", to: "Refuted" });
+  for (const n of ["no_uniform_separator_price", "stripe_device_violates", "no_uniform_price_modulus", "layer_price"])
+    assert.ok(Object.values(claim("I-31").refs).flat().some(r => r.name === "SeparatorFrozen." + n && r.audited), "I-31 links audited " + n);
+  assert.deepEqual(claim("II-24").formalized, { pr: 54, decl: "PartIIManuscript.conditional_np_safety", from: "Open", to: "Exact" });
   assert.equal(claim("II-24").conditional.kind, "open");
 });
 
@@ -101,8 +151,8 @@ test("conditional annotations", () => {
 
 /* 6. Phase X supporting results: 11 statements, kernel-checked on main, linked, audited. */
 test("Phase X supporting results", () => {
-  assert.equal(d.supporting.length, 14);
-  assert.equal(new Set(d.supporting.map(s => s.decl)).size, 14);
+  assert.equal(d.supporting.length, 35);
+  assert.equal(new Set(d.supporting.map(s => s.decl)).size, 35);
   const sha = d.verification.main.sha;
   for (const s of d.supporting) {
     assert.equal(s.audited, true, s.decl);
@@ -124,12 +174,13 @@ test("finite toroidal scope", () => {
     const theorem = d.supporting.find(s => s.decl === `ToroidalDiagonal.${name}`);
     assert.ok(theorem.audited && theorem.file.endsWith("ToroidalDiagonal.lean"), name);
   }
-  assert.equal(claim("I-37").status, "Open");
+  assert.equal(claim("I-37").status, "Restricted");
 });
 
 /* 8. Open obligations carry no percentage; SATLowerBound is the central one. */
 test("open obligations", () => {
-  assert.equal(d.open.length, 3);
+  assert.equal(d.open.length, 4);
+  assert.ok(d.open.some(o => o.title === "Superpolynomial physical resources for SAT"));
   const central = d.open.filter(o => o.central);
   assert.equal(central.length, 1);
   assert.equal(central[0].title, "CrossingSAT.SATLowerBound");
@@ -161,17 +212,35 @@ test("parser and generator guards", () => {
   const md = read("pvnp/proofs/manuscript-lean-inventory.md");
   assert.throws(() => parseInventory(md.replace("| I-25 |", "| I-999 |")), /missing claim I-25/);
   assert.throws(() => parseInventory(md.replace("| **Total** | **91** |", "| **Total** | **92** |")), /Total row/);
-  assert.throws(() => parseInventory(md.replace(/^\| Part II \| 28 \| 27 \|/m, "| Part II | 28 | 25 |")), /Part II/);
+  assert.throws(() => parseInventory(md.replace(/^\| Part II \| 28 \| 28 \|/m, "| Part II | 28 | 25 |")), /Part II/);
   const reg = JSON.parse(read("pvnp/dashboard/results.json"));
   const clone = () => JSON.parse(JSON.stringify(reg));
   let r = clone(); r.amendments = r.amendments.filter(a => a.id !== "I-12");
   assert.throws(() => build.generate({ registry: r }), /registered amendments/);
   r = clone(); r.formalizations[0].decl = "PartIIManuscript.no_np_complete_decider";
   assert.throws(() => build.generate({ registry: r }), /formalization must preserve/);
+  /* II-10's row text differs from the original snapshot, which is accepted only with a recorded reason. */
+  r = clone(); delete r.formalizations.find(f => f.id === "II-10").restated;
+  assert.throws(() => build.generate({ registry: r }), /formalization must preserve/);
+  r = clone(); r.formalizations = r.formalizations.filter(f => f.id !== "II-10");
+  assert.throws(() => build.generate({ registry: r }), /registered amendments/);
+  /* A refutation must name its target status. */
+  r = clone(); delete r.formalizations.find(f => f.id === "I-31").to;
+  assert.throws(() => build.generate({ registry: r }), /formalization must preserve/);
   r = clone(); r.conditional.open["I-25"] = "a refuted claim cannot be conditional-exact";
   assert.throws(() => build.generate({ registry: r }), /not Exact/);
   r = clone(); delete r.conditional.open["I-19"];
   assert.throws(() => build.generate({ registry: r }), /neither annotated nor exempted: I-19/);
+  /* An editorial reclassification must end in Interpretive and record its reason. */
+  r = clone(); r.reclassifications[0].reason = "short";
+  assert.throws(() => build.generate({ registry: r }), /editorial reclassification/);
+  r = clone(); r.reclassifications[0].to = "Exact";
+  assert.throws(() => build.generate({ registry: r }), /editorial reclassification/);
+  r = clone(); r.reclassifications = [];
+  assert.throws(() => build.generate({ registry: r }), /registered amendments/);
+  /* A Restricted formalization must still link its audited theorem. */
+  r = clone(); r.formalizations.find(f => f.id === "I-3").decl = "InterwovenSAT.Fxor_sat";
+  assert.throws(() => build.generate({ registry: r }), /formalization must preserve/);
   r = clone(); r.historical.expected.Exact = 77;
   assert.throws(() => build.generate({ registry: r }), /historical snapshot/);
   r = clone(); r.supporting[0].decl = "TMBooleanTableau.no_such_theorem";
@@ -189,4 +258,4 @@ test("parser and generator guards", () => {
 if (!d.lean.matches_verified)
   console.warn("Note: lean/ differs from the last recorded verified commit; declaration links point to main.");
 if (process.exitCode) console.error(`${passed} test groups passed; failures above.`);
-else console.log(`Dashboard check PASS (${passed} groups): 91 claims; 78 Exact (85.7%), 82 resolved (90.1%); original 70/2/11/8; toroidal results integrated; SATLowerBound open.`);
+else console.log(`Dashboard check PASS (${passed} groups): 91 claims; 79 Exact (86.8%), 3 Restricted, 5 Refuted, 3 Open, 1 Interpretive; 84 resolved (92.3%); original 70/2/11/8; SATLowerBound open.`);

@@ -1,4 +1,4 @@
-"""Executable cross-checks of the ASTRA Lean constructions (not proofs).
+"""Executable cross-checks of the PVNP Lean discrete constructions (not proofs).
 
 * The alternating shifted-sweep TM of `lean/PVNP/WCCtoTM.lean` reproduces the
   first-answer output of random finite quiescent radius-one WCCs, within the

@@ -18,7 +18,10 @@ from pathlib import Path
 
 
 def command(*args: str) -> str:
-    return subprocess.check_output(args, stderr=subprocess.STDOUT, text=True)
+    # Poppler emits UTF-8 text. Do not use Windows' locale-dependent CP1252
+    # decoder, and do not mix MiKTeX warning text from stderr into PDF content.
+    output = subprocess.check_output(args, stderr=subprocess.PIPE)
+    return output.decode("utf-8")
 
 
 def pages(pdf: Path) -> int:
@@ -30,7 +33,7 @@ def pages(pdf: Path) -> int:
 
 
 def pdf_text(pdf: Path) -> str:
-    result = command("pdftotext", "-layout", str(pdf), "-")
+    result = command("pdftotext", "-enc", "UTF-8", "-layout", str(pdf), "-")
     result = re.sub(r"\s+", " ", result)
     if len(result) < 350:
         raise AssertionError(f"PDF has insufficient extractable text: {pdf}")
@@ -53,7 +56,7 @@ def check(pdf: Path, minimum_pages: int, fragments: list[str]) -> int:
 
 def page_texts(pdf: Path) -> list[str]:
     # Page embedding changes glyph coordinates. Compare text in stream order.
-    raw = command("pdftotext", "-raw", str(pdf), "-")
+    raw = command("pdftotext", "-enc", "UTF-8", "-raw", str(pdf), "-")
     texts = raw.split("\f")
     if texts[-1].strip():
         raise AssertionError(f"{pdf}: incomplete page text extraction")

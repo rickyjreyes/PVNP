@@ -1,5 +1,5 @@
 import PVNP
-/-! Axiom audit for the principal ASTRA theorems (run with `lake env lean audit/AxiomAudit.lean`).
+/-! Axiom audit for the principal PVNP theorems (run with `lake env lean audit/AxiomAudit.lean`).
 Every listed declaration must depend only on `propext`, `Classical.choice`, `Quot.sound`. -/
 -- Issue #11
 #print axioms PVNP.Discrete.TM.toWCC_step_encode
@@ -629,3 +629,410 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TwoPhaseConstantWindow.zeroWindowMTM_outputs
 #print axioms PVNP.TwoPhaseConstantWindow.originalWindowCode_zero
 #print axioms PVNP.TwoPhaseConstantWindow.zeroWindowCode_fp
+
+-- Phase XIV: finite-control literal-output machine and fixed-radius FP witness.
+#print axioms PVNP.TwoPhaseFixedWord.literal_run_prefix
+#print axioms PVNP.TwoPhaseFixedWord.literalMTM_outputs
+#print axioms PVNP.TwoPhaseFixedWord.constantWindowCode_fp
+-- Phase XVI finite toroidal CNF lock: kernel-checked logical equivalence and obstruction.
+#print axioms PVNP.ToroidalCNFLock.rows_constant
+#print axioms PVNP.ToroidalCNFLock.lock_iff_satisfiable
+#print axioms PVNP.ToroidalCNFLock.bare_ring_lock_not_sat_classifier
+-- Phase XVI: abstract quadratic amplitude-scaling obstruction.
+#print axioms PVNP.SeparatorAmplitude.no_uniform_quadratic_price
+
+-- Phase XVII: finite-row logical torus and normalized contrast theorems.
+#print axioms PVNP.ToroidalFiniteRows.rowLock_iff_satisfiable
+#print axioms PVNP.ToroidalFiniteRows.finiteTrace_length
+#print axioms PVNP.SeparatorNormalizedRay.contrast_forces_quadratic_price
+#print axioms PVNP.SeparatorNormalizedRay.price_is_sharp
+#print axioms PVNP.TwoPhasePolynomialWriter.writer_clock_eq_polynomial
+#print axioms PVNP.TwoPhasePolynomialWriter.writer_coeffs_length
+#print axioms PVNP.TwoPhasePolynomialWriter.writer_clock_poly_bound
+#print axioms PVNP.TwoPhasePolynomialWriter.expected_window_length_from_writer_clock
+#print axioms PVNP.ToroidalFiniteRows.lock_rows_constant
+#print axioms PVNP.TwoPhasePolynomialWriter.partially_normalized_current_input
+#print axioms PVNP.TwoPhasePolynomialWriter.partially_normalized_extend
+#print axioms PVNP.TwoPhasePolynomialWriter.normalize_raw_rule
+#print axioms PVNP.TwoPhasePolynomialWriter.normalization_cfg_step
+#print axioms PVNP.TwoPhasePolynomialWriter.timePoly_eval
+#print axioms PVNP.TwoPhasePolynomialWriter.initialized_sentinel_tape
+#print axioms PVNP.TwoPhasePolynomialWriter.start_to_mark
+#print axioms PVNP.TwoPhasePolynomialWriter.mark_to_normalize
+#print axioms PVNP.TwoPhasePolynomialWriter.run_normalizes_input
+#print axioms PVNP.TwoPhasePolynomialWriter.windowMTM_normalization
+#print axioms PVNP.TwoPhasePolynomialWriter.inputMTM_normalization
+
+-- Phase XVIII: II-10 at its original scope. The actual polynomial-radius writers
+-- `windowMTM p` and `inputMTM M p` are polynomial-time transducers for the original codes.
+#print axioms PVNP.TwoPhasePolynomialWriter.ret_walk
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_copy
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_take_hit
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_take_miss
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_inc_in
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_inc_end
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_emit_in
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_emit_end
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_next_hit
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_next_miss
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_head
+#print axioms PVNP.TwoPhasePolynomialWriter.exec_finish
+#print axioms PVNP.TwoPhasePolynomialWriter.Exec.trans
+#print axioms PVNP.TwoPhasePolynomialWriter.Exec.inc
+#print axioms PVNP.TwoPhasePolynomialWriter.Exec.emit
+#print axioms PVNP.TwoPhasePolynomialWriter.Exec.next_hit
+#print axioms PVNP.TwoPhasePolynomialWriter.Exec.head
+#print axioms PVNP.TwoPhasePolynomialWriter.word_emits
+#print axioms PVNP.TwoPhasePolynomialWriter.repeated_emits
+#print axioms PVNP.TwoPhasePolynomialWriter.inner_loop
+#print axioms PVNP.TwoPhasePolynomialWriter.outer_loop
+#print axioms PVNP.TwoPhasePolynomialWriter.stage_sem
+#print axioms PVNP.TwoPhasePolynomialWriter.horner_emits
+#print axioms PVNP.TwoPhasePolynomialWriter.stages_emits
+#print axioms PVNP.TwoPhasePolynomialWriter.windowBody_emits
+#print axioms PVNP.TwoPhasePolynomialWriter.inputBodyG_emits
+#print axioms PVNP.TwoPhasePolynomialWriter.normalize_steps
+#print axioms PVNP.TwoPhasePolynomialWriter.assemble_outputs
+#print axioms PVNP.TwoPhasePolynomialWriter.hv_coeffs
+#print axioms PVNP.TwoPhasePolynomialWriter.winTail_eq_windowWord
+#print axioms PVNP.TwoPhasePolynomialWriter.inW_eq_originalInputCode
+#print axioms PVNP.TwoPhasePolynomialWriter.windowMTM_outputs
+#print axioms PVNP.TwoPhasePolynomialWriter.inputMTM_outputs
+-- Also registered by the integration branch of PR #72 (literal original machines).
+#print axioms PVNP.TwoPhasePolynomialWriter.Steps.trans
+#print axioms PVNP.TwoPhasePolynomialWriter.StagesSpec
+#print axioms PVNP.TwoPhasePolynomialWriter.assemble_spec
+#print axioms PVNP.TwoPhasePolynomialWriter.originalWindowCode_fp
+#print axioms PVNP.TwoPhasePolynomialWriter.originalInputCode_fp
+#print axioms PVNP.TwoPhasePolynomialWriter.originalWM
+#print axioms PVNP.TwoPhasePolynomialWriter.originalWM_decides
+#print axioms PVNP.TwoPhasePolynomialWriter.originalWM_first_answer
+#print axioms PVNP.TwoPhasePolynomialWriter.P_Turing_subset_P_disc_original
+#print axioms PVNP.TwoPhasePolynomialWriter.originalWM_mem_P_disc
+#print axioms PVNP.TwoPhasePolynomialWriter.P_Turing_subset_P_disc_by_original
+
+-- Phase XVIII, I-31: no uniform separator price for the frozen trajectory class.
+#print axioms PVNP.SeparatorFrozen.traj_solves
+#print axioms PVNP.SeparatorFrozen.traj_periodic
+#print axioms PVNP.SeparatorFrozen.traj_norm
+#print axioms PVNP.SeparatorFrozen.traj_contrast
+#print axioms PVNP.SeparatorFrozen.segment_subset
+#print axioms PVNP.SeparatorFrozen.hausdorff_segment
+#print axioms PVNP.SeparatorFrozen.interface_ge
+#print axioms PVNP.SeparatorFrozen.Phi_wave_le
+#print axioms PVNP.SeparatorFrozen.Phi_traj_le
+#print axioms PVNP.SeparatorFrozen.no_uniform_separator_price
+#print axioms PVNP.SeparatorFrozen.separator_price_hypothesis_false
+#print axioms PVNP.SeparatorFrozen.thetaEps_dominated
+#print axioms PVNP.SeparatorFrozen.separator_price_false_thetaEps
+#print axioms PVNP.SeparatorFrozen.stripe_device_decides
+#print axioms PVNP.SeparatorFrozen.stripe_device_violates
+#print axioms PVNP.SeparatorFrozen.Phi_bump_le
+#print axioms PVNP.SeparatorFrozen.bump_interface_ge
+#print axioms PVNP.SeparatorFrozen.no_uniform_price_modulus
+#print axioms PVNP.SeparatorFrozen.sq_integral_le
+#print axioms PVNP.SeparatorFrozen.layer_price
+#print axioms PVNP.SeparatorFrozen.layer_price_sharp
+
+-- Phase XVIII, I-32: expander interface growth is as hard as P_TM ≠ NP_TM.
+#print axioms PVNP.ExpanderInterface.expanderGrowth_of_every_length
+#print axioms PVNP.ExpanderInterface.sep_of_const
+#print axioms PVNP.ExpanderInterface.sep_const
+#print axioms PVNP.ExpanderInterface.constDecides_mem_P_TM
+#print axioms PVNP.ExpanderInterface.expanderGrowth_const_iff
+#print axioms PVNP.ExpanderInterface.expanderGrowth_false_of_mem_P
+#print axioms PVNP.ExpanderInterface.expanderGrowth_SAT_iff
+#print axioms PVNP.ExpanderInterface.expanderGrowth_implies_P_ne_NP
+-- Phase XVIII, I-37, I-3, III-22: time reversal and no locking for the frozen flow.
+#print axioms PVNP.Torus.conjH_conjH
+#print axioms PVNP.Torus.conjH_isometry
+#print axioms PVNP.Torus.fnl_conj
+#print axioms PVNP.Torus.fc_conj
+#print axioms PVNP.Torus.isSolution_reverse
+#print axioms PVNP.Torus.isSolution_shift
+#print axioms PVNP.Torus.backward_eq_forward_conj
+#print axioms PVNP.Torus.flow_neg
+#print axioms PVNP.Torus.infDist_conjH_le
+#print axioms PVNP.Torus.no_locking
+#print axioms PVNP.Torus.unstable_or_unreachable
+#print axioms PVNP.Torus.realStates_conj
+#print axioms PVNP.Torus.field_real_of_realState
+#print axioms PVNP.Torus.phaseOrbit_conj
+#print axioms PVNP.Torus.no_locking_phaseOrbit
+#print axioms PVNP.Torus.no_locking_realStates
+-- Phase XVIII, I-16 and I-2.
+#print axioms PVNP.DepthBarrier.wccDepth_SAT_iff
+#print axioms PVNP.DepthBarrier.wccdDepth_SAT_iff
+#print axioms PVNP.DepthBarrier.uniform_depth_SAT_iff
+#print axioms PVNP.DepthBarrier.explicit_state_constructible
+#print axioms PVNP.DepthBarrier.no_separation_of_all_constructible
+#print axioms PVNP.DepthBarrier.explicit_no_separation
+
+-- Physical readout capacity: conditional, PDE-derived, two-outcome contrast.
+#print axioms PVNP.PhysicalReadoutCapacity.detector_contrast_budget
+#print axioms PVNP.PhysicalReadoutCapacity.two_outcomes_require_change
+#print axioms PVNP.PhysicalReadoutCapacity.binary_readout_resource_disjunction
+#print axioms PVNP.PhysicalReadoutCapacity.no_binary_readout_below_both_budgets
+
+-- Conditional WCT SAT physical readout. These do not prove a SAT time lower bound.
+#print axioms PVNP.PhysicalSATReadout.margin_implies_contrast
+#print axioms PVNP.PhysicalSATReadout.noisy_margin_implies_contrast
+#print axioms PVNP.PhysicalSATReadout.two_outcomes_with_initial_skew
+#print axioms PVNP.PhysicalSATReadout.skewed_binary_readout_resource_disjunction
+#print axioms PVNP.PhysicalSATReadout.sat_pair_readout_resource_disjunction
+#print axioms PVNP.PhysicalSATReadout.noisy_sat_pair_readout_resource_disjunction
+#print axioms PVNP.PhysicalSATReadout.combined_budget_of_disjunction
+
+-- Interwoven-Ψ SAT energy model (Phase B). Energy landscapes only: no dynamics, no time bound.
+#print axioms PVNP.InterwovenSAT.sat_iff_zero_energySB
+#print axioms PVNP.InterwovenSAT.unsat_energySB_gap
+#print axioms PVNP.InterwovenSAT.sat_iff_energySB_lt_eighth
+#print axioms PVNP.InterwovenSAT.measure_satisfies
+#print axioms PVNP.InterwovenSAT.xor_energy_pos
+#print axioms PVNP.InterwovenSAT.xor_energy_ge_quarter
+#print axioms PVNP.InterwovenSAT.xor_energy_at_I
+#print axioms PVNP.InterwovenSAT.single_var_energy
+#print axioms PVNP.InterwovenSAT.naive_ground_energy_blind
+#print axioms PVNP.InterwovenSAT.naive_zero_energy_fails
+#print axioms PVNP.InterwovenSAT.naive_threshold_fails
+#print axioms PVNP.InterwovenSAT.min_formulation_vacuous
+#print axioms PVNP.InterwovenSAT.satisfying_not_ground
+#print axioms PVNP.InterwovenSAT.sat_iff_EminSB_eq_zero
+#print axioms PVNP.InterwovenSAT.unsat_iff_EminSB_ge
+#print axioms PVNP.InterwovenSAT.naive_Emin
+#print axioms PVNP.InterwovenSAT.sat_of_locks
+#print axioms PVNP.InterwovenSAT.locks_iff_sat_iff
+#print axioms PVNP.InterwovenSAT.unsat_gap_general
+#print axioms PVNP.InterwovenSAT.toroidal_locking_iff_unsat
+#print axioms PVNP.InterwovenSAT.naive_toroidal_locking_fails
+
+-- Frozen-torus SAT device bound and preloaded-answer countermodel (Phase C). No SAT lower bound.
+#print axioms PVNP.WCTSATDevice.Gam_nonneg
+#print axioms PVNP.WCTSATDevice.Jdet_const_of_Gam_eq_zero
+#print axioms PVNP.WCTSATDevice.change_budget
+#print axioms PVNP.WCTSATDevice.device_pair_budget
+#print axioms PVNP.WCTSATDevice.budget_mono
+#print axioms PVNP.WCTSATDevice.Gam_le_of_bounds
+#print axioms PVNP.WCTSATDevice.device_pair_budget_of_preparation
+#print axioms PVNP.WCTSATDevice.co_mode
+#print axioms PVNP.WCTSATDevice.fc_const
+#print axioms PVNP.WCTSATDevice.zeroMode_isSolution
+#print axioms PVNP.WCTSATDevice.Dc_zeroMode
+#print axioms PVNP.WCTSATDevice.budget_zeroMode
+#print axioms PVNP.WCTSATDevice.mass_zeroMode
+#print axioms PVNP.WCTSATDevice.Jdet_mode_zero
+#print axioms PVNP.WCTSATDevice.rev_dco
+#print axioms PVNP.WCTSATDevice.aW_dco_pos
+#print axioms PVNP.WCTSATDevice.Jdet_zeroMode_detector
+#print axioms PVNP.WCTSATDevice.Gam_zeroMode_pos
+#print axioms PVNP.WCTSATDevice.preloaded_device
+#print axioms PVNP.WCTSATDevice.preloaded_skew_eq_contrast
+#print axioms PVNP.WCTSATDevice.oneClause_sat
+#print axioms PVNP.WCTSATDevice.blindness_necessary
+
+-- Superpolynomial-resource barrier (Phase D): such a bound for SAT proves P_TM ≠ NP_TM.
+#print axioms PVNP.WCTSATScaling.not_superpoly_of_poly
+#print axioms PVNP.WCTSATScaling.superpoly_implies_not_mem_P
+#print axioms PVNP.WCTSATScaling.superpoly_SAT_implies_P_ne_NP
+#print axioms PVNP.WCTSATScaling.zdecides_iff
+#print axioms PVNP.WCTSATScaling.ZeroDev.res_le
+#print axioms PVNP.WCTSATScaling.zero_charges_P
+#print axioms PVNP.WCTSATScaling.zdecides_mem_P
+#print axioms PVNP.WCTSATScaling.zeroSuperpoly_iff
+#print axioms PVNP.WCTSATScaling.zeroSuperpoly_SAT_iff
+#print axioms PVNP.WCTSATScaling.torus_superpoly_implies_P_ne_NP
+
+-- Blind frozen-torus SAT device with one fixed budget (Phase XX). Its encoder is a SAT decider.
+#print axioms PVNP.WCTSATBlind.co_twoMode
+#print axioms PVNP.WCTSATBlind.pr_dco_tc
+#print axioms PVNP.WCTSATBlind.inner_eq_tsum
+#print axioms PVNP.WCTSATBlind.Jdet_twoMode
+#print axioms PVNP.WCTSATBlind.qf_e1v
+#print axioms PVNP.WCTSATBlind.Jdot_twoMode
+#print axioms PVNP.WCTSATBlind.flux_condition_of_nonpos
+#print axioms PVNP.WCTSATBlind.exists_pos_ne_of_hasDerivAt
+#print axioms PVNP.WCTSATBlind.blind_pair_exists
+#print axioms PVNP.WCTSATBlind.blind_device
+
+-- WCT sign-blind SAT-energy gap under arbitrary charged finite-radius stages.
+#print axioms PVNP.WCTLocalSATEnergy.distalFormula_sat_iff
+#print axioms PVNP.WCTLocalSATEnergy.distalFormula_energy_gap_iff
+#print axioms PVNP.WCTLocalSATEnergy.distalFormula_ground_energy_iff
+#print axioms PVNP.WCTLocalSATEnergy.sat_energy_requires_causal_coverage
+#print axioms PVNP.WCTLocalSATEnergy.sat_ground_energy_requires_causal_coverage
+#print axioms PVNP.WCTLocalSATEnergy.no_sat_energy_decider_below_cone
+#print axioms PVNP.WCTLocalSATEnergy.last_site_sat_energy_linear_bound
+
+-- Phase XXI: n-bit distributed 3-CNF, SAT truth, and charged light-cone lower bounds.
+#print axioms PVNP.WCTDistributedSAT.sourceFormula_length
+#print axioms PVNP.WCTDistributedSAT.formulaOfBits_sat_iff
+#print axioms PVNP.WCTDistributedSAT.sourceFormula_sat_iff
+#print axioms PVNP.WCTDistributedSAT.allTrue_sat
+#print axioms PVNP.WCTDistributedSAT.oneFalse_unsat
+#print axioms PVNP.WCTDistributedSAT.sources_agree_before
+#print axioms PVNP.WCTDistributedSAT.no_distributed_sat_decider_below_cone
+#print axioms PVNP.WCTDistributedSAT.distributed_sat_requires_causal_coverage
+#print axioms PVNP.WCTDistributedSAT.distributed_energy_requires_causal_coverage
+#print axioms PVNP.WCTDistributedSAT.distributed_ground_energy_requires_causal_coverage
+#print axioms PVNP.WCTDistributedSAT.distributed_energy_last_site_linear
+-- Part I I-3: explicit satisfiable 3-CNF with a nonglobal sign-blind local well.
+#print axioms PVNP.SATFalseWell.trapFormula_sat
+#print axioms PVNP.SATFalseWell.sPos_nonneg
+#print axioms PVNP.SATFalseWell.Elogic_trapFormula
+#print axioms PVNP.SATFalseWell.trapEnergy_local_lower
+#print axioms PVNP.SATFalseWell.trapEnergy_false
+#print axioms PVNP.SATFalseWell.trapEnergy_true
+#print axioms PVNP.SATFalseWell.false_score_is_local_min
+#print axioms PVNP.SATFalseWell.false_phase_energy
+#print axioms PVNP.SATFalseWell.true_phase_energy
+#print axioms PVNP.SATFalseWell.signblind_false_local_well
+
+-- Part II: quantitative high-frequency tail from the actual torus Fourier weights.
+#print axioms PVNP.TorusSpectralTail.finite_high_frequency_mass_bound
+#print axioms PVNP.TorusSpectralTail.finite_tail_mass_from_curvature_budget
+
+-- Part III: conservation-derived frozen-torus regularized curvature majorant.
+#print axioms PVNP.WCTRegularizedCeiling.lapBudget_nonneg
+#print axioms PVNP.WCTRegularizedCeiling.frozen_torus_laplacian_ceiling
+#print axioms PVNP.WCTRegularizedCeiling.frozen_torus_laplacian_squared_ceiling
+#print axioms PVNP.WCTRegularizedCeiling.regularized_laplacian_envelope_ceiling
+
+-- Part II: complete infinite torus Fourier tail control via H² and summability.
+#print axioms PVNP.TorusSpectralTail.infinite_high_frequency_mass_bound
+#print axioms PVNP.TorusSpectralTail.infinite_tail_mass_from_curvature_budget
+
+-- Phase XXII, I-37: locking configurations of a field on the spatial torus T_L².
+#print axioms PVNP.SpatialLocking.rel_admissible
+#print axioms PVNP.SpatialLocking.qf_pos
+#print axioms PVNP.SpatialLocking.summable_grad2
+#print axioms PVNP.SpatialLocking.grad2_nonneg
+#print axioms PVNP.SpatialLocking.grad2_mode_zero
+#print axioms PVNP.SpatialLocking.eq_mode_of_grad2_eq_zero
+#print axioms PVNP.SpatialLocking.pt_mode
+#print axioms PVNP.SpatialLocking.dens_nonneg
+#print axioms PVNP.SpatialLocking.rel_bitField
+#print axioms PVNP.SpatialLocking.norm_bitField
+#print axioms PVNP.SpatialLocking.sat_iff_locked
+#print axioms PVNP.SpatialLocking.no_locked_iff_unsat
+#print axioms PVNP.SpatialLocking.locked_iff
+#print axioms PVNP.SpatialLocking.rel_phase
+#print axioms PVNP.SpatialLocking.locked_frozen_flow
+#print axioms PVNP.SpatialLocking.frozen_flow_preserves_locks
+#print axioms PVNP.SpatialLocking.summable_mass
+#print axioms PVNP.SpatialLocking.norm_Ac_sq
+#print axioms PVNP.SpatialLocking.kin_eq
+#print axioms PVNP.SpatialLocking.summable_kin
+#print axioms PVNP.SpatialLocking.eq_mode_of_coeff
+#print axioms PVNP.SpatialLocking.kin_ge
+#print axioms PVNP.SpatialLocking.eq_mode_of_kin_eq
+#print axioms PVNP.SpatialLocking.box_real_univ
+#print axioms PVNP.SpatialLocking.bound_field
+#print axioms PVNP.SpatialLocking.pot_ge
+#print axioms PVNP.SpatialLocking.ham_ge
+#print axioms PVNP.SpatialLocking.eq_mode_of_ham_eq
+#print axioms PVNP.SpatialLocking.ham_mode
+#print axioms PVNP.SpatialLocking.approach_zeroMode
+#print axioms PVNP.SpatialLocking.mode_apply_zero
+#print axioms PVNP.SpatialLocking.no_attracting_locks
+
+-- Phase XXII, I-3: the false well traps every energy-monotone evolution.
+#print axioms PVNP.SATDynamics.sPos_eq
+#print axioms PVNP.SATDynamics.energy_lower_in_box
+#print axioms PVNP.SATDynamics.energy_monotone_trapped
+#print axioms PVNP.SATDynamics.false_corner_in_box
+#print axioms PVNP.SATDynamics.false_corner_energy
+#print axioms PVNP.SATDynamics.flipLit_flipLit
+#print axioms PVNP.SATDynamics.flipF_flipF
+#print axioms PVNP.SATDynamics.flipField_flipField
+#print axioms PVNP.SATDynamics.admissible_flipField
+#print axioms PVNP.SATDynamics.sq_flipField
+#print axioms PVNP.SATDynamics.score_flip
+#print axioms PVNP.SATDynamics.clausePen_flip
+#print axioms PVNP.SATDynamics.Elog_flip
+#print axioms PVNP.SATDynamics.edges_flipF
+#print axioms PVNP.SATDynamics.hyperedges_flipF
+#print axioms PVNP.SATDynamics.vars_flipF
+#print axioms PVNP.SATDynamics.glap_flipF
+#print axioms PVNP.SATDynamics.energySB_flip
+#print axioms PVNP.SATDynamics.litVal_flip
+#print axioms PVNP.SATDynamics.sat_flipF
+#print axioms PVNP.SATDynamics.flipField_false_corner
+#print axioms PVNP.SATDynamics.corner_trapped
+#print axioms PVNP.SATDynamics.no_corner_preparation_decides
+#print axioms PVNP.SATDynamics.le_foldr_max
+#print axioms PVNP.SATDynamics.var_lt_nvar
+#print axioms PVNP.SATDynamics.sat_iff_corner_sweep
+#print axioms PVNP.SATDynamics.corner_sweep_card
+#print axioms PVNP.SATDynamics.efficient_device_and_simulation_imply_P_eq_NP
+
+-- Phase XXII, I-2: readings of the symbolic separation conjecture; links to I-16 and I-32.
+#print axioms PVNP.NonconstructibleFamily.familyModel_Pst
+#print axioms PVNP.NonconstructibleFamily.familyModel_NPst
+#print axioms PVNP.NonconstructibleFamily.unrestricted_family_separation
+#print axioms PVNP.NonconstructibleFamily.npFamily_separation_iff
+#print axioms PVNP.NonconstructibleFamily.npFamily_SAT_iff
+#print axioms PVNP.NonconstructibleFamily.mode_zero_apply
+#print axioms PVNP.NonconstructibleFamily.zeroMode_zero
+#print axioms PVNP.NonconstructibleFamily.wavefield_injective
+#print axioms PVNP.NonconstructibleFamily.wavefield_constructible_iff
+#print axioms PVNP.NonconstructibleFamily.wavefield_separation_iff
+#print axioms PVNP.NonconstructibleFamily.npFamily_iff_wccDepth
+#print axioms PVNP.NonconstructibleFamily.npFamily_iff_expanderGrowth
+
+-- Phase XXII, I-11: zero-mode class equality and readout precision.
+#print axioms PVNP.ContinuumPrecision.zeroDev_languages_eq_P_TM
+#print axioms PVNP.ContinuumPrecision.Cdet_nonneg
+#print axioms PVNP.ContinuumPrecision.Jdet_lipschitz
+#print axioms PVNP.ContinuumPrecision.readout_precision
+#print axioms PVNP.ContinuumPrecision.decision_robust
+#print axioms PVNP.ContinuumPrecision.precision_suffices
+#print axioms PVNP.ContinuumPrecision.approx_trajectory_close
+#print axioms PVNP.ContinuumPrecision.approx_readout
+
+-- Phase XXIII: forced barrier and finite Fourier certificates
+#print axioms PVNP.SATDynamics.energy_cap_trapped
+#print axioms PVNP.SATDynamics.readout_requires_energy_excursion
+#print axioms PVNP.SATDynamics.bounded_forcing_cannot_readout
+#print axioms PVNP.TorusGalerkin.trunc_norm_le
+#print axioms PVNP.TorusGalerkin.trunc_sub
+#print axioms PVNP.TorusGalerkin.galerkin_support
+#print axioms PVNP.TorusGalerkin.galerkin_lipschitz
+#print axioms PVNP.TorusGalerkin.consistency_bound
+#print axioms PVNP.TorusGalerkin.galerkin_consistent
+#print axioms PVNP.TorusGalerkin.residual_certificate
+#print axioms PVNP.TorusGalerkin.no_uniform_H2_cutoff
+#print axioms PVNP.TorusGalerkin.higher_regularity_tail
+#print axioms PVNP.TorusGalerkin.certified_readout
+#print axioms PVNP.SATDynamics.every_corner_requires_excursion
+#print axioms PVNP.SATDynamics.escape_admissible
+#print axioms PVNP.SATDynamics.escape_continuous
+#print axioms PVNP.SATDynamics.escape_start
+#print axioms PVNP.SATDynamics.escape_end
+#print axioms PVNP.SATDynamics.escape_curvature
+#print axioms PVNP.SATDynamics.escape_energy
+#print axioms PVNP.SATDynamics.escape_energy_bound
+#print axioms PVNP.SATDynamics.escape_readout
+#print axioms PVNP.SATDynamics.trapEnergy_decomposition
+#print axioms PVNP.SATDynamics.trapEnergy_mean_lower
+#print axioms PVNP.SATDynamics.trapEnergy_before_saddle
+#print axioms PVNP.SATDynamics.trapEnergy_saddle
+#print axioms PVNP.SATDynamics.readout_requires_sharp_peak
+
+-- Phase XXIV: finite Fourier trajectory convergence
+#print axioms PVNP.TorusGalerkin.trunc_lipschitz
+#print axioms PVNP.TorusGalerkin.compact_uniform_tail
+#print axioms PVNP.TorusGalerkin.clipped_support
+#print axioms PVNP.TorusGalerkin.clipped_lipschitz
+#print axioms PVNP.TorusGalerkin.clipped_bound
+#print axioms PVNP.TorusGalerkin.clipped_continuous_time
+#print axioms PVNP.TorusGalerkin.clipped_eq_galerkin
+#print axioms PVNP.TorusGalerkin.clipped_uniform_consistency
+#print axioms PVNP.TorusGalerkin.exists_local_clipped
+#print axioms PVNP.TorusGalerkin.exists_global_clipped
+#print axioms PVNP.TorusGalerkin.clipped_trajectory_support
+#print axioms PVNP.TorusGalerkin.gronwall_diagonal_scale
+#print axioms PVNP.TorusGalerkin.gronwall_diagonal_mono
+#print axioms PVNP.TorusGalerkin.clipped_trajectory_error
+#print axioms PVNP.TorusGalerkin.exists_convergent_clipped
+#print axioms PVNP.TorusGalerkin.exists_convergent_galerkin
+#print axioms PVNP.TorusGalerkin.frozen_galerkin_approximation

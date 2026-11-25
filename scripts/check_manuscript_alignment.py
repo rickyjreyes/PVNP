@@ -32,7 +32,7 @@ def main() -> None:
         encoding="utf8"
     )
 
-    must("| **Total** | **91** | **78** | **2** | **4** | **7** |" in inventory,
+    must("| **Total** | **91** | **79** | **3** | **5** | **3** | **1** |" in inventory,
          "Canonical claim inventory unexpectedly changed")
     for number in (25, 26, 27, 28):
         must(re.search(r"Withdrawn[^\n]*I-" + str(number) + r"\b", p1) is not None,
@@ -56,6 +56,30 @@ def main() -> None:
          "Original II-10 theorem still presented as full unconditional uniformity")
     must("PartIIUniform.P" in p2 and "original" in p2.lower(),
          "Generic uniform class theorem and original W_M not distinguished")
+    # II-10 is Exact since 12 Nov 2026.  The theorem keeps its dated conditional
+    # wording; a dated addendum must name the Lean theorems that discharge it.
+    must("Addendum, 12 November 2026: both writer hypotheses are theorems" in p2
+         and "originalWindowCode_fp" in p2 and "originalInputCode_fp" in p2
+         and "originalWM_decides" in p2,
+         "Part II lacks the dated II-10 addendum naming the verified writer theorems")
+    must("Addendum, 12 November 2026" in combined and "79 Exact, 1 Restricted" in combined,
+         "Consolidated volume lacks the dated II-10 addendum and current counts")
+    # I-31 is Refuted since 12 Nov 2026: the hypothesis stays in Part I with a dated addendum.
+    must("Addendum, 12 November 2026: the hypothesis fails on growing tori" in p1
+         and "no_uniform_separator_price" in p1 and "layer_price" in p1,
+         "Part I lacks the dated I-31 addendum naming the counterexample and the corrected price")
+    must("5 Refuted and 6 Open" in combined,
+         "Consolidated volume lacks the dated counts after the I-31 refutation")
+    # I-37 is Restricted and III-22 Interpretive since 13 Nov 2026 (dated addenda).
+    must("Addendum, 13 November 2026" in p1 and "toroidal_locking_iff_unsat" in p1
+         and "naive_toroidal_locking_fails" in p1,
+         "Part I lacks the dated I-37 addendum naming the locking theorem and its failure case")
+    must("Addendum, 13 November 2026" in p3 and "Interpretive" in p3,
+         "Part III lacks the dated III-22 Interpretive classification")
+    must("Addendum, 13 November 2026" in combined and "toroidal_locking_iff_unsat" in combined,
+         "Consolidated volume lacks the dated I-37/III-22 addendum")
+    must("I-37 & Open" not in combined and "III-22 & Open" not in combined,
+         "Consolidated volume still labels I-37 or III-22 Open")
     must("Current formalization status (7 November 2026)" in p2,
          "Missing current Part II status section")
     must("Current Lean formalization status (7 November 2026)" in p1,
@@ -80,15 +104,33 @@ def main() -> None:
         must(len(labels) == len(set(labels)), "Duplicate LaTeX labels in source")
         refs = re.findall(r"\\(?:eqref|autoref|ref)\{([^}]*)\}", f)
         must(set(refs).issubset(labels), "Unresolved internal LaTeX reference")
+    must("II-10 & Restricted" not in combined,
+         "Consolidated volume still labels the settled II-10 claim Restricted")
+    must("I-31 & Open" not in combined,
+         "Consolidated volume still labels frozen-model I-31 as unresolved")
+    must("79 Exact, 3 Restricted, 5 Refuted, 3 Open and 1 Interpretive" in combined,
+         "The consolidated volume does not contain current inventory totals")
+    # Phase XXIII restores I-37 to Restricted at original scope.
+    must("Addendum, 14 November 2026" in p1 and "SpatialLocking.sat_iff_locked" in p1
+         and "SATDynamics.energy_monotone_trapped" in p1,
+         "Part I lacks the dated I-37/I-3 addenda naming the spatial locking and trapping theorems")
+    must("Addendum, 14 November 2026" in combined and "SpatialLocking.sat_iff_locked" in combined,
+         "Consolidated volume lacks the dated I-37/I-3 addendum")
+    must("I-37 & Restricted" in combined and "I-3 & Open" not in combined,
+         "Consolidated volume must list I-37 as Restricted and must not list I-3 as Open")
+    must("Original complete polynomial-time window and initial-configuration transducers." not in combined,
+         "Current consolidated register contains outdated II-10 gate")
+    must("\\usepackage{xcolor}" in combined and "\\usepackage{xcolor>" not in combined,
+         "Malformed xcolor package line in the consolidated LaTeX preamble")
     must(combined.count("\\includepdf[") == 4, "Consolidated volume not binding four parts")
     for name in ("part-i", "part-ii", "part-iii", "supplement"):
         must("archive/" + name + ".pdf" in combined,
              f"Missing {name} PDF from consolidated volume")
     must("Unresolved original-claim register" in combined,
-         "Consolidated volume missing the nine Restricted/Open entries")
+         "Consolidated volume missing the current seven-claim unresolved register")
     must("two-site" in supplement, "Missing supplement finite-model disclaimer")
     print("PASS: Part I-III historical corrections and 91-claim inventory are aligned")
-    print("PASS: consolidated LaTeX sources and nine-claim register are structurally consistent")
+    print("PASS: consolidated LaTeX sources and amended 91-claim register are structurally consistent")
     print("NOTE: these static checks DO NOT verify Lean or compiled PDF output")
 
 

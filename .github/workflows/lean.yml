@@ -1,7 +1,7 @@
 name: PVNP Lean supporting theorems
 on:
   push:
-    branches: [main, formal/wcc-locality-resource-audit-10-11-20261027, astra/complete-program-20261102]
+    branches: [main, formal/wcc-locality-resource-audit-10-11-20261027]
     paths: ['lean/**', '.github/workflows/lean.yml']
   pull_request:
   workflow_dispatch:
@@ -34,7 +34,7 @@ jobs:
         run: lake build PVNP
       - name: Check issue 10 and 11 proof modules explicitly
         run: lake build PVNP.LocalityLowerBound PVNP.ReplayCost PVNP.TMCellCompiler PVNP.RadiusCausality PVNP.TMGlobal PVNP.TMStayTrace PVNP.MachineCode PVNP.FiniteWCCCode PVNP.OracleObstruction PVNP.TMHeadMotion PVNP.TMHeadSupport PVNP.TMHeadUniqueRight PVNP.TMHeadUniqueLeft PVNP.TMHeadStep PVNP.TMMovingTrace
-      - name: Check ASTRA completion modules explicitly (#10, #11, #12, #15)
+      - name: Check PVNP completion modules explicitly (#10, #11, #12, #15)
         run: lake build PVNP.DiscreteMachines PVNP.TMtoWCC PVNP.WCCtoTM PVNP.ComplexityEquivalence PVNP.MachineSerialization PVNP.BandlimitedNoisyPacking PVNP.FourierReceiverProjection PVNP.DecisionVsEncodingCounterexample PVNP.PartIIIAnalytic PVNP.DiscreteCurvatureRail PVNP.PhysicalComplexityClasses PVNP.WitnessSizeUniformity PVNP.FourierTorusReceiver PVNP.PSubsetNP PVNP.CircleSpectralGap PVNP.WCTPlaneWave PVNP.TMScan PVNP.SATVerifier PVNP.PartIIIHighFreq3D PVNP.TransportCalculus PVNP.AnalogSplitSATCapacity PVNP.PhysicalModelAudit PVNP.WCCRadius PVNP.WCCGenerality PVNP.WCCDFiniteSupport PVNP.WCTLattice PVNP.WCTLatticeGlobalBounds PVNP.WCTMeshScaling PVNP.DecoderUniformity
       - name: Check D-1 single-tape TM compiler modules explicitly
         run: lake build PVNP.TMStackScan PVNP.SweepTM PVNP.WCCDCyclic PVNP.WCCDSweep PVNP.WCCDSweepSteps PVNP.WCCDSweepLoops PVNP.WCCDSweepRound PVNP.WCCDSweepBuild PVNP.WCCDSweepMain
@@ -66,6 +66,78 @@ jobs:
         run: lake build PVNP.TwoPhaseWindowWord
       - name: Kernel check original zero-radius lattice FP witness
         run: lake build PVNP.TwoPhaseConstantWindow
+      - name: Check all fixed-radius original W_M lattice-writer FP candidates
+        run: lake build PVNP.TwoPhaseFixedWord
+      - name: Kernel-check original II-10 polynomial writer execution and FP witnesses
+        run: |
+          lake build PVNP.TwoPhasePolynomialExec PVNP.TwoPhasePolynomialState PVNP.TwoPhasePolynomialProgram PVNP.TwoPhasePolynomialOutputs PVNP.TwoPhasePolynomialFP
+          lake build PVNP.TwoPhasePolynomialWriter PVNP.TwoPhasePrefixWriter
+      - name: II-10 source proof closure guard
+        run: |
+          test -f PVNP/TwoPhasePolynomialExec.lean
+          test -f PVNP/TwoPhasePolynomialState.lean
+          test -f PVNP/TwoPhasePolynomialProgram.lean
+          test -f PVNP/TwoPhasePolynomialOutputs.lean
+          test -f PVNP/TwoPhasePolynomialFP.lean
+          grep -Fq 'import PVNP.TwoPhasePolynomialFP' PVNP.lean
+          grep -Fq '#print axioms PVNP.TwoPhasePolynomialWriter.originalWindowCode_fp' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.TwoPhasePolynomialWriter.originalInputCode_fp' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.TwoPhasePolynomialWriter.originalWM_decides' audit/AxiomAudit.lean
+      - name: Run original two-phase transducer regression
+        working-directory: .
+        run: python3 -m unittest discover -s pvnp/tests -p 'test_two_phase_tape_writer.py'
+      - name: Phase XVI kernel check finite torus and separator obstruction
+        run: lake build PVNP.ToroidalCNFLock PVNP.SeparatorAmplitude
+      - name: Phase XVI finite computations and nine-claim status check
+        working-directory: .
+        run: |
+          python3 -m unittest discover -s pvnp/tests -p 'test_phase_xvi_*.py'
+          python3 pvnp/phase_xvi/status.py --check
+      - name: Phase XVII kernel-check coefficient bridge, finite rows, normalized contrast
+        run: lake build PVNP.TwoPhasePolynomialWriter PVNP.ToroidalFiniteRows PVNP.SeparatorNormalizedRay
+      - name: Phase XVII finite Boolean torus and II-10 control certificates
+        working-directory: .
+        run: python3 -m unittest discover -s pvnp/tests -p 'test_phase_xvii_*.py'
+      - name: Phase XVIII kernel-check the I-31 separator counterexample
+        run: lake build PVNP.SeparatorFrozen
+      - name: Phase XVIII kernel-check the I-32, I-37/I-3/III-22 and I-16/I-2 barrier modules
+        run: lake build PVNP.ExpanderInterfaceBarrier PVNP.TorusNoLocking PVNP.DepthBarrier
+      - name: Kernel-check the WCT SAT readout, interwoven-Ψ model, torus SAT device and resource barrier
+        run: lake build PVNP.PhysicalReadoutCapacity PVNP.PhysicalSATReadout PVNP.InterwovenSAT PVNP.WCTSATDevice PVNP.WCTSATScaling PVNP.WCTSATBlind
+      - name: Run SAT readout, interwoven-Ψ and torus device regressions
+        working-directory: .
+        run: |
+          python3 -m unittest discover -s pvnp/tests -p 'test_physical_sat_readout_algebra.py'
+          python3 -m unittest discover -s pvnp/tests -p 'test_interwoven_sat_energy.py'
+          python3 -m unittest discover -s pvnp/tests -p 'test_wct_sat_device.py'
+      - name: Interwoven-Ψ and torus SAT device closure guard
+        run: |
+          grep -Fq 'import PVNP.InterwovenSAT' PVNP.lean
+          grep -Fq 'import PVNP.WCTSATDevice' PVNP.lean
+          grep -Fq 'import PVNP.WCTSATScaling' PVNP.lean
+          grep -Fq '#print axioms PVNP.InterwovenSAT.locks_iff_sat_iff' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.WCTSATDevice.blindness_necessary' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.WCTSATScaling.zeroSuperpoly_SAT_iff' audit/AxiomAudit.lean
+          grep -Fq 'import PVNP.WCTSATBlind' PVNP.lean
+          grep -Fq '#print axioms PVNP.WCTSATBlind.blind_device' audit/AxiomAudit.lean
+      - name: Phase XXII kernel-check the six-claim closure modules (I-37, I-3, I-2, I-11)
+        run: lake build PVNP.SpatialToroidalLocking PVNP.SATDynamicsObstruction PVNP.NonconstructibleFamily PVNP.ContinuumPrecision
+      - name: Phase XXII closure guard
+        run: |
+          grep -Fq 'import PVNP.SpatialToroidalLocking' PVNP.lean
+          grep -Fq 'import PVNP.SATDynamicsObstruction' PVNP.lean
+          grep -Fq 'import PVNP.NonconstructibleFamily' PVNP.lean
+          grep -Fq 'import PVNP.ContinuumPrecision' PVNP.lean
+          grep -Fq '#print axioms PVNP.SpatialLocking.sat_iff_locked' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.SpatialLocking.no_attracting_locks' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.SATDynamics.energy_monotone_trapped' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.SATDynamics.no_corner_preparation_decides' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.NonconstructibleFamily.wavefield_separation_iff' audit/AxiomAudit.lean
+          grep -Fq '#print axioms PVNP.ContinuumPrecision.precision_suffices' audit/AxiomAudit.lean
+      - name: Phase XXIII forced barrier and Fourier certificate modules
+        run: lake build PVNP.SATForcedBarrier PVNP.SATForcedEscape PVNP.TorusGalerkinCertificate
+      - name: Phase XXIV finite Fourier trajectory convergence
+        run: lake build PVNP.TorusGalerkinTrajectory
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt

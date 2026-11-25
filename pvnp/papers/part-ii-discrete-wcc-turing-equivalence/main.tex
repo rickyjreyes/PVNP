@@ -993,6 +993,33 @@ charges that work, and writes the decision bit.
 These two different proofs must not be conflated.
 \end{proof}
 
+\begin{remark}[Addendum, 12 November 2026: both writer hypotheses are theorems]
+\label{rem:tm_to_wcc_writers}
+The two writer hypotheses of Theorem~\ref{thm:tm_to_wcc} hold for
+every polynomial radius $p$ and every machine $M$.  The lattice
+writer and the encoder are explicit single-tape machines,
+\texttt{windowMTM}~$p$ and \texttt{inputMTM}~$M$~$p$.  Each one
+normalizes its input, computes $L=p(|x|)$ in unary by Horner's rule
+on marked work cells, writes the canonical word, and halts with a
+blank after it.  Lean proves that the outputs are exactly
+$\operatorname{originalWindowCode}(p)(x)$ and
+$\operatorname{originalInputCode}(M,p)(x)$, at the first halt, within
+explicit polynomial numbers of transitions
+(\nolinkurl{TwoPhasePolynomialWriter.windowMTM_outputs} and
+\nolinkurl{TwoPhasePolynomialWriter.inputMTM_outputs}).  Hence
+\nolinkurl{originalWindowCode_fp} and
+\nolinkurl{originalInputCode_fp}, and the concrete $W_M$ is a uniform
+discrete WCC machine (\nolinkurl{originalWM}).  Its first answer
+appears at update exactly $2T_M(x)$ whenever $T_M(x)\le p(|x|)$
+(\nolinkurl{originalWM_first_answer}), so it decides $L$ within
+$2c\max\{|x|,1\}^k$ updates (\nolinkurl{originalWM_decides}).  The
+inclusion $P_{\mathrm{Turing}}\subseteq P_{\mathrm{WCC}}^{\mathrm{disc}}$
+also holds with $W_M$ itself as the witness
+(\nolinkurl{P_Turing_subset_P_disc_by_original}).  The theorem above
+keeps its conditional wording of 7 November 2026; this addendum
+discharges its two hypotheses.
+\end{remark}
+
 \subsection{Simulation of WCC by Turing machines}
 
 We now recall the converse direction: any discrete WCC machine can be simulated
@@ -1937,6 +1964,17 @@ writers and exact bitmap statements supply
 supporting constructions, not these missing
 uniform \texttt{FP} witnesses.  Consequently
 the original construction remains Restricted.
+
+\paragraph{Addendum, 12 November 2026: II-10 is Exact.}
+The two missing witnesses are now Lean theorems,
+\nolinkurl{TwoPhasePolynomialWriter.originalWindowCode_fp} and
+\nolinkurl{TwoPhasePolynomialWriter.originalInputCode_fp}, for the
+actual polynomial-radius machines and every polynomial radius; see
+Remark~\ref{rem:tm_to_wcc_writers}.  The Part II inventory is
+therefore 28 Exact and none Restricted.  The exact-head gate
+\texttt{scripts/verify\_ii10\_original\_wm.sh} (complete kernel
+build, standard-axiom audit and reference regressions) passed on
+repository commit \texttt{df8824c} with Lean 4.23.0.
 
 \paragraph{Historical corrections retained in the audit.}
 The original all-time two-phase invariant and

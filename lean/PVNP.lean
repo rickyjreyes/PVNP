@@ -116,6 +116,7 @@ import PVNP.WCTLatticeGlobal
 -- Phase VI: periodic torus well-posedness and F-1 continuum flux.
 import PVNP.TorusWellPosed
 import PVNP.TorusFlux
+import PVNP.PhysicalReadoutCapacity
 
 -- Phase IX: exact target statement and no-go theorems for candidate invariants.
 import PVNP.SATTarget
@@ -180,3 +181,83 @@ import PVNP.TwoPhaseWindowWord
 
 -- Phase XIV: an actual finite-state zero-radius MTM lattice FP witness.
 import PVNP.TwoPhaseConstantWindow
+
+-- Phase XIV: literal-output finite-control MTM and constant-radius W_M FP candidate.
+import PVNP.TwoPhaseFixedWord
+
+-- Phase XV: machine definitions and fixed-prefix writer.
+import PVNP.TwoPhasePolynomialWriter
+import PVNP.TwoPhasePrefixWriter
+-- Phase XVIII: concrete step semantics, assembler/Horner execution, both
+-- first-halt output words and unconditional FP witnesses for original W_M.
+-- This import is the full-build gate for original II-10.
+import PVNP.TwoPhasePolynomialFP
+-- Phase XVI: a formula-dependent finite toroidal CNF consistency equivalence.
+-- Logical constraint system only; does not establish physical I-37.
+import PVNP.ToroidalCNFLock
+-- Phase XVI: abstract amplitude-scaling obstruction (I-31 necessary assumption).
+import PVNP.SeparatorAmplitude
+
+-- Phase XVII: charged finite-row logical torus and sharp detector-contrast ray price.
+import PVNP.ToroidalFiniteRows
+import PVNP.SeparatorNormalizedRay
+
+-- Phase XVIII: the modules behind `PVNP.TwoPhasePolynomialFP` (imported above), listed so
+-- that each is a named build target. Exec: instruction-level transitions of `build P`;
+-- State: abstract work-region state; Program: assembler semantics and Horner's rule;
+-- Outputs: first halt and output word.
+import PVNP.TwoPhasePolynomialExec
+import PVNP.TwoPhasePolynomialState
+import PVNP.TwoPhasePolynomialProgram
+import PVNP.TwoPhasePolynomialOutputs
+
+-- Phase XVIII, I-31: the uniform separator price fails on the frozen torus at fixed contrast;
+-- the corrected price depends on the transition width.
+import PVNP.SeparatorFrozen
+-- Phase XVIII, I-32: in the charged constant model, expander interface growth for dense SAT
+-- is equivalent to P_TM ≠ NP_TM.
+import PVNP.ExpanderInterfaceBarrier
+-- Phase XVIII, I-37, I-3 and III-22: the frozen flow is time-reversible, so it cannot lock
+-- into a stable lock set from outside it, and backward evolution is conjugated forward evolution.
+import PVNP.TorusNoLocking
+-- Phase XVIII, I-16 and I-2: conj:wcc_depth for dense SAT is P_TM ≠ NP_TM; explicit states are
+-- always constructible.
+import PVNP.DepthBarrier
+
+-- WCT-specific SAT readout: charged, approximate initial blindness and noisy final margins.
+import PVNP.PhysicalSATReadout
+
+-- Interwoven-Ψ SAT: logical, coupling and curvature energies on the phase torus; when the
+-- SAT ⟺ zero-ground-energy correspondence survives added terms; I-37 with locking defined.
+import PVNP.InterwovenSAT
+-- Frozen-torus SAT device: device-form readout bound without Γ > 0, flux constant bounded by
+-- prepared mass and energy, preloaded-answer countermodel, necessity of initial blindness.
+import PVNP.WCTSATDevice
+-- A superpolynomial physical resource bound for SAT over any class containing the charged
+-- zero-mode devices proves P_TM ≠ NP_TM; in the zero-mode class it is equivalent to it.
+import PVNP.WCTSATScaling
+-- A blind (equal initial readings) SAT-correct frozen-torus device whose curvature budget is one
+-- constant for every formula: two-mode readings and fluxes computed exactly.
+import PVNP.WCTSATBlind
+import PVNP.WCTLocalSATEnergy
+import PVNP.WCTDistributedSAT
+-- Part I I-3 adversarial test: satisfiable 3-CNF with a nonglobal sign-blind energy well.
+import PVNP.SATFalseWell
+-- Part II: exact finite-set Fourier spectral tail bound from the actual torus Laplacian weights.
+import PVNP.TorusSpectralTail
+-- Part III: conserved-data time-uniform Laplacian and regularized curvature envelope on frozen PDE.
+import PVNP.WCTRegularizedCeiling
+-- Phase XXII, I-37: spatial-torus locking realization, conservative locks, no attracting locks.
+import PVNP.SpatialToroidalLocking
+-- Phase XXII, I-3: false-well trapping for every energy-monotone evolution, corner counterexamples.
+import PVNP.SATDynamicsObstruction
+-- Phase XXII, I-2: every reading of the symbolic separation conjecture, with I-16/I-32 links.
+import PVNP.NonconstructibleFamily
+-- Phase XXII, I-11: zero-mode class equality and finite-precision robustness of the readout.
+import PVNP.ContinuumPrecision
+
+import PVNP.SATForcedBarrier
+import PVNP.TorusGalerkinCertificate
+import PVNP.SATForcedEscape
+
+import PVNP.TorusGalerkinTrajectory

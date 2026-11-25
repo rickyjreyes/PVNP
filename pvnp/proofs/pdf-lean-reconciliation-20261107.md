@@ -5,6 +5,8 @@
 **Source baseline:** Main commit 4b1b29242baec200fcafa02ec3cae2f29820b15b.  
 **Publication PR:** #61. **Phase XIV proof PR #60:** merged into `main` at `0dc9e5b` on 8 November 2026, with exact-head Lean kernel verification still pending.
 
+> **Historical 7 November snapshot.** The statements below retain their original context. The amended II-10 status is now **Exact**; see the dated 12 November addendum below and the [authoritative current inventory](manuscript-lean-inventory.md).
+
 ## What was changed in the revised manuscripts
 
 | Original claim or result | Historical issue | Updated source and mathematical status |
@@ -96,3 +98,25 @@ The release pipeline previously overwrote the tracked `paper.pdf` during a local
 A hermetic test harness injects PDF-build, PDF-content, Lean, and dashboard failures and asserts that no failure mutates the tracked publication PDF; a successful full mocked run does promote exactly the validated candidate. **These tests verify gate control flow, not the actual TeX, Lean, or dashboard content.**
 
 The private repository is still blocked by GitHub Actions runner allocation, and this inspection environment has no installed Lean toolchain or network access to clone the private project. Therefore the full pinned Lean build and axiom audit, exact-source compiled PDF inspection, and end-to-end `--all` result are **still pending**. Keep publication and claim statuses unchanged until a real full verification completes. Do not use green mock checks or merged unverified Lean code as a substitute for kernel certification.
+## 12 November 2026 addendum: II-10 original scope closed
+
+This is a dated update to the 7 November baseline above, not a retroactive
+claim that the original proof was complete at that earlier date. PR #73 adds
+concrete, actual single-tape polynomial-radius lattice and configuration
+writers, proves exact first-halt output words and polynomial transition counts,
+and supplies the two previously missing `FP` witnesses. Its
+`TwoPhasePolynomialWriter.originalWM_first_answer` theorem identifies the
+original finite-WCC machine's first answer at exactly `2*T_M(x)`, with no
+premature output and with the corrected radius/empty-input boundary.
+
+The author reports a successful 7,386-job full Lean build, standard-axiom
+audit, and verification gate at source commit
+`df8824ca659b2e931eb4302251569d6c6c6140b3`; GitHub-hosted runners did
+not execute an equivalent workflow. The amended inventory now has **79 Exact,
+1 Restricted, 4 Refuted, 7 Open**, with **Part II 28/28 Exact**. The
+remaining Restricted claim is I-11. A later addendum of the same day (PR #78)
+refutes I-31 for the frozen trajectory class, giving 79 Exact, 1 Restricted,
+5 Refuted, 6 Open. This result does not establish the
+unrestricted continuum WCT↔TM bridge or classical P ≠ NP. For the
+mathematical proof chain and verification provenance, see
+`pvnp/proofs/II10_VERIFICATION_LEDGER.md`.

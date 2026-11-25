@@ -1,4 +1,4 @@
-# Final formalization report — ASTRA program v2 (2 November 2026)
+# Formalization report — revision 2 (2 November 2026)
 
 **Starting point:** merge commit `614dc1c9894d7384e46d6c0cb95310ecfc88c201`. **Toolchain:** Lean
 v4.23.0 with Mathlib v4.23.0 (`37df177`).
@@ -173,14 +173,14 @@ Part II 35 pages, Part III 11 pages, with no undefined references.
 **PR #14:** merged by the owner into `main` as `a1293dc`.
 
 **PR #19** (this program's Lean modules), <https://github.com/rickyjreyes/PVNP/pull/19>:
-- base `main`, head `astra/math-20261102`;
+- base `main`; original development commits are recorded below;
 - commits `522db46` (physical audit), `210ef45` (radius-r), `5c29bda` (merge main), `2bd6ba8`
   (generality), `82987fd` (lattice and bridge), `d2b019a` (ledger);
 - CI on `2bd6ba8`: Lean run 41529538065 ✓, PDFs run 41529538053 ✓;
 - CI on `82987fd` (lattice and bridge, 111-declaration audit): Lean run 41532337480 ✓, PDFs ✓;
 - CI on `d2b019a` (ledger only): see the PR checks.
 
-**Docs/manuscripts PR** (stacked on #19), head `astra/docs-20261102`: see the PR description.
+**Docs/manuscripts PR** (stacked on #19): consult the historical PR description and commit record.
 
 ## 9. Next highest-value task
 

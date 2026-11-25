@@ -452,6 +452,10 @@ analytic results whose physical assumptions
 are not independent Lean theorems.
 This unified register supersedes
 the separate dated verification addenda.
+\emph{Addendum, 13 November 2026.}  III-22 is now classified as
+Interpretive rather than Open: the arrow-of-time remark states that no
+equivalence is proved and asserts no theorem, so no proof obligation is
+attached to it.
 
 \paragraph{Analytical and finite mathematical results.}
 The denominator counterexample, the zero
@@ -487,6 +491,9 @@ realization by the curvature PDE.
 The original two-phase construction's
 specific uniform writers remain
 Restricted in Part II (II-10).
+\emph{Addendum, 12 November 2026:} both
+writers are now verified as polynomial-time
+single-tape transducers, and II-10 is Exact.
 
 \paragraph{Field transport and well-posedness.}
 The transport lower bound is verified
@@ -703,6 +710,17 @@ $P^{\mathrm{phys}}=NP^{\mathrm{phys}}\iff\text{retrocausality}$,
 and no physical separation inferred merely from a forward thermodynamic
 arrow, is proved. This section is retained as a research direction rather
 than as a theorem.
+\end{remark}
+\begin{remark}[Addendum, 12 November 2026]
+For the frozen dynamics the sentence on inverse dynamics has an exact
+form.  Complex conjugation reverses time: if $\psi(t)$ is a solution,
+so is $\overline{\psi(-t)}$.  Hence the state at time $-t$ is the
+conjugate of the forward evolution, for time $t$, of the conjugated
+initial state
+(\nolinkurl{Torus.backward_eq_forward_conj}, \nolinkurl{Torus.flow_neg}).
+Running this dynamics backward is a forward computation with the
+encoder and decoder composed with conjugation.  The remark above remains
+an interpretation, not a theorem.
 \end{remark}
 
 \section{Mathematical Revision Register}

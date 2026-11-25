@@ -42,7 +42,6 @@ theorem windowWord_eq_latCode (L : ℕ) :
     windowWord L = latCode 1 (L + 1) (window L) := by
   unfold windowWord latCode
   rw [bitmap_eq_interior]
-  rfl
 
 /-- The original `W_M` lattice generator has precisely this closed-form
 output for every input and every polynomial radius clock. -/

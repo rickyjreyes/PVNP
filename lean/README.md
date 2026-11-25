@@ -131,9 +131,9 @@ sites still depends on the transition direction. Complete moving-head
 traces and P/NP class equality remain open. Verify the file by
 current-head Lean CI before describing it as kernel checked.
 
-## ASTRA completion checkpoint — 2 November 2026 (issues #10, #11, #12, #15)
+## Lean completion checkpoint — 2 November 2026 (issues #10, #11, #12, #15)
 
-Full report: [`pvnp/proofs/astra-completion-report.md`](../pvnp/proofs/astra-completion-report.md). Frozen physical model: [`pvnp/proofs/physical-model-freeze.md`](../pvnp/proofs/physical-model-freeze.md). Axiom audit: [`audit/AxiomAudit.lean`](audit/AxiomAudit.lean) (CI fails on any axiom beyond `propext`, `Classical.choice`, `Quot.sound`).
+Full report: [`pvnp/proofs/lean-completion-report-20261102.md`](../pvnp/proofs/lean-completion-report-20261102.md). Frozen physical model: [`pvnp/proofs/physical-model-freeze.md`](../pvnp/proofs/physical-model-freeze.md). Axiom audit: [`audit/AxiomAudit.lean`](audit/AxiomAudit.lean) (CI fails on any axiom beyond `propext`, `Classical.choice`, `Quot.sound`).
 
 **#11 — PROVED for the frozen discrete model.** `DiscreteMachines` defines an ordinary finite single-tape TM and a finite quiescent radius-one WCC on `ℤ`, a shared first-answer decision semantics, and `P_TM`, `P_WCC`, `NP_TM`, `NP_WCC` with explicit polynomial time and witness bounds. `TMtoWCC` proves exact real-time simulation for every transition case; `WCCtoTM` builds an explicit alternating shifted-sweep TM with time `1 + (T+1)(n+2T+5)`; `ComplexityEquivalence` derives `P_WCC_eq_P_TM`, `NP_WCC_eq_NP_TM` and `p_vs_np_discrete_transfer`. `MachineSerialization` gives a flat binary machine code with verified round trip, canonical rejection, injectivity and size bound, and normalizes every TM to a serializable table. Not formalized: radius-`r`/`d`-dimensional lattices, non-local poly-time encoders, a universal TM.
 
@@ -145,7 +145,7 @@ Full report: [`pvnp/proofs/astra-completion-report.md`](../pvnp/proofs/astra-com
 
 No classical `P ≠ NP`, physical class separation, or universal SAT lower bound is claimed.
 
-### Second ASTRA tranche (2 November 2026)
+### Second Lean verification tranche (2 November 2026)
 
 - `PSubsetNP`: explicit pair-parsing, witness-erasing, odd-cell simulating TM; **`P_TM_subset_NP_TM`**, **`P_WCC_subset_NP_WCC`** (Part III `thm:p-in-np` unconditional for the discrete classes).
 - `FourierTorusReceiver`: the receiver is the list of Fourier coefficients of a field in `L²(𝕋^d)`; Bessel from Mathlib's Parseval; `torus_receiver_packing`, `torus2_bandlimited_packing`.

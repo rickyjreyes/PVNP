@@ -172,6 +172,11 @@ lattice and input-state writers run in
 polynomial single-tape time (Part II II-10).
 Generic class equivalence does not complete
 that particular construction.
+\emph{Addendum, 12 November 2026:} both writer
+proofs now exist in Lean
+(\nolinkurl{TwoPhasePolynomialWriter.originalWindowCode_fp},
+\nolinkurl{TwoPhasePolynomialWriter.originalInputCode_fp}),
+and II-10 is Exact.
 
 \paragraph{What the SAT and curvature results establish.}
 The $\psi$-SAT logical penalty
@@ -425,6 +430,19 @@ The proposed physical lock tests whether local phase gradients decay and
 intensity reaches a local maximum. Its equivalence to SAT remains open (I-3).
 The formula-dependent logical penalty in Section~\ref{sec:psi-sat-corrected}
 has a proved witness criterion.
+\emph{Addendum, 14 November 2026.}  I-3 is now Restricted.  As a static
+test in the sign-blind encoding the criterion is exact: a formula is
+satisfiable if and only if the ground energy is $0$, and preparing each
+of the $2^n$ binary phase configurations and reading the energy decides
+satisfiability (\nolinkurl{SATDynamics.sat_iff_corner_sweep}).  As a
+dynamical test it fails: a satisfiable formula has a false energy well
+that traps every energy-nonincreasing evolution of unit fields for all
+time (\nolinkurl{SATDynamics.energy_monotone_trapped}), and for every
+formula-independent binary preparation some satisfiable formula is never
+detected by energy descent
+(\nolinkurl{SATDynamics.no_corner_preparation_decides}).  A physical
+decider with polynomial resources and a resource-preserving Turing
+simulation would place SAT in $P_{\mathrm{TM}}$.
 
 % ============================
 % Complexity Class Definitions
@@ -2523,6 +2541,33 @@ For all admissible fields used by a specified class of machines,
 $\Phi(\psi)\ge\kappa_0\mathcal H^{d-1}(\partial\mathcal R_\psi)$
 with $\kappa_0>0$ independent of the input length and encoding.
 \end{hypothesis}
+\begin{remark}[Addendum, 12 November 2026: the hypothesis fails on growing tori]
+\label{rem:separator-price-fails}
+In the frozen model the field lives on a torus of side $L_n$.
+The exact solution $\psi(t,x)=A\,e^{i(2\pi x_1/L-\omega t)}$ of the
+frozen equation has the same amplitude $|A|$ for every $L$, so its
+quadrature readout $\operatorname{Re}\psi$ reaches $\pm|A|$ with a fixed
+margin.  For every curvature operator with $|\Theta[\psi]|\le c|\Delta\psi|$,
+including $\Delta$ and the operator $\Theta_\varepsilon$ of Part III,
+\[
+ \Phi(\psi_t)\le 4\pi^2|A|^2+16\pi^4c^2|A|^2/L^2,
+\]
+while the frontier of $\{\operatorname{Re}\psi_t>0\}$ in the
+fundamental domain has Euclidean length at least $L$, at every time.
+Hence no $\kappa_0>0$ independent of the input length exists for the
+frozen trajectory class
+(\nolinkurl{SeparatorFrozen.no_uniform_separator_price}).  These
+fields are used by an admissible decider whose encoder writes the
+decision bit as the sign of $A$
+(\nolinkurl{SeparatorFrozen.stripe_device_violates}), and a modulus
+readout fails in the same way
+(\nolinkurl{SeparatorFrozen.no_uniform_price_modulus}).  What
+survives is a width-dependent price: a transition from $\le-\eta$ to
+$\ge\eta$ across width $w$ costs at least $4\eta^2/w$ per unit
+length, and this is sharp (\nolinkurl{SeparatorFrozen.layer_price}).
+A uniform $\kappa_0$ therefore requires a uniform bound on transition
+widths, as in the mesh price below.
+\end{remark}
 \begin{hypothesis}[Encoding-uniform expander interface growth]
 \label{prop:locked-expander-full}
 For every permitted decider and encoding of a hard-instance family,
@@ -2530,6 +2575,17 @@ there is a worst-case input whose \emph{required} field trajectory
 incurs separator measure at least $c_0 2^{\gamma n}$ with constants
 independent of the algorithm.
 \end{hypothesis}
+\begin{remark}[Addendum, 12 November 2026: the expander hypothesis is as hard as $P\ne NP$]
+The charged constant devices of the frozen model, whose encoder writes a
+polynomial-time decision bit as a spatially constant amplitude, have no
+decision interface at any time.  Consequently, for dense SAT in the class
+of these devices the hypothesis above is equivalent to
+$P_{\mathrm{TM}}\ne NP_{\mathrm{TM}}$, and in every device class
+containing them it implies $P_{\mathrm{TM}}\ne NP_{\mathrm{TM}}$
+(\nolinkurl{ExpanderInterface.expanderGrowth_SAT_iff},
+\nolinkurl{ExpanderInterface.expanderGrowth_implies_P_ne_NP}).  For a
+language decidable in polynomial time it is false.
+\end{remark}
 Neither hypothesis follows merely from graph expansion or from
 counting disconnected truth assignments. An expander on $\Theta(n)$
 vertices has only $O(n)$ edges at bounded degree; an exponential
@@ -2735,6 +2791,76 @@ In this framework, a \emph{toroidal locking witness} for a
 toroidal $\psi$--electron structure whose phase-locking and flux
 constraints correspond to the satisfaction of all clauses. Nonexistence
 of such a locking configuration is equivalent to unsatisfiability.
+\emph{Addendum, 12 November 2026.}  The locking constraints are not
+defined here, so this sentence is not a theorem.  For the frozen
+dynamics there is an obstruction: the flow is time-reversible, so a
+solution that converges to a nonempty, Lyapunov-stable lock set that is
+invariant under complex conjugation already starts in that set
+(\nolinkurl{Torus.no_locking}).  This covers the phase orbit of every
+binary-phase state.  A robust locking realization therefore needs
+dissipative or forced dynamics.
+\emph{Addendum, 13 November 2026.}  Define the structure on the
+configuration torus $|\psi_i|=1$ of an interwoven field, one unit
+amplitude per variable: the phase-locking constraints are the clause
+penalties of the $\psi$-SAT energy, and the flux constraints are the
+coupling and curvature energies of the squared field $\psi_i^2$ on the
+clause interaction graph.  A locking configuration is a point at which
+all of them vanish.  With these definitions, nonexistence of a locking
+configuration is equivalent to unsatisfiability, for every formula
+(\nolinkurl{InterwovenSAT.toroidal_locking_iff_unsat}).  With
+sign-sensitive flux constraints (coupling of $\psi_i$ itself) the
+equivalence fails for a satisfiable two-variable formula whose clauses
+need opposite phases (\nolinkurl{InterwovenSAT.naive_toroidal_locking_fails}).
+For any nonnegative flux energy the equivalence holds exactly when the
+energy vanishes on some satisfying configuration of every satisfiable
+formula (\nolinkurl{InterwovenSAT.locks_iff_sat_iff}).  The statement is
+proved for this configuration-space structure, not for a spatial
+$\psi$--electron field, and it says nothing about reaching a lock.
+\emph{Addendum, 14 November 2026.}  The structure is now realized on the
+spatial torus of side $L$ of the frozen equation.  A field
+$\Psi=(\psi_0,\psi_1,\dots)$ of frozen-torus $H^2$ states, with $\psi_0$
+the reference ($\psi$--electron) component and $\psi_{i+1}$ carrying
+variable $i$, is a locking configuration when $|\psi_i|=1$ at every
+point, the local density of the clause penalties and of the coupling
+and curvature of the squared relative field
+$\psi_{i+1}\overline{\psi_0}$ vanishes at every point, and every
+component has zero gradient energy.  With these definitions a locking
+configuration exists if and only if the formula is satisfiable, for
+every formula, every $L>0$ and all nonnegative coupling and curvature
+strengths (\nolinkurl{SpatialLocking.sat_iff_locked}).  The locks are
+the constant fields with satisfying relative phases.  The frozen
+evolution keeps them locked with vanishing Laplacian for all times, and
+for $\kappa\le 0$, $\beta\le 0<\gamma$ no frozen trajectory approaches
+a lock from outside (\nolinkurl{SpatialLocking.no_attracting_locks}).
+The sentence above is therefore proved (I-37 is Exact); reaching a lock
+is a separate question, answered negatively for the frozen flow.
+\paragraph{Phase XXIII scope audit, 14 November 2026.}
+The previous Exact classification applies only to the revised definition.
+Here the reference component is explicitly
+$\psi_0(x)=\operatorname{field}_L(\operatorname{co}_L(\Psi(0)))(x)$;
+the variable components use $\psi_{i+1}\overline{\psi_0}$.
+Zero gradient energy forces all components to be spatially constant.
+No charge, spin, nonzero winding, localization, or identification with
+an independently defined electron model is established. I-37 is therefore
+Restricted at original scope; the revised static equivalence remains proved.
+Existence of a satisfying lock does not provide its preparation algorithm.
+For I-3, continuous forcing from the false corner must raise the normalized
+encoding energy by at least $1/16$ before successful readout
+(\nolinkurl{SATDynamics.readout_requires_energy_excursion}).
+A sharper sum-of-squares argument gives the exact optimal peak $32/25$:
+every successful continuous escape crosses that energy, and the explicit
+common-phase command $\psi_i(t)=e^{i\pi(1-t)}$ reaches zero energy at
+time one without exceeding it, with zero graph curvature
+(\nolinkurl{SATDynamics.readout_requires_sharp_peak},
+\nolinkurl{SATDynamics.escape_energy_bound}). This is a controlled path
+for the fixed false-well instance, not a general SAT solver.
+For I-11, finite Fourier vector fields converge pointwise, with separate
+input and nonlinear-output tail errors
+(\nolinkurl{TorusGalerkin.galerkin_consistent}). An $H^2$ norm bound alone
+admits no uniform finite cutoff in $H^2$
+(\nolinkurl{TorusGalerkin.no_uniform_H2_cutoff}); this is not a lower bound
+against all numerical representations or weaker-norm simulations.
+
 \subsection{Discrete Equivalence with Classical $P$ and $NP$}
 \label{sec:discrete-equivalence}
 The following statements concern \emph{uniform finite-state local-update}
