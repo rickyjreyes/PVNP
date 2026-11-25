@@ -63,7 +63,10 @@ part supplement-fixed-mass-nodal-coercivity supplement
 sources+=(pvnp/papers/consolidated-wave-computation/main.tex)
 cp "$ROOT/pvnp/papers/consolidated-wave-computation/main.tex" "$STAGE/main.tex"
 compile "$STAGE" "$STAGE" consolidated
-OUTPUT="$ROOT/pvnp/preprints/consolidated-wave-computation/paper.pdf"
+# Callers performing a full release gate can set PVNP_PDF_OUTPUT to a staging path.
+# The default direct-build interface remains backward compatible.
+OUTPUT="${PVNP_PDF_OUTPUT:-$ROOT/pvnp/preprints/consolidated-wave-computation/paper.pdf}"
+mkdir -p "$(dirname "$OUTPUT")"
 install -m 0644 "$STAGE/main.pdf" "$OUTPUT"
 if [[ -n "$REVIEW" ]]; then
   cp "$OUTPUT" "$REVIEW/pdfs/consolidated.pdf"
