@@ -1256,3 +1256,11 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.GalerkinTaylor.gronE_le
 #print axioms PVNP.GalerkinTaylor.integrator_error
 #print axioms PVNP.GalerkinTaylor.certified_integrator
+
+-- Phase XXVIII: spatial mode counts.
+#print axioms PVNP.TorusGalerkin.weighted_tail
+#print axioms PVNP.TorusGalerkin.analytic_tail
+#print axioms PVNP.TorusGalerkin.gronwallBound_le
+#print axioms PVNP.TorusGalerkin.analytic_mode_count
+#print axioms PVNP.TorusGalerkin.sobolev_count_lower
+#print axioms PVNP.TorusGalerkin.galerkin_error_of_tail

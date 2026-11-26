@@ -293,3 +293,5 @@ import PVNP.GalerkinTaylorNorm
 import PVNP.GalerkinTaylorSeries
 -- Phase XXVIII: certified multi-step Taylor integrator for the frozen Galerkin flow.
 import PVNP.TaylorIntegrator
+-- Phase XXVIII: spatial mode counts, analytic versus Sobolev tails.
+import PVNP.SpatialModeCount
