@@ -281,3 +281,5 @@ import PVNP.FiniteDetector
 import PVNP.RestrictedResourceBudget
 
 import PVNP.SidebandAmplification
+-- Phase XXVI: exponential sensitivity is not exponential cost (Taylor terms linear in bits and growth).
+import PVNP.ExpTaylorAmplification
