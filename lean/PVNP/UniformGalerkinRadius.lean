@@ -20,6 +20,7 @@ theorem kinetic_norm_bound (L κ : ℝ) (v : ℓ2) :
     (g := fun k => (|κ| + 1) * ‖v k‖)
     (by simpa only [mul_pow] using (summable_sq v).mul_left ((|κ|+1)^2))
     (fun k => by
+      beta_reduce
       rw [Ac, dmul_apply, norm_mul]
       exact mul_le_mul_of_nonneg_right (norm_Ac_sym_le L κ k) (norm_nonneg _))
   calc
@@ -35,7 +36,8 @@ theorem potBudget_nonneg (L β γ B : ℝ) : 0 ≤ potBudget L β γ B := by
   positivity
 
 theorem potential_zero (L β γ : ℝ) : pot L β γ 0 = 0 := by
-  simp [pot, co_zero, field, nfun]
+  have hf : ∀ x, Torus.field L 0 x = 0 := fun x => by simp [Torus.field]
+  simp [pot, co_zero, hf, nfun]
 
 /-- Taylor at zero gives a convenient, not sharp, polynomial energy budget. -/
 theorem potential_upper {L : ℝ} (hL : 0 < L) (β γ : ℝ) {v : ℓ2} {B : ℝ}
@@ -116,10 +118,14 @@ theorem weak_readout_error {L κ β γ R K T : ℝ} (hL : 0 < L)
   have h1 := norm_Lc_le L (U L κ T (W T))
   have h2 := norm_Lc_le L (U L κ T (w T))
   rw [norm_U] at h1 h2
-  have hsum : ‖Lc L (U L κ T (W T))‖ + ‖Lc L (U L κ T (w T))‖ ≤ 2*R := by
+  have h1' := norm_Lc_le L (W T)
+  have hsum : ‖Lc L (W T)‖ + ‖Lc L (U L κ T (w T))‖ ≤ 2*R := by
     linarith [hbW T, hbw T]
+  have he' : ‖Lc L (U L κ T (W T - w T))‖ ≤
+      gronwallBound (R/K) (LF L β γ R) (LF L β γ R * R/K) T := by
+    rw [Lc_U, norm_U]; exact he
   exact h.trans (mul_le_mul
-    (mul_le_mul_of_nonneg_left hsum (Cdet_nonneg hL χ)) he
+    (mul_le_mul_of_nonneg_left hsum (Cdet_nonneg hL χ)) he'
     (norm_nonneg _) (mul_nonneg (Cdet_nonneg hL χ) (by positivity)))
 
 

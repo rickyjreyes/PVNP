@@ -1142,6 +1142,7 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.SidebandAmplification.sideband_energy_deriv
 #print axioms PVNP.SidebandAmplification.sideband_energy_conserved
 #print axioms PVNP.SidebandAmplification.stable_sideband_bound
+#print axioms PVNP.SidebandAmplification.stable_sideband_ratio_bound
 #print axioms PVNP.SidebandAmplification.stable_background_coefficients
 #print axioms PVNP.SidebandAmplification.unstable_sideband_iff
 #print axioms PVNP.SidebandAmplification.detector_directional_expansion

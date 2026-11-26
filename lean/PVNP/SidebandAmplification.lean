@@ -18,15 +18,15 @@ def discriminant (κ q a β γ : ℝ) : ℝ :=
   -H κ q * (H κ q + 2*c a β γ)
 
 theorem growing_rate {h g : ℝ} (hu : 0 < -h*(h+2*g)) :
-    ∃ λ : ℝ, 0 < λ ∧ λ^2 = -h*(h+2*g) := by
+    ∃ r : ℝ, 0 < r ∧ r^2 = -h*(h+2*g) := by
   exact ⟨Real.sqrt (-h*(h+2*g)), Real.sqrt_pos.2 hu,
     Real.sq_sqrt hu.le⟩
 
-theorem eigenvector {h g λ : ℝ} (hλ : λ^2 = -h*(h+2*g)) :
-    h*λ = λ*h ∧ -(h+2*g)*h = λ*λ := by
+theorem eigenvector {h g r : ℝ} (hr : r^2 = -h*(h+2*g)) :
+    h*r = r*h ∧ -(h+2*g)*h = r*r := by
   constructor
   · ring
-  · nlinarith only [hλ]
+  · nlinarith only [hr]
 
 theorem explicit_growing_sideband :
     H 0 1 = 1 ∧ c 1 2 (1/2) = -1 ∧
@@ -37,7 +37,10 @@ theorem exponential_solution (t : ℝ) :
     HasDerivAt (fun s : ℝ => Real.exp s) (H 0 1 * Real.exp t) t ∧
     HasDerivAt (fun s : ℝ => Real.exp s)
       (-(H 0 1 + 2*c 1 2 (1/2))*Real.exp t) t := by
-  constructor <;> simpa [H,c] using Real.hasDerivAt_exp t
+  have h1 : H 0 1 = 1 := by norm_num [H]
+  have h2 : -(H 0 1 + 2*c 1 2 (1/2)) = 1 := by norm_num [H, c]
+  rw [h2, h1, one_mul]
+  exact ⟨Real.hasDerivAt_exp t, Real.hasDerivAt_exp t⟩
 
 
 open Complex PVNP.Torus PVNP.WCTSATDevice
@@ -59,8 +62,10 @@ theorem rotated_fnl_deriv (a β γ : ℝ) (z : ℂ) :
   have h := (h3.add h5).sub hphase
   convert h using 1
   · funext e
-    simp only [fnl, map_add, map_mul, Complex.conj_ofReal]
-  · simp only [Complex.ofReal_zero, zero_mul, add_zero, one_mul]
+    simp only [fnl, map_add, map_mul, Complex.conj_ofReal, Pi.add_apply, Pi.sub_apply,
+      Pi.mul_apply]
+    try ring
+  · simp only [Pi.mul_apply, Complex.ofReal_zero, zero_mul, add_zero, one_mul]
     unfold c
     push_cast
     ring
@@ -127,6 +132,20 @@ theorem stable_sideband_bound {h g : ℝ} {x y : ℝ → ℝ}
         (mul_le_mul_of_nonneg_right (le_max_left _ _) (sq_nonneg _))
 
 
+/-- **Uniform-in-time sideband bound.** With both quadratic coefficients positive, the
+sideband amplitude stays bounded for all time by the ratio of the extreme coefficients:
+no exponential growth occurs in the linear stable regime. -/
+theorem stable_sideband_ratio_bound {h g : ℝ} {x y : ℝ → ℝ}
+    (hh : 0 < h) (hg : 0 < h+2*g)
+    (hx : ∀ t, HasDerivAt x (h*y t) t)
+    (hy : ∀ t, HasDerivAt y (-(h+2*g)*x t) t) (t : ℝ) :
+    (x t)^2+(y t)^2 ≤
+      (max h (h+2*g) / min h (h+2*g))*((x 0)^2+(y 0)^2) := by
+  have hmin : 0 < min h (h+2*g) := lt_min hh hg
+  have hb := stable_sideband_bound hh hg hx hy t
+  rw [div_mul_eq_mul_div, le_div_iff₀ hmin]
+  linarith [mul_comm (min h (h+2*g)) ((x t)^2+(y t)^2)]
+
 /-- All nonzero q have positive-definite sideband energy under
 these sufficient background conditions. This is linear stability,
 not global nonlinear stability. -/
@@ -144,7 +163,13 @@ theorem stable_background_coefficients {κ q a β γ : ℝ}
 theorem unstable_sideband_iff {h g : ℝ} (hh : 0 < h) :
     0 < -h*(h+2*g) ↔ h+2*g < 0 := by
   rw [neg_mul, neg_pos]
-  exact mul_neg_iff_of_pos_left hh
+  constructor
+  · intro hlt
+    by_contra hge
+    push_neg at hge
+    exact absurd hlt (not_lt.2 (mul_nonneg hh.le hge))
+  · intro hlt
+    exact mul_neg_of_pos_of_neg hh hlt
 
 /-- Exact quadratic detector expansion for a real directional
 perturbation. It uses the original physical Jdet. -/

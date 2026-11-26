@@ -154,8 +154,8 @@ theorem galerkin_euler_defect {L κ β γ R M N : ℝ} (hL : 0 < L)
     have habs : |s-a| ≤ h := by
       rw [abs_of_nonneg (sub_nonneg.mpr hs.1)]
       linarith [hs.2]
-    have hs1 := galerkin_lipschitz hL S s (hb s) (hb a)
-    have hs2 := galerkin_time_modulus hL hR hM hN S hm hn (hb a) s a
+    have hs1 := galerkin_lipschitz (κ := κ) (β := β) (γ := γ) hL S s (hb s) (hb a)
+    have hs2 := galerkin_time_modulus (β := β) (γ := γ) hL hR hM hN S hm hn (hb a) s a
     calc
       _ ≤ ‖galerkin S L κ β γ s (W s)-galerkin S L κ β γ s (W a)‖ +
         ‖galerkin S L κ β γ s (W a)-d‖ := norm_sub_le_norm_sub_add_norm_sub _ _ _
@@ -219,7 +219,7 @@ theorem rounded_galerkin_euler {L κ β γ R M Q h ξ δ b : ℝ}
       rw [norm_sub_rev]
       exact galerkin_euler_defect hL (add_nonneg hR hb) hM hQ S hm hq hd hW' t h hh
     have huv : ‖u-v‖ ≤ (1+A*h)*e i := by
-      have hg := galerkin_lipschitz hL S t (hxball i he) (hW' t)
+      have hg := galerkin_lipschitz (κ := κ) (β := β) (γ := γ) hL S t (hxball i he) (hW' t)
       have heq : u-v = (x i-W t)+h •
           (galerkin S L κ β γ t (x i)-galerkin S L κ β γ t (W t)) := by
         dsimp [u,v]; rw [smul_sub]; abel
@@ -242,7 +242,11 @@ theorem rounded_galerkin_euler {L κ β γ R M Q h ξ δ b : ℝ}
       _ = _ := by ring
   have h := rounded_step_bootstrap (e := e) N hδ hA hh
     (add_nonneg (mul_nonneg hD (sq_nonneg h)) hξ)
-    (by simpa [e] using h0) hstep hbudget
+    (by
+      have hz : ((0:ℕ):ℝ) * h = 0 := by rw [Nat.cast_zero, zero_mul]
+      show ‖x 0 - W (((0:ℕ):ℝ) * h)‖ ≤ δ
+      rw [hz]
+      exact h0) hstep hbudget
   intro i hi
   exact ⟨(h i hi).1,hxball i (h i hi).2⟩
 
