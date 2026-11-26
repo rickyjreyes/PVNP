@@ -1036,3 +1036,114 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TorusGalerkin.exists_convergent_clipped
 #print axioms PVNP.TorusGalerkin.exists_convergent_galerkin
 #print axioms PVNP.TorusGalerkin.frozen_galerkin_approximation
+
+-- Phase XXV: exact finite residual evaluation
+#print axioms PVNP.TorusGalerkin.trunc_supported
+#print axioms PVNP.TorusGalerkin.supported_trunc_eq
+#print axioms PVNP.TorusGalerkin.support_mono
+#print axioms PVNP.TorusGalerkin.support_U
+#print axioms PVNP.TorusGalerkin.support_smul
+#print axioms PVNP.TorusGalerkin.support_add
+#print axioms PVNP.TorusGalerkin.support_conj
+#print axioms PVNP.TorusGalerkin.support_mulH
+#print axioms PVNP.TorusGalerkin.support_Fnl
+#print axioms PVNP.TorusGalerkin.support_Gf
+#print axioms PVNP.TorusGalerkin.finite_nonlinear_field
+#print axioms PVNP.TorusGalerkin.finite_residual_sq
+#print axioms PVNP.TorusGalerkin.finite_pr
+
+-- Phase XXV: time-slab certification
+#print axioms PVNP.TorusGalerkin.finite_U_increment
+#print axioms PVNP.TorusGalerkin.finite_U_time_modulus
+#print axioms PVNP.TorusGalerkin.finite_Gf_time_modulus
+#print axioms PVNP.TorusGalerkin.affine_slab_residual
+
+-- Effective weak-norm consistency
+#print axioms PVNP.TorusGalerkin.weak_projection_tail
+#print axioms PVNP.TorusGalerkin.weak_detector_lipschitz
+#print axioms PVNP.TorusGalerkin.weak_detector_cutoff
+#print axioms PVNP.TorusGalerkin.weak_mulH_comm
+#print axioms PVNP.TorusGalerkin.weak_mul_bound
+#print axioms PVNP.TorusGalerkin.weak_conj_norm
+#print axioms PVNP.TorusGalerkin.weak_lip_mul
+#print axioms PVNP.TorusGalerkin.weak_Fnl_sub_le
+#print axioms PVNP.TorusGalerkin.weak_Gf_sub_le
+#print axioms PVNP.TorusGalerkin.weak_consistency_bound
+
+-- Finite Galerkin conservation and global existence
+#print axioms PVNP.TorusGalerkin.trunc_co
+#print axioms PVNP.TorusGalerkin.trunc_comm_U
+#print axioms PVNP.TorusGalerkin.trunc_smul
+#print axioms PVNP.TorusGalerkin.supported_inner_Lc
+#print axioms PVNP.TorusGalerkin.supported_inner_Ac
+#print axioms PVNP.TorusGalerkin.projected_inner_Lc_self
+#print axioms PVNP.TorusGalerkin.U_galerkin
+#print axioms PVNP.TorusGalerkin.galerkin_mass_deriv
+#print axioms PVNP.TorusGalerkin.galerkin_ham_deriv
+#print axioms PVNP.TorusGalerkin.galerkin_conserved
+#print axioms PVNP.TorusGalerkin.galerkin_apriori
+#print axioms PVNP.TorusGalerkin.exists_global_galerkin
+
+-- Effective global weak comparison
+#print axioms PVNP.TorusGalerkin.Lc_injective
+#print axioms PVNP.TorusGalerkin.weakLift_Lc
+#print axioms PVNP.TorusGalerkin.weakField_Lc
+#print axioms PVNP.TorusGalerkin.weakField_lipschitz
+#print axioms PVNP.TorusGalerkin.weak_trajectory_error
+#print axioms PVNP.TorusGalerkin.weak_galerkin_residual
+#print axioms PVNP.TorusGalerkin.weak_galerkin_global_error
+
+-- Cutoff-independent radius and detector error
+#print axioms PVNP.TorusGalerkin.kinetic_norm_bound
+#print axioms PVNP.TorusGalerkin.potBudget_nonneg
+#print axioms PVNP.TorusGalerkin.potential_zero
+#print axioms PVNP.TorusGalerkin.potential_upper
+#print axioms PVNP.TorusGalerkin.initial_energy_upper
+#print axioms PVNP.TorusGalerkin.uniformRadius_nonneg
+#print axioms PVNP.TorusGalerkin.initial_radius_upper
+#print axioms PVNP.TorusGalerkin.exists_uniform_galerkin
+#print axioms PVNP.TorusGalerkin.weak_readout_error
+#print axioms PVNP.TorusGalerkin.gronwall_proportional_le
+#print axioms PVNP.TorusGalerkin.exists_certified_galerkin_readout
+#print axioms PVNP.TorusGalerkin.detector_margin_from_cutoff
+#print axioms PVNP.TorusGalerkin.detector_decision_preserved
+
+-- Rounded Euler resource and radius certificates
+#print axioms PVNP.TorusGalerkin.stepEnvelope_nonneg
+#print axioms PVNP.TorusGalerkin.stepEnvelope_mono
+#print axioms PVNP.TorusGalerkin.stepEnvelope_succ
+#print axioms PVNP.TorusGalerkin.rounded_step_bootstrap
+#print axioms PVNP.TorusGalerkin.rounded_step_budget
+#print axioms PVNP.TorusGalerkin.galerkin_time_modulus
+#print axioms PVNP.TorusGalerkin.galerkin_speed
+#print axioms PVNP.TorusGalerkin.galerkin_euler_defect
+#print axioms PVNP.TorusGalerkin.rounded_galerkin_euler
+
+-- Exact finite detector
+#print axioms PVNP.TorusGalerkin.finite_detector_sum
+#print axioms PVNP.TorusGalerkin.finite_detector_dependence
+#print axioms PVNP.TorusGalerkin.finite_detector_free_sum
+
+-- Restricted resource envelopes and promise totality
+#print axioms PVNP.RestrictedResourceBudget.cutoff_weight_lower
+#print axioms PVNP.RestrictedResourceBudget.spatial_budget
+#print axioms PVNP.RestrictedResourceBudget.step_count_budget
+#print axioms PVNP.RestrictedResourceBudget.interval_decision_total
+#print axioms PVNP.RestrictedResourceBudget.expanded_interval_width
+#print axioms PVNP.RestrictedResourceBudget.expanded_interval_sound
+
+-- Sideband amplification algebra
+#print axioms PVNP.SidebandAmplification.growing_rate
+#print axioms PVNP.SidebandAmplification.eigenvector
+#print axioms PVNP.SidebandAmplification.explicit_growing_sideband
+#print axioms PVNP.SidebandAmplification.exponential_solution
+#print axioms PVNP.SidebandAmplification.rotated_fnl_deriv
+#print axioms PVNP.SidebandAmplification.actual_field_first_variation
+#print axioms PVNP.SidebandAmplification.sideband_energy_deriv
+#print axioms PVNP.SidebandAmplification.sideband_energy_conserved
+#print axioms PVNP.SidebandAmplification.stable_sideband_bound
+#print axioms PVNP.SidebandAmplification.stable_sideband_ratio_bound
+#print axioms PVNP.SidebandAmplification.stable_background_coefficients
+#print axioms PVNP.SidebandAmplification.unstable_sideband_iff
+#print axioms PVNP.SidebandAmplification.detector_directional_expansion
+#print axioms PVNP.SidebandAmplification.detector_directional_deriv
