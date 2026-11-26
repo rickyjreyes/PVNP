@@ -285,3 +285,13 @@ import PVNP.SidebandAmplification
 import PVNP.ExpTaylorAmplification
 -- Phase XXVII: exact finite-bit evaluation of the exponential partial sum (polynomial sizes).
 import PVNP.ExpTaylorBits
+-- Phase XXVIII: majorant bounds for cubic–quintic Taylor recursions (temporal analyticity radius).
+import PVNP.TaylorMajorant
+-- Phase XXVIII: the frozen nonlinearity obeys the cubic–quintic Taylor majorant.
+import PVNP.GalerkinTaylorNorm
+-- Phase XXVIII: the actual Galerkin trajectory is the sum of its Taylor series.
+import PVNP.GalerkinTaylorSeries
+-- Phase XXVIII: certified multi-step Taylor integrator for the frozen Galerkin flow.
+import PVNP.TaylorIntegrator
+-- Phase XXVIII: spatial mode counts, analytic versus Sobolev tails.
+import PVNP.SpatialModeCount

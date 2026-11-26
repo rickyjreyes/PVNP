@@ -1168,3 +1168,99 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.ExpTaylorBits.round_error
 #print axioms PVNP.ExpTaylorBits.exp_dyadic_approx
 #print axioms PVNP.ExpTaylorBits.dyadic_num_le
+
+-- Phase XXVIII: cubic–quintic Taylor majorant.
+#print axioms PVNP.TaylorMajorant.wt_pos
+#print axioms PVNP.TaylorMajorant.wt_zero
+#print axioms PVNP.TaylorMajorant.cauchy_nonneg
+#print axioms PVNP.TaylorMajorant.sum_wt_le
+#print axioms PVNP.TaylorMajorant.sum_wt_le_two
+#print axioms PVNP.TaylorMajorant.wt_mul_le
+#print axioms PVNP.TaylorMajorant.weighted_conv_le
+#print axioms PVNP.TaylorMajorant.cauchy_bound
+#print axioms PVNP.TaylorMajorant.powers_bound
+#print axioms PVNP.TaylorMajorant.wt_step
+#print axioms PVNP.TaylorMajorant.majorant
+#print axioms PVNP.TaylorMajorant.taylor_term_le
+#print axioms PVNP.TaylorMajorant.taylor_tail_le
+
+-- Phase XXVIII: norm reduction of the actual nonlinearity to the Taylor majorant.
+#print axioms PVNP.GalerkinTaylor.cauchy_comm
+#print axioms PVNP.GalerkinTaylor.cauchy_mono
+#print axioms PVNP.GalerkinTaylor.cauchy_smul_left
+#print axioms PVNP.GalerkinTaylor.norm_cauchyH_le
+#print axioms PVNP.GalerkinTaylor.norm_conjSeq
+#print axioms PVNP.GalerkinTaylor.nseq_nonneg
+#print axioms PVNP.GalerkinTaylor.cauchyH_step
+#print axioms PVNP.GalerkinTaylor.norm_fnlCoeff_le
+#print axioms PVNP.GalerkinTaylor.galerkin_taylor_majorant
+
+-- Phase XXVIII: identification of the actual Galerkin trajectory with its Taylor series.
+#print axioms PVNP.GalerkinTaylor.hasSum_mulH
+#print axioms PVNP.GalerkinTaylor.real_smul_eq
+#print axioms PVNP.GalerkinTaylor.mulH_real_smul
+#print axioms PVNP.GalerkinTaylor.hasSum_mulH_pow
+#print axioms PVNP.GalerkinTaylor.conjH_add
+#print axioms PVNP.GalerkinTaylor.conjH_real_smul
+#print axioms PVNP.GalerkinTaylor.hasSum_conjSeq
+#print axioms PVNP.GalerkinTaylor.sum_range_wt_le_two
+#print axioms PVNP.GalerkinTaylor.summable_wt
+#print axioms PVNP.GalerkinTaylor.tsum_wt_le_two
+#print axioms PVNP.GalerkinTaylor.norm_pow_smul_le
+#print axioms PVNP.GalerkinTaylor.Dom.summable
+#print axioms PVNP.GalerkinTaylor.Dom.hasSum
+#print axioms PVNP.GalerkinTaylor.Dom.cprod
+#print axioms PVNP.GalerkinTaylor.Dom.conj
+#print axioms PVNP.GalerkinTaylor.hasSum_Fnl
+#print axioms PVNP.GalerkinTaylor.om_nonneg
+#print axioms PVNP.GalerkinTaylor.omSum_nonneg
+#print axioms PVNP.GalerkinTaylor.om_le_omSum
+#print axioms PVNP.GalerkinTaylor.norm_omMul_le
+#print axioms PVNP.GalerkinTaylor.Aop_apply
+#print axioms PVNP.GalerkinTaylor.norm_Aop_le
+#print axioms PVNP.GalerkinTaylor.hasDerivAt_phys
+#print axioms PVNP.GalerkinTaylor.pre_eq_coeff
+#print axioms PVNP.GalerkinTaylor.coeff_zero
+#print axioms PVNP.GalerkinTaylor.cauchyH_congr
+#print axioms PVNP.GalerkinTaylor.fnlCoeff_congr
+#print axioms PVNP.GalerkinTaylor.rhs_congr
+#print axioms PVNP.GalerkinTaylor.coeff_succ
+#print axioms PVNP.GalerkinTaylor.coeff_recursion
+#print axioms PVNP.GalerkinTaylor.coeff_dom
+#print axioms PVNP.GalerkinTaylor.rate_nonneg
+#print axioms PVNP.GalerkinTaylor.nat_mul_wt_le
+#print axioms PVNP.GalerkinTaylor.trunc_add
+#print axioms PVNP.GalerkinTaylor.truncL_apply
+#print axioms PVNP.GalerkinTaylor.real_smul_comm_I
+#print axioms PVNP.GalerkinTaylor.hasSum_rhs
+#print axioms PVNP.GalerkinTaylor.norm_deriv_term_le
+#print axioms PVNP.GalerkinTaylor.hasDerivAt_series
+#print axioms PVNP.GalerkinTaylor.series_zero
+#print axioms PVNP.GalerkinTaylor.norm_series_le
+#print axioms PVNP.GalerkinTaylor.series_solves
+#print axioms PVNP.GalerkinTaylor.physField_lipschitz
+#print axioms PVNP.GalerkinTaylor.galerkin_taylor_series
+#print axioms PVNP.GalerkinTaylor.taylor_poly_error
+#print axioms PVNP.GalerkinTaylor.radius_admissible
+#print axioms PVNP.GalerkinTaylor.actual_galerkin_taylor
+#print axioms PVNP.GalerkinTaylor.galerkin_trajectory_taylor
+
+-- Phase XXVIII: certified multi-step Taylor integrator.
+#print axioms PVNP.GalerkinTaylor.tail_of_dom
+#print axioms PVNP.GalerkinTaylor.tail_bound
+#print axioms PVNP.GalerkinTaylor.flowSeries_zero
+#print axioms PVNP.GalerkinTaylor.flowSeries_lipschitz
+#print axioms PVNP.GalerkinTaylor.step_error
+#print axioms PVNP.GalerkinTaylor.gronE_succ
+#print axioms PVNP.GalerkinTaylor.gronE_mono
+#print axioms PVNP.GalerkinTaylor.gronE_le
+#print axioms PVNP.GalerkinTaylor.integrator_error
+#print axioms PVNP.GalerkinTaylor.certified_integrator
+
+-- Phase XXVIII: spatial mode counts.
+#print axioms PVNP.TorusGalerkin.weighted_tail
+#print axioms PVNP.TorusGalerkin.analytic_tail
+#print axioms PVNP.TorusGalerkin.gronwallBound_le
+#print axioms PVNP.TorusGalerkin.analytic_mode_count
+#print axioms PVNP.TorusGalerkin.sobolev_count_lower
+#print axioms PVNP.TorusGalerkin.galerkin_error_of_tail
