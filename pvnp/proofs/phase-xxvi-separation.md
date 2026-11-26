@@ -144,6 +144,8 @@ bit-complexity theorem for the PDE, and it does not change I-11's classification
 ## Verification
 
 Local, Lean 4.23.0: `lake build PVNP` passed (7,420 jobs) and the new module compiles without
-warnings; the transitive axiom audit was still running when this was recorded (the hosted `lean`
-job runs the same audit). Dashboard (13 groups), status registry, manuscript-alignment and
+warnings. `lake env lean audit/AxiomAudit.lean` with `audit/check_axioms.py` passed for all 1,011
+registered declarations, the eight `ExpTaylor` theorems included, using only `propext`,
+`Classical.choice` and `Quot.sound`; no `sorryAx` occurs. The Lean tree is that of commit
+`3fd90d1`; later commits change documentation and generated dashboard data only. Dashboard (13 groups), status registry, manuscript-alignment and
 release-document checks pass.
