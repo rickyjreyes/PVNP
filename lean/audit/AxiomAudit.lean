@@ -1244,3 +1244,15 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.GalerkinTaylor.radius_admissible
 #print axioms PVNP.GalerkinTaylor.actual_galerkin_taylor
 #print axioms PVNP.GalerkinTaylor.galerkin_trajectory_taylor
+
+-- Phase XXVIII: certified multi-step Taylor integrator.
+#print axioms PVNP.GalerkinTaylor.tail_of_dom
+#print axioms PVNP.GalerkinTaylor.tail_bound
+#print axioms PVNP.GalerkinTaylor.flowSeries_zero
+#print axioms PVNP.GalerkinTaylor.flowSeries_lipschitz
+#print axioms PVNP.GalerkinTaylor.step_error
+#print axioms PVNP.GalerkinTaylor.gronE_succ
+#print axioms PVNP.GalerkinTaylor.gronE_mono
+#print axioms PVNP.GalerkinTaylor.gronE_le
+#print axioms PVNP.GalerkinTaylor.integrator_error
+#print axioms PVNP.GalerkinTaylor.certified_integrator

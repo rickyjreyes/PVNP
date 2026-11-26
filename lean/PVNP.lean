@@ -291,3 +291,5 @@ import PVNP.TaylorMajorant
 import PVNP.GalerkinTaylorNorm
 -- Phase XXVIII: the actual Galerkin trajectory is the sum of its Taylor series.
 import PVNP.GalerkinTaylorSeries
+-- Phase XXVIII: certified multi-step Taylor integrator for the frozen Galerkin flow.
+import PVNP.TaylorIntegrator
