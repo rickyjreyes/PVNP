@@ -1168,3 +1168,18 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.ExpTaylorBits.round_error
 #print axioms PVNP.ExpTaylorBits.exp_dyadic_approx
 #print axioms PVNP.ExpTaylorBits.dyadic_num_le
+
+-- Phase XXVIII: cubic–quintic Taylor majorant.
+#print axioms PVNP.TaylorMajorant.wt_pos
+#print axioms PVNP.TaylorMajorant.wt_zero
+#print axioms PVNP.TaylorMajorant.cauchy_nonneg
+#print axioms PVNP.TaylorMajorant.sum_wt_le
+#print axioms PVNP.TaylorMajorant.sum_wt_le_two
+#print axioms PVNP.TaylorMajorant.wt_mul_le
+#print axioms PVNP.TaylorMajorant.weighted_conv_le
+#print axioms PVNP.TaylorMajorant.cauchy_bound
+#print axioms PVNP.TaylorMajorant.powers_bound
+#print axioms PVNP.TaylorMajorant.wt_step
+#print axioms PVNP.TaylorMajorant.majorant
+#print axioms PVNP.TaylorMajorant.taylor_term_le
+#print axioms PVNP.TaylorMajorant.taylor_tail_le

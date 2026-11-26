@@ -285,3 +285,5 @@ import PVNP.SidebandAmplification
 import PVNP.ExpTaylorAmplification
 -- Phase XXVII: exact finite-bit evaluation of the exponential partial sum (polynomial sizes).
 import PVNP.ExpTaylorBits
+-- Phase XXVIII: majorant bounds for cubic–quintic Taylor recursions (temporal analyticity radius).
+import PVNP.TaylorMajorant
