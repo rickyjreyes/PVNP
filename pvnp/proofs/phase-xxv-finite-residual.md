@@ -441,3 +441,49 @@ a surrogate receiver. A rational regression compares actual Fourier
 field evaluations for symmetric positive and negative perturbations
 against the derivative formula at nonzero mode. Full verification
 of these additions is pending.
+
+
+## Kernel verification and completion (26 November 2026)
+
+All ten Phase XXV modules compile on Lean 4.23.0 with the pinned Mathlib. Seven needed no change:
+`FiniteNonlinearResidual`, `CertifiedIntegrator`, `WeakNormApproximation`, `GalerkinConservation`,
+`WeakGlobalComparison`, `FiniteDetector` and `RestrictedResourceBudget`. The remaining failures were
+elaboration problems; no theorem statement was changed.
+
+- `SidebandAmplification`: `λ` is a reserved keyword and cannot be a binder (renamed in
+  `growing_rate`, `eigenvector`). Numerals are now normalized explicitly in `exponential_solution`.
+  The `convert` goals of `rotated_fnl_deriv` left unapplied `Pi` arithmetic, now evaluated pointwise.
+  `mul_neg_iff_of_pos_left` is absent from the pinned Mathlib, so `unstable_sideband_iff` is proved
+  directly.
+- `UniformGalerkinRadius`: beta-reduction before `dmul_apply` (`kinetic_norm_bound`); `Torus.field`
+  disambiguated from Mathlib's `field` simproc (`potential_zero`); in `weak_readout_error` the norm
+  sum and the weak error bound are restated in the normal form the detector Lipschitz inequality
+  produces.
+- `RoundedStepBudget`: the implicit physical parameters of `galerkin_lipschitz` and
+  `galerkin_time_modulus` are now passed explicitly; a heartbeat-exhausting `simpa` over an ℓ² norm
+  is replaced by a direct rewrite of the zero time index (`rounded_galerkin_euler`).
+
+New theorem `SidebandAmplification.stable_sideband_ratio_bound`: if `h > 0` and `h + 2g > 0`, every
+solution of the linear sideband system satisfies
+`x(t)² + y(t)² ≤ (max(h, h+2g) / min(h, h+2g)) (x(0)² + y(0)²)` for all `t`. The earlier
+`stable_sideband_bound` holds without its positivity hypotheses (which it does not use) and is
+uninformative without them; the new theorem gives the uniform-in-time bound stated above.
+
+Statement review: each theorem's hypotheses are checkable certificates or physical assumptions
+(radius bounds, cutoff weights, real detector, per-step update defects). None embeds its conclusion.
+`exists_certified_galerkin_readout` is unconditional in the trajectory: it constructs the Galerkin
+trajectory and bounds the readout error from the initial H² bound alone. `RestrictedResourceBudget`
+contains scalar majorants only and is not a complexity theorem.
+
+Verification on the merged head (main through PR #108 merged into this branch): `lake build PVNP`
+passed (7,419 jobs); the local transitive axiom audit of all registered declarations was still
+running when this was recorded, and its result is appended below. The hosted `lean` job runs the
+same audit. The 13 rational Fourier regressions
+(`pvnp/tests/test_phase_xxv_rational_fourier.py`) pass.
+
+Classification: I-11 stays Restricted; its estimate moves from 55% to 65%, because two of its three
+recorded obligations — an effective tail bound along the trajectory and certified time
+discretization — are now kernel-checked in the weak norm that the detector uses. Still open:
+a formal bit-complexity (Turing-machine) implementation, and the regime where `LF(R_B)·T` is
+superlogarithmic. There, the sufficient mode and step counts are exponential and the linearized
+sideband modes give genuine exponential sensitivity, but no runtime lower bound is proved.
