@@ -289,3 +289,5 @@ import PVNP.ExpTaylorBits
 import PVNP.TaylorMajorant
 -- Phase XXVIII: the frozen nonlinearity obeys the cubic–quintic Taylor majorant.
 import PVNP.GalerkinTaylorNorm
+-- Phase XXVIII: the actual Galerkin trajectory is the sum of its Taylor series.
+import PVNP.GalerkinTaylorSeries
