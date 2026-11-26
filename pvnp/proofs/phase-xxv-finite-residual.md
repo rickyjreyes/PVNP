@@ -476,9 +476,10 @@ trajectory and bounds the readout error from the initial H² bound alone. `Restr
 contains scalar majorants only and is not a complexity theorem.
 
 Verification on the merged head (main through PR #108 merged into this branch): `lake build PVNP`
-passed (7,419 jobs); the local transitive axiom audit of all registered declarations was still
-running when this was recorded, and its result is appended below. The hosted `lean` job runs the
-same audit. The 13 rational Fourier regressions
+passed (7,419 jobs). `lake env lean audit/AxiomAudit.lean` with `audit/check_axioms.py` passed for
+all 1,003 registered declarations (every Phase XXV theorem included), using only `propext`,
+`Classical.choice` and `Quot.sound`; no `sorryAx` occurs. The Lean tree is that of merge commit
+`f057fec`; later commits change documentation and generated dashboard data only. The 13 rational Fourier regressions
 (`pvnp/tests/test_phase_xxv_rational_fourier.py`) pass.
 
 Classification: I-11 stays Restricted; its estimate moves from 55% to 65%, because two of its three
