@@ -41,4 +41,7 @@ Classical P versus NP remains unresolved, and I-2, I-16 and I-32 remain Open.
 
 ## Verification
 
-Pending: full build, transitive axiom audit, hosted CI.
+Local, Lean 4.23.0, Lean tree of commit `54939c9`: `lake build PVNP` passed (7,421 jobs). The
+transitive axiom audit passed for all 1,020 registered declarations, the nine `ExpTaylorBits`
+theorems included, using only `propext`, `Classical.choice` and `Quot.sound`; no `sorryAx` occurs.
+Hosted CI runs on the pull request.
