@@ -6,7 +6,7 @@ window.PVNP_DATA = {
  "inventory": {
   "path": "pvnp/proofs/manuscript-lean-inventory.md",
   "date": "2026-11-14",
-  "blob": "1dbe774551d2bad8efe55c8b2bea9bd456778638",
+  "blob": "a953b98ac7019c2c05e862449cd53f9ba7ebbac1",
   "url": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md",
   "table": {
    "parts": {
@@ -100,7 +100,7 @@ window.PVNP_DATA = {
   }
  },
  "lean": {
-  "tree": "f643da4ae3245704229e6924f5e5151489d40042",
+  "tree": "dc2b47e3470d2cc5c3e2aab833f7c0027ea03b22",
   "matches_verified": false,
   "links_ref": "main"
  },
@@ -140,7 +140,7 @@ window.PVNP_DATA = {
    "claim": "∃ verifiable non-constructible ψ* under WCT rails",
    "lean": "`NonconstructibleFamily.unrestricted_family_separation`, `NonconstructibleFamily.npFamily_separation_iff`, `NonconstructibleFamily.npFamily_SAT_iff`, `NonconstructibleFamily.wavefield_separation_iff`, `NonconstructibleFamily.npFamily_iff_wccDepth` (Phase XXII); `DepthBarrier.explicit_no_separation`, `DepthBarrier.explicit_state_constructible` (Phase XVIII)",
    "status": "Open",
-   "details": "Open (conjecture). Every reading is settled or is exactly the classical separation. Explicit states: false, since a fixed machine of `def:tm` writes any word in |s|+1 transitions on every input, so `NPst \\ Pst = ∅` for every verifier. Input-indexed families `x ↦ ψ_x` with unrestricted verification: true for the vacuous reason that a diagonal language outside P_TM is verified by the trivial predicate. NP-verified families, and physical wavefield families prepared by charged zero-mode torus devices: `NPst \\ Pst ≠ ∅` iff P_TM ≠ NP_TM, which is `conj:wcc_depth` (I-16) for dense SAT. Missing: P_TM ≠ NP_TM.",
+   "details": "Open (conjecture). The specified formalized readings are false, vacuous or equivalent to the classical separation; other models remain open. Explicit states: false, since a fixed machine of `def:tm` writes any word in |s|+1 transitions on every input, so `NPst \\ Pst = ∅` for every verifier. Input-indexed families `x ↦ ψ_x` with unrestricted verification: true for the vacuous reason that a diagonal language outside P_TM is verified by the trivial predicate. NP-verified families, and physical wavefield families prepared by charged zero-mode torus devices: `NPst \\ Pst ≠ ∅` iff P_TM ≠ NP_TM, which is `conj:wcc_depth` (I-16) for dense SAT. Missing: P_TM ≠ NP_TM.",
    "refs": {
     "NonconstructibleFamily.unrestricted_family_separation": [
      {
@@ -180,7 +180,7 @@ window.PVNP_DATA = {
     "DepthBarrier.explicit_no_separation": [
      {
       "name": "DepthBarrier.explicit_no_separation",
-      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/DepthBarrier.lean#L84",
+      "url": "https://github.com/rickyjreyes/PVNP/blob/main/lean/PVNP/DepthBarrier.lean#L87",
       "audited": true
      }
     ],

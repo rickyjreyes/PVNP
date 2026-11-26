@@ -24,7 +24,7 @@ No `sorry`, `admit`, `native_decide` or new axiom is used; the axiom audit allow
 | I-37 | Restricted (70%) | **Exact** | Realized on the spatial torus `T_L²` with frozen-WCT fields; SAT ⟺ a locking configuration exists; locks are exact, curvature-free solutions of the frozen flow and are never approached from outside. |
 | I-3 | Open (45%) | **Restricted** | The static criterion holds (sign-blind encoding); as a dynamical test it is refuted for every energy-nonincreasing evolution from every formula-independent corner; an exhaustive (exponential) device is correct; an efficient one is the P vs NP question. |
 | I-11 | Restricted (45%) | Restricted | The charged zero-mode torus class decides exactly `P_TM`; the readout decision is robust at precision `δ` with `log(1/δ) = LF·T + O(1)`; any approximate trajectory with certified residual `ε` gives the readout to within a Gronwall bound. A polynomial-time scheme with certified residual remains the gap. |
-| I-2 | Open (15%) | Open | Every reading is false (explicit states), vacuous (unrestricted verification) or *exactly* `P_TM ≠ NP_TM` (NP-verified families, also physical wavefield families on the frozen torus). |
+| I-2 | Open (15%) | Open | The analyzed readings are false (explicit states), vacuous (unrestricted verification) or *exactly* `P_TM ≠ NP_TM` (NP-verified families, also physical wavefield families on the frozen torus). |
 | I-32 | Open (20%) | Open | Equivalent to I-2 (reading C) and to I-16 for dense SAT in the charged constant class; its manuscript consequence via I-31 is broken because I-31 is refuted. |
 | I-16 | Open (15%) | Open | For dense SAT it is exactly `P_TM ≠ NP_TM`, equivalent to I-2 (reading C). No strategy available here overcomes the known barriers. |
 
@@ -213,7 +213,7 @@ verification and resource model, there is a coherent target state in `NP_st \ P_
 
 **Previous result.** Explicit finite states: false (`DepthBarrier.explicit_no_separation`).
 
-**New result: every reading is settled or is exactly `P ≠ NP`.**
+**New result: the analyzed models are false, vacuous or equivalent to `P ≠ NP`. Other models remain open.**
 
 * *Reading A, explicit states:* false (Phase XVIII).
 * *Reading B, input-indexed families `x ↦ ψ_x ∈ {0,1}` with unrestricted verification*
