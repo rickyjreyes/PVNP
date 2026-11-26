@@ -25,6 +25,24 @@ Here `Ω` bounds the free frequencies on `S`, `B = |β| C_A²` and `G = |γ| C_A
   the step uses `(n+2)² ≤ 4(n+1)³` (`wt_step`).
 - `taylor_tail_le`: if `λh ≤ 1/2`, the Taylor tail after `q` terms is at most `2K(λh)^{q+1}`.
 
+## Norm reduction for the actual nonlinearity (`lean/PVNP/GalerkinTaylorNorm.lean`)
+
+Namespace `PVNP.GalerkinTaylor`. `cauchyH` is the coefficientwise Cauchy product through the
+repository's `mulH`. `fnlCoeff L β γ c n` is the `n`-th formal Taylor coefficient of `Fnl` along
+a coefficient sequence `c`, built from exactly the products in the definition of `Fnl`.
+
+- `norm_fnlCoeff_le`: `‖fnlCoeff L β γ c n‖ ≤ |β| C_A² (a⋆a⋆a)_n + |γ| C_A⁴ (a⋆a⋆a⋆a⋆a)_n`,
+  where `a = ‖c‖`. It uses `norm_mulH_le`, `norm_conjH`, and commutativity
+  (`cauchy_comm`) and monotonicity (`cauchy_mono`) of the scalar product.
+- `galerkin_taylor_majorant`: if `‖c_0‖ ≤ K` and
+  `(n+1)‖c_{n+1}‖ ≤ Ω‖c_n‖ + ‖fnlCoeff L β γ c n‖` for all `n`, then
+  `‖c_n‖ ≤ K λ^n/(n+1)²` with `λ = 4(Ω + 64|β|C_A²K² + 4096|γ|C_A⁴K⁴)`.
+
+The hypothesis is the norm form of the Galerkin Taylor recursion
+`(n+1) c_{n+1} = −i(A c_n + P_S fnlCoeff c n)`, given `‖A v‖ ≤ Ω‖v‖` and `‖P_S v‖ ≤ ‖v‖`. This
+discharges the identification of the constants `Ω`, `B`, `G` for the frozen field. What remains
+is that the actual trajectory is the sum of its Taylor series.
+
 ## Consequences, once the estimate is applied to the actual trajectory
 
 With `K = R`, the conserved radius bound (`TorusGalerkin.galerkin_apriori` and `uniformRadius`),
@@ -41,8 +59,8 @@ polynomially with the cutoff radius of `S`.
 
 ## Not established
 
-1. **Identification.** The actual Galerkin trajectory is the sum of its Taylor series, and its
-   coefficients obey the recursion with the stated `Ω`, `B`, `G`. This needs analyticity of
+1. **Identification.** The actual Galerkin trajectory is the sum of its Taylor series. The
+   constants are now identified (`galerkin_taylor_majorant`), but the series identification is not. This needs analyticity of
    polynomial ODE flows: construct the series, sum it, and identify the sum by uniqueness. It is
    not formalized. Until it is, the consequences above are conditional.
 2. **Spatial cost.** The number of modes needed (`K ∝ e^{LF(R_B)T}/m` from Phase XXV) is

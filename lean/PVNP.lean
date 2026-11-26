@@ -287,3 +287,5 @@ import PVNP.ExpTaylorAmplification
 import PVNP.ExpTaylorBits
 -- Phase XXVIII: majorant bounds for cubic–quintic Taylor recursions (temporal analyticity radius).
 import PVNP.TaylorMajorant
+-- Phase XXVIII: the frozen nonlinearity obeys the cubic–quintic Taylor majorant.
+import PVNP.GalerkinTaylorNorm

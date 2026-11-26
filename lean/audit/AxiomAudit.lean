@@ -1183,3 +1183,14 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TaylorMajorant.majorant
 #print axioms PVNP.TaylorMajorant.taylor_term_le
 #print axioms PVNP.TaylorMajorant.taylor_tail_le
+
+-- Phase XXVIII: norm reduction of the actual nonlinearity to the Taylor majorant.
+#print axioms PVNP.GalerkinTaylor.cauchy_comm
+#print axioms PVNP.GalerkinTaylor.cauchy_mono
+#print axioms PVNP.GalerkinTaylor.cauchy_smul_left
+#print axioms PVNP.GalerkinTaylor.norm_cauchyH_le
+#print axioms PVNP.GalerkinTaylor.norm_conjSeq
+#print axioms PVNP.GalerkinTaylor.nseq_nonneg
+#print axioms PVNP.GalerkinTaylor.cauchyH_step
+#print axioms PVNP.GalerkinTaylor.norm_fnlCoeff_le
+#print axioms PVNP.GalerkinTaylor.galerkin_taylor_majorant
