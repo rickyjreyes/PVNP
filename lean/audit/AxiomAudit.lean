@@ -1147,3 +1147,13 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.SidebandAmplification.unstable_sideband_iff
 #print axioms PVNP.SidebandAmplification.detector_directional_expansion
 #print axioms PVNP.SidebandAmplification.detector_directional_deriv
+
+-- Phase XXVI: exponential sensitivity is not exponential computational cost.
+#print axioms PVNP.ExpTaylor.exp_eq_tsum
+#print axioms PVNP.ExpTaylor.term_succ
+#print axioms PVNP.ExpTaylor.term_shift_le
+#print axioms PVNP.ExpTaylor.exp_sub_partial_eq
+#print axioms PVNP.ExpTaylor.exp_tail_le
+#print axioms PVNP.ExpTaylor.exp_partial_sum_error
+#print axioms PVNP.ExpTaylor.taylor_terms_for_precision
+#print axioms PVNP.ExpTaylor.sideband_growth_taylor

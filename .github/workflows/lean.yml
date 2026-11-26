@@ -138,6 +138,8 @@ jobs:
         run: lake build PVNP.SATForcedBarrier PVNP.SATForcedEscape PVNP.TorusGalerkinCertificate
       - name: Phase XXIV finite Fourier trajectory convergence
         run: lake build PVNP.TorusGalerkinTrajectory
+      - name: Phase XXVI exponential amplification versus Taylor cost
+        run: lake build PVNP.ExpTaylorAmplification
       - name: Axiom audit of principal theorems (only propext, Classical.choice, Quot.sound allowed)
         run: |
           lake env lean audit/AxiomAudit.lean | tee axiom-audit.txt
