@@ -283,3 +283,5 @@ import PVNP.RestrictedResourceBudget
 import PVNP.SidebandAmplification
 -- Phase XXVI: exponential sensitivity is not exponential cost (Taylor terms linear in bits and growth).
 import PVNP.ExpTaylorAmplification
+-- Phase XXVII: exact finite-bit evaluation of the exponential partial sum (polynomial sizes).
+import PVNP.ExpTaylorBits

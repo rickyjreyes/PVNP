@@ -1157,3 +1157,14 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.ExpTaylor.exp_partial_sum_error
 #print axioms PVNP.ExpTaylor.taylor_terms_for_precision
 #print axioms PVNP.ExpTaylor.sideband_growth_taylor
+
+-- Phase XXVII: finite-bit exponential partial sum.
+#print axioms PVNP.ExpTaylorBits.fallQ_mul
+#print axioms PVNP.ExpTaylorBits.fallQ_le
+#print axioms PVNP.ExpTaylorBits.taylorDen_pos
+#print axioms PVNP.ExpTaylorBits.partial_sum_eq
+#print axioms PVNP.ExpTaylorBits.num_le_pow
+#print axioms PVNP.ExpTaylorBits.den_le_pow
+#print axioms PVNP.ExpTaylorBits.round_error
+#print axioms PVNP.ExpTaylorBits.exp_dyadic_approx
+#print axioms PVNP.ExpTaylorBits.dyadic_num_le
