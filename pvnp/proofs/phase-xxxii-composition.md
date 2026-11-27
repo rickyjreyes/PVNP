@@ -1,7 +1,7 @@
 # Phase XXXII: composable verified Turing-machine programs (27 November 2026)
 
-New Lean modules: `lean/PVNP/SweepCompose.lean` and `lean/PVNP/SweepLens.lean`. They are based on the
-Phase XXXII PDE-detector branch.
+New Lean modules: `lean/PVNP/SweepCompose.lean` and `lean/PVNP/SweepLens.lean`. They build on
+`main` after the Phase XXXII PDE-detector theorem (#116, merged as `e763ece`).
 
 ## Outcome
 
@@ -110,12 +110,11 @@ in the evaluator category. That category moves from 4/7 to 6/9.
 Local, Lean 4.23.0, on the Lean tree of this pull request's head:
 - `lake build PVNP` passed (7,439 jobs). `PVNP.SweepCompose` and `PVNP.SweepLens` build without
   warnings.
-- Axiom audit:
-  - The full transitive audit passed for all 1,334 declarations registered before `SweepLens`.
-  - A targeted audit passed for the 15 `SweepLens` declarations.
-  - Every audited declaration uses only `propext`, `Classical.choice` and `Quot.sound`, and no
-    `sorryAx` occurs.
-- The hosted workflow audits all 1,349 registered declarations at the pull-request head.
+- The full transitive axiom audit (`audit/check_axioms.py`) passed for all 1,349 registered
+  declarations. Each uses only `propext`, `Classical.choice` and `Quot.sound` (or none), and no
+  `sorryAx` occurs.
+- The hosted workflow builds the modules and audits all 1,349 declarations at the pull-request
+  head.
 
 Later commits change documentation, the obligation registry and generated dashboard data only.
 Hosted CI is recorded on the pull request.
