@@ -53,19 +53,25 @@
     {
       "id": "C2",
       "title": "Detector-specific bound, Galerkin dynamics",
-      "subjective_percent": 45,
+      "subjective_percent": 55,
       "obligations": [
         {
           "id": "C2.1",
-          "status": "derived",
-          "statement": "Dual-weighted module estimate |u phi|_{-sigma} <= A_sigma^{l1}(u) |phi|_{-sigma}",
-          "lean": []
+          "status": "proved",
+          "statement": "Dual-weighted module estimate |v w|_{-sigma}^2 <= C_A^2 A_sigma(v)^2 |w|_{-sigma}^2",
+          "lean": [
+            "PVNP.DualResidual.dw_le_mul",
+            "PVNP.DualResidual.dsq_mulH_le"
+          ]
         },
         {
           "id": "C2.2",
-          "status": "derived",
-          "statement": "Dual tail estimate |Q_N u|_{-sigma} <= e^{-2 sigma N} A_sigma(u)",
-          "lean": []
+          "status": "proved",
+          "statement": "Dual tail |v - P_S v|_{-sigma}^2 <= e^{-4 sigma N} A_sigma(v)^2 and the quadratic residual of an analytic factor times the tail",
+          "lean": [
+            "PVNP.DualResidual.dsq_tail_le",
+            "PVNP.DualResidual.dsq_mulH_tail_le"
+          ]
         },
         {
           "id": "C2.3",
@@ -485,7 +491,7 @@
           "check": {
             "file_contains": [
               "lean/PVNP.lean",
-              "import PVNP.DetectorQuadratic"
+              "import PVNP.DualResidual"
             ]
           }
         },
@@ -497,7 +503,7 @@
           "check": {
             "file_contains": [
               ".github/workflows/lean.yml",
-              "PVNP.SweepDiv PVNP.DetectorQuadratic"
+              "PVNP.SweepDiv PVNP.DetectorQuadratic PVNP.DualResidual"
             ]
           }
         },
@@ -509,7 +515,7 @@
           "check": {
             "file_contains": [
               "lean/audit/AxiomAudit.lean",
-              "PVNP.DetectorQuadratic.device_detector_quadratic"
+              "PVNP.DualResidual.dsq_mulH_tail_le"
             ]
           }
         },

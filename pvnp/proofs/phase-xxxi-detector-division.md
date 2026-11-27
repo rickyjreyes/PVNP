@@ -3,6 +3,7 @@
 Base: `main` at `ce45ceb` (Phase XXX merged). New Lean modules:
 - `lean/PVNP/SweepDiv.lean`
 - `lean/PVNP/DetectorQuadratic.lean`
+- `lean/PVNP/DualResidual.lean`
 
 New tooling: an obligation registry `pvnp/phase_xxxi/obligations.json` and its evaluator
 `pvnp/phase_xxxi/progress.py`, which computes the twelve progress bars (§6), with the test
@@ -18,11 +19,15 @@ New tooling: an obligation registry `pvnp/phase_xxxi/obligations.json` and its e
   `r` and a truncation whose complement has mode size `≥ N`,
   `|J(v) − J(P_S v)| ≤ 3 C_det e^{σr} e^{−2σN} A_σ(v)²`. The full state has the rate `e^{−σN}`.
   The bound is instantiated on the SAT device's actual detector.
-- **Derived, not kernel-checked.** The same doubled exponent holds dynamically along the Galerkin
-  flow, with a factor `e^{C(M)T}` (§2.2). This halves the cutoff. It does not make long horizons
-  polynomial, because the proved analyticity radius still decays like `4^{−T/τ}`.
+- **Proved.** The analytic core of the dynamic bound. In the dual norm
+  `|v|_{−σ}² = Σ e^{−2σ|k|}|v_k|²`, an analytic factor acts boundedly with the algebra constant
+  `C_A`, and the discarded tail enters with exponent `4σN` in the squared norm instead of `2σN`.
+- **Derived, not kernel-checked.** The resulting dynamic bound along the Galerkin flow,
+  `e^{C(M)T} e^{−2σN}` (§2.2); its energy and Gronwall steps are not formalized. This halves the
+  cutoff. It does not make long horizons polynomial, because the proved analyticity radius still
+  decays like `4^{−T/τ}`.
 - **Open.**
-  - the dynamic detector theorem in Lean;
+  - the energy and Gronwall steps of the dynamic detector theorem in Lean;
   - fixed-point multiplication, signed, complex and rational arithmetic;
   - the constant `C_A`, polynomial evaluation, convolution and the Taylor recurrence on the TM;
   - the end-to-end evaluator (#99);
@@ -112,7 +117,7 @@ The two identities behind this are `inner_layer_left` and `inner_layer_right`:
 
 For accuracy `ε` the static cutoff drops from `N ≈ log(1/ε)/σ` to `N ≈ log(1/ε)/(2σ)`.
 
-### 2.2 Dynamic bound (derivation; not kernel-checked)
+### 2.2 Dynamic bound (steps (a)–(c) kernel-checked in `DualResidual`; (d)–(f) derived)
 
 **Setup.**
 - `u` is the PDE solution and `u_N` the Galerkin solution with `u_N(0) = P_N u(0)`.
@@ -122,16 +127,22 @@ For accuracy `ε` the static cutoff drops from `N ≈ log(1/ε)/σ` to `N ≈ lo
 
 **Steps.**
 
-(a) **Weight inequality.** `e^{−σ|k|} ≤ e^{σ|k−j|} e^{−σ|j|}`, since `|j| ≤ |k| + |k − j|`.
+(a) **Weight inequality.** `e^{−σ|k|} ≤ e^{σ|k−j|} e^{−σ|j|}`, since `|j| ≤ |k| + |k − j|`
+(`dw_le_mul`).
 
 (b) **Module estimate.**
 - Young's inequality on `ℓ¹ ∗ ℓ²` and (a) give `|uφ|_{−σ} ≤ ‖e^{σ|·|}û‖_{ℓ¹} |φ|_{−σ}`.
 - In `H²` coordinates, `‖e^{σ|·|}û‖_{ℓ¹} ≤ c_L A_σ(u)` by Cauchy–Schwarz with
   `Σ(1 + q_L(k))^{−2} < ∞`. This is the mechanism of `Analytic.asum_mulH`.
 - Conjugation preserves `|·|_{−σ}`.
+- Kernel-checked in the repository's `H²` coordinates as the dual module estimate
+  `|v·w|_{−σ}² ≤ C_A² A_σ(v)² |w|_{−σ}²` (`dsq_mulH_le`, via the pointwise domination
+  `dw_mulH_le`, the dual analogue of `aw_mulH_le`).
 
 (c) **Dual tail.** `|Q_N u|_{−σ} ≤ e^{−2σN} A_σ(u)`, because `e^{−σ|k|} = e^{−2σ|k|} e^{σ|k|}`.
-The discarded modes enter the dual norm with the doubled exponent.
+The discarded modes enter the dual norm with the doubled exponent (`dsq_tail_le`). With (b) this
+gives the quadratic residual: an analytic factor times the tail is
+`≤ C_A² A_σ(v)² e^{−4σN} A_σ(w)²` in the squared dual norm (`dsq_mulH_tail_le`).
 
 (d) **Error equation.** Let `e = P_N u − u_N`. Then `∂_t e = −iωe − iP_N[F(u) − F(u_N)]`.
 - The dispersion is skew in every diagonal weighted norm, and `P_N` is a contraction.
@@ -153,8 +164,7 @@ The discarded modes enter the dual norm with the doubled exponent.
 The residual is quadratically small in the dual norm because the detector pairs the error only
 with analytic functions. This is the dual-weighted residual principle of the specification.
 
-**Formal gaps** (registry C2.1–C2.5):
-- the dual analogue of `aw_mulH_le` in the `ℓ²` framework;
+**Formal gaps** (registry C2.3–C2.5; C2.1 and C2.2 are discharged by `DualResidual`):
 - differentiability of the dual norm along the projected PDE solution and the Galerkin error;
 - the inhomogeneous Gronwall step;
 - composition with the propagation theorem.
@@ -311,7 +321,7 @@ The subjective column is a separate judgement.
 PVNP Phase XXXI | bars computed from obligations; subjective estimates labelled separately
      category                                                                                           computed   subjective (not computed)
 C1   Detector-specific bound, static truncation                                   [####################] 100% (5/5)   100%
-C2   Detector-specific bound, Galerkin dynamics                                   [....................]   0% (0/5)    45%
+C2   Detector-specific bound, Galerkin dynamics                                   [########............]  40% (2/5)    55%
 C3   Spatial complexity and the analyticity radius                                [#############.......]  67% (4/6)    55%
 C4   Verified TM integer arithmetic                                               [####################] 100% (5/5)   100%
 C5   TM fixed-point, rational, signed and complex arithmetic; certified rounding  [####................]  20% (1/5)    25%
