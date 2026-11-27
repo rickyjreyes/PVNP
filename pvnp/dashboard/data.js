@@ -6,7 +6,7 @@ window.PVNP_DATA = {
  "inventory": {
   "path": "pvnp/proofs/manuscript-lean-inventory.md",
   "date": "2026-11-14",
-  "blob": "07bcee21162190e5030f2b697e2130dcaf46af33",
+  "blob": "4afd5eec1e892d9e416bec23954275da3fd2152a",
   "url": "https://github.com/rickyjreyes/PVNP/blob/main/pvnp/proofs/manuscript-lean-inventory.md",
   "table": {
    "parts": {
@@ -100,7 +100,7 @@ window.PVNP_DATA = {
   }
  },
  "lean": {
-  "tree": "be56868d7a6a855de268f1e082ba7b05298426cd",
+  "tree": "ad914614fef9daf418cf854c8cc8b095c3206c0c",
   "matches_verified": false,
   "links_ref": "main"
  },

@@ -389,6 +389,15 @@
             "PVNP.Discrete.Sweep.ProgOn.reachFirst_lens",
             "PVNP.Discrete.Sweep.ProgOn.reachFirst_lens_frame"
           ]
+        },
+        {
+          "id": "C7.10",
+          "status": "proved",
+          "statement": "Loop combinator for sweep programs: data-dependent iteration with exact charged costs, on the compiled TM",
+          "lean": [
+            "PVNP.Discrete.Sweep.ProgOn.loop_reachFirst",
+            "PVNP.Discrete.Sweep.ProgOn.loop_tm"
+          ]
         }
       ]
     },
