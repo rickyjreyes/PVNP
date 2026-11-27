@@ -1639,3 +1639,15 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Discrete.SweepArith.cadd_first
 #print axioms PVNP.Discrete.SweepArith.csub_first
 #print axioms PVNP.Discrete.SweepArith.caddsub_tm
+-- Phase XXXII: the loop combinator (SweepLoop)
+#print axioms PVNP.Discrete.Sweep.ProgOn.loop_trip_inl
+#print axioms PVNP.Discrete.Sweep.ProgOn.loop_trip_inr
+#print axioms PVNP.Discrete.Sweep.ProgOn.loop_tripCost_inl
+#print axioms PVNP.Discrete.Sweep.ProgOn.loop_tripCost_inr
+#print axioms PVNP.Discrete.Sweep.ProgOn.loop_stepP_inl_ne
+#print axioms PVNP.Discrete.Sweep.ProgOn.loop_stepP_inl_exit
+#print axioms PVNP.Discrete.Sweep.ProgOn.loop_stepP_inr_ne
+#print axioms PVNP.Discrete.Sweep.ProgOn.loop_stepP_inr_exit
+#print axioms PVNP.Discrete.Sweep.ProgOn.loop_body_then
+#print axioms PVNP.Discrete.Sweep.ProgOn.loop_reachFirst
+#print axioms PVNP.Discrete.Sweep.ProgOn.loop_tm

@@ -327,3 +327,5 @@ import PVNP.SweepFixMul
 import PVNP.AnalyticAlmostConservation
 -- Phase XXXII: certified complex fixed-point arithmetic by multi-stage composition.
 import PVNP.SweepComplex
+-- Phase XXXII: loops of verified sweep programs (data-dependent iteration).
+import PVNP.SweepLoop
