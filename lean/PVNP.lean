@@ -315,3 +315,5 @@ import PVNP.DetectorQuadratic
 import PVNP.DualResidual
 -- Phase XXXI (continued): the dynamic detector theorem along the Galerkin flow.
 import PVNP.DetectorDynamic
+-- Phase XXXII: the dynamic detector theorem for the continuum PDE.
+import PVNP.DetectorPDE

@@ -53,7 +53,7 @@
     {
       "id": "C2",
       "title": "Detector-specific bound, Galerkin dynamics",
-      "subjective_percent": 80,
+      "subjective_percent": 100,
       "obligations": [
         {
           "id": "C2.1",
@@ -94,9 +94,12 @@
         },
         {
           "id": "C2.5",
-          "status": "open",
-          "statement": "Passage to the PDE solution (S' exhausting Z^2), combining galerkin_detector_dynamic_data with analytic_galerkin_pde_error",
-          "lean": []
+          "status": "proved",
+          "statement": "Passage to the PDE solution: |J(u(T)) - J(u_S(T))| <= 4 C_A A_{sigma_T}(chi) M e^{-2 sigma_T N} ((A_{sigma_T}(w(0))^2 + G(2M)^2 T) e^{(2K_F(2M)+1)T})^{1/2} for the actual frozen PDE solution (gamma > 0)",
+          "lean": [
+            "PVNP.DetectorPDE.pde_detector_dynamic",
+            "PVNP.DetectorPDE.exists_finer_set"
+          ]
         }
       ]
     },
@@ -318,7 +321,8 @@
           "statement": "Detector-specific cutoff with exponent 2 sigma N, static and along the Galerkin flow",
           "lean": [
             "PVNP.DetectorQuadratic.device_detector_quadratic",
-            "PVNP.DetectorDynamic.galerkin_detector_dynamic_data"
+            "PVNP.DetectorDynamic.galerkin_detector_dynamic_data",
+            "PVNP.DetectorPDE.pde_detector_dynamic"
           ]
         },
         {
@@ -499,7 +503,7 @@
           "check": {
             "file_contains": [
               "lean/PVNP.lean",
-              "import PVNP.DetectorDynamic"
+              "import PVNP.DetectorPDE"
             ]
           }
         },
@@ -511,7 +515,7 @@
           "check": {
             "file_contains": [
               ".github/workflows/lean.yml",
-              "PVNP.DualResidual PVNP.DetectorDynamic"
+              "PVNP.DetectorDynamic PVNP.DetectorPDE"
             ]
           }
         },
@@ -523,7 +527,7 @@
           "check": {
             "file_contains": [
               "lean/audit/AxiomAudit.lean",
-              "PVNP.DetectorDynamic.galerkin_detector_dynamic_data"
+              "PVNP.DetectorPDE.pde_detector_dynamic"
             ]
           }
         },
@@ -558,7 +562,7 @@
           "statement": "Proof note with local verification receipt",
           "check": {
             "file_contains": [
-              "pvnp/proofs/phase-xxxi-dynamic-detector.md",
+              "pvnp/proofs/phase-xxxii-pde-detector.md",
               "## Verification"
             ]
           }
