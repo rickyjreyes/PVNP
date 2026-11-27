@@ -1324,3 +1324,24 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Analytic.radius_mono
 #print axioms PVNP.Analytic.analytic_galerkin_pde_error
 #print axioms PVNP.Analytic.analytic_end_to_end
+
+-- Phase XXIX: verified binary addition, subtraction and comparison on the compiled TM.
+#print axioms PVNP.Discrete.SweepArith.val_append
+#print axioms PVNP.Discrete.SweepArith.val_lt
+#print axioms PVNP.Discrete.SweepArith.bscan_id
+#print axioms PVNP.Discrete.SweepArith.fadd_spec
+#print axioms PVNP.Discrete.SweepArith.fscan_add_ab
+#print axioms PVNP.Discrete.SweepArith.fscan_add
+#print axioms PVNP.Discrete.SweepArith.add_reach
+#print axioms PVNP.Discrete.SweepArith.add_value
+#print axioms PVNP.Discrete.SweepArith.addCost_le
+#print axioms PVNP.Discrete.SweepArith.add_tm
+#print axioms PVNP.Discrete.SweepArith.fsub_spec
+#print axioms PVNP.Discrete.SweepArith.fscan_sub
+#print axioms PVNP.Discrete.SweepArith.sub_reach
+#print axioms PVNP.Discrete.SweepArith.sub_value
+#print axioms PVNP.Discrete.SweepArith.sub_tm
+#print axioms PVNP.Discrete.SweepArith.cmpOf_step
+#print axioms PVNP.Discrete.SweepArith.fscan_cmp
+#print axioms PVNP.Discrete.SweepArith.cmp_halts
+#print axioms PVNP.Discrete.SweepArith.cmp_tm

@@ -301,3 +301,5 @@ import PVNP.AnalyticNorm
 import PVNP.AnalyticPropagation
 -- Phase XXIX: end-to-end simulation of the frozen flow from analytic data.
 import PVNP.AnalyticSimulation
+-- Phase XXIX: verified binary addition, subtraction and comparison on the compiled TM.
+import PVNP.SweepArith
