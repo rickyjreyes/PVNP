@@ -289,7 +289,7 @@
     {
       "id": "C7",
       "title": "End-to-end continuum evaluator, P_phys in P_TM (#99, I-11)",
-      "subjective_percent": 60,
+      "subjective_percent": 62,
       "obligations": [
         {
           "id": "C7.1",
@@ -342,6 +342,16 @@
           "status": "open",
           "statement": "Polynomial runtime under admissibility over polynomial horizons",
           "lean": []
+        },
+        {
+          "id": "C7.8",
+          "status": "proved",
+          "statement": "Sequential composition of verified sweep programs preserving semantics, outputs and exact charged transition counts, with a first-arrival primitive",
+          "lean": [
+            "PVNP.Discrete.Sweep.ProgOn.seq_reach",
+            "PVNP.Discrete.Sweep.ProgOn.seq_tm",
+            "PVNP.Discrete.SweepArith.div_first"
+          ]
         }
       ]
     },
@@ -503,7 +513,7 @@
           "check": {
             "file_contains": [
               "lean/PVNP.lean",
-              "import PVNP.DetectorPDE"
+              "import PVNP.SweepCompose"
             ]
           }
         },
@@ -515,7 +525,7 @@
           "check": {
             "file_contains": [
               ".github/workflows/lean.yml",
-              "PVNP.DetectorDynamic PVNP.DetectorPDE"
+              "PVNP.DetectorPDE PVNP.SweepCompose"
             ]
           }
         },
@@ -527,7 +537,7 @@
           "check": {
             "file_contains": [
               "lean/audit/AxiomAudit.lean",
-              "PVNP.DetectorPDE.pde_detector_dynamic"
+              "PVNP.Discrete.Sweep.ProgOn.seq_tm"
             ]
           }
         },
@@ -562,7 +572,7 @@
           "statement": "Proof note with local verification receipt",
           "check": {
             "file_contains": [
-              "pvnp/proofs/phase-xxxii-pde-detector.md",
+              "pvnp/proofs/phase-xxxii-composition.md",
               "## Verification"
             ]
           }

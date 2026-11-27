@@ -1492,3 +1492,27 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.DetectorPDE.size_ge_of_not_mem_box
 #print axioms PVNP.DetectorPDE.exists_finer_set
 #print axioms PVNP.DetectorPDE.pde_detector_dynamic
+
+-- Phase XXXII: sequential composition of sweep programs (SweepCompose)
+#print axioms PVNP.Discrete.Sweep.ProgOn.toProg_ofProg
+#print axioms PVNP.Discrete.Sweep.ProgOn.fscan_inl
+#print axioms PVNP.Discrete.Sweep.ProgOn.fscan_inr
+#print axioms PVNP.Discrete.Sweep.ProgOn.bscan_inl
+#print axioms PVNP.Discrete.Sweep.ProgOn.bscan_inr
+#print axioms PVNP.Discrete.Sweep.ProgOn.trip_inl
+#print axioms PVNP.Discrete.Sweep.ProgOn.trip_inr
+#print axioms PVNP.Discrete.Sweep.ProgOn.tripCost_inl
+#print axioms PVNP.Discrete.Sweep.ProgOn.tripCost_inr
+#print axioms PVNP.Discrete.Sweep.ProgOn.next_of_stepP
+#print axioms PVNP.Discrete.Sweep.ProgOn.stepP_inl_ne
+#print axioms PVNP.Discrete.Sweep.ProgOn.stepP_inl_exit
+#print axioms PVNP.Discrete.Sweep.ProgOn.stepP_inr
+#print axioms PVNP.Discrete.Sweep.ProgOn.reachFirst_lift
+#print axioms PVNP.Discrete.Sweep.ProgOn.reach_lift_inr
+#print axioms PVNP.Discrete.Sweep.ProgOn.seq_reach
+#print axioms PVNP.Discrete.Sweep.ProgOn.seq_tm
+#print axioms PVNP.Discrete.Sweep.ReachFirst.reach
+#print axioms PVNP.Discrete.SweepArith.divI_ne_done
+#print axioms PVNP.Discrete.SweepArith.div_loop_first
+#print axioms PVNP.Discrete.SweepArith.div_reach_first
+#print axioms PVNP.Discrete.SweepArith.div_first
