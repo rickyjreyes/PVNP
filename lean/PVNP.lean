@@ -323,3 +323,5 @@ import PVNP.SweepCompose
 import PVNP.SweepLens
 -- Phase XXXII: certified fixed-point and two's-complement arithmetic by composition.
 import PVNP.SweepFixMul
+-- Phase XXXII: almost conservation of analytic energies; polynomial analyticity radius.
+import PVNP.AnalyticAlmostConservation
