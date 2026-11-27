@@ -1371,3 +1371,14 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Discrete.SweepArith.mul_reach
 #print axioms PVNP.Discrete.SweepArith.mul_exact
 #print axioms PVNP.Discrete.SweepArith.mul_tm
+
+-- Phase XXX: resonance structure of the frozen dispersion (no small divisors, nontrivial resonances).
+#print axioms PVNP.FrozenResonance.qf_two_pi
+#print axioms PVNP.FrozenResonance.om_two_pi
+#print axioms PVNP.FrozenResonance.om_cast
+#print axioms PVNP.FrozenResonance.phase_int
+#print axioms PVNP.FrozenResonance.no_small_divisors
+#print axioms PVNP.FrozenResonance.doubly_resonant_trivial
+#print axioms PVNP.FrozenResonance.radial_vanish
+#print axioms PVNP.FrozenResonance.nontrivial_resonance
+#print axioms PVNP.FrozenResonance.nontrivial_resonance_real

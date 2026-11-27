@@ -305,3 +305,5 @@ import PVNP.AnalyticSimulation
 import PVNP.SweepArith
 -- Phase XXX: verified shift-and-add multiplication on the compiled TM.
 import PVNP.SweepMul
+-- Phase XXX: resonance structure of the frozen dispersion (no small divisors, nontrivial resonances).
+import PVNP.FrozenResonance
