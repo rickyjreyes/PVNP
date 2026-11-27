@@ -1345,3 +1345,29 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Discrete.SweepArith.fscan_cmp
 #print axioms PVNP.Discrete.SweepArith.cmp_halts
 #print axioms PVNP.Discrete.SweepArith.cmp_tm
+
+-- Phase XXX: verified shift-and-add multiplication on the compiled TM.
+#print axioms PVNP.Discrete.SweepArith.fscan_shift_x
+#print axioms PVNP.Discrete.SweepArith.fscan_keep_y
+#print axioms PVNP.Discrete.SweepArith.fscan_fr
+#print axioms PVNP.Discrete.SweepArith.fscan_fA_acc
+#print axioms PVNP.Discrete.SweepArith.fscan_fS_acc
+#print axioms PVNP.Discrete.SweepArith.fscan_fP
+#print axioms PVNP.Discrete.SweepArith.decide_ne_zero
+#print axioms PVNP.Discrete.SweepArith.decide_odd
+#print axioms PVNP.Discrete.SweepArith.bscan_bP
+#print axioms PVNP.Discrete.SweepArith.bscan_bR
+#print axioms PVNP.Discrete.SweepArith.val_tail_append_false
+#print axioms PVNP.Discrete.SweepArith.mnext_eq
+#print axioms PVNP.Discrete.SweepArith.trips_zero
+#print axioms PVNP.Discrete.SweepArith.trips_pos
+#print axioms PVNP.Discrete.SweepArith.trips_le
+#print axioms PVNP.Discrete.SweepArith.trip_eq
+#print axioms PVNP.Discrete.SweepArith.step_core
+#print axioms PVNP.Discrete.SweepArith.step_trip
+#print axioms PVNP.Discrete.SweepArith.tripCost_mul
+#print axioms PVNP.Discrete.SweepArith.mod_add_mul
+#print axioms PVNP.Discrete.SweepArith.mul_loop
+#print axioms PVNP.Discrete.SweepArith.mul_reach
+#print axioms PVNP.Discrete.SweepArith.mul_exact
+#print axioms PVNP.Discrete.SweepArith.mul_tm

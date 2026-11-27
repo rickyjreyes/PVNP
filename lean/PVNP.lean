@@ -303,3 +303,5 @@ import PVNP.AnalyticPropagation
 import PVNP.AnalyticSimulation
 -- Phase XXIX: verified binary addition, subtraction and comparison on the compiled TM.
 import PVNP.SweepArith
+-- Phase XXX: verified shift-and-add multiplication on the compiled TM.
+import PVNP.SweepMul
