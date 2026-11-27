@@ -321,3 +321,5 @@ import PVNP.DetectorPDE
 import PVNP.SweepCompose
 -- Phase XXXII: track lenses (verified alphabet translations) for sweep programs.
 import PVNP.SweepLens
+-- Phase XXXII: certified fixed-point and two's-complement arithmetic by composition.
+import PVNP.SweepFixMul
