@@ -1264,3 +1264,63 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.TorusGalerkin.analytic_mode_count
 #print axioms PVNP.TorusGalerkin.sobolev_count_lower
 #print axioms PVNP.TorusGalerkin.galerkin_error_of_tail
+
+-- Phase XXIX: cutoff-independent analytic norms and the analytic Banach algebra.
+#print axioms PVNP.Analytic.size_nonneg
+#print axioms PVNP.Analytic.size_add_le
+#print axioms PVNP.Analytic.size_neg
+#print axioms PVNP.Analytic.size_le_sub_add
+#print axioms PVNP.Analytic.aw_pos
+#print axioms PVNP.Analytic.aw_le_mul
+#print axioms PVNP.Analytic.aw_neg
+#print axioms PVNP.Analytic.aw_zero
+#print axioms PVNP.Analytic.asq_nonneg
+#print axioms PVNP.Analytic.anorm_nonneg
+#print axioms PVNP.Analytic.anorm_sq
+#print axioms PVNP.Analytic.asq_zero_radius
+#print axioms PVNP.Analytic.asum_zero_radius
+#print axioms PVNP.Analytic.asum_of_supported
+#print axioms PVNP.Analytic.lift_apply
+#print axioms PVNP.Analytic.norm_lift_sq
+#print axioms PVNP.Analytic.norm_lift
+#print axioms PVNP.Analytic.co_lift
+#print axioms PVNP.Analytic.norm_co_lift
+#print axioms PVNP.Analytic.aw_mulH_le
+#print axioms PVNP.Analytic.asum_mulH
+#print axioms PVNP.Analytic.anorm_mulH_le
+#print axioms PVNP.Analytic.asum_conjH
+#print axioms PVNP.Analytic.asq_conjH
+#print axioms PVNP.Analytic.anorm_conjH
+#print axioms PVNP.Analytic.asum_trunc
+#print axioms PVNP.Analytic.asq_trunc_le
+#print axioms PVNP.Analytic.asum_smul
+#print axioms PVNP.Analytic.asq_smul
+#print axioms PVNP.Analytic.anorm_smul
+#print axioms PVNP.Analytic.anorm_add_le
+#print axioms PVNP.Analytic.asq_U
+#print axioms PVNP.Analytic.asum_U
+#print axioms PVNP.Analytic.anorm_Fnl_le
+#print axioms PVNP.Analytic.asq_interp
+#print axioms PVNP.Analytic.asq_mono
+#print axioms PVNP.Analytic.tail_le
+
+-- Phase XXIX: propagation of analytic regularity, uniform over Galerkin truncations.
+#print axioms PVNP.Analytic.asq_eq_sum
+#print axioms PVNP.Analytic.hasDerivAt_asq
+#print axioms PVNP.Analytic.inner_disp_zero
+#print axioms PVNP.Analytic.inner_physField_le
+#print axioms PVNP.Analytic.deriv_asq_le
+#print axioms PVNP.Analytic.grate_pos
+#print axioms PVNP.Analytic.tstep_pos
+#print axioms PVNP.Analytic.exp_half_le_two
+#print axioms PVNP.Analytic.local_propagation
+#print axioms PVNP.Analytic.global_propagation
+#print axioms PVNP.Analytic.radius_at
+
+-- Phase XXIX: end-to-end simulation of the frozen flow from analytic data.
+#print axioms PVNP.Analytic.pde_apriori
+#print axioms PVNP.Analytic.supported_U
+#print axioms PVNP.Analytic.galerkin_analytic
+#print axioms PVNP.Analytic.radius_mono
+#print axioms PVNP.Analytic.analytic_galerkin_pde_error
+#print axioms PVNP.Analytic.analytic_end_to_end

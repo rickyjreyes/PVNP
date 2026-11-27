@@ -295,3 +295,9 @@ import PVNP.GalerkinTaylorSeries
 import PVNP.TaylorIntegrator
 -- Phase XXVIII: spatial mode counts, analytic versus Sobolev tails.
 import PVNP.SpatialModeCount
+-- Phase XXIX: cutoff-independent analytic norms and the analytic Banach algebra.
+import PVNP.AnalyticNorm
+-- Phase XXIX: propagation of analytic regularity, uniform over Galerkin truncations.
+import PVNP.AnalyticPropagation
+-- Phase XXIX: end-to-end simulation of the frozen flow from analytic data.
+import PVNP.AnalyticSimulation
