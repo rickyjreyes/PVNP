@@ -342,13 +342,17 @@ C12 is the only bar that measures classical P versus NP. It is 0: the problem is
 
 ## Verification
 
-Local, Lean 4.23.0, on the Lean tree of commit `0510b55`:
-- `lake build PVNP` passed (7,434 jobs). `PVNP.SweepDiv` and `PVNP.DetectorQuadratic` build
-  without warnings.
-- `lake env lean audit/AxiomAudit.lean` with `audit/check_axioms.py` passed for all 1,255
-  registered declarations, including the 43 new ones: 27 in `SweepDiv` and 16 in
-  `DetectorQuadratic`. They use only `propext`, `Classical.choice` and `Quot.sound`, and no
+Local, Lean 4.23.0:
+- On the Lean tree of commit `cb7c4e1`, `lake build PVNP` passed (7,435 jobs). The three new
+  modules build without warnings.
+- On the Lean tree of commit `0510b55`, `lake env lean audit/AxiomAudit.lean` with
+  `audit/check_axioms.py` passed for all 1,255 registered declarations. These include 27 new
+  ones in `SweepDiv` and 16 in `DetectorQuadratic`.
+- On the Lean tree of `cb7c4e1`, the 14 `DualResidual` declarations were audited separately.
+- Every audited declaration uses only `propext`, `Classical.choice` and `Quot.sound`, and no
   `sorryAx` occurs.
+
+The hosted workflow audits all 1,269 registered declarations at the pull-request head.
 
 Later commits change documentation, the obligation registry and its evaluator, tests, and
 generated dashboard data only. The dashboard, status registry, manuscript-alignment and
