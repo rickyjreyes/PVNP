@@ -1486,3 +1486,9 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.DetectorDynamic.dsq_annulus_le
 #print axioms PVNP.DetectorDynamic.galerkin_detector_dynamic_data
 #print axioms PVNP.DetectorDynamic.cutoff_for_margin
+
+-- Phase XXXII: dynamic detector theorem for the PDE (DetectorPDE)
+#print axioms PVNP.DetectorPDE.abs_ge_of_not_mem_Icc
+#print axioms PVNP.DetectorPDE.size_ge_of_not_mem_box
+#print axioms PVNP.DetectorPDE.exists_finer_set
+#print axioms PVNP.DetectorPDE.pde_detector_dynamic
