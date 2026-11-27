@@ -1571,7 +1571,7 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 -- Phase XXXII: almost conservation and the polynomial analyticity radius (AnalyticAlmostConservation)
 #print axioms PVNP.Analytic.one_sub_exp_neg_le_sqrt
 #print axioms PVNP.Analytic.aw_defect_le
-#print axioms PVNP.Analytic.aw_defect_le'
+#print axioms PVNP.Analytic.aw_defect_le_left
 #print axioms PVNP.Analytic.fq_nonneg
 #print axioms PVNP.Analytic.summable_fq
 #print axioms PVNP.Analytic.size_div_wt_sq_le

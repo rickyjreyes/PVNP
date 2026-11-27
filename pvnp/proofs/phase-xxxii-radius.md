@@ -102,7 +102,7 @@ plain energy estimates.
 
 | Theorem | Statement |
 |---|---|
-| `one_sub_exp_neg_le_sqrt`, `aw_defect_le`, `aw_defect_le'` | the weight defect bound |
+| `one_sub_exp_neg_le_sqrt`, `aw_defect_le`, `aw_defect_le_left` | the weight defect bound |
 | `summable_fq`, `size_div_wt_sq_le`, `summable_size_wt`, `tsum_sqrt_size_co_le` | `SB < ∞`; half a derivative in `ℓ¹` |
 | `elift` and its algebra (`elift_add`, `elift_sub`, `elift_smul`, `elift_conjH`, `norm_elift`, `co_elift`) | the complex analytic lift |
 | `comm_mulH_le` | the `O(√σ)` commutator with the `H²` product |

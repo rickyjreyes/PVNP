@@ -85,7 +85,7 @@ theorem aw_defect_le {σ : ℝ} (hσ : 0 ≤ σ) (k j : Z2) :
   nlinarith [mul_le_mul_of_nonneg_left key hpos]
 
 /-- The same defect with the half derivative on the other factor. -/
-theorem aw_defect_le' {σ : ℝ} (hσ : 0 ≤ σ) (k j : Z2) :
+theorem aw_defect_le_left {σ : ℝ} (hσ : 0 ≤ σ) (k j : Z2) :
     aw σ (k - j) * aw σ j - aw σ k ≤
       aw σ (k - j) * aw σ j * (Real.sqrt (2 * σ) * Real.sqrt (size (k - j))) := by
   have h := aw_defect_le hσ k (k - j)
@@ -357,7 +357,7 @@ theorem comm_mulH_le (hL : 0 < L) {σ : ℝ} (hσ : 0 ≤ σ) {v w : ℓ2} (hv :
       intro j
       have hle := aw_le_mul hσ k j
       have hD1 := aw_defect_le hσ k j
-      have hD2 := aw_defect_le' hσ k j
+      have hD2 := aw_defect_le_left hσ k j
       have hwk := wt_le L k j
       have e1' : ‖V (k - j)‖ = aw σ (k - j) * (wt L (k - j) * ‖co L v (k - j)‖) := by
         rw [hV, norm_elift_apply, wt_mul_norm_co]
