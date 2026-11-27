@@ -53,7 +53,7 @@
     {
       "id": "C2",
       "title": "Detector-specific bound, Galerkin dynamics",
-      "subjective_percent": 55,
+      "subjective_percent": 80,
       "obligations": [
         {
           "id": "C2.1",
@@ -75,20 +75,27 @@
         },
         {
           "id": "C2.3",
-          "status": "derived",
-          "statement": "Dual energy inequality for the projected Galerkin error e = P_N u - u_N",
-          "lean": []
+          "status": "proved",
+          "statement": "Dual energy inequality for the error between Galerkin trajectories on S and S' (S in S'), uniform in S': the dispersion cancels, the nonlinear difference is bounded by K_F(M), the forcing by e^{-2 sigma N} G(M)",
+          "lean": [
+            "PVNP.DetectorDynamic.hasDerivAt_dsq",
+            "PVNP.DetectorDynamic.deriv_dsq_le",
+            "PVNP.DetectorDynamic.dnorm_Fnl_sub_le"
+          ]
         },
         {
           "id": "C2.4",
-          "status": "derived",
-          "statement": "Gronwall closure: |J(u(T)) - J(u_N(T))| <= C(M,chi)(1 + T e^{C_N(M) T}) e^{-2 sigma_T N}",
-          "lean": []
+          "status": "proved",
+          "statement": "Gronwall closure: |J(w(T)) - J(u(T))| <= 2 C_A A_sigma(chi) M e^{-2 sigma N} ((A_sigma(u0)^2 + G(M)^2 T) e^{(2K_F+1)T})^{1/2}, uniformly in the fine set S'",
+          "lean": [
+            "PVNP.DetectorDynamic.galerkin_dual_gronwall",
+            "PVNP.DetectorDynamic.galerkin_detector_dynamic_data"
+          ]
         },
         {
           "id": "C2.5",
           "status": "open",
-          "statement": "Kernel-checked dynamic theorem combining C2.1-C2.4",
+          "statement": "Passage to the PDE solution (S' exhausting Z^2), combining galerkin_detector_dynamic_data with analytic_galerkin_pde_error",
           "lean": []
         }
       ]
@@ -308,9 +315,10 @@
         {
           "id": "C7.4",
           "status": "proved",
-          "statement": "Detector-specific static cutoff with exponent 2 sigma N",
+          "statement": "Detector-specific cutoff with exponent 2 sigma N, static and along the Galerkin flow",
           "lean": [
-            "PVNP.DetectorQuadratic.device_detector_quadratic"
+            "PVNP.DetectorQuadratic.device_detector_quadratic",
+            "PVNP.DetectorDynamic.galerkin_detector_dynamic_data"
           ]
         },
         {
@@ -491,7 +499,7 @@
           "check": {
             "file_contains": [
               "lean/PVNP.lean",
-              "import PVNP.DualResidual"
+              "import PVNP.DetectorDynamic"
             ]
           }
         },
@@ -503,7 +511,7 @@
           "check": {
             "file_contains": [
               ".github/workflows/lean.yml",
-              "PVNP.SweepDiv PVNP.DetectorQuadratic PVNP.DualResidual"
+              "PVNP.DualResidual PVNP.DetectorDynamic"
             ]
           }
         },
@@ -515,7 +523,7 @@
           "check": {
             "file_contains": [
               "lean/audit/AxiomAudit.lean",
-              "PVNP.DualResidual.dsq_mulH_tail_le"
+              "PVNP.DetectorDynamic.galerkin_detector_dynamic_data"
             ]
           }
         },
@@ -550,7 +558,7 @@
           "statement": "Proof note with local verification receipt",
           "check": {
             "file_contains": [
-              "pvnp/proofs/phase-xxxi-detector-division.md",
+              "pvnp/proofs/phase-xxxi-dynamic-detector.md",
               "## Verification"
             ]
           }
