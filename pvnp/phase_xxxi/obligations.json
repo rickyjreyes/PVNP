@@ -289,7 +289,7 @@
     {
       "id": "C7",
       "title": "End-to-end continuum evaluator, P_phys in P_TM (#99, I-11)",
-      "subjective_percent": 62,
+      "subjective_percent": 65,
       "obligations": [
         {
           "id": "C7.1",
@@ -351,6 +351,15 @@
             "PVNP.Discrete.Sweep.ProgOn.seq_reach",
             "PVNP.Discrete.Sweep.ProgOn.seq_tm",
             "PVNP.Discrete.SweepArith.div_first"
+          ]
+        },
+        {
+          "id": "C7.9",
+          "status": "proved",
+          "statement": "Verified alphabet translations: transport of first arrivals and frame preservation along track lenses",
+          "lean": [
+            "PVNP.Discrete.Sweep.ProgOn.reachFirst_lens",
+            "PVNP.Discrete.Sweep.ProgOn.reachFirst_lens_frame"
           ]
         }
       ]
@@ -513,7 +522,7 @@
           "check": {
             "file_contains": [
               "lean/PVNP.lean",
-              "import PVNP.SweepCompose"
+              "import PVNP.SweepLens"
             ]
           }
         },
@@ -525,7 +534,7 @@
           "check": {
             "file_contains": [
               ".github/workflows/lean.yml",
-              "PVNP.DetectorPDE PVNP.SweepCompose"
+              "PVNP.SweepCompose PVNP.SweepLens"
             ]
           }
         },
@@ -537,7 +546,7 @@
           "check": {
             "file_contains": [
               "lean/audit/AxiomAudit.lean",
-              "PVNP.Discrete.Sweep.ProgOn.seq_tm"
+              "PVNP.Discrete.Sweep.ProgOn.reachFirst_lens_frame"
             ]
           }
         },

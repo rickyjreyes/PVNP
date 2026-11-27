@@ -319,3 +319,5 @@ import PVNP.DetectorDynamic
 import PVNP.DetectorPDE
 -- Phase XXXII: sequential composition of verified sweep programs (exact charged costs).
 import PVNP.SweepCompose
+-- Phase XXXII: track lenses (verified alphabet translations) for sweep programs.
+import PVNP.SweepLens

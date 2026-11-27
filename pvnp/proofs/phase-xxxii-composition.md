@@ -1,6 +1,7 @@
 # Phase XXXII: composable verified Turing-machine programs (27 November 2026)
 
-New Lean module: `lean/PVNP/SweepCompose.lean`. It is based on the Phase XXXII PDE-detector branch.
+New Lean modules: `lean/PVNP/SweepCompose.lean` and `lean/PVNP/SweepLens.lean`. They are based on the
+Phase XXXII PDE-detector branch.
 
 ## Outcome
 
@@ -9,11 +10,13 @@ New Lean module: `lean/PVNP/SweepCompose.lean`. It is based on the Phase XXXII P
   transition counts. A compiled single-tape TM corollary follows.
 - **Proved.** Long division in first-arrival form (`div_first`), the interface the composition
   theorem consumes.
+- **Proved.** Verified alphabet translations through **track lenses** (`SweepLens`, §2a). A
+  program over one alphabet runs on the chosen tracks of a common multi-track alphabet. Its
+  first arrivals and exact costs transport, and independent tracks are left unchanged.
 - **Not done.**
-  - **Alphabet translations.** The verified primitives use different cell alphabets: `Cell` for
-    addition, `MCell` for multiplication, `DCell` for division. Composing different primitives
-    needs verified alphabet embeddings or a common track alphabet, and layout-conversion
-    programs.
+  - **Instantiation.** A common track alphabet, the concrete lenses for `MCell` and `DCell`, and
+    multiplication in first-arrival form. With these, multiply-then-divide, which is certified
+    fixed-point multiplication, follows by `seq_reach`.
   - **Downstream arithmetic.** Signed, rational, fixed-point multiplication and complex
     arithmetic.
   - **Numerical kernels.** Constants, convolution and the Taylor recurrence.
@@ -58,11 +61,33 @@ Composition preserves:
 - **intermediate representation:** `A`'s output is `B`'s input on the same tape alphabet;
 - **charged costs:** exactly additive.
 
+## 2a. Track lenses (`SweepLens`)
+
+**Definitions.**
+- A lens `ℓ : TrackLens E D` has `get : E → D` and `put : E → D → E`, with `get (put x d) = d`.
+- `viaLens A ℓ z lift` runs `A` on `get` of each cell and writes the result back with `put`.
+  Extension cells are written into `z`.
+- `ℓ₂` is *independent* of `ℓ` (`Indep`) when `ℓ₂.get (ℓ.put x d) = ℓ₂.get x`.
+
+| Theorem | Statement |
+|---|---|
+| `fscan_lens`, `bscan_lens`, `trip_lens`, `trip_lens_view`, `trip_lens_buf` | the lifted scans and trips are the original ones on the view |
+| `tripCost_lens` | equal costs |
+| `stepP_lens` | lifted steps are the original steps on the view |
+| `reachFirst_lens` | **transport**: a first arrival of `A` from the view `l.map get` lifts to a first arrival from `l`, with the same cost and the same output view |
+| `frame_trip`, `reachFirst_lens_frame` | **frame preservation**: if `A` never extends the tape, an independent lens sees no change |
+
+**Consequence.** On a common alphabet, the division program can read its dividend directly from
+the multiplication program's accumulator track. No copying program is needed. The other inputs of
+division (the shifted divisor, the zero quotient and the marker) sit on tracks that the multiplier's
+lens leaves unchanged.
+
 ## 3. What remains on the machine side
 
-1. **Common alphabet.** Embed `Cell`, `MCell` and `DCell` into one track alphabet. Prove that
-   each primitive transports along the embedding, preserving its `ReachFirst` statement.
-2. **Layout conversion.** Write programs that copy, shift and clear tracks, with first-arrival
+1. **Common alphabet.** The general transport is proved (`reachFirst_lens`,
+   `reachFirst_lens_frame`). What remains is the concrete common alphabet with lenses for
+   `Cell`, `MCell` and `DCell`, and multiplication and addition in first-arrival form.
+2. **Layout conversion.** Where tracks cannot be shared, layout conversion is needed. Write programs that copy, shift and clear tracks, with first-arrival
    costs. One is needed between consecutive primitives, for example to move a product into a
    dividend track.
 3. **Arithmetic.**
@@ -77,16 +102,20 @@ Composition preserves:
 
 ## 4. Progress (registry)
 
-The registry records the composition theorem as C7.8 in the evaluator category. That category
-moves from 4/7 to 5/8.
+The registry records the composition theorem as C7.8 and the track-lens transport as C7.9, both
+in the evaluator category. That category moves from 4/7 to 6/9.
 
 ## Verification
 
-Local, Lean 4.23.0, on the Lean tree of commit `ab97d3f`:
-- `lake build PVNP` passed (7,438 jobs). `PVNP.SweepCompose` builds without warnings.
-- The full transitive axiom audit (`audit/check_axioms.py`) passed for all 1,334 registered
-  declarations, including the 22 new ones. They use only `propext`, `Classical.choice` and
-  `Quot.sound`, and no `sorryAx` occurs.
+Local, Lean 4.23.0, on the Lean tree of this pull request's head:
+- `lake build PVNP` passed (7,439 jobs). `PVNP.SweepCompose` and `PVNP.SweepLens` build without
+  warnings.
+- Axiom audit:
+  - The full transitive audit passed for all 1,334 declarations registered before `SweepLens`.
+  - A targeted audit passed for the 15 `SweepLens` declarations.
+  - Every audited declaration uses only `propext`, `Classical.choice` and `Quot.sound`, and no
+    `sorryAx` occurs.
+- The hosted workflow audits all 1,349 registered declarations at the pull-request head.
 
 Later commits change documentation, the obligation registry and generated dashboard data only.
 Hosted CI is recorded on the pull request.

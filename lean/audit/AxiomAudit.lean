@@ -1516,3 +1516,20 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Discrete.SweepArith.div_loop_first
 #print axioms PVNP.Discrete.SweepArith.div_reach_first
 #print axioms PVNP.Discrete.SweepArith.div_first
+
+-- Phase XXXII: track lenses (SweepLens)
+#print axioms PVNP.Discrete.Sweep.TrackLens.map_get_zipWith
+#print axioms PVNP.Discrete.Sweep.TrackLens.length_zipWith
+#print axioms PVNP.Discrete.Sweep.TrackLens.frame_zipWith
+#print axioms PVNP.Discrete.Sweep.ProgOn.fscan_lens
+#print axioms PVNP.Discrete.Sweep.ProgOn.bscan_lens
+#print axioms PVNP.Discrete.Sweep.ProgOn.fpass_lens
+#print axioms PVNP.Discrete.Sweep.ProgOn.mid_lens_view
+#print axioms PVNP.Discrete.Sweep.ProgOn.trip_lens
+#print axioms PVNP.Discrete.Sweep.ProgOn.trip_lens_buf
+#print axioms PVNP.Discrete.Sweep.ProgOn.trip_lens_view
+#print axioms PVNP.Discrete.Sweep.ProgOn.tripCost_lens
+#print axioms PVNP.Discrete.Sweep.ProgOn.stepP_lens
+#print axioms PVNP.Discrete.Sweep.ProgOn.reachFirst_lens
+#print axioms PVNP.Discrete.Sweep.ProgOn.frame_trip
+#print axioms PVNP.Discrete.Sweep.ProgOn.reachFirst_lens_frame
