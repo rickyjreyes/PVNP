@@ -82,4 +82,11 @@ moves from 4/7 to 5/8.
 
 ## Verification
 
-VERIFICATION
+Local, Lean 4.23.0, on the Lean tree of commit `ab97d3f`:
+- `lake build PVNP` passed (7,438 jobs). `PVNP.SweepCompose` builds without warnings.
+- The full transitive axiom audit (`audit/check_axioms.py`) passed for all 1,334 registered
+  declarations, including the 22 new ones. They use only `propext`, `Classical.choice` and
+  `Quot.sound`, and no `sorryAx` occurs.
+
+Later commits change documentation, the obligation registry and generated dashboard data only.
+Hosted CI is recorded on the pull request.
