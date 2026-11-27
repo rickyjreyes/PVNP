@@ -308,7 +308,8 @@ recomputes these bars from the repository.
 The subjective column is a separate judgement.
 
 ```
-     category                                                                     computed                 subjective (not computed)
+PVNP Phase XXXI | bars computed from obligations; subjective estimates labelled separately
+     category                                                                                           computed   subjective (not computed)
 C1   Detector-specific bound, static truncation                                   [####################] 100% (5/5)   100%
 C2   Detector-specific bound, Galerkin dynamics                                   [....................]   0% (0/5)    45%
 C3   Spatial complexity and the analyticity radius                                [#############.......]  67% (4/6)    55%
@@ -321,6 +322,7 @@ C9   Universal separation (I-2, I-16, I-32)                                     
 C10  Adversarial falsification with kernel-checked counterexamples                [###########.........]  55% (6/11)    70%
 C11  Phase XXXI execution pipeline (repository state at commit time)              [#################...]  86% (6/7)    80%
 C12  Classical P versus NP                                                        [....................]   0% (0/1)     0%
+C12 is the only bar that measures classical P versus NP. It is 0: the problem is unresolved.
 ```
 
 **Reading the bars.**
