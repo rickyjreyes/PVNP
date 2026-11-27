@@ -307,3 +307,5 @@ import PVNP.SweepArith
 import PVNP.SweepMul
 -- Phase XXX: resonance structure of the frozen dispersion (no small divisors, nontrivial resonances).
 import PVNP.FrozenResonance
+-- Phase XXXI: verified binary long division and certified fixed-point rounding on the TM.
+import PVNP.SweepDiv

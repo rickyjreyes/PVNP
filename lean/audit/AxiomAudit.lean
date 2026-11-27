@@ -1382,3 +1382,32 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.FrozenResonance.radial_vanish
 #print axioms PVNP.FrozenResonance.nontrivial_resonance
 #print axioms PVNP.FrozenResonance.nontrivial_resonance_real
+
+-- Phase XXXI: verified long division (SweepDiv)
+#print axioms PVNP.Discrete.SweepArith.cmpOf_msb
+#print axioms PVNP.Discrete.SweepArith.gscan_q
+#print axioms PVNP.Discrete.SweepArith.gscan_keep
+#print axioms PVNP.Discrete.SweepArith.gscan_fr
+#print axioms PVNP.Discrete.SweepArith.gscan_sub
+#print axioms PVNP.Discrete.SweepArith.gscan_gP
+#print axioms PVNP.Discrete.SweepArith.hscan_hP
+#print axioms PVNP.Discrete.SweepArith.hscan_hR
+#print axioms PVNP.Discrete.SweepArith.cmpOf_lt_iff
+#print axioms PVNP.Discrete.SweepArith.dnext_eq
+#print axioms PVNP.Discrete.SweepArith.trip_eq_div
+#print axioms PVNP.Discrete.SweepArith.tripCost_div
+#print axioms PVNP.Discrete.SweepArith.dstep_core
+#print axioms PVNP.Discrete.SweepArith.dstep
+#print axioms PVNP.Discrete.SweepArith.div_arith
+#print axioms PVNP.Discrete.SweepArith.mod_shift
+#print axioms PVNP.Discrete.SweepArith.div_loop
+#print axioms PVNP.Discrete.SweepArith.div_reach
+#print axioms PVNP.Discrete.SweepArith.div_tm
+#print axioms PVNP.Discrete.SweepArith.bitsOf_length
+#print axioms PVNP.Discrete.SweepArith.val_bitsOf
+#print axioms PVNP.Discrete.SweepArith.mkCells_spec
+#print axioms PVNP.Discrete.SweepArith.divInput_spec
+#print axioms PVNP.Discrete.SweepArith.div_exact
+#print axioms PVNP.Discrete.SweepArith.div_exact_tm
+#print axioms PVNP.Discrete.SweepArith.fixdiv_certified
+#print axioms PVNP.Discrete.SweepArith.fixdiv_tm
