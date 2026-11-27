@@ -1,0 +1,575 @@
+{
+  "phase": "XXXI",
+  "date": "2026-11-27",
+  "rule": "A category's bar is discharged/total over its obligations. A mathematical obligation is discharged only when its status is 'proved' or 'refuted' and every Lean declaration it cites is registered in lean/audit/AxiomAudit.lean and declared in a module under lean/PVNP. A process obligation is discharged only when its status is 'done' and its file check passes. 'derived' (a paper derivation), 'analyzed' (a documented analysis) and 'open' never count. The subjective estimates are separate judgements and are not computed from the obligations.",
+  "categories": [
+    {
+      "id": "C1",
+      "title": "Detector-specific bound, static truncation",
+      "subjective_percent": 100,
+      "obligations": [
+        {
+          "id": "C1.1",
+          "status": "proved",
+          "statement": "Exact splitting J(v) - J(P_S v) = Re(<t,chi t> + <t,chi b> + <b,chi t>) with the boundary layer b",
+          "lean": [
+            "PVNP.DetectorQuadratic.detector_split"
+          ]
+        },
+        {
+          "id": "C1.2",
+          "status": "proved",
+          "statement": "Quadratic layer bound |J(v) - J(P_S v)| <= C_det |t| (|t| + 2|b|)",
+          "lean": [
+            "PVNP.DetectorQuadratic.detector_layer_bound"
+          ]
+        },
+        {
+          "id": "C1.3",
+          "status": "proved",
+          "statement": "Analytic static bound C_det e^{-sigma N}(e^{-sigma N} + 2 e^{-sigma(N-r)}) A_sigma(v)^2",
+          "lean": [
+            "PVNP.DetectorQuadratic.detector_static_quadratic"
+          ]
+        },
+        {
+          "id": "C1.4",
+          "status": "proved",
+          "statement": "Bandwidth-r form 3 C_det e^{sigma r} e^{-2 sigma N} A_sigma(v)^2",
+          "lean": [
+            "PVNP.DetectorQuadratic.detector_band_quadratic"
+          ]
+        },
+        {
+          "id": "C1.5",
+          "status": "proved",
+          "statement": "Instantiation on the SAT device's detector (bandwidth 1)",
+          "lean": [
+            "PVNP.DetectorQuadratic.device_detector_quadratic"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "title": "Detector-specific bound, Galerkin dynamics",
+      "subjective_percent": 45,
+      "obligations": [
+        {
+          "id": "C2.1",
+          "status": "derived",
+          "statement": "Dual-weighted module estimate |u phi|_{-sigma} <= A_sigma^{l1}(u) |phi|_{-sigma}",
+          "lean": []
+        },
+        {
+          "id": "C2.2",
+          "status": "derived",
+          "statement": "Dual tail estimate |Q_N u|_{-sigma} <= e^{-2 sigma N} A_sigma(u)",
+          "lean": []
+        },
+        {
+          "id": "C2.3",
+          "status": "derived",
+          "statement": "Dual energy inequality for the projected Galerkin error e = P_N u - u_N",
+          "lean": []
+        },
+        {
+          "id": "C2.4",
+          "status": "derived",
+          "statement": "Gronwall closure: |J(u(T)) - J(u_N(T))| <= C(M,chi)(1 + T e^{C_N(M) T}) e^{-2 sigma_T N}",
+          "lean": []
+        },
+        {
+          "id": "C2.5",
+          "status": "open",
+          "statement": "Kernel-checked dynamic theorem combining C2.1-C2.4",
+          "lean": []
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "title": "Spatial complexity and the analyticity radius",
+      "subjective_percent": 55,
+      "obligations": [
+        {
+          "id": "C3.1",
+          "status": "proved",
+          "statement": "Cutoff-independent propagation of analyticity with radius sigma_0 4^{-floor(t/tau)}",
+          "lean": [
+            "PVNP.Analytic.global_propagation"
+          ]
+        },
+        {
+          "id": "C3.2",
+          "status": "proved",
+          "statement": "End-to-end simulation bound from analytic data",
+          "lean": [
+            "PVNP.Analytic.analytic_end_to_end"
+          ]
+        },
+        {
+          "id": "C3.3",
+          "status": "proved",
+          "statement": "No small divisors on T^2_{2 pi} with integer kappa",
+          "lean": [
+            "PVNP.FrozenResonance.no_small_divisors"
+          ]
+        },
+        {
+          "id": "C3.4",
+          "status": "refuted",
+          "statement": "Hypothesis: the frozen dispersion has only trivial resonant quartets",
+          "lean": [
+            "PVNP.FrozenResonance.nontrivial_resonance"
+          ]
+        },
+        {
+          "id": "C3.5",
+          "status": "open",
+          "statement": "Polynomial lower bound on the analyticity radius over polynomial horizons",
+          "lean": []
+        },
+        {
+          "id": "C3.6",
+          "status": "open",
+          "statement": "Exponential decay of the radius for some admissible datum (the obstruction is real)",
+          "lean": []
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "title": "Verified TM integer arithmetic",
+      "subjective_percent": 100,
+      "obligations": [
+        {
+          "id": "C4.1",
+          "status": "proved",
+          "statement": "Addition with exact transition count",
+          "lean": [
+            "PVNP.Discrete.SweepArith.add_tm"
+          ]
+        },
+        {
+          "id": "C4.2",
+          "status": "proved",
+          "statement": "Subtraction with exact transition count",
+          "lean": [
+            "PVNP.Discrete.SweepArith.sub_tm"
+          ]
+        },
+        {
+          "id": "C4.3",
+          "status": "proved",
+          "statement": "Comparison with exact transition count",
+          "lean": [
+            "PVNP.Discrete.SweepArith.cmp_tm"
+          ]
+        },
+        {
+          "id": "C4.4",
+          "status": "proved",
+          "statement": "Multiplication with exact transition count",
+          "lean": [
+            "PVNP.Discrete.SweepArith.mul_tm"
+          ]
+        },
+        {
+          "id": "C4.5",
+          "status": "proved",
+          "statement": "Long division: quotient and remainder of W-bit operands in exactly (W+2)(4W+2) transitions",
+          "lean": [
+            "PVNP.Discrete.SweepArith.div_exact_tm"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C5",
+      "title": "TM fixed-point, rational, signed and complex arithmetic; certified rounding",
+      "subjective_percent": 25,
+      "obligations": [
+        {
+          "id": "C5.1",
+          "status": "proved",
+          "statement": "Fixed-point division with certified rounding q/2^p <= N/D < (q+1)/2^p",
+          "lean": [
+            "PVNP.Discrete.SweepArith.fixdiv_tm",
+            "PVNP.Discrete.SweepArith.fixdiv_certified"
+          ]
+        },
+        {
+          "id": "C5.2",
+          "status": "open",
+          "statement": "Fixed-point multiplication with certified rounding",
+          "lean": []
+        },
+        {
+          "id": "C5.3",
+          "status": "open",
+          "statement": "Signed arithmetic",
+          "lean": []
+        },
+        {
+          "id": "C5.4",
+          "status": "open",
+          "statement": "Complex arithmetic on pairs",
+          "lean": []
+        },
+        {
+          "id": "C5.5",
+          "status": "open",
+          "statement": "Rational arithmetic with normalization",
+          "lean": []
+        }
+      ]
+    },
+    {
+      "id": "C6",
+      "title": "Constants and series on the TM",
+      "subjective_percent": 15,
+      "obligations": [
+        {
+          "id": "C6.1",
+          "status": "proved",
+          "statement": "Exact rational Taylor partial sums with polynomial bit sizes and dyadic rounding (mathematical bound, not a TM program)",
+          "lean": [
+            "PVNP.ExpTaylorBits.exp_dyadic_approx"
+          ]
+        },
+        {
+          "id": "C6.2",
+          "status": "open",
+          "statement": "Certified rational approximation of pi on the TM",
+          "lean": []
+        },
+        {
+          "id": "C6.3",
+          "status": "open",
+          "statement": "Certified approximation of the algebra constant C_A on the TM",
+          "lean": []
+        },
+        {
+          "id": "C6.4",
+          "status": "open",
+          "statement": "Polynomial evaluation on the TM",
+          "lean": []
+        },
+        {
+          "id": "C6.5",
+          "status": "open",
+          "statement": "Finite Fourier convolution on the TM",
+          "lean": []
+        },
+        {
+          "id": "C6.6",
+          "status": "open",
+          "statement": "Taylor coefficient recurrence on the TM",
+          "lean": []
+        }
+      ]
+    },
+    {
+      "id": "C7",
+      "title": "End-to-end continuum evaluator, P_phys in P_TM (#99, I-11)",
+      "subjective_percent": 60,
+      "obligations": [
+        {
+          "id": "C7.1",
+          "status": "proved",
+          "statement": "Certified Fourier cutoff for analytic data",
+          "lean": [
+            "PVNP.Analytic.analytic_end_to_end"
+          ]
+        },
+        {
+          "id": "C7.2",
+          "status": "proved",
+          "statement": "Certified time integrator with step, order and precision counts",
+          "lean": [
+            "PVNP.GalerkinTaylor.certified_integrator"
+          ]
+        },
+        {
+          "id": "C7.3",
+          "status": "proved",
+          "statement": "Readout decision preserved under approximation",
+          "lean": [
+            "PVNP.ContinuumPrecision.decision_robust"
+          ]
+        },
+        {
+          "id": "C7.4",
+          "status": "proved",
+          "statement": "Detector-specific static cutoff with exponent 2 sigma N",
+          "lean": [
+            "PVNP.DetectorQuadratic.device_detector_quadratic"
+          ]
+        },
+        {
+          "id": "C7.5",
+          "status": "open",
+          "statement": "Arithmetic library sufficient for the evaluator (C5, C6)",
+          "lean": []
+        },
+        {
+          "id": "C7.6",
+          "status": "open",
+          "statement": "Explicit uniform TM evaluator with correctness, termination and coefficient access",
+          "lean": []
+        },
+        {
+          "id": "C7.7",
+          "status": "open",
+          "statement": "Polynomial runtime under admissibility over polynomial horizons",
+          "lean": []
+        }
+      ]
+    },
+    {
+      "id": "C8",
+      "title": "P_TM in P_phys: controlled SAT dynamics and TM embedding (#103, I-3, I-37)",
+      "subjective_percent": 35,
+      "obligations": [
+        {
+          "id": "C8.1",
+          "status": "proved",
+          "statement": "Static satisfiability equivalence with toroidal locking",
+          "lean": [
+            "PVNP.SpatialLocking.sat_iff_locked"
+          ]
+        },
+        {
+          "id": "C8.2",
+          "status": "refuted",
+          "statement": "Hypothesis: energy-monotone evolutions acquire the SAT lock dynamically",
+          "lean": [
+            "PVNP.SATDynamics.energy_monotone_trapped"
+          ]
+        },
+        {
+          "id": "C8.3",
+          "status": "open",
+          "statement": "Charged controlled evolution with SAT and UNSAT readout correctness and no precomputed answer",
+          "lean": []
+        },
+        {
+          "id": "C8.4",
+          "status": "open",
+          "statement": "Embedding of standard TM computation in the evolution with full resource accounting (M1-b)",
+          "lean": []
+        }
+      ]
+    },
+    {
+      "id": "C9",
+      "title": "Universal separation (I-2, I-16, I-32)",
+      "subjective_percent": 0,
+      "obligations": [
+        {
+          "id": "C9.1",
+          "status": "open",
+          "statement": "CrossingSAT.SATLowerBound",
+          "lean": []
+        },
+        {
+          "id": "C9.2",
+          "status": "open",
+          "statement": "SATTarget.SATSuperpolynomial",
+          "lean": []
+        },
+        {
+          "id": "C9.3",
+          "status": "open",
+          "statement": "A representation-independent invariant with the four required properties",
+          "lean": []
+        }
+      ]
+    },
+    {
+      "id": "C10",
+      "title": "Adversarial falsification with kernel-checked counterexamples",
+      "subjective_percent": 70,
+      "obligations": [
+        {
+          "id": "C10.1",
+          "status": "analyzed",
+          "statement": "Relativization",
+          "lean": []
+        },
+        {
+          "id": "C10.2",
+          "status": "analyzed",
+          "statement": "Natural proofs",
+          "lean": []
+        },
+        {
+          "id": "C10.3",
+          "status": "analyzed",
+          "statement": "Algebrization",
+          "lean": []
+        },
+        {
+          "id": "C10.4",
+          "status": "refuted",
+          "statement": "Global-coupling invariants: Tseitin formulas reduce to component parity",
+          "lean": [
+            "PVNP.TseitinSAT.tseitin_mem_SAT_dense_iff_comp"
+          ]
+        },
+        {
+          "id": "C10.5",
+          "status": "refuted",
+          "statement": "Crossing-information invariants: attained by V_SAT in P_TM",
+          "lean": [
+            "PVNP.VerifierCrossing.crossingInfo_V_SAT"
+          ]
+        },
+        {
+          "id": "C10.6",
+          "status": "refuted",
+          "statement": "Physical-cost invariants without charged preparation: zero-mode devices decide exactly P_TM",
+          "lean": [
+            "PVNP.ContinuumPrecision.zeroDev_languages_eq_P_TM"
+          ]
+        },
+        {
+          "id": "C10.7",
+          "status": "refuted",
+          "statement": "Fixed-horizon lower bounds: a finite table is fast through any horizon",
+          "lean": [
+            "PVNP.FiniteHorizon.fast_through_horizon"
+          ]
+        },
+        {
+          "id": "C10.8",
+          "status": "refuted",
+          "statement": "Domain-uniform coercivity: expanding-domain countermodel",
+          "lean": [
+            "PVNP.WCTPlaneWave.expanding_domain_countermodel"
+          ]
+        },
+        {
+          "id": "C10.9",
+          "status": "refuted",
+          "statement": "Normal-form invariants assuming only trivial resonances",
+          "lean": [
+            "PVNP.FrozenResonance.nontrivial_resonance"
+          ]
+        },
+        {
+          "id": "C10.10",
+          "status": "analyzed",
+          "statement": "Degenerate dispersion: Strichartz-type transfer",
+          "lean": []
+        },
+        {
+          "id": "C10.11",
+          "status": "analyzed",
+          "statement": "Search versus decision",
+          "lean": []
+        }
+      ]
+    },
+    {
+      "id": "C11",
+      "title": "Phase XXXI execution pipeline (repository state at commit time)",
+      "subjective_percent": 80,
+      "obligations": [
+        {
+          "id": "C11.1",
+          "kind": "process",
+          "status": "done",
+          "statement": "New modules imported by the library",
+          "check": {
+            "file_contains": [
+              "lean/PVNP.lean",
+              "import PVNP.DetectorQuadratic"
+            ]
+          }
+        },
+        {
+          "id": "C11.2",
+          "kind": "process",
+          "status": "done",
+          "statement": "New modules built by the Lean workflow",
+          "check": {
+            "file_contains": [
+              ".github/workflows/lean.yml",
+              "PVNP.SweepDiv PVNP.DetectorQuadratic"
+            ]
+          }
+        },
+        {
+          "id": "C11.3",
+          "kind": "process",
+          "status": "done",
+          "statement": "New declarations registered in the axiom audit",
+          "check": {
+            "file_contains": [
+              "lean/audit/AxiomAudit.lean",
+              "PVNP.DetectorQuadratic.device_detector_quadratic"
+            ]
+          }
+        },
+        {
+          "id": "C11.4",
+          "kind": "process",
+          "status": "done",
+          "statement": "Inventory records Phase XXXI",
+          "check": {
+            "file_contains": [
+              "pvnp/proofs/manuscript-lean-inventory.md",
+              "**Phase XXXI"
+            ]
+          }
+        },
+        {
+          "id": "C11.5",
+          "kind": "process",
+          "status": "done",
+          "statement": "Status registry records Phase XXXI for I-11",
+          "check": {
+            "file_contains": [
+              "pvnp/phase_xvi/targets.json",
+              "Phase XXXI"
+            ]
+          }
+        },
+        {
+          "id": "C11.6",
+          "kind": "process",
+          "status": "done",
+          "statement": "Proof note with local verification receipt",
+          "check": {
+            "file_contains": [
+              "pvnp/proofs/phase-xxxi-detector-division.md",
+              "## Verification"
+            ]
+          }
+        },
+        {
+          "id": "C11.7",
+          "kind": "process",
+          "status": "open",
+          "statement": "Hosted CI at the exact pull-request head and merge (recorded on the pull request, not in the repository)",
+          "check": {}
+        }
+      ]
+    },
+    {
+      "id": "C12",
+      "title": "Classical P versus NP",
+      "subjective_percent": 0,
+      "obligations": [
+        {
+          "id": "C12.1",
+          "status": "open",
+          "statement": "Unconditional, noncircular, kernel-checked resolution of P_TM = NP_TM or P_TM != NP_TM",
+          "lean": []
+        }
+      ]
+    }
+  ]
+}
