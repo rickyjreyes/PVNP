@@ -313,3 +313,5 @@ import PVNP.SweepDiv
 import PVNP.DetectorQuadratic
 -- Phase XXXI: dual-weighted residuals (module estimate, dual tail, quadratic residual).
 import PVNP.DualResidual
+-- Phase XXXI (continued): the dynamic detector theorem along the Galerkin flow.
+import PVNP.DetectorDynamic
