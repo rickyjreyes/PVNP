@@ -1411,3 +1411,21 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Discrete.SweepArith.div_exact_tm
 #print axioms PVNP.Discrete.SweepArith.fixdiv_certified
 #print axioms PVNP.Discrete.SweepArith.fixdiv_tm
+
+-- Phase XXXI: detector-specific quadratic truncation bound (DetectorQuadratic)
+#print axioms PVNP.DetectorQuadratic.co_trunc
+#print axioms PVNP.DetectorQuadratic.co_mulH_eq_zero
+#print axioms PVNP.DetectorQuadratic.co_mulH_congr
+#print axioms PVNP.DetectorQuadratic.inner_layer_left
+#print axioms PVNP.DetectorQuadratic.inner_layer_right
+#print axioms PVNP.DetectorQuadratic.detector_split
+#print axioms PVNP.DetectorQuadratic.detector_layer_bound
+#print axioms PVNP.DetectorQuadratic.layer_le
+#print axioms PVNP.DetectorQuadratic.detector_static_quadratic
+#print axioms PVNP.DetectorQuadratic.size_sub_comm
+#print axioms PVNP.DetectorQuadratic.isLayer_of_band
+#print axioms PVNP.DetectorQuadratic.layer_size
+#print axioms PVNP.DetectorQuadratic.detector_band_quadratic
+#print axioms PVNP.DetectorQuadratic.device_band
+#print axioms PVNP.DetectorQuadratic.device_real
+#print axioms PVNP.DetectorQuadratic.device_detector_quadratic

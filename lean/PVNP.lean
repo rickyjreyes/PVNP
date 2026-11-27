@@ -309,3 +309,5 @@ import PVNP.SweepMul
 import PVNP.FrozenResonance
 -- Phase XXXI: verified binary long division and certified fixed-point rounding on the TM.
 import PVNP.SweepDiv
+-- Phase XXXI: the detector sees the Fourier tail quadratically (static detector-specific bound).
+import PVNP.DetectorQuadratic
