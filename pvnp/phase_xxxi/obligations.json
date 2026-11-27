@@ -204,7 +204,7 @@
     {
       "id": "C5",
       "title": "TM fixed-point, rational, signed and complex arithmetic; certified rounding",
-      "subjective_percent": 25,
+      "subjective_percent": 50,
       "obligations": [
         {
           "id": "C5.1",
@@ -217,15 +217,25 @@
         },
         {
           "id": "C5.2",
-          "status": "open",
+          "status": "proved",
           "statement": "Fixed-point multiplication with certified rounding",
-          "lean": []
+          "lean": [
+            "PVNP.Discrete.SweepArith.fixmul_tm",
+            "PVNP.Discrete.SweepArith.fixmul_certified",
+            "PVNP.Discrete.SweepArith.sfixmul_tm",
+            "PVNP.Discrete.SweepArith.sfixmul_certified"
+          ]
         },
         {
           "id": "C5.3",
-          "status": "open",
+          "status": "proved",
           "statement": "Signed arithmetic",
-          "lean": []
+          "lean": [
+            "PVNP.Discrete.SweepArith.sadd_tm",
+            "PVNP.Discrete.SweepArith.ssub_tm",
+            "PVNP.Discrete.SweepArith.slt_iff",
+            "PVNP.Discrete.SweepArith.sfixmul_tm"
+          ]
         },
         {
           "id": "C5.4",
@@ -237,6 +247,12 @@
           "id": "C5.5",
           "status": "open",
           "statement": "Rational arithmetic with normalization",
+          "lean": []
+        },
+        {
+          "id": "C5.6",
+          "status": "open",
+          "statement": "Signed fixed-point division with certified rounding",
           "lean": []
         }
       ]
@@ -350,7 +366,8 @@
           "lean": [
             "PVNP.Discrete.Sweep.ProgOn.seq_reach",
             "PVNP.Discrete.Sweep.ProgOn.seq_tm",
-            "PVNP.Discrete.SweepArith.div_first"
+            "PVNP.Discrete.SweepArith.div_first",
+            "PVNP.Discrete.Sweep.ProgOn.seq_reachFirst"
           ]
         },
         {
