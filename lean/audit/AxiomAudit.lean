@@ -1429,3 +1429,19 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.DetectorQuadratic.device_band
 #print axioms PVNP.DetectorQuadratic.device_real
 #print axioms PVNP.DetectorQuadratic.device_detector_quadratic
+
+-- Phase XXXI: dual-weighted residuals (DualResidual)
+#print axioms PVNP.DualResidual.dw_pos
+#print axioms PVNP.DualResidual.dw_le_one
+#print axioms PVNP.DualResidual.dw_mul_aw
+#print axioms PVNP.DualResidual.dw_le_mul
+#print axioms PVNP.DualResidual.dsq_nonneg
+#print axioms PVNP.DualResidual.dsum
+#print axioms PVNP.DualResidual.dlift_apply
+#print axioms PVNP.DualResidual.norm_dlift_sq
+#print axioms PVNP.DualResidual.co_dlift
+#print axioms PVNP.DualResidual.norm_co_dlift
+#print axioms PVNP.DualResidual.dw_mulH_le
+#print axioms PVNP.DualResidual.dsq_mulH_le
+#print axioms PVNP.DualResidual.dsq_tail_le
+#print axioms PVNP.DualResidual.dsq_mulH_tail_le

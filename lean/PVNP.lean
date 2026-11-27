@@ -311,3 +311,5 @@ import PVNP.FrozenResonance
 import PVNP.SweepDiv
 -- Phase XXXI: the detector sees the Fourier tail quadratically (static detector-specific bound).
 import PVNP.DetectorQuadratic
+-- Phase XXXI: dual-weighted residuals (module estimate, dual tail, quadratic residual).
+import PVNP.DualResidual
