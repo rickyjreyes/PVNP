@@ -307,3 +307,9 @@ import PVNP.SweepArith
 import PVNP.SweepMul
 -- Phase XXX: resonance structure of the frozen dispersion (no small divisors, nontrivial resonances).
 import PVNP.FrozenResonance
+-- Phase XXXI: verified binary long division and certified fixed-point rounding on the TM.
+import PVNP.SweepDiv
+-- Phase XXXI: the detector sees the Fourier tail quadratically (static detector-specific bound).
+import PVNP.DetectorQuadratic
+-- Phase XXXI: dual-weighted residuals (module estimate, dual tail, quadratic residual).
+import PVNP.DualResidual

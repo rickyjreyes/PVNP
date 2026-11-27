@@ -1382,3 +1382,66 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.FrozenResonance.radial_vanish
 #print axioms PVNP.FrozenResonance.nontrivial_resonance
 #print axioms PVNP.FrozenResonance.nontrivial_resonance_real
+
+-- Phase XXXI: verified long division (SweepDiv)
+#print axioms PVNP.Discrete.SweepArith.cmpOf_msb
+#print axioms PVNP.Discrete.SweepArith.gscan_q
+#print axioms PVNP.Discrete.SweepArith.gscan_keep
+#print axioms PVNP.Discrete.SweepArith.gscan_fr
+#print axioms PVNP.Discrete.SweepArith.gscan_sub
+#print axioms PVNP.Discrete.SweepArith.gscan_gP
+#print axioms PVNP.Discrete.SweepArith.hscan_hP
+#print axioms PVNP.Discrete.SweepArith.hscan_hR
+#print axioms PVNP.Discrete.SweepArith.cmpOf_lt_iff
+#print axioms PVNP.Discrete.SweepArith.dnext_eq
+#print axioms PVNP.Discrete.SweepArith.trip_eq_div
+#print axioms PVNP.Discrete.SweepArith.tripCost_div
+#print axioms PVNP.Discrete.SweepArith.dstep_core
+#print axioms PVNP.Discrete.SweepArith.dstep
+#print axioms PVNP.Discrete.SweepArith.div_arith
+#print axioms PVNP.Discrete.SweepArith.mod_shift
+#print axioms PVNP.Discrete.SweepArith.div_loop
+#print axioms PVNP.Discrete.SweepArith.div_reach
+#print axioms PVNP.Discrete.SweepArith.div_tm
+#print axioms PVNP.Discrete.SweepArith.bitsOf_length
+#print axioms PVNP.Discrete.SweepArith.val_bitsOf
+#print axioms PVNP.Discrete.SweepArith.mkCells_spec
+#print axioms PVNP.Discrete.SweepArith.divInput_spec
+#print axioms PVNP.Discrete.SweepArith.div_exact
+#print axioms PVNP.Discrete.SweepArith.div_exact_tm
+#print axioms PVNP.Discrete.SweepArith.fixdiv_certified
+#print axioms PVNP.Discrete.SweepArith.fixdiv_tm
+
+-- Phase XXXI: detector-specific quadratic truncation bound (DetectorQuadratic)
+#print axioms PVNP.DetectorQuadratic.co_trunc
+#print axioms PVNP.DetectorQuadratic.co_mulH_eq_zero
+#print axioms PVNP.DetectorQuadratic.co_mulH_congr
+#print axioms PVNP.DetectorQuadratic.inner_layer_left
+#print axioms PVNP.DetectorQuadratic.inner_layer_right
+#print axioms PVNP.DetectorQuadratic.detector_split
+#print axioms PVNP.DetectorQuadratic.detector_layer_bound
+#print axioms PVNP.DetectorQuadratic.layer_le
+#print axioms PVNP.DetectorQuadratic.detector_static_quadratic
+#print axioms PVNP.DetectorQuadratic.size_sub_comm
+#print axioms PVNP.DetectorQuadratic.isLayer_of_band
+#print axioms PVNP.DetectorQuadratic.layer_size
+#print axioms PVNP.DetectorQuadratic.detector_band_quadratic
+#print axioms PVNP.DetectorQuadratic.device_band
+#print axioms PVNP.DetectorQuadratic.device_real
+#print axioms PVNP.DetectorQuadratic.device_detector_quadratic
+
+-- Phase XXXI: dual-weighted residuals (DualResidual)
+#print axioms PVNP.DualResidual.dw_pos
+#print axioms PVNP.DualResidual.dw_le_one
+#print axioms PVNP.DualResidual.dw_mul_aw
+#print axioms PVNP.DualResidual.dw_le_mul
+#print axioms PVNP.DualResidual.dsq_nonneg
+#print axioms PVNP.DualResidual.dsum
+#print axioms PVNP.DualResidual.dlift_apply
+#print axioms PVNP.DualResidual.norm_dlift_sq
+#print axioms PVNP.DualResidual.co_dlift
+#print axioms PVNP.DualResidual.norm_co_dlift
+#print axioms PVNP.DualResidual.dw_mulH_le
+#print axioms PVNP.DualResidual.dsq_mulH_le
+#print axioms PVNP.DualResidual.dsq_tail_le
+#print axioms PVNP.DualResidual.dsq_mulH_tail_le
