@@ -210,7 +210,7 @@
     {
       "id": "C5",
       "title": "TM fixed-point, rational, signed and complex arithmetic; certified rounding",
-      "subjective_percent": 75,
+      "subjective_percent": 90,
       "obligations": [
         {
           "id": "C5.1",
@@ -255,9 +255,14 @@
         },
         {
           "id": "C5.5",
-          "status": "open",
+          "status": "proved",
           "statement": "Rational arithmetic with normalization",
-          "lean": []
+          "lean": [
+            "PVNP.Discrete.SweepArith.radd_tm",
+            "PVNP.Discrete.SweepArith.rmul_tm",
+            "PVNP.Discrete.SweepArith.norm_tm",
+            "PVNP.Discrete.SweepArith.gcd_loop"
+          ]
         },
         {
           "id": "C5.6",
