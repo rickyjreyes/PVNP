@@ -337,3 +337,5 @@ import PVNP.SweepSDiv
 import PVNP.SweepGcd
 -- Phase XXXII: normalized rational arithmetic (sums and products of signed fractions).
 import PVNP.SweepRat
+-- Phase XXXII: uniform access to packed words (shift right by a counter, then mask).
+import PVNP.SweepAccess

@@ -1736,3 +1736,21 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Discrete.SweepArith.reduced_frac
 #print axioms PVNP.Discrete.SweepArith.radd_tm
 #print axioms PVNP.Discrete.SweepArith.rmul_tm
+-- Phase XXXII: uniform access to packed words (SweepAccess)
+#print axioms PVNP.Discrete.SweepArith.fscan_idS
+#print axioms PVNP.Discrete.SweepArith.bscan_shr
+#print axioms PVNP.Discrete.SweepArith.bscan_shr_c
+#print axioms PVNP.Discrete.SweepArith.shr_first
+#print axioms PVNP.Discrete.SweepArith.shr_value
+#print axioms PVNP.Discrete.SweepArith.bodyR_first
+#print axioms PVNP.Discrete.SweepArith.bodyRStep_length
+#print axioms PVNP.Discrete.SweepArith.bodyRStep_x
+#print axioms PVNP.Discrete.SweepArith.bodyRStep_c
+#print axioms PVNP.Discrete.SweepArith.iterR_spec
+#print axioms PVNP.Discrete.SweepArith.shift_right_by_counter
+#print axioms PVNP.Discrete.SweepArith.val_and_mask
+#print axioms PVNP.Discrete.SweepArith.pack_word
+#print axioms PVNP.Discrete.SweepArith.shrLoop_ext
+#print axioms PVNP.Discrete.SweepArith.access_run
+#print axioms PVNP.Discrete.SweepArith.mkA_spec
+#print axioms PVNP.Discrete.SweepArith.access_tm
