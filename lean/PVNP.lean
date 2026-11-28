@@ -339,3 +339,5 @@ import PVNP.SweepGcd
 import PVNP.SweepRat
 -- Phase XXXII: uniform access to packed words (shift right by a counter, then mask).
 import PVNP.SweepAccess
+-- Phase XXXII: polynomial evaluation by a Horner loop with indexed coefficient access.
+import PVNP.SweepPoly
