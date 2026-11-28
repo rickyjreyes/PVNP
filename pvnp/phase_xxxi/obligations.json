@@ -279,7 +279,7 @@
     {
       "id": "C6",
       "title": "Constants and series on the TM",
-      "subjective_percent": 15,
+      "subjective_percent": 25,
       "obligations": [
         {
           "id": "C6.1",
@@ -303,9 +303,12 @@
         },
         {
           "id": "C6.4",
-          "status": "open",
+          "status": "proved",
           "statement": "Polynomial evaluation on the TM",
-          "lean": []
+          "lean": [
+            "PVNP.Discrete.SweepArith.poly_tm",
+            "PVNP.Discrete.SweepArith.poly_loop"
+          ]
         },
         {
           "id": "C6.5",
