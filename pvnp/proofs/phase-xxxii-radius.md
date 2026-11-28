@@ -150,8 +150,13 @@ Local, Lean 4.23.0, on the Lean tree of this branch:
 - `lake build PVNP` passed (7,441 jobs). `PVNP.AnalyticAlmostConservation` builds without warnings
   and uses no `sorry`, `admit`, `native_decide` or custom axiom. One theorem (`comm_mulH_le`) sets
   `maxHeartbeats 400000`; `CookLevinMain` already does the same.
-- The full transitive axiom audit (`audit/check_axioms.py`) runs over all 1,433 registered
-  declarations: the 1,383 earlier ones and the 50 new theorems. The result is recorded on the
-  pull request.
+- The full transitive axiom audit (`audit/check_axioms.py`) passed for all 1,433 registered
+  declarations: the 1,383 earlier ones and the 50 new theorems. Each uses only `propext`,
+  `Classical.choice` and `Quot.sound` (or none), and no `sorryAx` occurs. The audited file is the
+  committed `lean/audit/AxiomAudit.lean`.
+- A first audit run reported 1,432 of 1,433 reports. The checker's pattern `'([^']+)'` cannot read
+  a declaration name that contains a prime, so `aw_defect_le'` was renamed `aw_defect_le_left`.
+  A prime-tolerant re-parse of that run showed every report clean, and the full audit was then
+  repeated on the renamed tree.
 - The hosted workflow builds the modules and audits all registered declarations at the
   pull-request head.
