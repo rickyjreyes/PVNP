@@ -210,7 +210,7 @@
     {
       "id": "C5",
       "title": "TM fixed-point, rational, signed and complex arithmetic; certified rounding",
-      "subjective_percent": 65,
+      "subjective_percent": 75,
       "obligations": [
         {
           "id": "C5.1",
@@ -261,9 +261,13 @@
         },
         {
           "id": "C5.6",
-          "status": "open",
+          "status": "proved",
           "statement": "Signed fixed-point division with certified rounding",
-          "lean": []
+          "lean": [
+            "PVNP.Discrete.SweepArith.sdiv_tm",
+            "PVNP.Discrete.SweepArith.sdiv_certified",
+            "PVNP.Discrete.SweepArith.sdiv_layout"
+          ]
         }
       ]
     },
