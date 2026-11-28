@@ -353,3 +353,7 @@ import PVNP.SweepRegLib
 import PVNP.EvalKron
 -- Phase XXXII: the Galerkin Taylor coefficients as an exact Gaussian-integer recurrence.
 import PVNP.EvalTaylor
+-- Phase XXXII: word-level register programs (read/write packed words, clean arithmetic).
+import PVNP.EvalWords
+-- Phase XXXII: bookkeeping for one order of the integer Taylor recurrence.
+import PVNP.EvalLevel
