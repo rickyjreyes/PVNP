@@ -329,3 +329,5 @@ import PVNP.AnalyticAlmostConservation
 import PVNP.SweepComplex
 -- Phase XXXII: loops of verified sweep programs (data-dependent iteration).
 import PVNP.SweepLoop
+-- Phase XXXII: shifting a track by a binary counter (the first application of the loop).
+import PVNP.SweepLayout

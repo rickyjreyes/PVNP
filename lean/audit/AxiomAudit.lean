@@ -1651,3 +1651,21 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Discrete.Sweep.ProgOn.loop_body_then
 #print axioms PVNP.Discrete.Sweep.ProgOn.loop_reachFirst
 #print axioms PVNP.Discrete.Sweep.ProgOn.loop_tm
+-- Phase XXXII: shifting a track by a binary counter (SweepLayout)
+#print axioms PVNP.Discrete.SweepArith.fscan_shl
+#print axioms PVNP.Discrete.SweepArith.fscan_shl_c
+#print axioms PVNP.Discrete.SweepArith.fdec_spec
+#print axioms PVNP.Discrete.SweepArith.fscan_dec
+#print axioms PVNP.Discrete.SweepArith.fscan_dec_x
+#print axioms PVNP.Discrete.SweepArith.fscan_nz
+#print axioms PVNP.Discrete.SweepArith.shl_first
+#print axioms PVNP.Discrete.SweepArith.dec_first
+#print axioms PVNP.Discrete.SweepArith.test_step
+#print axioms PVNP.Discrete.SweepArith.test_cost
+#print axioms PVNP.Discrete.SweepArith.body_first
+#print axioms PVNP.Discrete.SweepArith.bodyStep_length
+#print axioms PVNP.Discrete.SweepArith.bodyStep_x
+#print axioms PVNP.Discrete.SweepArith.bodyStep_c
+#print axioms PVNP.Discrete.SweepArith.iter_spec
+#print axioms PVNP.Discrete.SweepArith.shift_by_counter
+#print axioms PVNP.Discrete.SweepArith.shift_by_counter_tm
