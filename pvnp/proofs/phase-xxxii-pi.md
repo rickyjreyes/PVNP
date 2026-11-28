@@ -151,7 +151,12 @@ C12  Classical P versus NP                                                      
 
 Local, Lean 4.23.0, on the Lean tree of this branch:
 - `PVNP.SweepPi` compiles without warnings and uses no `sorry`, `admit`, `native_decide` or
-  custom axiom.
-- The full build and the full transitive axiom audit are pending.
+  custom axiom. `pi_tm_prec`, `pi_tm`, `piA_err`, `pi_run`, `at_loop`, `body_at`, `pi_euler` and
+  `atSum_err` depend only on `propext`, `Classical.choice` and `Quot.sound`.
+- `lake build PVNP` passed (7,451 jobs).
+- The full transitive axiom audit (`audit/check_axioms.py`) passed for all 1,658 registered
+  declarations: the 1,635 earlier ones and the 23 new theorems. Each uses only `propext`,
+  `Classical.choice` and `Quot.sound`, or none, and no `sorryAx` occurs. The audited file is the
+  committed `lean/audit/AxiomAudit.lean`.
 - The hosted workflow builds the modules and audits all registered declarations at the
   pull-request head.
