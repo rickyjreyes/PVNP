@@ -341,3 +341,5 @@ import PVNP.SweepRat
 import PVNP.SweepAccess
 -- Phase XXXII: polynomial evaluation by a Horner loop with indexed coefficient access.
 import PVNP.SweepPoly
+-- Phase XXXII: finite Fourier convolution by Kronecker substitution (real and complex, on mode boxes).
+import PVNP.SweepConv
