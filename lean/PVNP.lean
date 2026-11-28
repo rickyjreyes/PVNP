@@ -333,3 +333,7 @@ import PVNP.SweepLoop
 import PVNP.SweepLayout
 -- Phase XXXII: signed fixed-point division with certified rounding (four-stage composite).
 import PVNP.SweepSDiv
+-- Phase XXXII: the Euclidean algorithm and normalization of fractions (a loop of verified programs).
+import PVNP.SweepGcd
+-- Phase XXXII: normalized rational arithmetic (sums and products of signed fractions).
+import PVNP.SweepRat
