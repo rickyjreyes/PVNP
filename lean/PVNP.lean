@@ -349,3 +349,7 @@ import PVNP.SweepPi
 import PVNP.SweepReg
 -- Phase XXXII: register programs with verified values and costs (shifts, multiplication, division).
 import PVNP.SweepRegLib
+-- Phase XXXII: Kronecker packing of Taylor series of Fourier arrays (one multiplication per Cauchy product).
+import PVNP.EvalKron
+-- Phase XXXII: the Galerkin Taylor coefficients as an exact Gaussian-integer recurrence.
+import PVNP.EvalTaylor
