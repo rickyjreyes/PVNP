@@ -49,7 +49,7 @@ The stages are chained by `ProgOn.seq_reachFirst`. The shift loop never extends 
 | `iterR_spec`, `shift_right_by_counter` | **the right-shift loop**: `x = ⌊X/2^s⌋`, a zero counter, exactly `(3s + 1)(2n + 2)` transitions |
 | `val_and_mask` | masking with `2^L − 1` keeps the residue modulo `2^L` |
 | `pack_word` | `⌊pack L ws / 2^{kL}⌋ mod 2^L = ws[k]` for words below `2^L` |
-| `shrLoop_ext`, `access_run` | the access machine on any tape: work track `⌊V/2^s⌋ mod 2^L` |
+| `shrLoop_ext`, `access_run` | the access machine on any tape: work track `⌊V/2^s⌋ mod 2^L`; the vector and mask tracks and the length are unchanged |
 | `mkA_spec`, `access_tm` | **uniform word access on the compiled TM** |
 
 ## 3. Progress (registry)
@@ -69,7 +69,7 @@ C12  Classical P versus NP                                                      
 
 ## Verification
 
-Local, Lean 4.23.0, on the Lean tree of this branch:
+Local, Lean 4.23.0, on the Lean tree of the access branch at `a4ff321` (merged as #124):
 - `PVNP.SweepAccess` compiles without warnings and uses no `sorry`, `admit`, `native_decide` or
   custom axiom. `access_tm`, `shift_right_by_counter` and `pack_word` depend only on `propext`,
   `Classical.choice` and `Quot.sound`.
@@ -80,3 +80,7 @@ Local, Lean 4.23.0, on the Lean tree of this branch:
   committed `lean/audit/AxiomAudit.lean`.
 - The hosted workflow builds the modules and audits all registered declarations at the
   pull-request head.
+
+The polynomial branch strengthens `access_run`: it also records that the vector and mask tracks
+and the length are unchanged, which the Horner loop uses. Its build and audit receipt is in
+`pvnp/proofs/phase-xxxii-polynomial.md`.

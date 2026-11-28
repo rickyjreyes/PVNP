@@ -1754,3 +1754,25 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Discrete.SweepArith.access_run
 #print axioms PVNP.Discrete.SweepArith.mkA_spec
 #print axioms PVNP.Discrete.SweepArith.access_tm
+-- Phase XXXII: polynomial evaluation (SweepPoly)
+#print axioms PVNP.Discrete.Sweep.ProgOn.seq_ext_none
+#print axioms PVNP.Discrete.Sweep.ProgOn.loop_ext_none
+#print axioms PVNP.Discrete.Sweep.ProgOn.viaLens_ext_none
+#print axioms PVNP.Discrete.SweepArith.fscan_sub_ab
+#print axioms PVNP.Discrete.SweepArith.accessProg_ext
+#print axioms PVNP.Discrete.SweepArith.hornerFrom_eq
+#print axioms PVNP.Discrete.SweepArith.fscan_nzP
+#print axioms PVNP.Discrete.SweepArith.testP_step
+#print axioms PVNP.Discrete.SweepArith.testP_cost
+#print axioms PVNP.Discrete.SweepArith.st_acc
+#print axioms PVNP.Discrete.SweepArith.st_mul
+#print axioms PVNP.Discrete.SweepArith.st_sub
+#print axioms PVNP.Discrete.SweepArith.st_dec
+#print axioms PVNP.Discrete.SweepArith.map_proj
+#print axioms PVNP.Discrete.SweepArith.pv_congr
+#print axioms PVNP.Discrete.SweepArith.body_poly
+#print axioms PVNP.Discrete.SweepArith.hornerTrips_le
+#print axioms PVNP.Discrete.SweepArith.poly_loop
+#print axioms PVNP.Discrete.SweepArith.hornerW_eq
+#print axioms PVNP.Discrete.SweepArith.mkH_spec
+#print axioms PVNP.Discrete.SweepArith.poly_tm

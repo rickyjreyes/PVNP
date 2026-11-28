@@ -281,7 +281,9 @@ def accessProg : ProgOn ACell :=
 theorem access_run (l : List ACell) (L : ℕ) (hm : l.map ACell.mask = bitsOf l.length (2 ^ L - 1)) :
     ∃ l', ReachFirst accessProg.toProg (Sum.inr AddI.done) (accessProg.start, l) l'
         ((3 * val (l.map (fun z => z.s.c)) + 3) * (2 * l.length + 2)) ∧
-      val (l'.map (fun z => z.s.x)) = val (l.map ACell.v) / 2 ^ val (l.map (fun z => z.s.c)) % 2 ^ L := by
+      val (l'.map (fun z => z.s.x)) = val (l.map ACell.v) / 2 ^ val (l.map (fun z => z.s.c)) % 2 ^ L ∧
+      l'.map ACell.v = l.map ACell.v ∧ l'.map ACell.mask = l.map ACell.mask ∧
+      l'.length = l.length := by
   -- copy
   have r1 := map_first copyF abit l
   -- shift right
@@ -296,6 +298,9 @@ theorem access_run (l : List ACell) (L : ℕ) (hm : l.map ACell.mask = bitsOf l.
   have k2 : l2.map (fun z => z.mask) = (l.map copyF).map (fun z => z.mask) :=
     ProgOn.reachFirst_lens_frame shrLoop lensAs az abit shrLoop_ext
       (ℓ₂ := ⟨ACell.mask, fun x b => ⟨x.s, x.v, b⟩, fun _ _ => rfl⟩) (fun _ _ => rfl) r2
+  have kv : l2.map (fun z => z.v) = (l.map copyF).map (fun z => z.v) :=
+    ProgOn.reachFirst_lens_frame shrLoop lensAs az abit shrLoop_ext
+      (ℓ₂ := ⟨ACell.v, fun x b => ⟨x.s, b, x.mask⟩, fun _ _ => rfl⟩) (fun _ _ => rfl) r2
   have hl2 : l2.length = l.length := by
     have := congrArg List.length k2
     simpa using this
@@ -307,12 +312,12 @@ theorem access_run (l : List ACell) (L : ℕ) (hm : l.map ACell.mask = bitsOf l.
       AddI.done (show (Sum.inl TstI.test : TstI ⊕ (AddI ⊕ AddI)) ≠ Sum.inl TstI.no by decide) r1 r2)
     r3
   rw [hl2] at hc
-  refine ⟨l2.map maskF, ?_, ?_⟩
+  refine ⟨l2.map maskF, ?_, ?_, ?_, ?_, by rw [List.length_map, hl2]⟩
   · convert hc using 1
     ring
   · have e1 : (l2.map maskF).map (fun z => z.s.x) =
         List.zipWith (· && ·) (l2.map (fun z => z.s.x)) (l2.map (fun z => z.mask)) := by
-      clear r2 v2 k2 hl2 hc r3
+      clear r2 v2 k2 kv hl2 hc r3
       induction l2 with
       | nil => rfl
       | cons z l ih => simp only [List.map_cons, List.zipWith_cons_cons, ih]; rfl
@@ -327,6 +332,13 @@ theorem access_run (l : List ACell) (L : ℕ) (hm : l.map ACell.mask = bitsOf l.
       show vSx s' % 2 ^ L = _
       rw [hsx]
     exact key
+  · have e : (l2.map maskF).map ACell.v = l2.map (fun z => z.v) := by rw [List.map_map]; rfl
+    rw [e, kv, List.map_map]
+    rfl
+  · have e : (l2.map maskF).map ACell.mask = l2.map (fun z => z.mask) := by
+      rw [List.map_map]; rfl
+    rw [e, k2, List.map_map]
+    rfl
 
 /-! ### The layout and the compiled machine -/
 
@@ -374,7 +386,7 @@ theorem access_tm {n L k : ℕ} {ws : List ℕ} (hk : k < ws.length) (hw : ∀ w
   have hm : (accessInput n L ws k).map ACell.mask =
       bitsOf (accessInput n L ws k).length (2 ^ L - 1) := by
     unfold accessInput; rw [h3, h4]
-  obtain ⟨l', hr, hx⟩ := access_run (accessInput n L ws k) L hm
+  obtain ⟨l', hr, hx, -, -, -⟩ := access_run (accessInput n L ws k) L hm
   have hlen : (accessInput n L ws k).length = n := by unfold accessInput; exact h4
   rw [hc, hlen] at hr
   rw [hv, hc, pack_word L ws k hk hw] at hx
