@@ -1830,3 +1830,27 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Discrete.SweepArith.cconv_tm
 #print axioms PVNP.Discrete.SweepArith.cconv_boxList_range
 #print axioms PVNP.Discrete.SweepArith.cconv2_tm
+-- Phase XXXII: certified pi on the TM by Euler's arctangent formula (SweepPi)
+#print axioms PVNP.PiSeries.pi_euler
+#print axioms PVNP.PiSeries.arctan_tail
+#print axioms PVNP.PiSeries.atTerm_err
+#print axioms PVNP.PiSeries.atSum_err
+#print axioms PVNP.PiSeries.piSum_err
+#print axioms PVNP.Discrete.SweepArith.fscan_nzA
+#print axioms PVNP.Discrete.SweepArith.testA_step
+#print axioms PVNP.Discrete.SweepArith.testA_cost
+#print axioms PVNP.Discrete.SweepArith.stg_sub
+#print axioms PVNP.Discrete.SweepArith.stg_dec
+#print axioms PVNP.Discrete.SweepArith.dec_value
+#print axioms PVNP.Discrete.SweepArith.body_at
+#print axioms PVNP.Discrete.SweepArith.atU_le
+#print axioms PVNP.Discrete.SweepArith.at_loop
+#print axioms PVNP.Discrete.SweepArith.atU_eq
+#print axioms PVNP.Discrete.SweepArith.atU_term
+#print axioms PVNP.Discrete.SweepArith.atR_eq
+#print axioms PVNP.Discrete.SweepArith.pi_run
+#print axioms PVNP.Discrete.SweepArith.piA_err
+#print axioms PVNP.Discrete.SweepArith.atSum_abs_le
+#print axioms PVNP.Discrete.SweepArith.tv_range
+#print axioms PVNP.Discrete.SweepArith.pi_tm
+#print axioms PVNP.Discrete.SweepArith.pi_tm_prec

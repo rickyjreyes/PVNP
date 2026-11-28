@@ -343,3 +343,5 @@ import PVNP.SweepAccess
 import PVNP.SweepPoly
 -- Phase XXXII: finite Fourier convolution by Kronecker substitution (real and complex, on mode boxes).
 import PVNP.SweepConv
+-- Phase XXXII: certified pi on the TM (Euler's arctangent formula, two loops of verified programs).
+import PVNP.SweepPi
