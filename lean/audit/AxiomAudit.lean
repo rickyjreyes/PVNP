@@ -1619,3 +1619,23 @@ Every listed declaration must depend only on `propext`, `Classical.choice`, `Quo
 #print axioms PVNP.Analytic.anorm_trunc_le
 #print axioms PVNP.DetectorPDE.galerkin_detector_poly
 #print axioms PVNP.DetectorPDE.pde_detector_poly
+-- Phase XXXII: certified complex fixed-point arithmetic (SweepComplex)
+#print axioms PVNP.Discrete.SweepArith.addMod_first
+#print axioms PVNP.Discrete.SweepArith.addMod_value
+#print axioms PVNP.Discrete.SweepArith.sub_first
+#print axioms PVNP.Discrete.SweepArith.fmulProg_ext
+#print axioms PVNP.Discrete.SweepArith.stage_fmul
+#print axioms PVNP.Discrete.SweepArith.stage_sub
+#print axioms PVNP.Discrete.SweepArith.stage_add
+#print axioms PVNP.Discrete.SweepArith.mkC_spec
+#print axioms PVNP.Discrete.SweepArith.cmulInput_spec
+#print axioms PVNP.Discrete.SweepArith.tc_natCast
+#print axioms PVNP.Discrete.SweepArith.cmul_layout
+#print axioms PVNP.Discrete.SweepArith.tc_mod_pow
+#print axioms PVNP.Discrete.SweepArith.tc_sub_tc
+#print axioms PVNP.Discrete.SweepArith.fq_word
+#print axioms PVNP.Discrete.SweepArith.cmul_certified
+#print axioms PVNP.Discrete.SweepArith.cmul_tm
+#print axioms PVNP.Discrete.SweepArith.cadd_first
+#print axioms PVNP.Discrete.SweepArith.csub_first
+#print axioms PVNP.Discrete.SweepArith.caddsub_tm

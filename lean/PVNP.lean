@@ -325,3 +325,5 @@ import PVNP.SweepLens
 import PVNP.SweepFixMul
 -- Phase XXXII: almost conservation of analytic energies; polynomial analyticity radius.
 import PVNP.AnalyticAlmostConservation
+-- Phase XXXII: certified complex fixed-point arithmetic by multi-stage composition.
+import PVNP.SweepComplex
