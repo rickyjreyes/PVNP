@@ -279,7 +279,7 @@
     {
       "id": "C6",
       "title": "Constants and series on the TM",
-      "subjective_percent": 25,
+      "subjective_percent": 35,
       "obligations": [
         {
           "id": "C6.1",
@@ -312,9 +312,14 @@
         },
         {
           "id": "C6.5",
-          "status": "open",
+          "status": "proved",
           "statement": "Finite Fourier convolution on the TM",
-          "lean": []
+          "lean": [
+            "PVNP.Discrete.SweepArith.conv2_tm",
+            "PVNP.Discrete.SweepArith.cconv2_tm",
+            "PVNP.Discrete.SweepArith.conv_tm",
+            "PVNP.Discrete.SweepArith.kron_mul"
+          ]
         },
         {
           "id": "C6.6",
