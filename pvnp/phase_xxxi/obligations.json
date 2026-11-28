@@ -396,7 +396,8 @@
           "statement": "Loop combinator for sweep programs: data-dependent iteration with exact charged costs, on the compiled TM",
           "lean": [
             "PVNP.Discrete.Sweep.ProgOn.loop_reachFirst",
-            "PVNP.Discrete.Sweep.ProgOn.loop_tm"
+            "PVNP.Discrete.Sweep.ProgOn.loop_tm",
+            "PVNP.Discrete.SweepArith.shift_by_counter_tm"
           ]
         }
       ]
