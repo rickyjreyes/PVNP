@@ -102,7 +102,12 @@ Local, Lean 4.23.0, on the Lean tree of this branch:
 - `PVNP.SweepComplex` compiles without warnings and uses no `sorry`, `admit`, `native_decide` or
   custom axiom. `cmul_layout`, `cmul_tm` and `cmul_certified` depend only on `propext`,
   `Classical.choice` and `Quot.sound`.
-- `lake build PVNP` and the full transitive axiom audit (`audit/check_axioms.py`, all 1,452
-  registered declarations) are run on this tree. The results are recorded on the pull request.
+- `lake build PVNP` passed (7,442 jobs).
+- The full transitive axiom audit (`audit/check_axioms.py`) passed for all 1,452 registered
+  declarations: the 1,433 earlier ones and the 19 new theorems. Each uses only `propext`,
+  `Classical.choice` and `Quot.sound`, or none, and no `sorryAx` occurs. The audited file is the
+  committed `lean/audit/AxiomAudit.lean`.
 - A scratch `#eval` of the full six-stage composite exhausted memory and is not used. The
   fixed-point stages were checked by `#eval` in `phase-xxxii-fixed-point.md`.
+- The hosted workflow builds the modules and audits all registered declarations at the
+  pull-request head.
