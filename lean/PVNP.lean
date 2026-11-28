@@ -331,3 +331,5 @@ import PVNP.SweepComplex
 import PVNP.SweepLoop
 -- Phase XXXII: shifting a track by a binary counter (the first application of the loop).
 import PVNP.SweepLayout
+-- Phase XXXII: signed fixed-point division with certified rounding (four-stage composite).
+import PVNP.SweepSDiv
