@@ -345,3 +345,7 @@ import PVNP.SweepPoly
 import PVNP.SweepConv
 -- Phase XXXII: certified pi on the TM (Euler's arctangent formula, two loops of verified programs).
 import PVNP.SweepPi
+-- Phase XXXII: a register machine on tracks, compiled to single-tape TMs with exact costs.
+import PVNP.SweepReg
+-- Phase XXXII: register programs with verified values and costs (shifts, multiplication, division).
+import PVNP.SweepRegLib
