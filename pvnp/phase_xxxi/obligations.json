@@ -106,7 +106,7 @@
     {
       "id": "C3",
       "title": "Spatial complexity and the analyticity radius",
-      "subjective_percent": 55,
+      "subjective_percent": 90,
       "obligations": [
         {
           "id": "C3.1",
@@ -142,15 +142,21 @@
         },
         {
           "id": "C3.5",
-          "status": "open",
+          "status": "proved",
           "statement": "Polynomial lower bound on the analyticity radius over polynomial horizons",
-          "lean": []
+          "lean": [
+            "PVNP.Analytic.galerkin_radius_poly",
+            "PVNP.Analytic.galerkin_radius_bound"
+          ]
         },
         {
           "id": "C3.6",
-          "status": "open",
+          "status": "refuted",
           "statement": "Exponential decay of the radius for some admissible datum (the obstruction is real)",
-          "lean": []
+          "lean": [
+            "PVNP.Analytic.galerkin_radius_poly",
+            "PVNP.DetectorPDE.pde_detector_poly"
+          ]
         }
       ]
     },
@@ -305,7 +311,7 @@
     {
       "id": "C7",
       "title": "End-to-end continuum evaluator, P_phys in P_TM (#99, I-11)",
-      "subjective_percent": 65,
+      "subjective_percent": 70,
       "obligations": [
         {
           "id": "C7.1",
@@ -338,7 +344,8 @@
           "lean": [
             "PVNP.DetectorQuadratic.device_detector_quadratic",
             "PVNP.DetectorDynamic.galerkin_detector_dynamic_data",
-            "PVNP.DetectorPDE.pde_detector_dynamic"
+            "PVNP.DetectorPDE.pde_detector_dynamic",
+            "PVNP.DetectorPDE.pde_detector_poly"
           ]
         },
         {
