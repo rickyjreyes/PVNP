@@ -408,6 +408,15 @@
             "PVNP.Discrete.Sweep.ProgOn.loop_tm",
             "PVNP.Discrete.SweepArith.shift_by_counter_tm"
           ]
+        },
+        {
+          "id": "C7.11",
+          "status": "proved",
+          "statement": "Uniform input access: the compiled TM reads the k-th word of a packed input vector, uniformly in the index k",
+          "lean": [
+            "PVNP.Discrete.SweepArith.access_tm",
+            "PVNP.Discrete.SweepArith.shift_right_by_counter"
+          ]
         }
       ]
     },
